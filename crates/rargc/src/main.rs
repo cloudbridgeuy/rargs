@@ -13,6 +13,9 @@ fn main() -> Result<()> {
         Some(SubCommands::Tree { script_root }) => {
             commands::tree::Command::new(commands::tree::Options { script_root }).run()
         }
+        Some(SubCommands::Build { script_root }) => {
+            commands::build::Command::new(commands::build::Options { script_root }).run()
+        }
         None => Err(anyhow::format_err!("No subcommand provided")),
     }
 }

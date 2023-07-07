@@ -17,4 +17,9 @@ pub enum SubCommands {
         /// The path to the script root
         script_root: String,
     },
+    /// Build the script
+    Build {
+        /// The path to the script root
+        script_root: String,
+    },
 }
