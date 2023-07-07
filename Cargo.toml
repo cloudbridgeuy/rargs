@@ -1,0 +1,21 @@
+[workspace]
+members = ["crates/*"]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+authors = ["Guzmán Monné"]
+
+[profile.dev]
+# Disabling debug info speeds up builds.
+debug = 0
+
+[profile.release]
+incremental = true
+# Set this to 1 or 2 to get more useful backtraces in debugger.
+debug = 0
+
+[workspace.dependencies]
+rargc = { path = "./crates/rargc", version = "0.0.0" }
+
+

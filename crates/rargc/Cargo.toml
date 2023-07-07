@@ -1,0 +1,24 @@
+[package]
+name = "rargc"
+version = "0.0.0"
+homepage = "https://github.com/cloudbridgeuy/rargc"
+description = "A bash framework based on argc and bashly"
+autobins = false
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "rargc"
+path = "src/main.rs"
+
+[lib]
+name = "rargc"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1.0.71"
+clap = { version = "4.3.10", features = ["derive"] }
+env_logger = "0.10.0"
+log = "0.4.19"
