@@ -19,6 +19,8 @@ path = "src/lib.rs"
 
 [dependencies]
 anyhow = "1.0.71"
-clap = { version = "4.3.10", features = ["derive"] }
+clap = { version = "4.3.10", features = ["derive", "string"] }
+convert_case = "0.6.0"
 env_logger = "0.10.0"
 log = "0.4.19"
+nom = "7.1.3"

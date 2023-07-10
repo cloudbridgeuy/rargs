@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # @name basic
-# @description Basic bash script example
+# @describe Basic bash script example
 # @version 1.0.0
 
 # @cmd Greet the user
