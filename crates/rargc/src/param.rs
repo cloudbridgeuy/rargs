@@ -14,10 +14,10 @@ pub type Names = (
 #[derive(Debug, Clone, Default)]
 pub struct Data {
     pub name: String,
-    pub choices: Option<Vec<String>>,
+    pub choices: std::option::Option<Vec<String>>,
     pub multiple: bool,
     pub required: bool,
-    pub default: Option<String>,
+    pub default: std::option::Option<String>,
 }
 
 impl Data {
@@ -35,16 +35,16 @@ pub trait Param {
     fn tag_name(&self) -> &str;
 }
 
-/// A struct representing an `@flag` tag. E.g. `@flag --help "Prints help information"`
+/// Represents a `@flag` param. E.g. `@flag -h --help "Prints help information"`
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Flag {
     pub name: String,
     pub summary: String,
-    pub short: Option<char>,
+    pub short: std::option::Option<char>,
 }
 
 impl Flag {
-    pub fn new(data: Data, summary: &str, short: Option<char>) -> Self {
+    pub fn new(data: Data, summary: &str, short: std::option::Option<char>) -> Self {
         Self {
             name: data.name,
             summary: summary.to_string(),
@@ -60,5 +60,38 @@ impl Param for Flag {
 
     fn tag_name(&self) -> &str {
         "@flag"
+    }
+}
+
+/// Represents an `@option` param. E.g. `@option -n --name <name> "Your name"`
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub struct Option {
+    pub name: String,
+    pub summary: String,
+    pub short: std::option::Option<char>,
+    pub multiple: bool,
+    pub required: bool,
+    pub default: std::option::Option<String>,
+    pub choices: std::option::Option<Vec<String>>,
+    pub value_notation: std::option::Option<String>,
+}
+
+impl Option {
+    pub fn new(
+        data: Data,
+        summary: &str,
+        short: std::option::Option<char>,
+        value_notation: std::option::Option<String>,
+    ) -> Self {
+        Self {
+            name: data.name,
+            summary: summary.to_string(),
+            choices: data.choices,
+            multiple: data.multiple,
+            required: data.required,
+            default: data.default,
+            short,
+            value_notation,
+        }
     }
 }
