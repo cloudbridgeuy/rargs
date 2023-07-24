@@ -265,6 +265,7 @@ fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
                 nom::branch::alt((
                     parse_param_choices_default,
                     parse_param_choices_required,
+                    parse_param_choices_multiple,
                     parse_param_choices,
                     parse_param_assign,
                     parse_param_mark,
@@ -355,16 +356,53 @@ fn parse_param_choices(input: &str) -> nom::IResult<&str, param::Data> {
     )(input)
 }
 
+/// Parses the input as if it was a delimited multiple option value like `[a|b|c]`.
+fn parse_delimited_choices(input: &str) -> nom::IResult<&str, (Vec<&str>, Option<&str>)> {
+    nom::sequence::delimited(
+        nom::character::complete::char('['),
+        parse_choices,
+        nom::character::complete::char(']'),
+    )(input)
+}
+
+/// Parses the input as if it was a value notation with a multiple or multiple and required mark
+/// like `str*[a|b|c]` or `str+[a|b|c]`.
+fn parse_param_choices_multiple(input: &str) -> nom::IResult<&str, param::Data> {
+    nom::branch::alt((
+        nom::combinator::map(
+            nom::sequence::pair(
+                nom::sequence::terminated(parse_param_name, nom::character::complete::char('*')),
+                parse_delimited_choices,
+            ),
+            |(mut data, (choices, default))| {
+                data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
+                data.multiple = true;
+                data.default = default.map(|v| v.to_string());
+                data
+            },
+        ),
+        nom::combinator::map(
+            nom::sequence::pair(
+                nom::sequence::terminated(parse_param_name, nom::character::complete::char('+')),
+                parse_delimited_choices,
+            ),
+            |(mut data, (choices, default))| {
+                data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
+                data.multiple = true;
+                data.required = true;
+                data.default = default.map(|v| v.to_string());
+                data
+            },
+        ),
+    ))(input)
+}
+
 /// Parses the input as if it was a value notation with a default value like `str![=a|b|c]`.
 fn parse_param_choices_required(input: &str) -> nom::IResult<&str, param::Data> {
     nom::combinator::map(
         nom::sequence::pair(
             nom::sequence::terminated(parse_param_name, nom::character::complete::char('!')),
-            nom::sequence::delimited(
-                nom::character::complete::char('['),
-                parse_choices,
-                nom::character::complete::char(']'),
-            ),
+            parse_delimited_choices,
         ),
         |(mut data, (choices, default))| {
             data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
@@ -528,4 +566,192 @@ fn is_not_fn_name_char(c: char) -> bool {
 /// Returns true if the character is an ascii alphanumeric character, underscore, or dash.
 fn is_name_char(c: char) -> bool {
     c.is_ascii_alphanumeric() || c == '_' || c == '-'
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    macro_rules! assert_token {
+        ($comment:literal, Ignore) => {
+            assert_eq!(
+                parse_line($comment).unwrap(),
+                Some(Data::Unknown($comment.to_string()))
+            )
+        };
+        ($comment:literal, Error) => {
+            assert_eq!(parse_line($comment).unwrap(), None)
+        };
+        ($comment: literal, $kind:expr) => {
+            assert_eq!(parse_line($comment).unwrap(), Some($kind))
+        };
+    }
+
+    #[test]
+    fn test_parse_line() {
+        assert_token!(
+            "# @author Foo, Bar, Baz",
+            Data::Author(vec!(
+                "Foo".to_string(),
+                "Bar".to_string(),
+                "Baz".to_string()
+            ))
+        );
+        assert_token!("# @description foo", Data::Description("foo".to_string()));
+        assert_token!("# @version 1", Data::Version("1".to_string()));
+        assert_token!("# @help foo", Data::Help("foo".to_string()));
+        assert_token!("# @name foo", Data::Name("foo".to_string()));
+        assert_token!("# @default foo", Data::Default("foo".to_string()));
+        assert_token!("# @something foo", Data::Unknown("something".to_string()));
+        assert_token!(
+            "# @flag --flag A flag",
+            Data::Flag(param::Flag {
+                name: "flag".to_string(),
+                summary: "A flag".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @flag -f --flag A flag with a short and long name",
+            Data::Flag(param::Flag {
+                name: "flag".to_string(),
+                short: Some('f'),
+                summary: "A flag with a short and long name".to_string(),
+            })
+        );
+        assert_token!(
+            "# @option --option An option",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option -o --option An option with a short and long version",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option with a short and long version".to_string(),
+                short: Some('o'),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option! A required option",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "A required option".to_string(),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option=foo An option with a default value",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option with a default value".to_string(),
+                default: Some("foo".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option=\"foo bar\" An option with a default multi word value",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option with a default multi word value".to_string(),
+                default: Some("foo bar".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option* An option that takes multiple values",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that takes multiple values".to_string(),
+                multiple: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option+ An option that takes multiple values and its required",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that takes multiple values and its required".to_string(),
+                multiple: true,
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option[a|b|c] An option that supports predefined values",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that supports predefined values".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option[=a|b|c] An option that supports predefined values and has a default",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that supports predefined values and has a default".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option![a|b|c] An option that supports predefined values and its required",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that supports predefined values and its required".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option*[a|b|c] An option that supports predefined values and its multiple",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that supports predefined values and its multiple".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option+[a|b|c] An option that supports predefined values and its multiple and required",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option that supports predefined values and its multiple and required".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!("foo()", Data::Func("foo".to_string()));
+        assert_token!("foo ()", Data::Func("foo".to_string()));
+        assert_token!("foo  ()", Data::Func("foo".to_string()));
+        assert_token!("foo  ( )", Data::Func("foo".to_string()));
+        assert_token!(" foo  ( )", Data::Func("foo".to_string()));
+        assert_token!(" foo-bar ( )", Data::Func("foo-bar".to_string()));
+        assert_token!(" foo_bar ( )", Data::Func("foo_bar".to_string()));
+        assert_token!(" foo:bar ( )", Data::Func("foo:bar".to_string()));
+        assert_token!(" foo.bar ( )", Data::Func("foo.bar".to_string()));
+        assert_token!(" foo@bar ( )", Data::Func("foo@bar".to_string()));
+        assert_token!("function foo", Data::Func("foo".to_string()));
+        assert_token!("function foo_bar", Data::Func("foo_bar".to_string()));
+        assert_token!("function foo-bar", Data::Func("foo-bar".to_string()));
+        assert_token!("function foo:bar", Data::Func("foo:bar".to_string()));
+        assert_token!("function foo.bar", Data::Func("foo.bar".to_string()));
+        assert_token!("function foo@bar", Data::Func("foo@bar".to_string()));
+        assert_token!("# @arg foo![=a|b]", Data::Unknown("arg".to_string()));
+        assert_token!("foo=bar", Error);
+        assert_token!("#!/bin/bash", Error);
+        assert_token!("# @flag -f", Ignore);
+        assert_token!("# @option -foo![=a|b]", Ignore);
+    }
 }

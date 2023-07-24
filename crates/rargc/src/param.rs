@@ -36,7 +36,7 @@ pub trait Param {
 }
 
 /// Represents a `@flag` param. E.g. `@flag -h --help "Prints help information"`
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Default, Debug, PartialEq, Eq, Clone)]
 pub struct Flag {
     pub name: String,
     pub summary: String,
@@ -64,7 +64,7 @@ impl Param for Flag {
 }
 
 /// Represents an `@option` param. E.g. `@option -n --name <name> "Your name"`
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Default, Debug, PartialEq, Eq, Clone)]
 pub struct Option {
     pub name: String,
     pub summary: String,
