@@ -12,7 +12,6 @@
 
 # @cmd Greet the user
 # @flag -v --verbose Verbose mode
-# @option -g --greeting="Hello" Greeting to use
 # @option -r --required! Required option
 # @option -m --multiple* Multiple option
 # @option -d --default="Default value" Default value option
@@ -20,14 +19,13 @@
 # @option -p --multiple-and-required+ Multiple and required option
 # @option -o --options[one|two|three] Option with values
 # @option -O --options-with-default[=one|two|three] Option with values and default
-# @arg -u --user User name
-greet() {
-  local greeting="${rargc["greeting"]}"
-  local user="${rargc["user"]}"
-
-  if [[ -n "${rargc["verbose"]}" ]]; then
-    echo "Verbose mode enabled"
-  fi
-
-  echo "$greeting $user"
+# @arg required! Required positional argument
+# @arg multiple* Multiple positional argument
+# @arg default="Default value" Default value positional argument
+# @arg multiple-and-required+ Multiple and required positional argument
+# @arg p0 <FOO> Positional Argument with value notation
+# @arg p1[one|two|three] Positional Argument with values
+# @arg p2[=one|two|three] Positional Argument with values and default
+foo() {
+  echo "${rargc[@]}"
 }

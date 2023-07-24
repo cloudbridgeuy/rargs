@@ -13,6 +13,7 @@ pub struct Token {
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Data {
     Author(Vec<String>),
+    PositionalArgument(param::PositionalArgument),
     Cmd(String),
     Description(String),
     Flag(param::Flag),
@@ -192,7 +193,7 @@ fn parse_tag_param(input: &str) -> nom::IResult<&str, Option<Data>> {
     let check = nom::combinator::peek(nom::branch::alt((
         nom::bytes::complete::tag("flag"),
         nom::bytes::complete::tag("option"),
-        // nom::bytes::complete::tag("arg"),
+        nom::bytes::complete::tag("arg"),
     )));
 
     let arg = nom::branch::alt((
@@ -216,16 +217,16 @@ fn parse_tag_param(input: &str) -> nom::IResult<&str, Option<Data>> {
             ),
             |param| Some(Data::Option(param)),
         ),
-        // nom::combinator::map(
-        //     nom::sequence::preceded(
-        //         nom::sequence::pair(
-        //             nom::bytes::complete::tag("arg"),
-        //             nom::character::complete::space1,
-        //         ),
-        //         parse_arg_param,
-        //     ),
-        //     |param| Some(Data::Arg(param)),
-        // ),
+        nom::combinator::map(
+            nom::sequence::preceded(
+                nom::sequence::pair(
+                    nom::bytes::complete::tag("arg"),
+                    nom::character::complete::space1,
+                ),
+                parse_arg_param,
+            ),
+            |param| Some(Data::PositionalArgument(param)),
+        ),
     ));
 
     nom::sequence::preceded(
@@ -280,16 +281,36 @@ fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
     )(input)
 }
 
-fn parse_value_notation(input: &str) -> nom::IResult<&str, Option<&str>> {
-    let main = nom::sequence::delimited(
-        nom::character::complete::char('<'),
-        nom::bytes::complete::take_while1(|c: char| c.is_ascii_uppercase() || c == '_'),
-        nom::character::complete::char('>'),
-    );
+/// Parses the input as if it was a positional parameter like `@arg name <summary>`.
+fn parse_arg_param(input: &str) -> nom::IResult<&str, param::PositionalArgument> {
+    nom::combinator::map(
+        nom::sequence::tuple((
+            nom::branch::alt((
+                parse_param_choices_default,
+                parse_param_choices_required,
+                parse_param_choices_multiple,
+                parse_param_choices,
+                parse_param_assign,
+                parse_param_mark,
+            )),
+            parse_value_notation,
+            parse_tail,
+        )),
+        |(data, value_notation, summary)| {
+            param::PositionalArgument::new(data, summary, value_notation.map(|v| v.to_string()))
+        },
+    )(input)
+}
 
+/// Parses the input as if it was a value notation in the form of `<VALUE_NOTATION>`.
+fn parse_value_notation(input: &str) -> nom::IResult<&str, Option<&str>> {
     nom::combinator::opt(nom::sequence::preceded(
         nom::character::complete::space0,
-        main,
+        nom::sequence::delimited(
+            nom::character::complete::char('<'),
+            nom::bytes::complete::take_while1(|c: char| c.is_ascii_uppercase() || c == '_'),
+            nom::character::complete::char('>'),
+        ),
     ))(input)
 }
 
@@ -628,6 +649,16 @@ mod tests {
             })
         );
         assert_token!(
+            "# @option --option <VALUE_NOTATION> An option with a specific value notation",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                summary: "An option with a specific value notation".to_string(),
+                value_notation: Some("VALUE_NOTATION".to_string()),
+                ..Default::default()
+            })
+        );
+
+        assert_token!(
             "# @option -o --option An option with a short and long version",
             Data::Option(param::Option {
                 name: "option".to_string(),
@@ -732,6 +763,121 @@ mod tests {
                 ..Default::default()
             })
         );
+
+        assert_token!(
+            "# @arg positional_argument A positional argument",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument! A required option",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A required option".to_string(),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument=foo A positional argument with a default value",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument with a default value".to_string(),
+                default: Some("foo".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument=\"foo bar\" A positional argument with a default multi word value",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument with a default multi word value".to_string(),
+                default: Some("foo bar".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument* A positional argument that takes multiple values",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that takes multiple values".to_string(),
+                multiple: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument+ A positional argument that takes multiple values and its required",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that takes multiple values and its required".to_string(),
+                multiple: true,
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument[a|b|c] A positional argument that supports predefined values",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that supports predefined values".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument[=a|b|c] A positional argument that supports predefined values and has a default",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that supports predefined values and has a default".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument![a|b|c] A positional argument that supports predefined values and its required",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that supports predefined values and its required".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument*[a|b|c] A positional argument that supports predefined values and its multiple",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that supports predefined values and its multiple".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument+[a|b|c] A positional argument that supports predefined values and its multiple and required",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument that supports predefined values and its multiple and required".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg positional_argument <VALUE_NOTATION> A positional argument with a specific value notation.",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                summary: "A positional argument with a specific value notation.".to_string(),
+                value_notation: Some("VALUE_NOTATION".to_string()),
+                ..Default::default()
+            })
+        );
+
         assert_token!("foo()", Data::Func("foo".to_string()));
         assert_token!("foo ()", Data::Func("foo".to_string()));
         assert_token!("foo  ()", Data::Func("foo".to_string()));
@@ -748,7 +894,6 @@ mod tests {
         assert_token!("function foo:bar", Data::Func("foo:bar".to_string()));
         assert_token!("function foo.bar", Data::Func("foo.bar".to_string()));
         assert_token!("function foo@bar", Data::Func("foo@bar".to_string()));
-        assert_token!("# @arg foo![=a|b]", Data::Unknown("arg".to_string()));
         assert_token!("foo=bar", Error);
         assert_token!("#!/bin/bash", Error);
         assert_token!("# @flag -f", Ignore);

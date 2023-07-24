@@ -17,6 +17,7 @@ pub struct Command {
     pub meta: Meta,
     pub flags: HashMap<String, param::Flag>,
     pub options: HashMap<String, param::Option>,
+    pub positional_arguments: Vec<param::PositionalArgument>,
 }
 
 impl Command {
@@ -139,6 +140,34 @@ impl Script {
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing option --{} in line {}. Did you forget the @cmd directive?",
+                            value.name,
+                            event.position
+                        );
+                    }
+                }
+                parser::Data::PositionalArgument(value) => {
+                    if is_root_scope {
+                        eyre::bail!(
+                            "Args are not supported at the root scope. Found declaration for arg {} in line {}.",
+                            value.name,
+                            event.position
+                        )
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        if command
+                            .positional_arguments
+                            .iter()
+                            .any(|v| v.name == value.name)
+                        {
+                            eyre::bail!(
+                                "Duplicate arg {} for in line {}.",
+                                value.name,
+                                event.position
+                            );
+                        }
+                        command.positional_arguments.push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing arg {} in line {}. Did you forget the @cmd directive?",
                             value.name,
                             event.position
                         );

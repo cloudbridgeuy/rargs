@@ -63,6 +63,32 @@ impl Param for Flag {
     }
 }
 
+/// Represents an `@arg` param. E.g. `@arg name Your name`.
+#[derive(Default, Debug, PartialEq, Eq, Clone)]
+pub struct PositionalArgument {
+    pub name: String,
+    pub summary: String,
+    pub choices: std::option::Option<Vec<String>>,
+    pub multiple: bool,
+    pub required: bool,
+    pub default: std::option::Option<String>,
+    pub value_notation: std::option::Option<String>,
+}
+
+impl PositionalArgument {
+    pub fn new(data: Data, summary: &str, value_notation: std::option::Option<String>) -> Self {
+        Self {
+            name: data.name,
+            summary: summary.to_string(),
+            choices: data.choices,
+            multiple: data.multiple,
+            required: data.required,
+            default: data.default,
+            value_notation,
+        }
+    }
+}
+
 /// Represents an `@option` param. E.g. `@option -n --name <name> "Your name"`
 #[derive(Default, Debug, PartialEq, Eq, Clone)]
 pub struct Option {
