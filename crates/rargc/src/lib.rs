@@ -2,6 +2,7 @@ use clap::{Parser, Subcommand};
 
 pub mod commands;
 pub mod parser;
+pub mod param;
 pub mod script;
 pub mod token;
 

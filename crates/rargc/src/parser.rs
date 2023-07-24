@@ -1,5 +1,7 @@
 use color_eyre::eyre::{self, Result};
 
+use crate::param;
+
 pub type Position = usize;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -16,6 +18,7 @@ pub enum Data {
     Version(String),
     Help(String),
     Func(String),
+    Flag(param::Flag),
     Unknown(String),
 }
 
@@ -78,7 +81,7 @@ fn parse_tag(input: &str) -> nom::IResult<&str, Option<Data>> {
             nom::character::complete::space0,
             nom::character::complete::char('@'),
         )),
-        nom::branch::alt((parse_tag_text, parse_tag_unknown)),
+        nom::branch::alt((parse_tag_text, parse_tag_param, parse_tag_unknown)),
     )(input)
 }
 
@@ -135,7 +138,7 @@ fn parse_word(input: &str) -> nom::IResult<&str, &str> {
     nom::bytes::complete::take_while1(is_name_char)(input)
 }
 
-/// Parses the input as if it were a function.
+/// Parses the input as if it was a function.
 fn parse_fn(input: &str) -> nom::IResult<&str, Option<Data>> {
     nom::combinator::map(
         nom::branch::alt((parse_fn_keyword, parse_fn_no_keyword)),
@@ -143,7 +146,7 @@ fn parse_fn(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
-/// Parses a function with the `function` keyword.
+/// Parses the intput as if it was a function with the `function` keyword.
 fn parse_fn_keyword(input: &str) -> nom::IResult<&str, &str> {
     nom::sequence::preceded(
         nom::sequence::tuple((
@@ -155,12 +158,12 @@ fn parse_fn_keyword(input: &str) -> nom::IResult<&str, &str> {
     )(input)
 }
 
-/// Parses a function name.
+/// Parses the input as if it was a function name.
 fn parse_fn_name(input: &str) -> nom::IResult<&str, &str> {
     nom::bytes::complete::take_while1(is_not_fn_name_char)(input)
 }
 
-/// Parses a function without the `function` keyword.
+/// Parses the input as if it was a function without the `function` keyword.
 fn parse_fn_no_keyword(input: &str) -> nom::IResult<&str, &str> {
     nom::sequence::preceded(
         nom::character::complete::space0,
@@ -174,6 +177,92 @@ fn parse_fn_no_keyword(input: &str) -> nom::IResult<&str, &str> {
             )),
         ),
     )(input)
+}
+
+/// Parse the input as if it was a tag parameter like `@option rest...`, `@flag rest...`, or `@arg rest...`.
+fn parse_tag_param(input: &str) -> nom::IResult<&str, Option<Data>> {
+    let check = nom::combinator::peek(nom::branch::alt((
+        nom::bytes::complete::tag("option"),
+        // nom::bytes::complete::tag("flag"),
+        // nom::bytes::complete::tag("arg"),
+    )));
+
+    let arg = nom::branch::alt((
+        nom::combinator::map(
+            nom::sequence::preceded(
+                nom::sequence::pair(
+                    nom::bytes::complete::tag("flag"),
+                    nom::character::complete::space1,
+                ),
+                parse_flag_param,
+            ),
+            |param| Some(Data::Flag(param)),
+        ),
+        // nom::combinator::map(
+        //     nom::sequence::preceded(
+        //         nom::sequence::pair(
+        //             nom::bytes::complete::tag("option"),
+        //             nom::character::complete::space1,
+        //         ),
+        //         parse_option_param,
+        //     ),
+        //     |param| Some(Data::Option(param)),
+        // ),
+        // nom::combinator::map(
+        //     nom::sequence::preceded(
+        //         nom::sequence::pair(
+        //             nom::bytes::complete::tag("arg"),
+        //             nom::character::complete::space1,
+        //         ),
+        //         parse_arg_param,
+        //     ),
+        //     |param| Some(Data::Arg(param)),
+        // ),
+    ));
+
+    nom::sequence::preceded(
+        check,
+        nom::branch::alt((arg, nom::combinator::success(None))),
+    )(input)
+}
+
+/// Parses the input as if it was an option parameter like `@option rest...`, `@flag rest...`, or `@arg rest...`.
+fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
+    nom::combinator::map(
+        nom::sequence::tuple((
+            parse_short,
+            nom::sequence::preceded(
+                nom::sequence::pair(
+                    nom::character::complete::space0,
+                    nom::bytes::complete::tag("--"),
+                ),
+                parse_param_name,
+            ),
+            parse_tail,
+        )),
+        |(short, arg, summary)| param::Flag::new(arg, summary, short),
+    )(input)
+}
+
+/// Parses the input as if it was a short option like `-h`.
+fn parse_short(input: &str) -> nom::IResult<&str, Option<char>> {
+    let short = nom::sequence::delimited(
+        nom::character::complete::char('-'),
+        nom::character::complete::satisfy(|c| c.is_ascii_alphanumeric()),
+        nom::combinator::peek(nom::character::complete::space1),
+    );
+
+    nom::combinator::opt(short)(input)
+}
+
+/// Parses the input as if it was a parameter name like `--help`.
+fn parse_param_name(input: &str) -> nom::IResult<&str, param::Data> {
+    nom::combinator::map(parse_name, param::Data::new)(input)
+}
+
+/// Parses the input as if it was a string of ascii alphanumeric text, plus `-` or `_`.
+fn parse_name(input: &str) -> nom::IResult<&str, &str> {
+    nom::bytes::complete::take_while1(is_name_char)(input)
 }
 
 /// Returns true if the character is not a valid bash function name character.
