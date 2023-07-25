@@ -12,6 +12,7 @@ pub struct Token {
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Data {
+    SheBang(String),
     Author(Vec<String>),
     PositionalArgument(param::PositionalArgument),
     Cmd(String),
@@ -51,7 +52,7 @@ pub fn parse_source(source: &str) -> Result<Vec<Token>> {
 /// Parse a line into a token.
 pub fn parse_line(line: &str) -> Result<Option<Data>> {
     let maybe = nom::branch::alt((
-        nom::combinator::map(nom::branch::alt((parse_tag, parse_fn)), Some),
+        nom::combinator::map(nom::branch::alt((parse_tag, parse_fn, parse_shebang)), Some),
         nom::combinator::success(None),
     ))(line);
 
@@ -75,6 +76,20 @@ pub fn parse_line(line: &str) -> Result<Option<Data>> {
             e
         )),
     }
+}
+
+/// Parses an input as if it was a shebang #! line.
+fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::pair(
+                nom::character::complete::char('#'),
+                nom::character::complete::char('!'),
+            ),
+            parse_tail,
+        ),
+        |text| Some(Data::SheBang(format!("#!{}", text.to_string()))),
+    )(input)
 }
 
 /// Parses an input as if it was a bash comment with a tag such as
@@ -894,8 +909,8 @@ mod tests {
         assert_token!("function foo:bar", Data::Func("foo:bar".to_string()));
         assert_token!("function foo.bar", Data::Func("foo.bar".to_string()));
         assert_token!("function foo@bar", Data::Func("foo@bar".to_string()));
+        assert_token!("#!/bin/bash", Data::SheBang("#!/bin/bash".to_string()));
         assert_token!("foo=bar", Error);
-        assert_token!("#!/bin/bash", Error);
         assert_token!("# @flag -f", Ignore);
         assert_token!("# @option -foo![=a|b]", Ignore);
     }

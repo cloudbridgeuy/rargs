@@ -31,6 +31,7 @@ impl Command {
 
 #[derive(Default, Debug)]
 pub struct Script {
+    pub shebang: String,
     pub meta: Meta,
     pub flags: HashMap<String, param::Flag>,
     pub options: HashMap<String, param::Option>,
@@ -44,6 +45,7 @@ impl Script {
     pub fn new(meta: Meta) -> Self {
         Self {
             meta,
+            shebang: "#!/usr/bin/env bash".to_string(),
             ..Default::default()
         }
     }
@@ -172,6 +174,9 @@ impl Script {
                             event.position
                         );
                     }
+                }
+                parser::Data::SheBang(value) => {
+                    script.shebang = value;
                 }
             }
         }
