@@ -3,26 +3,25 @@ source: crates/templates/tests/parse_command_arguments_test.rs
 expression: output
 ---
 case $action in
-    -*) ;;
 
-    -b | --bar)
+    bar)
         action="bar"
         shift
-        bar_parse_arguments "$@"
+        parse_bar_arguments "$@"
         shift $#
         ;;
 
-    --baz)
+    baz)
         action="baz"
         shift
-        baz_parse_arguments "$@"
+        parse_baz_arguments "$@"
         shift $#
         ;;
 
-    -f | --foo)
+    foo)
         action="foo"
         shift
-        foo_parse_arguments "$@"
+        parse_foo_arguments "$@"
         shift $#
         ;;
 

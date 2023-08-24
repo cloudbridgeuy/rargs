@@ -2,10 +2,10 @@
 source: crates/templates/tests/command_argument_test.rs
 expression: output
 ---
---foo)
+foo)
         action="foo"
         shift
-        foo_parse_arguments "$@"
+        parse_foo_arguments "$@"
         shift $#
         ;;
 

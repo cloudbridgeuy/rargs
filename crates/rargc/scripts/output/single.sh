@@ -26,7 +26,7 @@ usage() {
   printf "\nOptions:\n"
   printf "  -o --option\n"
   printf "    Option with any value\n"
-
+  
 }
 
 
@@ -163,7 +163,6 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  inspect_args
 }
 
 

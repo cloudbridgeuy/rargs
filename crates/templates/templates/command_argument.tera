@@ -1,6 +1,6 @@
-{% if command["short"] -%}-{{ command["short"] }} | {% endif -%}--{{ name }})
+{{ name }})
         action="{{ name }}"
         shift
-        {{ name }}_parse_arguments "$@"
+        parse_{{ name }}_arguments "$@"
         shift $#
         ;;

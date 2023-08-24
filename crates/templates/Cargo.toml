@@ -24,6 +24,7 @@ include_dir = "0.7.3"
 
 [dev-dependencies]
 insta = { version = "1.31.0", features = ["yaml"] }
-
+env_logger = "*"
+test-log = "0.2.12"
 
 

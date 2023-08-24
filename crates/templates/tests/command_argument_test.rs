@@ -1,4 +1,5 @@
 use tera::Context;
+use test_log::test;
 
 use templates::TEMPLATES;
 

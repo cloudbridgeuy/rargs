@@ -1,0 +1,17 @@
+---
+source: crates/templates/tests/usage_test.rs
+expression: output
+---
+foo_usage() {
+  printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage -r|--required <REQUIRED> [OPTIONS]\n"
+  printf "  usage -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -r --required <REQUIRED>\n"
+  printf "    Test required option\n"
+  printf "\n\033[4m%s\033[0m\n" "Flags:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+

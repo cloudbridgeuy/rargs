@@ -8,6 +8,15 @@
 
 {% include "parse_arguments.tera" %}
 
+{% for name, command in commands -%}
+{% set commands = false %}
+{% set options = command.options -%}
+{% set flags = command.flags -%}
+{% set meta = command.meta -%}
+{% include "usage.tera" %}
+{% include "parse_arguments.tera" %}
+{% endfor -%}
+
 {% include "raw.tera" %}
 
 {% include "initialize.tera" %}

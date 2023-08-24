@@ -1,42 +1,64 @@
-usage() {
+{%- if name -%}{{ name }}_{%- endif -%}usage() {
   {% if meta["description"] -%}
-  printf "{{ meta["description"] }}\n\n"
+  printf "{{ meta["description"] }}\n"
   {% endif -%}
-  printf "Usage:\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  {%- set_global required = [] %}
+  {% if options %}
+  {%- for name, option in options -%}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
   {% if commands -%}
-  printf "  {{ meta["name"] }} [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  {{ meta["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
   {%- else -%}
-  printf "  {{ meta["name"] }} [OPTIONS]\n"
+  printf "  {{ meta["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
   {%- endif %}
-  printf "  {{ meta["name"] }} --help | -h\n"
-  printf "  {{ meta["name"] }} --version | -v\n"
+  printf "  {{ meta["name"] }} -h|--help\n"
+  {%- if not name %}
+  printf "  {{ meta["name"] }} -v|--version\n"
+  {%- endif %}
+  {%- if commands %}
+  printf "\n\033[4m%s\033[0m\n" "Commands:"
+  {%- for name, command in commands %}
+  printf "  {{ name }}\t{%- if command["meta"]["description"] -%}{{ command["meta"]["description"] }}{%- endif -%}\n"
+  {%- if command["meta"]["help"] %}
+  printf "    {{ command["meta"]["help"] }}\n"
+  {%- endif -%}
+  {%- endfor %}
+  {%- endif %}
+  {%- if options %}
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  {%- for name, option in options %}
+  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ name }} {% if option["required"] %}<{{ name | upper }}>{% else %}[<{{ name | upper }}>]{% endif %}\n"
+  printf "    {{ option["summary"] }}\n"
+  {%- if option["multiple"] or option["default"] or option["choices"] %}
+  printf "    [
+    {%- if option["multiple"] -%}
+      @multiple
+    {%- endif -%}
+    {%- if option["default"] -%}
+      {%- if option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
+    {%- endif -%}
+    {%- if option["choices"] -%}
+      {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
+    {%- endif -%}]\n"
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endif %}
+  printf "\n\033[4m%s\033[0m\n" "Flags:"
   {%- if flags %}
-  printf "\nFlags:\n"
   {%- for name, flag in flags %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ name }}\n"
   printf "    {{ flag["summary"] }}\n"
   {%- endfor %}
   {%- endif %}
-  {%- if options %}
-  printf "\nOptions:\n"
-  {%- for name, option in options %}
-  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ name }}\n"
-  printf "    {{ option["summary"] }}\n"
-  {% if option["multiple"] or option["required"] or option["default"] or option["choices"] -%}
-  printf "    [
-    {%- if option["required"] -%}
-      @required
-    {%- endif -%}
-    {%- if option["multiple"] -%}
-      {%- if option["required"] -%}, {% endif -%}@multiple
-    {%- endif -%}
-    {%- if option["default"] -%}
-      {%- if option["required"] or option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
-    {%- endif -%}
-    {%- if option["choices"] -%}
-      {%- if option["required"] or option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
-    {%- endif -%}]\n"
-  {%- endif %}
-  {%- endfor %}
+  printf "  -h --help\n"
+  printf "    Print help\n"
+  {%- if not name %}
+  printf "  -v --version\n"
+  printf "    Pring version\n"
   {%- endif %}
 }

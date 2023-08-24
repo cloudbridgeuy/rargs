@@ -1,10 +1,26 @@
 use tera::Context;
+use test_log::test;
 
 use templates::TEMPLATES;
 
 #[test]
 fn test_render() {
     let objects = vec![
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "usage",
+                "description": "Test simple usage"
+            },
+            "name": "foo".to_string(),
+            "options": {
+                "required": {
+                    "short": "r",
+                    "name": "required",
+                    "summary": "Test required option",
+                    "required": "true"
+                }
+            }
+        })),
         Context::from_serialize(serde_json::json!({
             "meta": {
                 "name": "usage",
@@ -144,6 +160,14 @@ fn test_render() {
                     "summary": "Test verbose flag"
                 }
             },
+            "commands": {
+                "foo": {
+                    "meta": {
+                        "description": "Test foo command",
+                        "help": "Something\n      With\n      Multiple\n      Lines"
+                    }
+                }
+            },
             "options": {
                 "all": {
                     "short": "a",
@@ -163,12 +187,10 @@ fn test_render() {
             match TEMPLATES.render("usage.tera", &object.expect("Can't create JSON object")) {
                 Ok(o) => o,
                 Err(e) => {
-                    log::error!("Parsing error(s): {}", e);
+                    println!("Parsing error(s): {}", e);
                     ::std::process::exit(1);
                 }
             };
-
-        println!("output: {:#?}", output);
 
         insta::assert_snapshot!(output)
     }
