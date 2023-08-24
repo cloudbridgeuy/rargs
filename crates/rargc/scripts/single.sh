@@ -5,7 +5,7 @@
 # @author Foo, Bar, Baz
 # @help Prints the flags and options provided globally.
 # @flag -f --flag Verbose mode
-# @option -o --option Options with any value
+# @option -o --option Option with any value
 
 echo "flag: ${args["flag"]}"
 echo "option: ${args["option"]}"

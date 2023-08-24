@@ -1,0 +1,19 @@
+---
+source: crates/templates/src/lib.rs
+expression: output
+---
+cli_usage() {
+  if [[ -n "Test simple usage" ]]; then
+    printf "Test simple usage\n\n"
+  fi
+
+  printf "Usage:\n"
+  printf "  usage [OPTIONS]\n"
+  printf "  usage --help | -h\n"
+  printf "  usage --version | -v\n\n"
+  printf "Options:\n"
+  printf "  -c --choices\n"
+  printf "    Test option with choices\n"
+  printf "    [@choices foo, bar, baz]\n"
+}
+

@@ -11,18 +11,7 @@ version_command() {
   echo "{{ version }}"
 }
 
-cli_usage() {
-  if [[ -n "{{ meta["description"] }}" ]]; then
-    printf "{{ meta["description"] }}\n\n"
-  fi
-
-  printf "Usage:\n"
-  {% if commands -%}
-  printf "  {{ meta["name"] }} [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  {%- else -%}
-  printf "  {{ meta["name"] }} [OPTIONS]\n\n"
-  {%- endif %}
-}
+{% include "usage.tera" %}
 
 parse_requirements() {
   # :command.fixed_flags_filter

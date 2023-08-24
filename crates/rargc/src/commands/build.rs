@@ -29,8 +29,7 @@ impl Command {
 
         println!("script: {:#?}", &script);
 
-        let output = crate::templates::TEMPLATES
-            .render("main.sh", &tera::Context::from_serialize(script)?)?;
+        let output = templates::render(&script)?;
 
         let name = format!(
             "{}/{}.sh",
@@ -42,18 +41,5 @@ impl Command {
         fs::write(name, output)?;
 
         Ok(())
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_command() {
-        let command = Command::new(Options {
-            script_root: "tests/fixtures/script.sh".to_string(),
-            destination: "tests/fixtures".to_string(),
-        });
     }
 }

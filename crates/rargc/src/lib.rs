@@ -1,7 +1,6 @@
 use clap::{Parser, Subcommand};
 
 pub mod commands;
-pub mod templates;
 
 #[derive(Debug, Parser)]
 #[command(name = "v0.1.0")]

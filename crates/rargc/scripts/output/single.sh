@@ -17,8 +17,15 @@ cli_usage() {
   fi
 
   printf "Usage:\n"
-  printf "  single [OPTIONS]\n\n"
+  printf "  single [OPTIONS]\n"
+  printf "  single --help | -h\n"
+  printf "  single --version | -v\n\n"
+  printf "Options:\n"
+  printf "  -o --option\n"
+  printf "    Options with any value\n"
+  
 }
+
 
 parse_requirements() {
   # :command.fixed_flags_filter

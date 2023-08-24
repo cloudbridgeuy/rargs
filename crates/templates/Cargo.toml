@@ -1,0 +1,29 @@
+[package]
+name = "templates"
+version = "0.0.0"
+homepage = "https://github.com/cloudbridgeuy/rargc"
+description = "Template library for rargc"
+autobins = false
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "templates"
+path = "src/lib.rs"
+
+[dependencies]
+color-eyre = "0.6.2"
+log = "0.4.19"
+tera = "1"
+lazy_static = "1.4.0"
+serde = { version = "1.0.186", features = ["derive"] }
+serde_json = "1.0.105"
+include_dir = "0.7.3"
+
+[dev-dependencies]
+insta = { version = "1.31.0", features = ["yaml"] }
+
+
+

@@ -1,0 +1,36 @@
+cli_usage() {
+  if [[ -n "{{ meta["description"] }}" ]]; then
+    printf "{{ meta["description"] }}\n\n"
+  fi
+
+  printf "Usage:\n"
+  {% if commands -%}
+  printf "  {{ meta["name"] }} [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  {%- else -%}
+  printf "  {{ meta["name"] }} [OPTIONS]\n"
+  {%- endif %}
+  printf "  {{ meta["name"] }} --help | -h\n"
+  printf "  {{ meta["name"] }} --version | -v\n\n"
+  {%- if options %}
+  printf "Options:\n"
+  {%- for name, option in options %}
+  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ name }}\n"
+  printf "    {{ option["summary"] }}\n"
+  {% if option["multiple"] or option["required"] or option["default"] or option["choices"] -%}
+  printf "    [
+    {%- if option["required"] -%}
+      @required
+    {%- endif -%}
+    {%- if option["multiple"] -%}
+      {%- if option["required"] -%}, {% endif -%}@multiple
+    {%- endif -%}
+    {%- if option["default"] -%}
+      {%- if option["required"] or option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
+    {%- endif -%}
+    {%- if option["choices"] -%}
+      {%- if option["required"] or option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
+    {%- endif -%}]\n"
+  {%- endif %}
+  {%- endfor %}
+  {%- endif %}
+}
