@@ -30,8 +30,6 @@ fn test_render() {
             }
         };
 
-        println!("output: {:#?}", output);
-
         insta::assert_snapshot!(output)
     }
 }

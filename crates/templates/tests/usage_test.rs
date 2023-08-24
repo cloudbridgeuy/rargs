@@ -187,7 +187,7 @@ fn test_render() {
             match TEMPLATES.render("usage.tera", &object.expect("Can't create JSON object")) {
                 Ok(o) => o,
                 Err(e) => {
-                    println!("Parsing error(s): {}", e);
+                    log::error!("Parsing error(s): {}", e);
                     ::std::process::exit(1);
                 }
             };

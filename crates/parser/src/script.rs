@@ -19,12 +19,14 @@ pub struct Command {
     pub flags: HashMap<String, param::Flag>,
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
+    pub lines: Option<Vec<String>>,
 }
 
 impl Command {
     pub fn new(meta: Meta) -> Self {
         Self {
             meta,
+            lines: Vec::new().into(),
             ..Default::default()
         }
     }
@@ -41,6 +43,7 @@ pub struct Script {
     pub rargc_version: String,
     pub default: Option<String>,
     pub commands: HashMap<String, Command>,
+    pub lines: Option<Vec<String>>,
 }
 
 impl Script {
@@ -60,6 +63,7 @@ impl Script {
         let meta = Meta::default();
         let mut script = Script::new(meta);
         let mut maybe_command: Option<Command> = None;
+        let mut last_command: Option<String> = None;
 
         let events = parser::parse_source(source)?;
 
@@ -103,7 +107,11 @@ impl Script {
 
                     if let Some(command) = maybe_command.as_mut() {
                         command.meta.name = Some(value.clone());
-                        script.commands.entry(value).or_insert(command.clone());
+                        script
+                            .commands
+                            .entry(value.clone())
+                            .or_insert(command.clone());
+                        last_command = Some(value);
                     }
                 }
                 parser::Data::Unknown(value) => {
@@ -181,8 +189,29 @@ impl Script {
                 parser::Data::SheBang(value) => {
                     script.shebang = value;
                 }
+                parser::Data::Line(value) => {
+                    if is_root_scope {
+                        script.lines.get_or_insert_with(Vec::new).push(value);
+                    } else if let Some(last_command) = &last_command {
+                        script
+                            .commands
+                            .get_mut(last_command)
+                            .unwrap()
+                            .lines
+                            .get_or_insert_with(Vec::new)
+                            .push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing line {} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
+                }
             }
         }
+
+        log::debug!("script: {:#?}", &script);
 
         Ok(script)
     }

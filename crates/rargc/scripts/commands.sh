@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# This is some random comment
+set -o
 
 # @name commands
 # @description Commands example
@@ -13,7 +15,7 @@
 # @example $ example.com ./output -f
 download() {
   # shellcheck disable=SC2154
-  echo "${rargc[@]}"
+  echo "${args[@]}"
 }
 
 # @cmd Upload a file
@@ -22,5 +24,5 @@ download() {
 # @option -p --password Password to use for logging in
 upload() {
   # shellcheck disable=SC2154
-  echo "${rargc[@]}"
+  echo "${args[@]}"
 }

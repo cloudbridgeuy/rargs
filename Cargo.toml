@@ -10,9 +10,6 @@ authors = ["Guzmán Monné"]
 [profile.dev.package.insta]
 opt-level = 3
 
-[profile.dev.package.similar]
-opt-level = 3
-
 [profile.dev]
 # Disabling debug info speeds up builds.
 debug = 0
@@ -21,8 +18,5 @@ debug = 0
 incremental = true
 # Set this to 1 or 2 to get more useful backtraces in debugger.
 debug = 0
-
-[workspace.dependencies]
-rargc = { path = "./crates/rargc", version = "0.0.0" }
 
 

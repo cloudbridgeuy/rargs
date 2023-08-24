@@ -27,8 +27,6 @@ impl Command {
         let script = Script::from_source(&source)?;
         let name = script.meta.name.to_owned();
 
-        println!("script: {:#?}", &script);
-
         let output = templates::render(&script)?;
 
         let name = format!(
