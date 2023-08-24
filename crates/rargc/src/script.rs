@@ -1,18 +1,19 @@
 use std::collections::HashMap;
 
 use color_eyre::eyre::{self, Result};
+use serde::Serialize;
 
 use crate::param;
 use crate::parser;
 
-#[derive(Default, Debug, Clone)]
+#[derive(Serialize, Default, Debug, Clone)]
 pub struct Meta {
     pub name: Option<String>,
     pub description: Option<String>,
     pub help: Option<String>,
 }
 
-#[derive(Default, Debug, Clone)]
+#[derive(Serialize, Default, Debug, Clone)]
 pub struct Command {
     pub meta: Meta,
     pub flags: HashMap<String, param::Flag>,
@@ -29,7 +30,7 @@ impl Command {
     }
 }
 
-#[derive(Default, Debug)]
+#[derive(Serialize, Default, Debug)]
 pub struct Script {
     pub shebang: String,
     pub meta: Meta,
@@ -105,7 +106,7 @@ impl Script {
                 }
                 parser::Data::Unknown(value) => {
                     // TODO: Change this to a debug! tracing command.
-                    println!("unknown: {}", value);
+                    log::warn!("unknown: {}", value);
                 }
                 parser::Data::Flag(value) => {
                     if is_root_scope {

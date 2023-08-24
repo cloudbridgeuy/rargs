@@ -1,9 +1,10 @@
 use clap::{Parser, Subcommand};
 
 pub mod commands;
-pub mod parser;
 pub mod param;
+pub mod parser;
 pub mod script;
+pub mod templates;
 pub mod token;
 
 #[derive(Debug, Parser)]
@@ -14,16 +15,42 @@ pub struct Cli {
     pub command: Option<SubCommands>,
 }
 
+#[derive(Debug, Parser)]
+pub struct TreeOptions {
+    /// The path to the script root
+    pub script_root: String,
+}
+
+#[derive(Debug, Parser)]
+pub struct BuildOptions {
+    /// The path to the script root
+    pub script_root: String,
+    /// Script destination directory
+    #[arg(short, long)]
+    pub destination: String,
+}
+
 #[derive(Debug, Subcommand)]
 pub enum SubCommands {
     /// Output a tree of all the commands available based on the script root
-    Tree {
-        /// The path to the script root
-        script_root: String,
-    },
+    Tree(TreeOptions),
     /// Build the script
-    Build {
-        /// The path to the script root
-        script_root: String,
-    },
+    Build(BuildOptions),
+}
+
+impl From<TreeOptions> for commands::tree::Options {
+    fn from(options: TreeOptions) -> Self {
+        Self {
+            script_root: options.script_root,
+        }
+    }
+}
+
+impl From<BuildOptions> for commands::build::Options {
+    fn from(options: BuildOptions) -> Self {
+        Self {
+            script_root: options.script_root,
+            destination: options.destination,
+        }
+    }
 }

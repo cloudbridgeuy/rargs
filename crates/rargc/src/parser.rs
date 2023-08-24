@@ -1,16 +1,17 @@
 use color_eyre::eyre::{self, Result};
+use serde::Serialize;
 
 use crate::param;
 
 pub type Position = usize;
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Debug, PartialEq, Eq, Clone)]
 pub struct Token {
     pub data: Data,
     pub position: Position,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Debug, PartialEq, Eq, Clone)]
 pub enum Data {
     SheBang(String),
     Author(Vec<String>),
@@ -39,9 +40,7 @@ pub fn parse_source(source: &str) -> Result<Vec<Token>> {
                 data: token,
                 position,
             }),
-            Ok(None) => {
-                println!("Add a debug! trace here");
-            }
+            Ok(None) => {}
             Err(e) => return Err(e),
         }
     }
@@ -62,8 +61,6 @@ pub fn parse_line(line: &str) -> Result<Option<Data>> {
                 if let Some(data) = maybe_data {
                     Ok(Some(data))
                 } else {
-                    // Add a tracing debug! message here to substitue
-                    // Err(eyre::format_err!("syntax error on line \"{}\"", line))
                     Ok(Some(Data::Unknown(line.to_string())))
                 }
             } else {

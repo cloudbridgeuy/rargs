@@ -5,17 +5,14 @@ use rargc::commands;
 use rargc::{Cli, SubCommands};
 
 fn main() -> Result<()> {
+    env_logger::init();
     color_eyre::install()?;
 
     let cli = Cli::parse();
 
     match cli.command {
-        Some(SubCommands::Tree { script_root }) => {
-            commands::tree::Command::new(commands::tree::Options { script_root }).run()
-        }
-        Some(SubCommands::Build { script_root }) => {
-            commands::build::Command::new(commands::build::Options { script_root }).run()
-        }
+        Some(SubCommands::Tree(options)) => commands::tree::Command::new(options.into()).run(),
+        Some(SubCommands::Build(options)) => commands::build::Command::new(options.into()).run(),
         None => Err(eyre::format_err!("No subcommand provided")),
     }
 }

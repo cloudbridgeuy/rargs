@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use serde::Serialize;
+
 use crate::parser;
 
 pub const EXTRA_ARGS: &str = "extra_args";
@@ -11,7 +13,7 @@ pub type Names = (
 );
 
 /// A struct representin a param tag E.g. `@arg`, `@option`, `@flag`.
-#[derive(Debug, Clone, Default)]
+#[derive(Serialize, Debug, Clone, Default)]
 pub struct Data {
     pub name: String,
     pub choices: std::option::Option<Vec<String>>,
@@ -36,7 +38,7 @@ pub trait Param {
 }
 
 /// Represents a `@flag` param. E.g. `@flag -h --help "Prints help information"`
-#[derive(Default, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct Flag {
     pub name: String,
     pub summary: String,
@@ -64,7 +66,7 @@ impl Param for Flag {
 }
 
 /// Represents an `@arg` param. E.g. `@arg name Your name`.
-#[derive(Default, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct PositionalArgument {
     pub name: String,
     pub summary: String,
@@ -90,7 +92,7 @@ impl PositionalArgument {
 }
 
 /// Represents an `@option` param. E.g. `@option -n --name <name> "Your name"`
-#[derive(Default, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct Option {
     pub name: String,
     pub summary: String,
