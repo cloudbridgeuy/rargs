@@ -1,0 +1,39 @@
+---
+source: crates/templates/tests/parse_command_arguments_test.rs
+expression: output
+---
+case $action in
+    -*) ;;
+
+    -b | --bar)
+        action="bar"
+        shift
+        bar_parse_arguments "$@"
+        shift $#
+        ;;
+
+    --baz)
+        action="baz"
+        shift
+        baz_parse_arguments "$@"
+        shift $#
+        ;;
+
+    -f | --foo)
+        action="foo"
+        shift
+        foo_parse_arguments "$@"
+        shift $#
+        ;;
+
+    "")
+      usage >&2
+      exit 1
+      ;;
+
+    *)
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
+      ;;
+  esac
+

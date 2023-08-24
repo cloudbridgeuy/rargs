@@ -1,0 +1,31 @@
+---
+source: crates/templates/tests/parse_option_arguments_test.rs
+expression: output
+---
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -b | --bar)
+        args['--bar']=1
+        shift
+        ;;
+      --baz)
+        args['--baz']=1
+        shift
+        ;;
+      -f | --foo)
+        args['--foo']=1
+        shift
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)printf "Invalid argument: %s\n" "$key" >&2
+        exit 1;;
+    esac
+  done
+
+

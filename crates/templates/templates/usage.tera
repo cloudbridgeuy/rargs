@@ -1,8 +1,7 @@
-cli_usage() {
-  if [[ -n "{{ meta["description"] }}" ]]; then
-    printf "{{ meta["description"] }}\n\n"
-  fi
-
+usage() {
+  {% if meta["description"] -%}
+  printf "{{ meta["description"] }}\n\n"
+  {% endif -%}
   printf "Usage:\n"
   {% if commands -%}
   printf "  {{ meta["name"] }} [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"

@@ -38,6 +38,7 @@ pub struct Script {
     pub options: HashMap<String, param::Option>,
     pub author: Option<Vec<String>>,
     pub version: Option<String>,
+    pub rargc_version: String,
     pub default: Option<String>,
     pub commands: HashMap<String, Command>,
 }
@@ -46,6 +47,7 @@ impl Script {
     pub fn new(meta: Meta) -> Self {
         Self {
             meta,
+            rargc_version: env!("CARGO_PKG_VERSION").to_string(),
             shebang: "#!/usr/bin/env bash".to_string(),
             ..Default::default()
         }

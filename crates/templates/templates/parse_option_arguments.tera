@@ -1,0 +1,38 @@
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+{% if flags %}{% for name, flag in flags %}
+      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ name }})
+        args['--{{ name }}']=1
+        shift
+        ;;
+{%- endfor -%}{% endif %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+{%- if options -%}{%- for name, option in options -%}{%- if loop.first %}
+        if [[ -z ${args['{{ name }}']+x} ]]; then
+          args['{{ name }}']=$1
+          shift
+        {% else -%}
+        elif [[ -z ${args['{{ name }}']+x} ]]; then
+          args['{{ name }}']=$1
+          shift
+        {% endif -%}
+        {% if loop.last -%}
+        else
+          printf "Invalid argument: %s\n" "$key" >&2
+          exit 1
+        fi
+        {% endif -%}
+{% endfor -%}{%- else -%}
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+{%- endif -%}
+        ;;
+    esac
+  done
+

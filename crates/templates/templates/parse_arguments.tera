@@ -1,0 +1,9 @@
+parse{%- if name -%}}_{{ name }}_{%- else -%}_{%- endif -%}arguments() {
+  {% include "parse_default_arguments.tera" %}
+
+  action=${1:-}
+
+  {% include "parse_command_arguments.tera" %}
+
+  {% include "parse_option_arguments.tera" %}
+}

@@ -1,0 +1,15 @@
+case $action in
+    -*) ;;
+{% if commands %}{% for name, command in commands %}
+    {% include "command_argument.tera" %}
+{%- endfor %}{% endif %}
+    "")
+      usage >&2
+      exit 1
+      ;;
+
+    *)
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
+      ;;
+  esac

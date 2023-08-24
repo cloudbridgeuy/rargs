@@ -1,12 +1,9 @@
 ---
-source: crates/templates/src/lib.rs
+source: crates/templates/tests/usage_test.rs
 expression: output
 ---
-cli_usage() {
-  if [[ -n "Test simple usage" ]]; then
-    printf "Test simple usage\n\n"
-  fi
-
+usage() {
+  printf "Test simple usage\n\n"
   printf "Usage:\n"
   printf "  usage [OPTIONS]\n"
   printf "  usage --help | -h\n"
