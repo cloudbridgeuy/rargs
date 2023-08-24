@@ -19,11 +19,14 @@ usage() {
   printf "Usage:\n"
   printf "  single [OPTIONS]\n"
   printf "  single --help | -h\n"
-  printf "  single --version | -v\n\n"
-  printf "Options:\n"
+  printf "  single --version | -v\n"
+  printf "\nFlags:\n"
+  printf "  -f --flag\n"
+  printf "    Verbose mode\n"
+  printf "\nOptions:\n"
   printf "  -o --option\n"
   printf "    Option with any value\n"
-  
+
 }
 
 
@@ -71,19 +74,19 @@ parse_arguments() {
         args['--flag']=1
         shift
         ;;
+      --option)
+        args['option']=$2
+        shift 2
+        ;;
+
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
         ;;
 
       *)
-        if [[ -z ${args['option']+x} ]]; then
-          args['option']=$1
-          shift
-        else
-          printf "Invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
         ;;
     esac
   done
@@ -160,6 +163,7 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  inspect_args
 }
 
 

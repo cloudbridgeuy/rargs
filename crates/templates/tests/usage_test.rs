@@ -115,6 +115,15 @@ fn test_render() {
                 "name": "usage",
                 "description": "Test simple usage"
             },
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                },
+                "short": {
+                    "short": "s",
+                    "summary": "Test short flag"
+                }
+            },
             "options": {
                 "choices": {
                     "short": "cm",
@@ -129,6 +138,11 @@ fn test_render() {
             "meta": {
                 "name": "usage",
                 "description": "Test simple usage"
+            },
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                }
             },
             "options": {
                 "all": {

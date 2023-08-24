@@ -7,6 +7,6 @@ usage() {
   printf "Usage:\n"
   printf "  usage [OPTIONS]\n"
   printf "  usage --help | -h\n"
-  printf "  usage --version | -v\n\n"
+  printf "  usage --version | -v\n"
 }
 

@@ -9,9 +9,16 @@ usage() {
   printf "  {{ meta["name"] }} [OPTIONS]\n"
   {%- endif %}
   printf "  {{ meta["name"] }} --help | -h\n"
-  printf "  {{ meta["name"] }} --version | -v\n\n"
+  printf "  {{ meta["name"] }} --version | -v\n"
+  {%- if flags %}
+  printf "\nFlags:\n"
+  {%- for name, flag in flags %}
+  printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ name }}\n"
+  printf "    {{ flag["summary"] }}\n"
+  {%- endfor %}
+  {%- endif %}
   {%- if options %}
-  printf "Options:\n"
+  printf "\nOptions:\n"
   {%- for name, option in options %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ name }}\n"
   printf "    {{ option["summary"] }}\n"

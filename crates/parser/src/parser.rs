@@ -85,7 +85,7 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
             ),
             parse_tail,
         ),
-        |text| Some(Data::SheBang(format!("#!{}", text.to_string()))),
+        |text| Some(Data::SheBang(format!("#!{}", text))),
     )(input)
 }
 
