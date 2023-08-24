@@ -2,7 +2,7 @@ use std::fs;
 
 use color_eyre::eyre::Result;
 
-use crate::script::Script;
+use parser::script::Script;
 
 pub struct Command {
     options: Options,
@@ -27,6 +27,8 @@ impl Command {
         let script = Script::from_source(&source)?;
         let name = script.meta.name.to_owned();
 
+        println!("script: {:#?}", &script);
+
         let output = crate::templates::TEMPLATES
             .render("main.sh", &tera::Context::from_serialize(script)?)?;
 
@@ -40,5 +42,18 @@ impl Command {
         fs::write(name, output)?;
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_command() {
+        let command = Command::new(Options {
+            script_root: "tests/fixtures/script.sh".to_string(),
+            destination: "tests/fixtures".to_string(),
+        });
     }
 }

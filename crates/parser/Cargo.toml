@@ -1,0 +1,23 @@
+[package]
+name = "parser"
+version = "0.0.0"
+homepage = "https://github.com/cloudbridgeuy/rargc"
+description = "Parser library for rargc"
+autobins = false
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "parser"
+path = "src/lib.rs"
+
+[dependencies]
+color-eyre = "0.6.2"
+log = "0.4.19"
+nom = "7.1.3"
+serde = { version = "1.0.186", features = ["derive"] }
+serde_json = "1.0.105"
+
+

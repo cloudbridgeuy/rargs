@@ -6,6 +6,12 @@ edition = "2021"
 license = "MIT"
 authors = ["Guzmán Monné"]
 
+[profile.dev.package.insta]
+opt-level = 3
+
+[profile.dev.package.similar]
+opt-level = 3
+
 [profile.dev]
 # Disabling debug info speeds up builds.
 debug = 0
