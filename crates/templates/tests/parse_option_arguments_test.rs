@@ -67,6 +67,49 @@ fn test_render() {
                 "fbaz": {}
             }
         })),
+        Context::from_serialize(serde_json::json!({
+            "name": "foo".to_string(),
+            "default":  "main".to_string(),
+            "options": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+                "bar": {
+                    "short": "b".to_string()
+                },
+                "baz": {}
+            },
+            "flags": {
+                "ffoo": {
+                    "short": "F".to_string()
+                },
+                "fbar": {
+                    "short": "B".to_string()
+                },
+                "fbaz": {}
+            }
+        })),
+        Context::from_serialize(serde_json::json!({
+            "default":  "main".to_string(),
+            "options": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+                "bar": {
+                    "short": "b".to_string()
+                },
+                "baz": {}
+            },
+            "flags": {
+                "ffoo": {
+                    "short": "F".to_string()
+                },
+                "fbar": {
+                    "short": "B".to_string()
+                },
+                "fbaz": {}
+            }
+        })),
     ];
 
     for object in objects {

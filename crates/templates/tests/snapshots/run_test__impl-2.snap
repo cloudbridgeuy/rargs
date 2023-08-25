@@ -7,18 +7,28 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  # Configure the default action if none was set.
-  if [[ -z "$action" ]]; then
-    action=foo
-  fi
-  
   # Call the right command action
   case "$action" in
-    "bar") bar ;;
+    "bar")
+      shift
+      parse_bar_arguments "$@"
+      shift $#
+      bar
+      ;;
   
-    "baz") baz ;;
+    "baz")
+      shift
+      parse_baz_arguments "$@"
+      shift $#
+      baz
+      ;;
   
-    "foo") foo ;;
+    "foo")
+      shift
+      parse_foo_arguments "$@"
+      shift $#
+      foo
+      ;;
   esac
 }
 

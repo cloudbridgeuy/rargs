@@ -2,34 +2,24 @@
 source: crates/templates/tests/parse_command_arguments_test.rs
 expression: output
 ---
-action=${1:-}
+action="${1:-}"
 
 case $action in
 
     bar)
-        action="bar"
-        shift
-        parse_bar_arguments "$@"
-        shift $#
-        ;;
+      action="bar"
+      ;;
     baz)
-        action="baz"
-        shift
-        parse_baz_arguments "$@"
-        shift $#
-        ;;
+      action="baz"
+      ;;
     foo)
-        action="foo"
-        shift
-        parse_foo_arguments "$@"
-        shift $#
-        ;;
+      action="foo"
+      ;;
     "")
-      usage >&2
-      exit 1
+      action="baz"
       ;;
     *)
+      action="baz"
       ;;
-      
   esac
 

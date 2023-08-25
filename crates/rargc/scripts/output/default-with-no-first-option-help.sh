@@ -17,9 +17,9 @@ version() {
 usage() {
   printf "Script without subcommands.\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  default [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  printf "  default -h|--help\n"
-  printf "  default -v|--version\n"
+  printf "  default-with-no-first-option-help [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  default-with-no-first-option-help -h|--help\n"
+  printf "  default-with-no-first-option-help -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   printf "  main\tMain function\n"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
@@ -70,6 +70,11 @@ case $action in
         args['--verbose']=1
         shift
         ;;
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+      
       *)
         break
         ;;
@@ -114,6 +119,11 @@ parse_main_arguments() {
         shift 2
         ;;
 
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+      
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -130,6 +140,13 @@ parse_main_arguments() {
 
 # Main function
 main() {
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "${args['--help']}" ]]; then
+    main_usage
+    exit 0
+  fi
 
     echo "verbose: ${args["--verbose"]}"
     echo "flag: ${args["--flag"]}"
@@ -186,6 +203,13 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling the case where no action was selected.
+  if [[ -n "${args['--help']}" ]] && [[ -z "$action" ]]; then
+    usage
+    exit 0
+  fi
   # Global script code
   # shellcheck disable=SC2154
   # Call the right command action

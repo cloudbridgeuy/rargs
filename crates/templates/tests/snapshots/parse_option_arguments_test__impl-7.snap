@@ -33,14 +33,8 @@ while [[ $# -gt 0 ]]; do
         shift 2
         ;;
 
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
       *)
-        printf "Invalid argument: %s\n" "$key" >&2
-        exit 1
+        break
         ;;
     esac
   done

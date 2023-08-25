@@ -14,6 +14,14 @@ fn test_render() {
         })),
         Context::from_serialize(serde_json::json!({
             "noname": "foo".to_string(),
+            "default": "main".to_string(),
+        })),
+        Context::from_serialize(serde_json::json!({
+            "name": "foo".to_string(),
+            "default": "main".to_string(),
+        })),
+        Context::from_serialize(serde_json::json!({
+            "noname": "foo".to_string(),
             "rules": ["no-first-option-help"]
         })),
         Context::from_serialize(serde_json::json!({

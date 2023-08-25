@@ -3,12 +3,6 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  {% if default -%}
-  # Configure the default action if none was set.
-  if [[ -z "$action" ]]; then
-    action={{ default }}
-  fi
-  {% endif %}
   {%- if rules and rules is containing("no-first-option-help") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
@@ -28,7 +22,12 @@ run() {
   # Call the right command action
   case "$action" in
     {%- for name, command in commands %}
-    "{{ name }}") {{ name }} ;;
+    "{{ name }}")
+      shift
+      parse_{{ name }}_arguments "$@"
+      shift $#
+      {{ name }}
+      ;;
   {% endfor -%}
   esac
 {%- endif %}

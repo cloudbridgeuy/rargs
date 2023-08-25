@@ -1,24 +1,25 @@
-action=${1:-}
+action="${1:-}"
 
 case $action in
 {% if commands %}{% for name, command in commands %}
     {{ name }})
-        action="{{ name }}"
-        shift
-        parse_{{ name }}_arguments "$@"
-        shift $#
-        ;;
+      action="{{ name }}"
+      ;;
 {%- endfor %}{% endif %}
     "")
+      {%- if default is defined %}
+      action="{{ default }}"
+      {% else %}
       usage >&2
       exit 1
+      {% endif -%}
       ;;
     *)
-      {% if default -%}
-      ;;
-      {% else -%}
+      {%- if default is defined %}
+      action="{{ default }}"
+      {% else %}
       printf "Invalid command: %s\n" "$action" >&2
       exit 1
+      {% endif -%}
       ;;
-      {%- endif %}
   esac

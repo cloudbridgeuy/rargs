@@ -7,7 +7,6 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling the case where no action was selected.
@@ -21,11 +20,26 @@ run() {
   echo lorem ipsum
   # Call the right command action
   case "$action" in
-    "bar") bar ;;
+    "bar")
+      shift
+      parse_bar_arguments "$@"
+      shift $#
+      bar
+      ;;
   
-    "baz") baz ;;
+    "baz")
+      shift
+      parse_baz_arguments "$@"
+      shift $#
+      baz
+      ;;
   
-    "foo") foo ;;
+    "foo")
+      shift
+      parse_foo_arguments "$@"
+      shift $#
+      foo
+      ;;
   esac
 }
 

@@ -8,7 +8,7 @@ while [[ $# -gt 0 ]]; do
         ;;
 {%- endfor -%}{% endif %}
 {%- if options -%}{%- for name, option in options %}
-      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ name }})
+      {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ name }})
         args['{{ name }}']=$2
         shift 2
         ;;
@@ -19,7 +19,8 @@ while [[ $# -gt 0 ]]; do
         shift 1
         ;;
       {% endif %}
-
+      {%- if default is defined %}
+      {%- if name is defined %}
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -29,6 +30,22 @@ while [[ $# -gt 0 ]]; do
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
         ;;
+      {%- else %}
+      *)
+        break
+        ;;
+      {%- endif %}
+      {%- else %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+      {%- endif %}
     esac
   done
 
