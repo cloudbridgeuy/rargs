@@ -7,7 +7,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage -a|--all <ALL> [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
   printf "  usage -h|--help\n"
-  printf "  usage -v|--version\n"
+  printf "  usage --version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   printf "  foo\tTest foo command\n"
   printf "    Something
@@ -23,7 +23,7 @@ usage() {
   printf "    Test verbose flag\n"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 

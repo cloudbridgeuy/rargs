@@ -14,22 +14,19 @@ run() {
   # Call the right command action
   case "$action" in
     "bar")
-      shift
-      parse_bar_arguments "$@"
+      parse_bar_arguments "${input[@]}"
       shift $#
       bar
       ;;
   
     "baz")
-      shift
-      parse_baz_arguments "$@"
+      parse_baz_arguments "${input[@]}"
       shift $#
       baz
       ;;
   
     "foo")
-      shift
-      parse_foo_arguments "$@"
+      parse_foo_arguments "${input[@]}"
       shift $#
       foo
       ;;

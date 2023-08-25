@@ -53,6 +53,10 @@ case $action in
     main)
       action="main"
       ;;
+    -h | --help)
+      usage
+      exit
+      ;;
     "")
       action="main"
       ;;

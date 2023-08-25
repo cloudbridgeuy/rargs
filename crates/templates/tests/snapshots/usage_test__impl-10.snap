@@ -7,7 +7,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage [OPTIONS]\n"
   printf "  usage -h|--help\n"
-  printf "  usage -v|--version\n"
+  printf "  usage --version\n"
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -cm --choices [<CHOICES>]\n"
   printf "    Test option with choices and multiple\n"
@@ -19,7 +19,7 @@ usage() {
   printf "    Test verbose flag\n"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 

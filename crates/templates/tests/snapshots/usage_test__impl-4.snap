@@ -7,14 +7,14 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage -r|--required <REQUIRED> [OPTIONS]\n"
   printf "  usage -h|--help\n"
-  printf "  usage -v|--version\n"
+  printf "  usage --version\n"
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -r --required <REQUIRED>\n"
   printf "    Test required option\n"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 

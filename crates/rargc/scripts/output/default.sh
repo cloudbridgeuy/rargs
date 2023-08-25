@@ -19,7 +19,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  default [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
   printf "  default -h|--help\n"
-  printf "  default -v|--version\n"
+  printf "  default --version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   printf "  main\tMain function\n"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
@@ -27,13 +27,13 @@ usage() {
   printf "    Verbose mode\n"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 
 
 parse_arguments() {
-  
+
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       --version)
@@ -52,6 +52,11 @@ case $action in
 
     main)
       action="main"
+      shift
+      ;;
+    -h | --help)
+      usage
+      exit
       ;;
     "")
       action="main"
@@ -75,7 +80,6 @@ case $action in
         ;;
     esac
   done
-
 }
 
 
@@ -95,11 +99,11 @@ main_usage() {
 }
 
 parse_main_arguments() {
-  
-  action="main"
-  
 
-  
+  action="main"
+
+
+
 
   while [[ $# -gt 0 ]]; do
     key="$1"
@@ -191,8 +195,7 @@ run() {
   # Call the right command action
   case "$action" in
     "main")
-      shift
-      parse_main_arguments "$@"
+      parse_main_arguments "${input[@]}"
       shift $#
       main
       ;;

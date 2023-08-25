@@ -18,7 +18,7 @@
   {%- endif %}
   printf "  {{ meta["name"] }} -h|--help\n"
   {%- if not name %}
-  printf "  {{ meta["name"] }} -v|--version\n"
+  printf "  {{ meta["name"] }} --version\n"
   {%- endif %}
   {%- if commands %}
   printf "\n\033[4m%s\033[0m\n" "Commands:"
@@ -58,7 +58,7 @@
   printf "  -h --help\n"
   printf "    Print help\n"
   {%- if not name %}
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
   {%- endif %}
 }

@@ -8,12 +8,19 @@ case $action in
 
     bar)
       action="bar"
+      shift
       ;;
     baz)
       action="baz"
+      shift
       ;;
     foo)
       action="foo"
+      shift
+      ;;
+    -h | --help)
+      usage
+      exit
       ;;
     "")
       action="baz"

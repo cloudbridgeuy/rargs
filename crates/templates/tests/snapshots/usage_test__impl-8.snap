@@ -7,7 +7,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage -rm|--required-multiple <REQUIRED-MULTIPLE> [OPTIONS]\n"
   printf "  usage -h|--help\n"
-  printf "  usage -v|--version\n"
+  printf "  usage --version\n"
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -rm --required <REQUIRED>\n"
   printf "    Test required and multiple option\n"
@@ -15,7 +15,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Flags:"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 
