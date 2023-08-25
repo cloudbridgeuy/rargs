@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# This is some random comment
-set -o
+
+echo "Hello from the other side!!!"
+echo "Your editor of choice is ${EDITOR:-}"
 
 # @name commands
 # @description Commands example
@@ -15,7 +16,8 @@ set -o
 # @example $ example.com ./output -f
 download() {
   # shellcheck disable=SC2154
-  echo "${args[@]}"
+  echo "Downloading ${args["source"]} to ${args["target"]}"
+  inspect_args
 }
 
 # @cmd Upload a file
@@ -24,5 +26,6 @@ download() {
 # @option -p --password Password to use for logging in
 upload() {
   # shellcheck disable=SC2154
-  echo "${args[@]}"
+  echo "Uploading using ${args["user"]}:${args["password"]}"
+  inspect_args
 }

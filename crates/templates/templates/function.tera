@@ -1,0 +1,15 @@
+{% if meta["description"] -%}
+# {{ meta["description"] }}
+{% endif -%}
+{% if meta["help"] -%}
+# {{ meta["help"] }}
+{% endif -%}
+{{ name }}() {
+{% if lines and lines | length > 0 -%}
+{%- for line in lines %}
+  {{ line }}
+{%- endfor -%}
+{%- else %}
+  echo "No implementation body found for function {{ name }}"
+{%- endif %}
+}

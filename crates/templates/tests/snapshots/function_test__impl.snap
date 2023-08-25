@@ -1,0 +1,12 @@
+---
+source: crates/templates/tests/function_test.rs
+expression: output
+---
+# Test simple function
+foo() {
+
+  foo
+  bar
+  baz
+}
+

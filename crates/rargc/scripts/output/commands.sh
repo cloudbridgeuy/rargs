@@ -50,9 +50,11 @@ parse_arguments() {
   done
 
 
+  
+
   action=${1:-}
 
-  case $action in
+case $action in
 
     download)
         action="download"
@@ -60,19 +62,16 @@ parse_arguments() {
         parse_download_arguments "$@"
         shift $#
         ;;
-
     upload)
         action="upload"
         shift
         parse_upload_arguments "$@"
         shift $#
         ;;
-
     "")
       usage >&2
       exit 1
       ;;
-
     *)
       printf "Invalid command: %s\n" "$action" >&2
       exit 1
@@ -83,6 +82,12 @@ parse_arguments() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
+
+      # We handle the --help option to support passing it to sub-commands.
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2
@@ -97,7 +102,6 @@ parse_arguments() {
   done
 
 }
-
 
 
 download_usage() {
@@ -128,7 +132,7 @@ parse_download_arguments() {
   done
 
 
-  action=${1:-}
+  action="download"
 
   
 
@@ -140,6 +144,12 @@ parse_download_arguments() {
         args['--force']=1
         shift
         ;;
+      # We handle the --help option to support passing it to sub-commands.
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -154,6 +164,13 @@ parse_download_arguments() {
 
 }
 
+# Download a file
+download() {
+
+    # shellcheck disable=SC2154
+    echo "Downloading ${args["source"]} to ${args["target"]}"
+    inspect_args
+}
 
 upload_usage() {
   printf "Upload a file\n"
@@ -186,7 +203,7 @@ parse_upload_arguments() {
   done
 
 
-  action=${1:-}
+  action="upload"
 
   
 
@@ -204,6 +221,12 @@ parse_upload_arguments() {
         shift 2
         ;;
 
+      # We handle the --help option to support passing it to sub-commands.
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -216,6 +239,14 @@ parse_upload_arguments() {
     esac
   done
 
+}
+
+# Upload a file
+upload() {
+
+    # shellcheck disable=SC2154
+    echo "Uploading using ${args["user"]}:${args["password"]}"
+    inspect_args
 }
 
 normalize_input() {
@@ -250,22 +281,6 @@ inspect_args() {
   else
     echo args: none
   fi
-
-  if ((${#other_args[@]})); then
-    echo
-    echo other_args:
-    echo "- \${other_args[*]} = ${other_args[*]}"
-    for i in "${!other_args[@]}"; do
-      echo "- \${other_args[$i]} = ${other_args[$i]}"
-    done
-  fi
-
-  if ((${#deps[@]})); then
-    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
-    echo
-    echo deps:
-    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
-  fi
 }
 
 
@@ -281,11 +296,19 @@ initialize() {
 
 run() {
   declare -A args=()
-  declare -A deps=()
-  declare -a other_args=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  # Global script code
+  echo "Hello from the other side!!!"
+  echo "Your editor of choice is ${EDITOR:-}"
+  
+  # Call the right command action
+  case "$action" in
+    "download") download ;;
+  
+    "upload") upload ;;
+  esac
 }
 
 
