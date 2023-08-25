@@ -25,6 +25,27 @@ fn test_render() {
             },
             "name": "foo".to_string(),
         })),
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "function",
+                "description": "Test simple function"
+            },
+            "name": "foo".to_string(),
+            "rules": [
+                "no-first-option-help"
+            ],
+        })),
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "function",
+                "description": "Test simple function"
+            },
+            "name": "foo".to_string(),
+            "rules": [
+                "no-first-option-help",
+                "custom-usage"
+            ],
+        })),
     ];
 
     for object in objects {

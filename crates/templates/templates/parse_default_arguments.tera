@@ -1,11 +1,25 @@
+{%- if not name %}
 while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      {% if not name -%}
       -v | --version)
         version
         exit
         ;;
+{%- if rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
+      -h | --help)
+        usage
+        exit
+        ;;
       {%- endif %}
+
+      *)
+        break
+        ;;
+    esac
+  done
+{%- elif rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
+while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
       -h | --help)
         {% if name -%}{{ name }}_{%- endif -%}usage
         exit
@@ -16,3 +30,6 @@ while [[ $# -gt 0 ]]; do
         ;;
     esac
   done
+{%- else %}
+{%- endif -%}
+

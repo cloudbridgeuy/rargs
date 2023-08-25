@@ -6,6 +6,18 @@ while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
 
+      -B | --fbar)
+        args['--fbar']=1
+        shift
+        ;;
+      --fbaz)
+        args['--fbaz']=1
+        shift
+        ;;
+      -F | --ffoo)
+        args['--ffoo']=1
+        shift
+        ;;
       --bar)
         args['bar']=$2
         shift 2

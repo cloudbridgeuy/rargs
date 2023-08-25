@@ -18,11 +18,11 @@ while [[ $# -gt 0 ]]; do
         args['--foo']=1
         shift
         ;;
-      # We handle the --help option to support passing it to sub-commands.
       -h|--help)
         args['--help']=1
         shift 1
         ;;
+      
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2

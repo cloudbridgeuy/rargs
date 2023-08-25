@@ -1,0 +1,17 @@
+---
+source: crates/templates/tests/function_test.rs
+expression: output
+---
+# Test simple function
+foo() {
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "${args['--help']}" ]]; then
+    foo_usage
+    exit 0
+  fi
+
+  echo "No implementation body found for function foo"
+}
+

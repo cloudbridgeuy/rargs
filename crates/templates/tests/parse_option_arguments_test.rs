@@ -31,6 +31,19 @@ fn test_render() {
                     "short": "b".to_string()
                 },
                 "baz": {}
+            },
+            "rules": ["no-first-option-help"]
+        })),
+        Context::from_serialize(serde_json::json!({
+            "name": "foo".to_string(),
+            "flags": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+                "bar": {
+                    "short": "b".to_string()
+                },
+                "baz": {}
             }
         })),
         Context::from_serialize(serde_json::json!({

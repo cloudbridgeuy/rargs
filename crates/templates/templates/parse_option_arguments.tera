@@ -13,11 +13,12 @@ while [[ $# -gt 0 ]]; do
         shift 2
         ;;
 {% endfor -%}{% endif %}
-      # We handle the --help option to support passing it to sub-commands.
+      {%- if rules and rules is containing("no-first-option-help") %}
       -h|--help)
         args['--help']=1
         shift 1
         ;;
+      {% endif %}
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2

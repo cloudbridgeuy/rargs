@@ -7,10 +7,9 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  
   # Configure the default action if none was set.
   if [[ -z "$action" ]]; then
-    foo
+    action=foo
   fi
   
   # Call the right command action

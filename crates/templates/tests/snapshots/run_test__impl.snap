@@ -8,7 +8,6 @@ run() {
   normalize_input "$@"
   parse_arguments "${input[@]}"
   
-  
   # Call the right command action
   case "$action" in
     "bar") bar ;;

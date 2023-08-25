@@ -33,6 +33,19 @@ fn test_render() {
                 "echo lorem ipsum",
             ],
         })),
+        Context::from_serialize(serde_json::json!({
+            "commands": {
+                "foo": {},
+                "bar": {},
+                "baz": {}
+            },
+            "lines": [
+                "API_KEY=\"${API_KEY:-}\"",
+                "API_SECRET=\"${API_SECRET:-}\"",
+                "echo lorem ipsum",
+            ],
+            "rules": ["no-first-option-help"]
+        })),
     ];
 
     for object in objects {

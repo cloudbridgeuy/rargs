@@ -20,6 +20,7 @@ pub struct Command {
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
     pub lines: Option<Vec<String>>,
+    pub rules: Option<Vec<String>>,
 }
 
 impl Command {
@@ -44,6 +45,7 @@ pub struct Script {
     pub default: Option<String>,
     pub commands: HashMap<String, Command>,
     pub lines: Option<Vec<String>>,
+    pub rules: Option<Vec<String>>,
 }
 
 impl Script {
@@ -188,6 +190,19 @@ impl Script {
                 }
                 parser::Data::SheBang(value) => {
                     script.shebang = value;
+                }
+                parser::Data::Rule(value) => {
+                    if is_root_scope {
+                        script.rules.get_or_insert_with(Vec::new).push(value);
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.rules.get_or_insert_with(Vec::new).push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing rule {} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
                 }
                 parser::Data::Line(value) => {
                     if is_root_scope {

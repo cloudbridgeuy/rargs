@@ -5,6 +5,15 @@
 # {{ meta["help"] }}
 {% endif -%}
 {{ name }}() {
+{%- if rules and rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "${args['--help']}" ]]; then
+    {{ name }}_usage
+    exit 0
+  fi
+{%- endif %}
 {% if lines and lines | length > 0 -%}
 {%- for line in lines %}
   {{ line }}

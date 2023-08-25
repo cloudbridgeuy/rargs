@@ -6,11 +6,6 @@ while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
 
-      # We handle the --help option to support passing it to sub-commands.
-      -h|--help)
-        args['--help']=1
-        shift 1
-        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2

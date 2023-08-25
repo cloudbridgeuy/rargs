@@ -1,15 +1,13 @@
+---
+source: crates/templates/tests/run_test.rs
+expression: output
+---
 run() {
   declare -A args=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  {% if default -%}
-  # Configure the default action if none was set.
-  if [[ -z "$action" ]]; then
-    action={{ default }}
-  fi
-  {% endif %}
-  {%- if rules and rules is containing("no-first-option-help") %}
+  
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling the case where no action was selected.
@@ -17,19 +15,17 @@ run() {
     usage
     exit 0
   fi
-{%- endif %}
-  {%- if lines and lines | length > 0 %}
   # Global script code
-  {%- for line in lines %}
-  {{ line }}
-  {%- endfor -%}
-{%- endif %}
-  {% if commands -%}
+  API_KEY="${API_KEY:-}"
+  API_SECRET="${API_SECRET:-}"
+  echo lorem ipsum
   # Call the right command action
   case "$action" in
-    {%- for name, command in commands %}
-    "{{ name }}") {{ name }} ;;
-  {% endfor -%}
+    "bar") bar ;;
+  
+    "baz") baz ;;
+  
+    "foo") foo ;;
   esac
-{%- endif %}
 }
+

@@ -28,6 +28,7 @@ pub enum Data {
     Version(String),
     Default(String),
     Line(String),
+    Rule(String),
     Unknown(String),
 }
 
@@ -123,6 +124,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 nom::bytes::complete::tag("help"),
                 nom::bytes::complete::tag("name"),
                 nom::bytes::complete::tag("version"),
+                nom::bytes::complete::tag("rule"),
             )),
             parse_tail,
         ),
@@ -137,6 +139,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "help" => Data::Help(text),
                 "name" => Data::Name(text),
                 "version" => Data::Version(text),
+                "rule" => Data::Rule(text),
                 _ => unreachable!(),
             })
         },
@@ -919,5 +922,9 @@ mod tests {
         assert_token!("foo=bar", Data::Line("foo=bar".to_string()));
         assert_token!("# @flag -f", Ignore);
         assert_token!("# @option -foo![=a|b]", Ignore);
+        assert_token!(
+            "# @rule no-first-option-help",
+            Data::Rule("no-first-option-help".to_string())
+        );
     }
 }

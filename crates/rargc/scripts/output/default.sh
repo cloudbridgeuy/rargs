@@ -10,20 +10,21 @@ fi
 
 
 version() {
-  echo "0.1.0"
+  echo "1.0.0"
 }
 
 
 usage() {
-  printf "Commands example\n"
+  printf "Script without subcommands.\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  commands [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  printf "  commands -h|--help\n"
-  printf "  commands -v|--version\n"
+  printf "  default [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  default -h|--help\n"
+  printf "  default -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
-  printf "  download\tDownload a file\n"
-  printf "  upload\tUpload a file\n"
+  printf "  main\tMain function\n"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
+  printf "  -v --verbose\n"
+  printf "    Verbose mode\n"
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  -v --version\n"
@@ -56,16 +57,10 @@ parse_arguments() {
 
 case $action in
 
-    download)
-        action="download"
+    main)
+        action="main"
         shift
-        parse_download_arguments "$@"
-        shift $#
-        ;;
-    upload)
-        action="upload"
-        shift
-        parse_upload_arguments "$@"
+        parse_main_arguments "$@"
         shift $#
         ;;
     "")
@@ -73,9 +68,8 @@ case $action in
       exit 1
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
-      exit 1
       ;;
+      
   esac
 
 
@@ -83,72 +77,10 @@ case $action in
     key="$1"
     case "$key" in
 
-      # We handle the --help option to support passing it to sub-commands.
-      -h|--help)
-        args['--help']=1
-        shift 1
-        ;;
-
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-        printf "Invalid argument: %s\n" "$key" >&2
-        exit 1
-        ;;
-    esac
-  done
-
-}
-
-
-download_usage() {
-  printf "Download a file\n"
-  printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  download [OPTIONS]\n"
-  printf "  download -h|--help\n"
-  printf "\n\033[4m%s\033[0m\n" "Flags:"
-  printf "  -f --force\n"
-  printf "    Overwrite existing files\n"
-  printf "  -h --help\n"
-  printf "    Print help\n"
-}
-
-parse_download_arguments() {
-  while [[ $# -gt 0 ]]; do
-    case "${1:-}" in
-      
-      -h | --help)
-        download_usage
-        exit
-        ;;
-
-      *)
-        break
-        ;;
-    esac
-  done
-
-
-  action="download"
-
-  
-
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -f | --force)
-        args['--force']=1
+      -v | --verbose)
+        args['--verbose']=1
         shift
         ;;
-      # We handle the --help option to support passing it to sub-commands.
-      -h|--help)
-        args['--help']=1
-        shift 1
-        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2
@@ -164,35 +96,28 @@ parse_download_arguments() {
 
 }
 
-# Download a file
-download() {
 
-    # shellcheck disable=SC2154
-    echo "Downloading ${args["source"]} to ${args["target"]}"
-    inspect_args
-}
-
-upload_usage() {
-  printf "Upload a file\n"
+main_usage() {
+  printf "Main function\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  upload -u|--user <USER> [OPTIONS]\n"
-  printf "  upload -h|--help\n"
+  printf "  main [OPTIONS]\n"
+  printf "  main -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -p --password [<PASSWORD>]\n"
-  printf "    Password to use for logging in\n"
-  printf "  -u --user <USER>\n"
-  printf "    Username to use for logging in\n"
+  printf "  -o --option [<OPTION>]\n"
+  printf "    Option with any value\n"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
+  printf "  -f --flag\n"
+  printf "    Flag option\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
-parse_upload_arguments() {
+parse_main_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       
       -h | --help)
-        upload_usage
+        main_usage
         exit
         ;;
 
@@ -203,7 +128,7 @@ parse_upload_arguments() {
   done
 
 
-  action="upload"
+  action="main"
 
   
 
@@ -211,21 +136,15 @@ parse_upload_arguments() {
     key="$1"
     case "$key" in
 
-      --password)
-        args['password']=$2
+      -f | --flag)
+        args['--flag']=1
+        shift
+        ;;
+      --option)
+        args['option']=$2
         shift 2
         ;;
 
-      --user)
-        args['user']=$2
-        shift 2
-        ;;
-
-      # We handle the --help option to support passing it to sub-commands.
-      -h|--help)
-        args['--help']=1
-        shift 1
-        ;;
 
       -?*)
         printf "invalid option: %s\n" "$key" >&2
@@ -241,12 +160,11 @@ parse_upload_arguments() {
 
 }
 
-# Upload a file
-upload() {
+# Main function
+main() {
 
-    # shellcheck disable=SC2154
-    echo "Uploading using ${args["user"]}:${args["password"]}"
-    inspect_args
+    echo "flag: ${args["--flag"]}"
+    echo "option: ${args["option"]}"
 }
 
 normalize_input() {
@@ -299,15 +217,16 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  # Global script code
-  echo "Hello from the other side!!!"
-  echo "Your editor of choice is ${EDITOR:-}"
+  # Configure the default action if none was set.
+  if [[ -z "$action" ]]; then
+    action=main
+  fi
   
+  # Global script code
+  # shellcheck disable=SC2154
   # Call the right command action
   case "$action" in
-    "download") download ;;
-  
-    "upload") upload ;;
+    "main") main ;;
   esac
 }
 
