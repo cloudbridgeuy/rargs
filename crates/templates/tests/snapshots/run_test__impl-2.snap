@@ -1,0 +1,27 @@
+---
+source: crates/templates/tests/run_test.rs
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -A deps=()
+  declare -a other_args=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+  
+  # Configure the default action if none was set.
+  if [[ -z "$action" ]]; then
+    foo
+  fi
+  
+  # Call the right command action
+  case "$action" in
+    "bar") bar ;;
+  
+    "baz") baz ;;
+  
+    "foo") foo ;;
+  esac
+}
+

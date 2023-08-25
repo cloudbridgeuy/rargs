@@ -1,6 +1,0 @@
-{{ name }})
-        action="{{ name }}"
-        shift
-        parse_{{ name }}_arguments "$@"
-        shift $#
-        ;;

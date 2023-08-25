@@ -5,4 +5,24 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  {% if lines and lines | length > 0 -%}
+  # Global script code
+  {%- for line in lines %}
+  {{ line }}
+  {%- endfor -%}
+{%- endif %}
+  {% if default -%}
+  # Configure the default action if none was set.
+  if [[ -z "$action" ]]; then
+    {{ default }}
+  fi
+  {% endif %}
+  {% if commands -%}
+  # Call the right command action
+  case "$action" in
+    {%- for name, command in commands %}
+    "{{ name }}") {{ name }} ;;
+  {% endfor -%}
+  esac
+{%- endif %}
 }

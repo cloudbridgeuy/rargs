@@ -916,7 +916,7 @@ mod tests {
         assert_token!("function foo.bar", Data::Func("foo.bar".to_string()));
         assert_token!("function foo@bar", Data::Func("foo@bar".to_string()));
         assert_token!("#!/bin/bash", Data::SheBang("#!/bin/bash".to_string()));
-        assert_token!("foo=bar", Error);
+        assert_token!("foo=bar", Data::Line("foo=bar".to_string()));
         assert_token!("# @flag -f", Ignore);
         assert_token!("# @option -foo![=a|b]", Ignore);
     }

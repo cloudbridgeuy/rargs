@@ -1,0 +1,26 @@
+---
+source: crates/templates/tests/run_test.rs
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -A deps=()
+  declare -a other_args=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+  # Global script code
+  API_KEY="${API_KEY:-}"
+  API_SECRET="${API_SECRET:-}"
+  echo lorem ipsum
+  
+  # Call the right command action
+  case "$action" in
+    "bar") bar ;;
+  
+    "baz") baz ;;
+  
+    "foo") foo ;;
+  esac
+}
+

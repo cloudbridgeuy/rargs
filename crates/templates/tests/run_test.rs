@@ -7,37 +7,37 @@ use templates::TEMPLATES;
 fn test_render() {
     let objects = vec![
         Context::from_serialize(serde_json::json!({
-            "name": "foo".to_string(),
             "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
+                "foo": {},
+                "bar": {},
                 "baz": {}
             }
         })),
         Context::from_serialize(serde_json::json!({
-            "name": "foo".to_string(),
             "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
+                "foo": {},
+                "bar": {},
                 "baz": {}
             },
-            "default": "baz",
+            "default": "foo"
+        })),
+        Context::from_serialize(serde_json::json!({
+            "commands": {
+                "foo": {},
+                "bar": {},
+                "baz": {}
+            },
+            "lines": [
+                "API_KEY=\"${API_KEY:-}\"",
+                "API_SECRET=\"${API_SECRET:-}\"",
+                "echo lorem ipsum",
+            ],
         })),
     ];
 
     for object in objects {
-        let output = match TEMPLATES.render(
-            "parse_command_arguments.tera",
-            &object.expect("Can't create JSON object"),
-        ) {
+        let output = match TEMPLATES.render("run.tera", &object.expect("Can't create JSON object"))
+        {
             Ok(o) => o,
             Err(e) => {
                 log::error!("Parsing error(s): {}", e);
