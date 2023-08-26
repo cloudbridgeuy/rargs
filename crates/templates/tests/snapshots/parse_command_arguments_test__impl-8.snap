@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse commands with a default value
+description: Parse unnamed commands with a default value
 expression: output
 ---
 

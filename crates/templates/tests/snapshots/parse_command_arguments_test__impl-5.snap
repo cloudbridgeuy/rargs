@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse commands with a default value
+description: Parse commands with a required global option and a default value
 expression: output
 ---
 
@@ -25,10 +25,10 @@ expression: output
       exit
       ;;
     "")
-      action="baz"
+      action="foo"
       ;;
     *)
-      action="baz"
+      action="foo"
       ;;
   esac
 

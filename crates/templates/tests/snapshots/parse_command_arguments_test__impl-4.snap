@@ -1,5 +1,6 @@
 ---
 source: crates/templates/tests/parse_command_arguments_test.rs
+description: Parse commands with a required global option
 expression: output
 ---
 

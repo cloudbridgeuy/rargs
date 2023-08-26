@@ -2,23 +2,15 @@ use tera::Context;
 use test_log::test;
 
 use templates::TEMPLATES;
+use utils::test_template;
 
 #[test]
 fn test_render() {
-    let objects = vec![Context::from_serialize(serde_json::json!({
-        "rargc_version": env!("CARGO_PKG_VERSION"),
-    }))];
-
-    for object in objects {
-        let output =
-            match TEMPLATES.render("intro.tera", &object.expect("Can't create JSON object")) {
-                Ok(o) => o,
-                Err(e) => {
-                    log::error!("Parsing error(s): {}", e);
-                    ::std::process::exit(1);
-                }
-            };
-
-        insta::assert_snapshot!(output)
-    }
+    test_template!(
+        "intro.tera",
+        "Get the rargc_version from the CARGO_PKG_VERSION environment variable",
+        serde_json::json!({
+            "rargc_version": env!("CARGO_PKG_VERSION"),
+        })
+    );
 }

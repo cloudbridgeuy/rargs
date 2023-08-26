@@ -1,5 +1,6 @@
 ---
 source: crates/templates/tests/function_test.rs
+description: Function with no-first-option-help rule
 expression: output
 ---
 # Test simple function
@@ -11,7 +12,6 @@ foo() {
     foo_usage
     exit 0
   fi
-
   echo "No implementation body found for function foo"
 }
 

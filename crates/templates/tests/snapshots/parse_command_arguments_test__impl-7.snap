@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse commands with a default value
+description: Parse unnamed commands with short and long only options
 expression: output
 ---
 
@@ -25,10 +25,10 @@ expression: output
       exit
       ;;
     "")
-      action="baz"
       ;;
     *)
-      action="baz"
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
       ;;
   esac
 

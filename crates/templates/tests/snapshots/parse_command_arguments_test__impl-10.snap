@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse commands with a default value
+description: Parse unnamed commands with a required global option
 expression: output
 ---
 
@@ -25,10 +25,13 @@ expression: output
       exit
       ;;
     "")
-      action="baz"
+      usage >&2
+      exit 1
+      
       ;;
     *)
-      action="baz"
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
       ;;
   esac
 

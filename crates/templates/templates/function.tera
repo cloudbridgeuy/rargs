@@ -13,7 +13,7 @@
     {{ name }}_usage
     exit 0
   fi
-{%- endif %}
+{%- endif -%}
 {% if lines and lines | length > 0 -%}
 {%- for line in lines %}
   {{ line }}

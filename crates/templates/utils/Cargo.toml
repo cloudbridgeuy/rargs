@@ -1,0 +1,19 @@
+[package]
+name = "utils"
+version = "0.0.0"
+homepage = "https://github.com/cloudbridgeuy/rargc"
+description = "Tests utility library"
+autobins = false
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "utils"
+path = "src/lib.rs"
+
+[dependencies]
+
+
+

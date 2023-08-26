@@ -2,62 +2,62 @@ use tera::Context;
 use test_log::test;
 
 use templates::TEMPLATES;
+use utils::test_template;
 
 #[test]
-fn test_render() {
-    let objects = vec![
-        Context::from_serialize(serde_json::json!({
+fn test_function_template() {
+    test_template!(
+        "function.tera",
+        "Normal function",
+        serde_json::json!({
+            "meta": {
+                "name": "foo",
+                "description": "Simple function"
+            },
+            "name": "foo",
+            "lines": ["foo", "bar", "baz"],
+        })
+    );
+    test_template!(
+        "function.tera",
+        "Function with no lines",
+        serde_json::json!({
             "meta": {
                 "name": "function",
                 "description": "Test simple function"
             },
-            "name": "foo".to_string(),
-            "lines": [
-                "foo".to_string(),
-                "bar".to_string(),
-                "baz".to_string()
-            ]
-        })),
-        Context::from_serialize(serde_json::json!({
+            "name": "foo",
+        })
+    );
+
+    test_template!(
+        "function.tera",
+        "Function with no-first-option-help rule",
+        serde_json::json!({
             "meta": {
                 "name": "function",
                 "description": "Test simple function"
             },
-            "name": "foo".to_string(),
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "function",
-                "description": "Test simple function"
-            },
-            "name": "foo".to_string(),
+            "name": "foo",
             "rules": [
                 "no-first-option-help"
             ],
-        })),
-        Context::from_serialize(serde_json::json!({
+        })
+    );
+
+    test_template!(
+        "function.tera",
+        "Function with custom-usage rule",
+        serde_json::json!({
             "meta": {
                 "name": "function",
                 "description": "Test simple function"
             },
-            "name": "foo".to_string(),
+            "name": "foo",
             "rules": [
                 "no-first-option-help",
                 "custom-usage"
             ],
-        })),
-    ];
-
-    for object in objects {
-        let output =
-            match TEMPLATES.render("function.tera", &object.expect("Can't create JSON object")) {
-                Ok(o) => o,
-                Err(e) => {
-                    log::error!("Parsing error(s): {}", e);
-                    ::std::process::exit(1);
-                }
-            };
-
-        insta::assert_snapshot!(output)
-    }
+        })
+    );
 }

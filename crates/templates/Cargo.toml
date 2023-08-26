@@ -23,6 +23,7 @@ serde_json = "1.0.105"
 include_dir = "0.7.3"
 
 [dev-dependencies]
+utils = { path = "./utils", version = "0.0.0" }
 insta = { version = "1.31.0", features = ["yaml"] }
 env_logger = "*"
 test-log = "0.2.12"
