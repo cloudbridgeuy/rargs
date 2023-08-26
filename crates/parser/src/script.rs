@@ -21,6 +21,7 @@ pub struct Command {
     pub positional_arguments: Vec<param::PositionalArgument>,
     pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
+    pub aliases: Option<Vec<String>>,
 }
 
 impl Command {
@@ -199,6 +200,23 @@ impl Script {
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing rule {} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
+                }
+                parser::Data::Alias(value) => {
+                    if is_root_scope {
+                        eyre::bail!(
+                            "Aliases are not supported at the root scope. Found declaration for alias {} in line {}.",
+                            value,
+                            event.position
+                        )
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.aliases.get_or_insert_with(Vec::new).push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing alias {} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
                         );

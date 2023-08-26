@@ -135,7 +135,6 @@ parse_download_arguments() {
 
 # Download a file
 download() {
-
     # shellcheck disable=SC2154
     echo "Downloading ${args["source"]} to ${args["target"]}"
     inspect_args
@@ -210,7 +209,6 @@ parse_upload_arguments() {
 
 # Upload a file
 upload() {
-
     # shellcheck disable=SC2154
     echo "Uploading using ${args["user"]}:${args["password"]}"
     inspect_args

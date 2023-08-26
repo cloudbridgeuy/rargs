@@ -17,6 +17,7 @@ pub struct Token {
 pub enum Data {
     SheBang(String),
     Author(Vec<String>),
+    Alias(String),
     PositionalArgument(param::PositionalArgument),
     Cmd(String),
     Description(String),
@@ -119,6 +120,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
             nom::branch::alt((
                 nom::bytes::complete::tag("author"),
                 nom::bytes::complete::tag("cmd"),
+                nom::bytes::complete::tag("alias"),
                 nom::bytes::complete::tag("description"),
                 nom::bytes::complete::tag("default"),
                 nom::bytes::complete::tag("help"),
@@ -134,6 +136,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
             Some(match tag {
                 "author" => Data::Author(text.split(',').map(|v| v.trim().to_string()).collect()),
                 "cmd" => Data::Cmd(text),
+                "alias" => Data::Alias(text),
                 "description" => Data::Description(text),
                 "default" => Data::Default(text),
                 "help" => Data::Help(text),
