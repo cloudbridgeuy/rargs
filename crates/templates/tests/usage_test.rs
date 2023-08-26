@@ -180,6 +180,85 @@ fn test_render() {
                 }
             }
         })),
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "usage",
+                "description": "Test simple usage"
+            },
+            "default": "foo",
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "meta": {
+                        "description": "Test foo command",
+                        "help": "Something\n      With\n      Multiple\n      Lines"
+                    }
+                }
+            },
+            "options": {
+                "all": {
+                    "short": "a",
+                    "name": "all",
+                    "summary": "Test option with all attributes",
+                    "choices": ["foo", "bar", "baz"],
+                    "multiple": "true",
+                    "required": "true",
+                    "default": "foo"
+                }
+            }
+        })),
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "help": "Some additional help message"
+            },
+            "name": "foo".to_string(),
+            "options": {
+                "required": {
+                    "short": "r",
+                    "name": "required",
+                    "summary": "Test required option",
+                    "required": "true"
+                }
+            }
+        })),
+        Context::from_serialize(serde_json::json!({
+            "meta": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "help": "Some additional help message"
+            },
+            "default": "foo",
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "meta": {
+                        "description": "Test foo command",
+                        "help": "Some additional help message"
+                    }
+                }
+            },
+            "options": {
+                "all": {
+                    "short": "a",
+                    "name": "all",
+                    "summary": "Test option with all attributes",
+                    "choices": ["foo", "bar", "baz"],
+                    "multiple": "true",
+                    "required": "true",
+                    "default": "foo"
+                }
+            }
+        })),
     ];
 
     for object in objects {

@@ -2,21 +2,22 @@
 source: crates/templates/tests/parse_command_arguments_test.rs
 expression: output
 ---
-action="${1:-}"
 
-case $action in
+  action="${1:-}"
+
+  case $action in
 
     bar)
       action="bar"
-      shift
+      input=("${input[@]:1}")
       ;;
     baz)
       action="baz"
-      shift
+      input=("${input[@]:1}")
       ;;
     foo)
       action="foo"
-      shift
+      input=("${input[@]:1}")
       ;;
     -h | --help)
       usage

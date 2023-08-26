@@ -2,6 +2,9 @@
   {% if meta["description"] -%}
   printf "{{ meta["description"] }}\n"
   {% endif -%}
+  {% if meta["help"] -%}
+  printf "{{ meta["help"] }}\n"
+  {% endif -%}
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   {%- set_global required = [] %}
   {% if options %}
@@ -25,8 +28,13 @@
   {%- for name, command in commands %}
   printf "  {{ name }}\t{%- if command["meta"]["description"] -%}{{ command["meta"]["description"] }}{%- endif -%}\n"
   {%- if command["meta"]["help"] %}
-  printf "    {{ command["meta"]["help"] }}\n"
+  printf "    \t{{ command["meta"]["help"] }}\n"
   {%- endif -%}
+  {%- if default is defined %}
+  {%- if name == default %}
+  printf "    \t[@default]"
+  {%- endif %}
+  {%- endif %}
   {%- endfor %}
   {%- endif %}
   {%- if options %}

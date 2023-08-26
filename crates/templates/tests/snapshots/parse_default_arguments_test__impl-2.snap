@@ -2,7 +2,6 @@
 source: crates/templates/tests/parse_default_arguments_test.rs
 expression: output
 ---
-
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
@@ -15,3 +14,5 @@ expression: output
         ;;
     esac
   done
+
+

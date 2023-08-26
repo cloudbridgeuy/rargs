@@ -16,25 +16,27 @@ version() {
 
 usage() {
   printf "Script without subcommands.\n"
+  printf "Script that shouws how to configure a single default command\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  default-with-no-first-option-help [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
   printf "  default-with-no-first-option-help -h|--help\n"
-  printf "  default-with-no-first-option-help -v|--version\n"
+  printf "  default-with-no-first-option-help --version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   printf "  main\tMain function\n"
+  printf "    \tPrints the flags and options provided globally.\n"
+  printf "    \t[@default]"
   printf "\n\033[4m%s\033[0m\n" "Flags:"
   printf "  -v --verbose\n"
   printf "    Verbose mode\n"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Pring version\n"
 }
 
 
 parse_arguments() {
-  
-  while [[ $# -gt 0 ]]; do
+    while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       --version)
         version
@@ -46,12 +48,15 @@ parse_arguments() {
     esac
   done
 
+
+  
   action="${1:-}"
 
-case $action in
+  case $action in
 
     main)
       action="main"
+      input=("${input[@]:1}")
       ;;
     -h | --help)
       usage
@@ -65,31 +70,11 @@ case $action in
       ;;
   esac
 
-
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -v | --verbose)
-        args['--verbose']=1
-        shift
-        ;;
-      -h|--help)
-        args['--help']=1
-        shift 1
-        ;;
-      
-      *)
-        break
-        ;;
-    esac
-  done
-
 }
-
 
 main_usage() {
   printf "Main function\n"
+  printf "Prints the flags and options provided globally.\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  main [OPTIONS]\n"
   printf "  main -h|--help\n"
@@ -99,15 +84,23 @@ main_usage() {
   printf "\n\033[4m%s\033[0m\n" "Flags:"
   printf "  -f --flag\n"
   printf "    Flag option\n"
+  printf "  -v --verbose\n"
+  printf "    Verbose mode\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
 parse_main_arguments() {
-  
-  action="main"
-  
+    while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      *)
+        break
+        ;;
+    esac
+  done
 
+
+  action="main"
   
 
   while [[ $# -gt 0 ]]; do
@@ -116,6 +109,10 @@ parse_main_arguments() {
 
       -f | --flag)
         args['--flag']=1
+        shift
+        ;;
+      -v | --verbose)
+        args['--verbose']=1
         shift
         ;;
       -o | --option)
@@ -143,6 +140,7 @@ parse_main_arguments() {
 }
 
 # Main function
+# Prints the flags and options provided globally.
 main() {
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
@@ -219,8 +217,7 @@ run() {
   # Call the right command action
   case "$action" in
     "main")
-      shift
-      parse_main_arguments "$@"
+      parse_main_arguments "${input[@]}"
       shift $#
       main
       ;;

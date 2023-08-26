@@ -1,10 +1,11 @@
-action="${1:-}"
 
-case $action in
+  action="${1:-}"
+
+  case $action in
 {% if commands %}{% for name, command in commands %}
     {{ name }})
       action="{{ name }}"
-      shift
+      input=("${input[@]:1}")
       ;;
 {%- endfor %}{% endif %}
     -h | --help)
