@@ -1,17 +1,16 @@
 ---
 source: crates/templates/tests/usage_test.rs
+description: Usage with only name and description
 expression: output
 ---
 usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
+
   printf "  usage [OPTIONS]\n"
+
   printf "  usage -h|--help\n"
-  printf "  usage --version\n"
-  printf "\n\033[4m%s\033[0m\n" "Flags:"
-  printf "  -h --help\n"
-  printf "    Print help\n"
-  printf "  --version\n"
-  printf "    Pring version\n"
+
+  
 }
 

@@ -1,24 +1,28 @@
-{% if meta["description"] -%}
-# {{ meta["description"] }}
+{% if command["description"] -%}
+# {{ command["description"] }}
 {% endif -%}
-{% if meta["help"] -%}
-# {{ meta["help"] }}
+{% if command["help"] -%}
+# {{ command["help"] }}
 {% endif -%}
-{{ name }}() {
-{%- if rules and rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
+{{ command["name"] }}() {
+{% if rules -%}
+  {%- if rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling individual functions case by case.
   if [[ -n "${args['--help']}" ]]; then
-    {{ name }}_usage
+    {{ command["name"] }}_usage
     exit 0
   fi
+  {%- endif -%}
 {%- endif -%}
-{% if lines and lines | length > 0 -%}
-{%- for line in lines %}
+{% if command["lines"] -%}
+  {% if command["lines"] | length > 0 -%}
+    {%- for line in command["lines"] %}
   {{ line }}
-{%- endfor -%}
-{%- else %}
+    {%- endfor -%}
+  {%- else %}
   echo "No implementation body found for function {{ name }}"
+  {%- endif %}
 {%- endif %}
 }

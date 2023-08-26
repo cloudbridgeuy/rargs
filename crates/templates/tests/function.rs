@@ -10,54 +10,47 @@ fn test_function_template() {
         "function.tera",
         "Normal function",
         serde_json::json!({
-            "meta": {
-                "name": "foo",
-                "description": "Simple function"
-            },
+        "command": {
             "name": "foo",
+            "description": "Simple function",
             "lines": ["foo", "bar", "baz"],
-        })
+        }})
     );
     test_template!(
         "function.tera",
         "Function with no lines",
         serde_json::json!({
-            "meta": {
-                "name": "function",
-                "description": "Test simple function"
-            },
-            "name": "foo",
+            "command": {
+                "name": "foo",
+                "description": "Simple function",
+                "lines": ["foo", "bar", "baz"],
+            }
         })
     );
-
     test_template!(
         "function.tera",
         "Function with no-first-option-help rule",
         serde_json::json!({
-            "meta": {
-                "name": "function",
-                "description": "Test simple function"
-            },
+        "rules": [
+            "no-first-option-help"
+        ],
+        "command": {
             "name": "foo",
-            "rules": [
-                "no-first-option-help"
-            ],
-        })
+            "description": "Simple function",
+        }})
     );
 
     test_template!(
         "function.tera",
         "Function with custom-usage rule",
         serde_json::json!({
-            "meta": {
-                "name": "function",
-                "description": "Test simple function"
-            },
+        "rules": [
+            "no-first-option-help",
+            "custom-usage"
+        ],
+        "command": {
             "name": "foo",
-            "rules": [
-                "no-first-option-help",
-                "custom-usage"
-            ],
-        })
+            "description": "Simple function",
+        }})
     );
 }

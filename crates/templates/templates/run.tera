@@ -21,11 +21,11 @@ run() {
   {% if commands -%}
   # Call the right command action
   case "$action" in
-    {%- for name, command in commands %}
-    "{{ name }}")
-      parse_{{ name }}_arguments "${input[@]}"
+    {%- for key, command in commands %}
+    "{{ key }}")
+      parse_{{ key }}_arguments "${input[@]}"
       shift $#
-      {{ name }}
+      {{ key }}
       ;;
   {% endfor -%}
   esac

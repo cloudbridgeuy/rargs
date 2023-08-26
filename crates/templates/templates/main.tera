@@ -7,38 +7,14 @@
 
 {% include "usage.tera" %}
 
-parse_arguments() {
-  {% include "parse_default_arguments.tera" %}
+{% include "parse_arguments.tera" %}
 
-  {%-if commands %}
-  {% include "parse_command_arguments.tera" %}
-  {%- else %}
-  {% include "parse_option_arguments.tera" -%}
-  {%- endif %}
-}
-
-{% for name, command in commands -%}
-{%- set commands = false %}
-
-{%- if options and command["options"] -%}
-{%- set options = options | merge(with=command["options"]) -%}
-{%- else -%}
-{%- set options = command["options"] -%}
-{%- endif -%}
-
-{%- if flags and command["flags"] -%}
-{%- set flags = flags | merge(with=command["flags"]) -%}
-{%- else -%}
-{%- set flags = command["flags"] -%}
-{%- endif -%}
-
-{%- set meta = command["meta"] -%}
-{%- set lines = command["lines"] -%}
+{% for key, command in commands -%}
 
 {%- set rules = rules | concat(with=command["rules"]) -%}
 
-{% include "usage.tera" %}
-{% include "parse_arguments.tera" %}
+{% include "command_usage.tera" %}
+{% include "parse_command_arguments.tera" %}
 {% include "function.tera" %}
 {% endfor -%}
 

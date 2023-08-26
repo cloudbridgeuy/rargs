@@ -1,0 +1,6 @@
+---
+source: crates/templates/tests/version_test.rs
+description: Without version
+expression: output
+---
+

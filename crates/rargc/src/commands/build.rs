@@ -24,16 +24,23 @@ impl Command {
         let source = fs::read_to_string(&self.options.script_root)
             .unwrap_or_else(|_| panic!("Unable to read file: {}", &self.options.script_root));
 
-        let script = Script::from_source(&source)?;
-        let name = script.meta.name.to_owned();
+        let mut script = Script::from_source(&source)?;
+
+        // If the script has a name, use that, otherwise use the name of the file
+        let mut name = script
+            .name
+            .to_owned()
+            .unwrap_or(self.options.script_root.clone());
+        if name.ends_with(".sh") {
+            name.truncate(name.len() - 3);
+            name = name.clone().split('/').last().unwrap().to_string();
+        }
+
+        script.name = Some(name.clone());
 
         let output = templates::render(&script)?;
 
-        let name = format!(
-            "{}/{}.sh",
-            self.options.destination,
-            name.unwrap_or(self.options.script_root.clone())
-        );
+        let name = format!("{}/{}.sh", self.options.destination, name);
 
         log::info!("Writing script to: {}", &name);
         fs::write(name, output)?;

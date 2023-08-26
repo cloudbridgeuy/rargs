@@ -1,9 +1,102 @@
-parse_{{ name }}_arguments() {
-  {% include "parse_default_arguments.tera" %}
+{%- set_global required = [] -%}
+{%- if options -%}
+{%- for key, option in options -%}
+  {%- if option["required"] -%}
+    {%- set_global required = required | concat(with=option) -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- endif -%}
 
-  {%- if name is defined %}
-  action="{{ name }}"
-  {% endif %}
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+    {%- if version %}
+      --version)
+        version
+        exit
+        ;;
+    {%- endif %}
+    {%- if rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
+      -h | --help)
+        usage
+        exit
+        ;;
+    {%- endif %}
+      *)
+        break
+        ;;
+    esac
+  done
 
-  {% include "parse_option_arguments.tera" -%}
+  {%-if commands %}
+  action="${1:-}"
+
+  case $action in
+  {%- if commands %}{%- for key, command in commands %}
+    {{ key }})
+      action="{{ key }}"
+      input=("${input[@]:1}")
+      ;;
+  {%- endfor %}{%- endif %}
+    -h | --help)
+      usage
+      exit
+      ;;
+    "")
+      {%- if default and default != "" %}
+      action="{{ default }}"
+      {%- elif required | length > 0 %}
+      usage >&2
+      exit 1
+      {% endif %}
+      ;;
+    *)
+      {%- if default and default != "" %}
+      action="{{ default }}"
+      {% else %}
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
+      {% endif -%}
+      ;;
+  esac
+  {%- else %}
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    {%- if flags %}{%- for key, flag in flags %}
+      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
+        args['--{{ key }}']=1
+        shift
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if options -%}{%- for key, option in options %}
+      {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
+        args['{{ key }}']=$2
+        shift 2
+        ;;
+    {%- endfor -%}{% endif %}
+      {%- if rules and rules is containing("no-first-option-help") %}
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+      {% endif %}
+      {%- if default is defined %}
+      *)
+        break
+        ;;
+      {%- else %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+      {%- endif %}
+    esac
+  done
+  {%- endif %}
 }

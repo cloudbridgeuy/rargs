@@ -7,27 +7,22 @@ use crate::param;
 use crate::parser;
 
 #[derive(Serialize, Default, Debug, Clone)]
-pub struct Meta {
-    pub name: Option<String>,
-    pub description: Option<String>,
-    pub help: Option<String>,
-}
-
-#[derive(Serialize, Default, Debug, Clone)]
 pub struct Command {
-    pub meta: Meta,
+    pub name: Option<String>,
+    pub help: Option<String>,
+    pub description: Option<String>,
     pub flags: HashMap<String, param::Flag>,
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
     pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
     pub aliases: Option<Vec<String>>,
+    pub examples: Option<Vec<String>>,
 }
 
 impl Command {
-    pub fn new(meta: Meta) -> Self {
+    pub fn new() -> Self {
         Self {
-            meta,
             lines: Vec::new().into(),
             ..Default::default()
         }
@@ -36,8 +31,10 @@ impl Command {
 
 #[derive(Serialize, Default, Debug)]
 pub struct Script {
+    pub name: Option<String>,
+    pub help: Option<String>,
+    pub description: Option<String>,
     pub shebang: String,
-    pub meta: Meta,
     pub flags: HashMap<String, param::Flag>,
     pub options: HashMap<String, param::Option>,
     pub author: Option<Vec<String>>,
@@ -47,12 +44,12 @@ pub struct Script {
     pub commands: HashMap<String, Command>,
     pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
+    pub examples: Option<Vec<String>>,
 }
 
 impl Script {
-    pub fn new(meta: Meta) -> Self {
+    pub fn new() -> Self {
         Self {
-            meta,
             rargc_version: env!("CARGO_PKG_VERSION").to_string(),
             shebang: "#!/usr/bin/env bash".to_string(),
             ..Default::default()
@@ -63,8 +60,7 @@ impl Script {
 impl Script {
     pub fn from_source(source: &str) -> Result<Self> {
         let mut is_root_scope = true;
-        let meta = Meta::default();
-        let mut script = Script::new(meta);
+        let mut script = Script::new();
         let mut maybe_command: Option<Command> = None;
         let mut last_command: Option<String> = None;
 
@@ -73,13 +69,13 @@ impl Script {
         for event in events {
             match event.data {
                 parser::Data::Name(value) => {
-                    script.meta.name = Some(value);
+                    script.name = Some(value);
                 }
                 parser::Data::Description(value) => {
                     if is_root_scope {
-                        script.meta.description = Some(value);
+                        script.description = Some(value);
                     } else if let Some(command) = maybe_command.as_mut() {
-                        command.meta.description = Some(value);
+                        command.description = Some(value);
                     } else {
                         eyre::bail!(
                             "No command in scope when parsing a @description param in line {}. Did you forget the @cmd directive?",
@@ -95,9 +91,9 @@ impl Script {
                 }
                 parser::Data::Help(value) => {
                     if is_root_scope {
-                        script.meta.help = Some(value);
+                        script.help = Some(value);
                     } else if let Some(command) = maybe_command.as_mut() {
-                        command.meta.help = Some(value);
+                        command.help = Some(value);
                     } else {
                         eyre::bail!(
                             "No command in scope when parsing a @help param in line {}. Did you forget the @cmd directive?",
@@ -109,7 +105,7 @@ impl Script {
                     is_root_scope = false;
 
                     if let Some(command) = maybe_command.as_mut() {
-                        command.meta.name = Some(value.clone());
+                        command.name = Some(value.clone());
                         script
                             .commands
                             .entry(value.clone())
@@ -136,14 +132,9 @@ impl Script {
                 }
                 parser::Data::Cmd(value) => {
                     is_root_scope = false;
-
-                    let mut meta = Meta::default();
-
-                    if !value.is_empty() {
-                        meta.description = Some(value);
-                    }
-
-                    maybe_command = Some(Command::new(meta));
+                    let mut command = Command::new();
+                    command.description = Some(value);
+                    maybe_command = Some(command);
                 }
                 parser::Data::Default(value) => {
                     script.default = Some(value);
@@ -217,6 +208,19 @@ impl Script {
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing alias {} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
+                }
+                parser::Data::Example(value) => {
+                    if is_root_scope {
+                        script.examples.get_or_insert_with(Vec::new).push(value);
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.examples.get_or_insert_with(Vec::new).push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing example {} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
                         );

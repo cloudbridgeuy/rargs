@@ -18,6 +18,7 @@ pub enum Data {
     SheBang(String),
     Author(Vec<String>),
     Alias(String),
+    Example(String),
     PositionalArgument(param::PositionalArgument),
     Cmd(String),
     Description(String),
@@ -121,6 +122,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 nom::bytes::complete::tag("author"),
                 nom::bytes::complete::tag("cmd"),
                 nom::bytes::complete::tag("alias"),
+                nom::bytes::complete::tag("example"),
                 nom::bytes::complete::tag("description"),
                 nom::bytes::complete::tag("default"),
                 nom::bytes::complete::tag("help"),
@@ -137,6 +139,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "author" => Data::Author(text.split(',').map(|v| v.trim().to_string()).collect()),
                 "cmd" => Data::Cmd(text),
                 "alias" => Data::Alias(text),
+                "example" => Data::Example(text),
                 "description" => Data::Description(text),
                 "default" => Data::Default(text),
                 "help" => Data::Help(text),
@@ -923,6 +926,7 @@ mod tests {
         assert_token!("function foo@bar", Data::Func("foo@bar".to_string()));
         assert_token!("#!/bin/bash", Data::SheBang("#!/bin/bash".to_string()));
         assert_token!("foo=bar", Data::Line("foo=bar".to_string()));
+        assert_token!("# @alias foo", Data::Alias("foo".to_string()));
         assert_token!("# @flag -f", Ignore);
         assert_token!("# @option -foo![=a|b]", Ignore);
         assert_token!(

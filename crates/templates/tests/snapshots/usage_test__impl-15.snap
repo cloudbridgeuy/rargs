@@ -1,21 +1,20 @@
 ---
 source: crates/templates/tests/usage_test.rs
-description: Usage with choices option
+description: Usage with extra help message
 expression: output
 ---
 usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
 
-  printf "  usage [OPTIONS]\n"
+  printf "  foo -r|--required <REQUIRED> [OPTIONS]\n"
 
-  printf "  usage -h|--help\n"
+  printf "  foo -h|--help\n"
 
   
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -c --choices [<CHOICES>]\n"
-  printf "    Test choices option\n"
-  printf "    [@choices foo, bar, baz]\n"
+  printf "  -r --required <REQUIRED>\n"
+  printf "    Test required option\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }

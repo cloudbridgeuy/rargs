@@ -3,32 +3,47 @@ source: crates/templates/tests/parse_command_arguments_test.rs
 description: Parse commands with a required global option and a default value
 expression: output
 ---
+parse_bar_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        bar_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
 
-  action="${1:-}"
-
-  case $action in
-
-    bar)
-      action="bar"
-      input=("${input[@]:1}")
-      ;;
-    baz)
-      action="baz"
-      input=("${input[@]:1}")
-      ;;
-    foo)
-      action="foo"
-      input=("${input[@]:1}")
-      ;;
-    -h | --help)
-      usage
-      exit
-      ;;
-    "")
-      action="foo"
-      ;;
-    *)
-      action="foo"
-      ;;
-  esac
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -b | --bar)
+        args['bar']=$2
+        shift 2
+        ;;
+      --baz)
+        args['baz']=$2
+        shift 2
+        ;;
+      -f | --foo)
+        args['foo']=$2
+        shift 2
+        ;;
+      -f | --foo)
+        args['foo']=$2
+        shift 2
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
 

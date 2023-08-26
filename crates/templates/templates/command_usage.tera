@@ -9,46 +9,44 @@
 {%- endfor -%}
 {%- endif -%}
 
-usage() {
-  {% if description -%}
-  printf "{{ description }}\n"
+{{ command["name"] }}_usage() {
+  {% if command["description"] -%}
+  printf "{{ command["description"] }}\n"
   {% endif -%}
 
-  {% if help -%}
-  printf "{{ help }}\n"
+  {% if command["help"] -%}
+  printf "{{ command["help"] }}\n"
   {% endif -%}
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
 
-  {% if commands -%}
-  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  {%- else -%}
-  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
-  {%- endif %}
+  printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
+  printf "  {{ command["name"] }} -h|--help\n"
 
-  printf "  {{ name }} -h|--help\n"
-
-  {% if version -%}
-  printf "  {{ name }} --version\n"
-  {%- endif %}
-
-  {%- if commands %}
-  printf "\n\033[4m%s\033[0m\n" "Commands:"
-  {%- for key, command in commands %}
-  printf "  {{ key }}\t{%- if command["description"] -%}{{ command["description"] }}{%- endif -%}\n"
-  {%- if command["help"] %}
-  printf "    \t{{ command["help"] }}\n"
+  {%- if command["options"] or command["flags"] %}
+  {%- if command["options"] %}
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  {%- for key, option in command["options"] %}
+  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
+  printf "    {{ option["summary"] }}\n"
+  {%- if option["multiple"] or option["default"] or option["choices"] %}
+  printf "    [
+    {%- if option["multiple"] -%}
+      @multiple
+    {%- endif -%}
+    {%- if option["default"] -%}
+      {%- if option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
+    {%- endif -%}
+    {%- if option["choices"] -%}
+      {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
+    {%- endif -%}]\n"
   {%- endif -%}
-  {%- if default is defined %}
-  {%- if key == default %}
-  printf "    \t[@default]"
+  {%- endfor -%}
   {%- endif %}
-  {%- endif %}
-  {%- endfor %}
   {%- endif %}
 
   {%- if options or flags %}
-  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "\n\033[4m%s\033[0m\n" "Global Options:"
   {%- if options %}
   {%- for key, option in options %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
@@ -76,9 +74,5 @@ usage() {
   {%- endif %}
   printf "  -h --help\n"
   printf "    Print help\n"
-  {%- if version %}
-  printf "  --version\n"
-  printf "    Pring version\n"
-  {%- endif %}
   {%- endif %}
 }

@@ -1,13 +1,23 @@
 ---
-source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse unnamed commands with global options
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse commands with global options
 expression: output
 ---
-
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
   action="${1:-}"
 
   case $action in
-
     bar)
       action="bar"
       input=("${input[@]:1}")
@@ -31,4 +41,5 @@ expression: output
       exit 1
       ;;
   esac
+}
 

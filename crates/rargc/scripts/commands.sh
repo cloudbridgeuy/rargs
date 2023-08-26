@@ -12,8 +12,8 @@ echo "Your editor of choice is ${EDITOR:-}"
 # @flag -f --force Overwrite existing files
 # @arg source! URL to download from
 # @arg target Target filename (default: same as source)
-# @example $ example.com
-# @example $ example.com ./output -f
+# @example Download a file $ download https://example.com
+# @example Download a file in force mode $ download -f https://example.com
 download() {
   # shellcheck disable=SC2154
   echo "Downloading ${args["source"]} to ${args["target"]}"

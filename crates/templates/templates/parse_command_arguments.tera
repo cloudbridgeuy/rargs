@@ -1,39 +1,79 @@
 {%- set_global required = [] -%}
-{% if options %}
-{%- for name, option in options -%}
-  {%- if option["required"] -%}
-    {%- set_global required = required | concat(with=option) -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- endif %}
-  action="${1:-}"
+{%- if options -%}
+  {%- for key, option in options -%}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 
-  case $action in
-{% if commands %}{% for name, command in commands %}
-    {{ name }})
-      action="{{ name }}"
-      input=("${input[@]:1}")
-      ;;
-{%- endfor %}{% endif %}
-    -h | --help)
-      usage
-      exit
-      ;;
-    "")
-      {%- if default and default != "" %}
-      action="{{ default }}"
-      {%- elif required | length > 0 %}
-      usage >&2
-      exit 1
-      {% else -%}
-      {% endif %}
-      ;;
-    *)
-      {%- if default and default != "" %}
-      action="{{ default }}"
-      {% else %}
-      printf "Invalid command: %s\n" "$action" >&2
-      exit 1
-      {% endif -%}
-      ;;
-  esac
+parse_{{ command["name"] }}_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+    {%- if rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
+      -h | --help)
+        {{ command["name"] }}_usage
+        exit
+        ;;
+    {%- endif %}
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    {%- if comand["flags"] %}{%- for key, flag in command["flags"] %}
+      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
+        args['--{{ key }}']=1
+        shift
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if command["options"] -%}{%- for key, option in command["options"] %}
+      {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
+        args['{{ key }}']=$2
+        shift 2
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if flags %}{%- for key, flag in flags %}
+      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
+        args['--{{ key }}']=1
+        shift
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if options -%}{%- for key, option in options %}
+      {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
+        args['{{ key }}']=$2
+        shift 2
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if rules and rules is containing("no-first-option-help") %}
+      -h|--help)
+        args['--help']=1
+        shift 1
+        ;;
+    {% endif %}
+    {%- if default is defined %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+      {%- else %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+      {%- endif %}
+    esac
+  done
+}

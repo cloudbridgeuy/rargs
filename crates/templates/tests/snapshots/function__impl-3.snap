@@ -1,10 +1,11 @@
 ---
-source: crates/templates/tests/function_test.rs
+source: crates/templates/tests/function.rs
 description: Function with no-first-option-help rule
 expression: output
 ---
-# Test simple function
+# Simple function
 foo() {
+
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling individual functions case by case.
@@ -12,6 +13,5 @@ foo() {
     foo_usage
     exit 0
   fi
-  echo "No implementation body found for function foo"
 }
 

@@ -1,0 +1,13 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with no lines
+expression: output
+---
+# Simple function
+foo() {
+
+  foo
+  bar
+  baz
+}
+

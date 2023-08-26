@@ -1,13 +1,23 @@
 ---
-source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse unnamed commands with a required global option
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse commands with short and long only options
 expression: output
 ---
-
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
   action="${1:-}"
 
   case $action in
-
     bar)
       action="bar"
       input=("${input[@]:1}")
@@ -25,13 +35,11 @@ expression: output
       exit
       ;;
     "")
-      usage >&2
-      exit 1
-      
       ;;
     *)
       printf "Invalid command: %s\n" "$action" >&2
       exit 1
       ;;
   esac
+}
 

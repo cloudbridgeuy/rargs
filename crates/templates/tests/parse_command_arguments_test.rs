@@ -10,15 +10,18 @@ fn test_render() {
         "parse_command_arguments.tera",
         "Parse commands with short and long only options",
         serde_json::json!({
-            "name": "foo".to_string(),
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
             }
         })
     );
@@ -26,15 +29,18 @@ fn test_render() {
         "parse_command_arguments.tera",
         "Parse commands with a default value",
         serde_json::json!({
-            "name": "foo".to_string(),
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
             },
             "default": "baz",
         })
@@ -43,203 +49,100 @@ fn test_render() {
         "parse_command_arguments.tera",
         "Parse commands with global options",
         serde_json::json!({
-            "name": "foo".to_string(),
+            "name": "foo",
             "options": {
                 "foo": {
-                    "short": "f".to_string()
+                    "short": "f"
                 },
             },
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
+            },
         })
     );
     test_template!(
         "parse_command_arguments.tera",
         "Parse commands with a required global option",
         serde_json::json!({
-            "name": "foo".to_string(),
+            "name": "foo",
             "options": {
                 "foo": {
-                    "short": "f".to_string(),
+                    "short": "f",
                     "required": true,
                 },
             },
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
+            },
         })
     );
     test_template!(
         "parse_command_arguments.tera",
         "Parse commands with a required global option and a default value",
         serde_json::json!({
-            "name": "foo".to_string(),
+            "name": "foo",
             "options": {
                 "foo": {
-                    "short": "f".to_string(),
+                    "short": "f",
                     "required": true,
                 },
             },
             "default": "foo",
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
+            },
         })
     );
     test_template!(
         "parse_command_arguments.tera",
         "Parse commands without a required global option and a default value",
         serde_json::json!({
-            "name": "foo".to_string(),
+            "name": "foo",
             "options": {
                 "foo": {
-                    "short": "f".to_string(),
+                    "short": "f",
                 },
             },
             "default": "foo",
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands with short and long only options",
-        serde_json::json!({
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands with a default value",
-        serde_json::json!({
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
+            "command": {
+                "name": "bar",
+                "options": {
+                    "foo": {
+                        "short": "f"
+                    },
+                    "bar": {
+                        "short": "b"
+                    },
+                    "baz": {}
+                }
             },
-            "default": "baz",
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands with global options",
-        serde_json::json!({
-            "options": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-            },
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands with a required global option",
-        serde_json::json!({
-            "options": {
-                "foo": {
-                    "short": "f".to_string(),
-                    "required": true,
-                },
-            },
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands with a required global option and a default value",
-        serde_json::json!({
-            "options": {
-                "foo": {
-                    "short": "f".to_string(),
-                    "required": true,
-                },
-            },
-            "default": "foo",
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
-        })
-    );
-    test_template!(
-        "parse_command_arguments.tera",
-        "Parse unnamed commands without a required global option and a default value",
-        serde_json::json!({
-            "options": {
-                "foo": {
-                    "short": "f".to_string(),
-                },
-            },
-            "default": "foo",
-            "commands": {
-                "foo": {
-                    "short": "f".to_string()
-                },
-                "bar": {
-                    "short": "b".to_string()
-                },
-                "baz": {}
-            }
         })
     );
 }

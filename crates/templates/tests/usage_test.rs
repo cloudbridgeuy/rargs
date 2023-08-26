@@ -2,16 +2,16 @@ use tera::Context;
 use test_log::test;
 
 use templates::TEMPLATES;
+use utils::test_template;
 
 #[test]
 fn test_render() {
-    let objects = vec![
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
-            "name": "foo".to_string(),
+    test_template!(
+        "usage.tera",
+        "Typical Usage",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "required": {
                     "short": "r",
@@ -20,18 +20,22 @@ fn test_render() {
                     "required": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with only name and description",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with single option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "foo": {
                     "short": "f",
@@ -39,12 +43,14 @@ fn test_render() {
                     "summary": "Test foo option"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with required option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "required": {
                     "short": "r",
@@ -53,12 +59,14 @@ fn test_render() {
                     "required": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with multiple option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "multiple": {
                     "short": "m",
@@ -67,12 +75,14 @@ fn test_render() {
                     "multiple": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with default option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "default": {
                     "short": "d",
@@ -81,26 +91,30 @@ fn test_render() {
                     "default": "foo"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with choices option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "choices": {
                     "short": "c",
                     "name": "choices",
-                    "summary": "Test option with choices",
+                    "summary": "Test choices option",
                     "choices": ["foo", "bar", "baz"]
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with required and multiple option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "required": {
                     "short": "rm",
@@ -110,12 +124,14 @@ fn test_render() {
                     "multiple": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with default and multiple option",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "options": {
                 "default": {
                     "short": "dm",
@@ -125,12 +141,14 @@ fn test_render() {
                     "multiple": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with options and flags",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "flags": {
                 "verbose": {
                     "summary": "Test verbose flag"
@@ -149,12 +167,29 @@ fn test_render() {
                     "multiple": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with commands",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "commands": {
+                "foo": {
+                    "meta": {
+                        "description": "Test foo command"
+                    }
+                }
+            }
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with commands and flags",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "flags": {
                 "verbose": {
                     "summary": "Test verbose flag"
@@ -163,60 +198,69 @@ fn test_render() {
             "commands": {
                 "foo": {
                     "meta": {
-                        "description": "Test foo command",
-                        "help": "Something\n      With\n      Multiple\n      Lines"
+                        "description": "Test foo command"
                     }
                 }
-            },
-            "options": {
-                "all": {
-                    "short": "a",
-                    "name": "all",
-                    "summary": "Test option with all attributes",
-                    "choices": ["foo", "bar", "baz"],
-                    "multiple": "true",
-                    "required": "true",
-                    "default": "foo"
-                }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage"
-            },
-            "default": "foo",
-            "flags": {
-                "verbose": {
-                    "summary": "Test verbose flag"
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with commands and options",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "options": {
+                "choices": {
+                    "short": "cm",
+                    "name": "choices-multiple",
+                    "summary": "Test option with choices and multiple",
+                    "choices": ["foo", "bar", "baz"],
+                    "multiple": "true"
                 }
             },
             "commands": {
                 "foo": {
                     "meta": {
-                        "description": "Test foo command",
-                        "help": "Something\n      With\n      Multiple\n      Lines"
+                        "description": "Test foo command"
                     }
+                }
+            }
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with commands, flags and options",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
                 }
             },
             "options": {
-                "all": {
-                    "short": "a",
-                    "name": "all",
-                    "summary": "Test option with all attributes",
+                "choices": {
+                    "short": "cm",
+                    "name": "choices-multiple",
+                    "summary": "Test option with choices and multiple",
                     "choices": ["foo", "bar", "baz"],
-                    "multiple": "true",
-                    "required": "true",
-                    "default": "foo"
+                    "multiple": "true"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "description": "Test foo command"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage",
-                "help": "Some additional help message"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with extra help message",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "name": "foo".to_string(),
             "options": {
                 "required": {
@@ -226,13 +270,14 @@ fn test_render() {
                     "required": "true"
                 }
             }
-        })),
-        Context::from_serialize(serde_json::json!({
-            "meta": {
-                "name": "usage",
-                "description": "Test simple usage",
-                "help": "Some additional help message"
-            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with option with all flags",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
             "default": "foo",
             "flags": {
                 "verbose": {
@@ -241,10 +286,8 @@ fn test_render() {
             },
             "commands": {
                 "foo": {
-                    "meta": {
-                        "description": "Test foo command",
-                        "help": "Some additional help message"
-                    }
+                    "description": "Test foo command",
+                    "help": "Some additional help message"
                 }
             },
             "options": {
@@ -258,19 +301,6 @@ fn test_render() {
                     "default": "foo"
                 }
             }
-        })),
-    ];
-
-    for object in objects {
-        let output =
-            match TEMPLATES.render("usage.tera", &object.expect("Can't create JSON object")) {
-                Ok(o) => o,
-                Err(e) => {
-                    log::error!("Parsing error(s): {}", e);
-                    ::std::process::exit(1);
-                }
-            };
-
-        insta::assert_snapshot!(output)
-    }
+        })
+    );
 }
