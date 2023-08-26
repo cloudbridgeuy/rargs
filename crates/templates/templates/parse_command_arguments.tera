@@ -1,4 +1,11 @@
-
+{%- set_global required = [] -%}
+{% if options %}
+{%- for name, option in options -%}
+  {%- if option["required"] -%}
+    {%- set_global required = required | concat(with=option) -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- endif %}
   action="${1:-}"
 
   case $action in
@@ -13,15 +20,16 @@
       exit
       ;;
     "")
-      {%- if default is defined %}
+      {%- if default and default != "" %}
       action="{{ default }}"
-      {% else %}
+      {%- elif required | length > 0 %}
       usage >&2
       exit 1
-      {% endif -%}
+      {% else -%}
+      {% endif %}
       ;;
     *)
-      {%- if default is defined %}
+      {%- if default and default != "" %}
       action="{{ default }}"
       {% else %}
       printf "Invalid command: %s\n" "$action" >&2

@@ -4,10 +4,13 @@ expression: output
 ---
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
+      --version)
+        version
+        exit
+        ;;
       *)
         break
         ;;
     esac
   done
-
 

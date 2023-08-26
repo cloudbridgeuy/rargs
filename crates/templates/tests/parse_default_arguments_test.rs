@@ -6,14 +6,14 @@ use templates::TEMPLATES;
 #[test]
 fn test_render() {
     let objects = vec![
+        Context::from_serialize(serde_json::json!({})),
         Context::from_serialize(serde_json::json!({
-            "noname": "foo".to_string(),
+            "default": "foo".to_string(),
         })),
         Context::from_serialize(serde_json::json!({
             "name": "foo".to_string(),
         })),
         Context::from_serialize(serde_json::json!({
-            "noname": "foo".to_string(),
             "default": "main".to_string(),
         })),
         Context::from_serialize(serde_json::json!({
@@ -21,7 +21,6 @@ fn test_render() {
             "default": "main".to_string(),
         })),
         Context::from_serialize(serde_json::json!({
-            "noname": "foo".to_string(),
             "rules": ["no-first-option-help"]
         })),
         Context::from_serialize(serde_json::json!({
@@ -29,11 +28,9 @@ fn test_render() {
             "rules": ["no-first-option-help"]
         })),
         Context::from_serialize(serde_json::json!({
-            "noname": "foo".to_string(),
             "rules": ["custom-usage"]
         })),
         Context::from_serialize(serde_json::json!({
-            "noname": "foo".to_string(),
             "rules": ["no-first-option-help", "custom-usage"]
         })),
         Context::from_serialize(serde_json::json!({

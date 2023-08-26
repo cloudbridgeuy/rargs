@@ -4,8 +4,12 @@ expression: output
 ---
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
+      --version)
+        version
+        exit
+        ;;
       -h | --help)
-        foo_usage
+        usage
         exit
         ;;
 
@@ -14,5 +18,4 @@ expression: output
         ;;
     esac
   done
-
 

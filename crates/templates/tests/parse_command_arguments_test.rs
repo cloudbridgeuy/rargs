@@ -31,6 +31,41 @@ fn test_render() {
             },
             "default": "baz",
         })),
+        Context::from_serialize(serde_json::json!({
+            "name": "foo".to_string(),
+            "options": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+            },
+            "commands": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+                "bar": {
+                    "short": "b".to_string()
+                },
+                "baz": {}
+            }
+        })),
+        Context::from_serialize(serde_json::json!({
+            "name": "foo".to_string(),
+            "options": {
+                "foo": {
+                    "short": "f".to_string(),
+                    "required": true,
+                },
+            },
+            "commands": {
+                "foo": {
+                    "short": "f".to_string()
+                },
+                "bar": {
+                    "short": "b".to_string()
+                },
+                "baz": {}
+            }
+        })),
     ];
 
     for object in objects {

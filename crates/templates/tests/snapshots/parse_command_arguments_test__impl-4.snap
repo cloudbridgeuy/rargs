@@ -24,6 +24,9 @@ expression: output
       exit
       ;;
     "")
+      usage >&2
+      exit 1
+      
       ;;
     *)
       printf "Invalid command: %s\n" "$action" >&2
