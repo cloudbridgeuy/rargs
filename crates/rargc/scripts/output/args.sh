@@ -104,7 +104,7 @@ parse_arguments() {
 choice_default_usage() {
   printf "Choice + Default\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  choice_default [OPTIONS] [CHOICE_DEFAULT]\n"
+  printf "  choice_default [OPTIONS] [CHOICE_DEFAULT] \n"
   printf "  choice_default -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -143,13 +143,18 @@ parse_choice_default_arguments() {
 # Choice + Default
 choice_default() {
 
+  
+  if [[ -z "${args['choice_default']}" ]]; then
+    args['choice_default']="a"
+  fi
+
     :;
 }
 
 choice_default_value_usage() {
   printf "Choice + Default + Value Notation\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  choice_default_value [OPTIONS] [CHOICE_DEFAULT_VALUE]\n"
+  printf "  choice_default_value [OPTIONS] [VALUE_NOTATION] \n"
   printf "  choice_default_value -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -188,13 +193,18 @@ parse_choice_default_value_arguments() {
 # Choice + Default + Value Notation
 choice_default_value() {
 
+  
+  if [[ -z "${args['choice_default_value']}" ]]; then
+    args['choice_default_value']="a"
+  fi
+
     :;
 }
 
 choices_usage() {
   printf "Choices\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  choices [OPTIONS] [CHOICES]\n"
+  printf "  choices [OPTIONS] [CHOICES] \n"
   printf "  choices -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -239,7 +249,7 @@ choices() {
 default_usage() {
   printf "Default\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  default [OPTIONS] [DEFAULT]\n"
+  printf "  default [OPTIONS] [DEFAULT] \n"
   printf "  default -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -278,13 +288,18 @@ parse_default_arguments() {
 # Default
 default() {
 
+  
+  if [[ -z "${args['default']}" ]]; then
+    args['default']="default_value"
+  fi
+
     :;
 }
 
 required_usage() {
   printf "Required\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  required [OPTIONS] REQUIRED\n"
+  printf "  required [OPTIONS] REQUIRED \n"
   printf "  required -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -323,13 +338,20 @@ parse_required_arguments() {
 # Required
 required() {
 
+  
+  if [[ -z "${args['required']}" ]]; then
+    echo "Missing required option: required"
+    required_usage
+    exit 1
+  fi
+
     :;
 }
 
 simplest_usage() {
   printf "Simplest\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  simplest [OPTIONS] [SIMPLEST]\n"
+  printf "  simplest [OPTIONS] [SIMPLEST] \n"
   printf "  simplest -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -374,7 +396,7 @@ simplest() {
 value_usage() {
   printf "Value Notation\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  value [OPTIONS] [VALUE]\n"
+  printf "  value [OPTIONS] [VALUE_NOTATION] \n"
   printf "  value -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"

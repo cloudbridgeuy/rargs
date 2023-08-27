@@ -96,8 +96,6 @@ pub fn object_value_to_dot_columns(
         })
         .collect();
 
-    println!("{:?}", pairs);
-
     Ok(serde_json::to_value(pairs_to_dot_columns(pairs, indent)).unwrap())
 }
 
