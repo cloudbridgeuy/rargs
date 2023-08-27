@@ -25,15 +25,34 @@
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   {% if command["positional_arguments"] -%}
-  printf "  {{ command["name"] }} {% for option in required -%}{% if option["short"] %}-{{
-  option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor
-%}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{% if arg["value_notation"] %}{{
-arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{
-arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}\n"
+  printf "  {{ command["name"] }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}\n"
   {% else -%}
   printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
   {% endif -%}
   printf "  {{ command["name"] }} -h|--help\n"
+
+  {%- if command["positional_arguments"] %}
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  {%- for arg in command["positional_arguments"] %}
+  printf "  {% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}\n"
+  printf "    {{ arg["description"] }}\n"
+  {%- if arg["required"] or arg["multiple"] or arg["default"] or arg["choices"] %}
+  printf "    [
+    {%- if arg["required"] -%}
+      @required
+    {%- endif -%}
+    {%- if arg["multiple"] -%}
+      {%- if arg["required"] -%}, {% endif -%}@multiple
+    {%- endif -%}
+    {%- if arg["default"] -%}
+      {%- if arg["required"] or arg["multiple"] -%}, {% endif -%}@default {{ arg["default"] }}
+    {%- endif -%}
+    {%- if arg["choices"] -%}
+      {%- if arg["required"] or arg["multiple"] or arg["default"] -%}, {% endif -%}@choices {{ arg["choices"] | join(sep=", ") }}
+    {%- endif -%}]\n"
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endif %}
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   {%- if command["options"] or command["flags"] %}

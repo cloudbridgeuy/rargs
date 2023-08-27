@@ -8,6 +8,10 @@ usage_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage [OPTIONS] VALUE_NOTATION \n"
   printf "  usage -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  VALUE_NOTATION\n"
+  printf "    Source file\n"
+  printf "    [@required]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"

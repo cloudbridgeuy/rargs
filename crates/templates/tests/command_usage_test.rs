@@ -322,4 +322,22 @@ fn test_render() {
             }
         })
     );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a required multiple positional argument with a custom value notation and choices",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "source",
+                    "description": "Source file",
+                    "choices": ["foo", "bar", "baz"],
+                    "required": true,
+                    "multiple": true,
+                    "value_notation": "VALUE_NOTATION"
+                }]
+            }
+        })
+    );
 }

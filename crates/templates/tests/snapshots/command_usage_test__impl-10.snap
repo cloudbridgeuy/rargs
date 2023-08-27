@@ -8,6 +8,9 @@ usage_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  usage [OPTIONS] [FOO] \n"
   printf "  usage -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  FOO\n"
+  printf "    Test foo positional argument\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
