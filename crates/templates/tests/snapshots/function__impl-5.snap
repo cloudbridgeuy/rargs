@@ -1,0 +1,17 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with global required option
+expression: output
+---
+# Function with global required option
+foo() {
+
+  
+  if [[ -z "${args['require']}" ]]; then
+    echo "Missing required option: require"
+    foo_usage
+    exit 1
+  fi
+
+}
+

@@ -1,0 +1,15 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with global default option
+expression: output
+---
+# Function with global default option
+foo() {
+
+  
+  if [[ -z "${args['default']}" ]]; then
+    args['default']="foo"
+  fi
+
+}
+

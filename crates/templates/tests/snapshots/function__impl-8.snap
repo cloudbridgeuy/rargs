@@ -1,0 +1,23 @@
+---
+source: crates/templates/tests/function.rs
+description: "Function with a local and two global required options, one with the same name"
+expression: output
+---
+# Function with a local required option
+foo() {
+
+  
+  if [[ -z "${args['foo']}" ]]; then
+    echo "Missing required option: foo"
+    foo_usage
+    exit 1
+  fi
+
+  if [[ -z "${args['require']}" ]]; then
+    echo "Missing required option: require"
+    foo_usage
+    exit 1
+  fi
+
+}
+
