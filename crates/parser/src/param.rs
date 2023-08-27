@@ -72,6 +72,7 @@ pub struct PositionalArgument {
     pub summary: String,
     pub choices: std::option::Option<Vec<String>>,
     pub required: bool,
+    pub multiple: bool,
     pub default: std::option::Option<String>,
     pub value_notation: std::option::Option<String>,
 }
@@ -83,6 +84,7 @@ impl PositionalArgument {
             summary: summary.to_string(),
             choices: data.choices,
             required: data.required,
+            multiple: data.multiple,
             default: data.default,
             value_notation,
         }

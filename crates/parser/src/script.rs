@@ -152,7 +152,7 @@ impl Script {
                         );
                     }
                 }
-                parser::Data::PositionalArgument(value) => {
+                parser::Data::PositionalArgument(mut value) => {
                     if is_root_scope {
                         eyre::bail!(
                             "Args are not supported at the root scope. Found declaration for arg {} in line {}.",
@@ -160,6 +160,7 @@ impl Script {
                             event.position
                         )
                     } else if let Some(command) = maybe_command.as_mut() {
+                        // Check if the arg is already declared.
                         if command
                             .positional_arguments
                             .iter()
@@ -171,6 +172,20 @@ impl Script {
                                 event.position
                             );
                         }
+
+                        // Check if there is a previous positional argument.
+                        if let Some(arg) = command.positional_arguments.last_mut() {
+                            if arg.multiple {
+                                eyre::bail!(
+                                    "Arg {} in line {} is declared after a multiple arg.",
+                                    value.name,
+                                    event.position
+                                );
+                            }
+                            arg.required = true;
+                            value.required = true;
+                        }
+
                         command.positional_arguments.push(value);
                     } else {
                         eyre::bail!(
