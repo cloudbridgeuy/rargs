@@ -145,4 +145,168 @@ fn test_render() {
             },
         })
     );
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                }]
+            },
+        })
+    );
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one required positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with two positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": false
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with two required positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": true
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with three positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": false
+                }, {
+                    "name": "baz",
+                    "required": false
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with three positional arguments, two of them required",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": true
+                }, {
+                    "name": "baz",
+                    "required": false
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with three positional arguments, three of them required",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": true
+                }, {
+                    "name": "baz",
+                    "required": true
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with three positional arguments, three of them required, the last one multiple",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "bar",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "required": true
+                }, {
+                    "name": "baz",
+                    "required": true,
+                    "multiple": true
+                }]
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one multiple positional arguments",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "foo",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "required": true,
+                    "multiple": true
+                }]
+            },
+        })
+    );
 }

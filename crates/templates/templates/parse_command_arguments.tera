@@ -70,9 +70,48 @@ parse_{{ command["name"] }}_arguments() {
         exit 1
         ;;
       *)
-        printf "Invalid argument: %s\n" "$key" >&2
+        {%- if command["positional_arguments"] %}
+          {%- for arg in command["positional_arguments"] %}
+            {%- if loop.first and loop.last %}
+        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$1
+          shift
+        else
+              {%- if arg["multiple"] %}
+          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$1\""
+          shift
+              {%- else %}
+          printf "Invalid argument: %s\n" "$1" >&2
+          exit 1
+              {%- endif %}
+        fi
+            {%- elif loop.first %}
+        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$1
+          shift
+            {%- elif loop.last %}
+        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$1
+          shift
+        else
+              {%- if arg["multiple"] %}
+          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$1\""
+          shift
+              {%- else %}
+          printf "Invalid argument: %s\n" "$1" >&2
+          exit 1
+              {%- endif %}
+        fi
+            {%- else %}
+        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$1
+          shift
+            {%- endif %}
+          {%- endfor %}
+      {%- else %}
+        printf "Invalid argument: %s\n" "$1" >&2
         exit 1
-        ;;
+      {%- endif %}
       {%- endif %}
     esac
   done

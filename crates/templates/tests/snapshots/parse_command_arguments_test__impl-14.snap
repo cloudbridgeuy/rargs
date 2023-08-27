@@ -1,0 +1,43 @@
+---
+source: crates/templates/tests/parse_command_arguments_test.rs
+description: "Parse commands with three positional arguments, three of them required, the last one multiple"
+expression: output
+---
+parse_bar_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        bar_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -z ${args['foo']+x} ]]; then
+          args['foo']=$1
+          shift
+        elif [[ -z ${args['bar']+x} ]]; then
+          args['bar']=$1
+          shift
+        elif [[ -z ${args['baz']+x} ]]; then
+          args['baz']=$1
+          shift
+        else
+          args['baz']="${args['baz']} \"$1\""
+          shift
+        fi
+    esac
+  done
+}
+

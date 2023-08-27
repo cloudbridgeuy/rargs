@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/command_usage_test.rs
-description: Command usage with positional arguments
+description: Command usage with positional arguments with default value
 expression: output
 ---
 usage_usage() {

@@ -185,4 +185,77 @@ fn test_render() {
             }
         })
     );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with one positional arguments supporting multiple values",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "description": "Test foo positional argument",
+                    "multiple": true
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with positional arguments with default value",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "description": "Test foo positional argument",
+                    "default": "bar"
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with two positional arguments",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "description": "Test foo positional argument",
+                    "default": "bar",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "description": "Test foo positional argument",
+                    "default": "baz",
+                    "required": true
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with two positional arguments, the last muliple",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "foo",
+                    "description": "Test foo positional argument",
+                    "default": "bar",
+                    "required": true
+                }, {
+                    "name": "bar",
+                    "description": "Test foo positional argument",
+                    "default": "baz",
+                    "required": true,
+                    "multiple": true
+                }]
+            }
+        })
+    );
 }

@@ -25,7 +25,7 @@
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   {% if command["positional_arguments"] -%}
-  printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{{ arg["name"] | upper }}{% else %}[{{ arg["name"] | upper }}]{% endif %}{% endfor %}\n"
+  printf "  {{ command["name"] }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{{ arg["name"] | upper }}{% if arg["multiple"] %}...{% endif %}{% else %}[{{ arg["name"] | upper }}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}\n"
   {% else -%}
   printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
   {% endif -%}
