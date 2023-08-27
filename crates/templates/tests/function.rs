@@ -249,4 +249,47 @@ fn test_function_template() {
             }],
         }})
     );
+    test_template!(
+        "function.tera",
+        "Function with a local positional argument with choices",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a local positional argument with choices",
+            "positional_arguments": [{
+                "name": "choices",
+                "choices": ["one", "two", "three"]
+            }],
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with a global option with choices",
+        serde_json::json!({
+        "options": {
+            "choices": {
+                "name": "choices",
+                "choices": ["one", "two", "three"]
+            }
+        },
+        "command": {
+            "name": "foo",
+            "description": "Function with a global option with choices",
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with a local option with choices",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a local option with choices",
+            "options": {
+                "choices": {
+                    "name": "choices",
+                    "choices": ["one", "two", "three"]
+                }
+            },
+        }})
+    );
 }

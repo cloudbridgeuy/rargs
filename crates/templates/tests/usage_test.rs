@@ -16,7 +16,7 @@ fn test_render() {
                 "required": {
                     "short": "r",
                     "name": "required",
-                    "summary": "Test required option",
+                    "description": "Test required option",
                     "required": "true"
                 }
             }
@@ -40,7 +40,7 @@ fn test_render() {
                 "foo": {
                     "short": "f",
                     "name": "foo",
-                    "summary": "Test foo option"
+                    "description": "Test foo option"
                 }
             }
         })
@@ -55,7 +55,7 @@ fn test_render() {
                 "required": {
                     "short": "r",
                     "name": "required",
-                    "summary": "Test required option",
+                    "description": "Test required option",
                     "required": "true"
                 }
             }
@@ -71,7 +71,7 @@ fn test_render() {
                 "multiple": {
                     "short": "m",
                     "name": "multiple",
-                    "summary": "Test multiple option",
+                    "description": "Test multiple option",
                     "multiple": "true"
                 }
             }
@@ -87,7 +87,7 @@ fn test_render() {
                 "default": {
                     "short": "d",
                     "name": "default",
-                    "summary": "Test default option",
+                    "description": "Test default option",
                     "default": "foo"
                 }
             }
@@ -103,7 +103,7 @@ fn test_render() {
                 "choices": {
                     "short": "c",
                     "name": "choices",
-                    "summary": "Test choices option",
+                    "description": "Test choices option",
                     "choices": ["foo", "bar", "baz"]
                 }
             }
@@ -119,7 +119,7 @@ fn test_render() {
                 "required": {
                     "short": "rm",
                     "name": "required-multiple",
-                    "summary": "Test required and multiple option",
+                    "description": "Test required and multiple option",
                     "required": "true",
                     "multiple": "true"
                 }
@@ -136,7 +136,7 @@ fn test_render() {
                 "default": {
                     "short": "dm",
                     "name": "default-multiple",
-                    "summary": "Test default and multiple option",
+                    "description": "Test default and multiple option",
                     "default": "foo",
                     "multiple": "true"
                 }
@@ -151,18 +151,18 @@ fn test_render() {
             "description": "Test simple usage",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 },
                 "short": {
                     "short": "s",
-                    "summary": "Test short flag"
+                    "description": "Test short flag"
                 }
             },
             "options": {
                 "choices": {
                     "short": "cm",
                     "name": "choices-multiple",
-                    "summary": "Test option with choices and multiple",
+                    "description": "Test option with choices and multiple",
                     "choices": ["foo", "bar", "baz"],
                     "multiple": "true"
                 }
@@ -190,7 +190,7 @@ fn test_render() {
             "description": "Test simple usage",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 }
             },
             "commands": {
@@ -210,7 +210,7 @@ fn test_render() {
                 "choices": {
                     "short": "cm",
                     "name": "choices-multiple",
-                    "summary": "Test option with choices and multiple",
+                    "description": "Test option with choices and multiple",
                     "choices": ["foo", "bar", "baz"],
                     "multiple": "true"
                 }
@@ -230,14 +230,14 @@ fn test_render() {
             "description": "Test simple usage",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 }
             },
             "options": {
                 "choices": {
                     "short": "cm",
                     "name": "choices-multiple",
-                    "summary": "Test option with choices and multiple",
+                    "description": "Test option with choices and multiple",
                     "choices": ["foo", "bar", "baz"],
                     "multiple": "true"
                 }
@@ -260,7 +260,7 @@ fn test_render() {
                 "required": {
                     "short": "r",
                     "name": "required",
-                    "summary": "Test required option",
+                    "description": "Test required option",
                     "required": "true"
                 }
             }
@@ -275,7 +275,7 @@ fn test_render() {
             "default": "foo",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 }
             },
             "commands": {
@@ -288,7 +288,7 @@ fn test_render() {
                 "all": {
                     "short": "a",
                     "name": "all",
-                    "summary": "Test option with all attributes",
+                    "description": "Test option with all attributes",
                     "choices": ["foo", "bar", "baz"],
                     "multiple": "true",
                     "required": "true",
@@ -306,7 +306,7 @@ fn test_render() {
             "default": "foo",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 }
             },
             "commands": {
@@ -333,7 +333,7 @@ fn test_render() {
             "description": "Test simple usage",
             "flags": {
                 "verbose": {
-                    "summary": "Test verbose flag"
+                    "description": "Test verbose flag"
                 }
             },
             "commands": {

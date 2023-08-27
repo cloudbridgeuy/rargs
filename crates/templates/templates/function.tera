@@ -1,5 +1,6 @@
 {%- set_global required = [] -%}
 {%- set_global defaults = [] -%}
+{%- set_global choices = [] -%}
 {%- if options -%}
   {%- if command["options"] %}
     {%- for key, option in options | merge(with=command["options"]) -%}
@@ -9,6 +10,9 @@
       {%- if option["default"] -%}
         {%- set_global defaults = defaults | concat(with=option) -%}
       {%- endif -%}
+      {% if option["choices"] -%}
+        {%- set_global choices = choices | concat(with=option) -%}
+      {%- endif -%}
     {%- endfor -%}
   {%- else %}
     {%- for key, option in options -%}
@@ -17,6 +21,9 @@
       {%- endif -%}
       {%- if option["default"] -%}
         {%- set_global defaults = defaults | concat(with=option) -%}
+      {%- endif -%}
+      {% if option["choices"] -%}
+        {%- set_global choices = choices | concat(with=option) -%}
       {%- endif -%}
     {%- endfor -%}
   {%- endif %}
@@ -29,6 +36,9 @@
       {%- if option["default"] -%}
         {%- set_global defaults = defaults | concat(with=option) -%}
       {%- endif -%}
+      {% if option["choices"] -%}
+        {%- set_global choices = choices | concat(with=option) -%}
+      {%- endif -%}
     {%- endfor -%}
   {%- endif -%}
 {%- endif -%}
@@ -39,6 +49,9 @@
     {%- endif -%}
     {%- if arg["default"] -%}
       {%- set_global defaults = defaults | concat(with=arg) -%}
+    {%- endif -%}
+    {% if arg["choices"] -%}
+      {%- set_global choices = choices | concat(with=arg) -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
@@ -65,6 +78,17 @@
   {% for option in defaults %}
   if [[ -z "${args['{{ option["name"] }}']}" ]]; then
     args['{{ option["name"] }}']="{{ option["default"] }}"
+  fi
+{% endfor %}
+{%- endif %}
+{%- if choices | length > 0 %}
+  {% for option in choices %}
+  if [[ -n "${args['{{ option["name"] }}']}" ]]; then
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${args['{{ option["name"] }}']} ]]; then
+      echo "Invalid option for {{ option["name"] }}: ${args['{{ option["name"] }}']}"
+      {{ command["name"] }}_usage
+      exit 1
+    fi
   fi
 {% endfor %}
 {%- endif %}

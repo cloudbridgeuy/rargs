@@ -41,15 +41,15 @@ pub trait Param {
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct Flag {
     pub name: String,
-    pub summary: String,
+    pub description: String,
     pub short: std::option::Option<char>,
 }
 
 impl Flag {
-    pub fn new(data: Data, summary: &str, short: std::option::Option<char>) -> Self {
+    pub fn new(data: Data, description: &str, short: std::option::Option<char>) -> Self {
         Self {
             name: data.name,
-            summary: summary.to_string(),
+            description: description.to_string(),
             short,
         }
     }
@@ -69,7 +69,7 @@ impl Param for Flag {
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct PositionalArgument {
     pub name: String,
-    pub summary: String,
+    pub description: String,
     pub choices: std::option::Option<Vec<String>>,
     pub required: bool,
     pub multiple: bool,
@@ -78,10 +78,10 @@ pub struct PositionalArgument {
 }
 
 impl PositionalArgument {
-    pub fn new(data: Data, summary: &str, value_notation: std::option::Option<String>) -> Self {
+    pub fn new(data: Data, description: &str, value_notation: std::option::Option<String>) -> Self {
         Self {
             name: data.name,
-            summary: summary.to_string(),
+            description: description.to_string(),
             choices: data.choices,
             required: data.required,
             multiple: data.multiple,
@@ -95,7 +95,7 @@ impl PositionalArgument {
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct Option {
     pub name: String,
-    pub summary: String,
+    pub description: String,
     pub short: std::option::Option<char>,
     pub multiple: bool,
     pub required: bool,
@@ -107,13 +107,13 @@ pub struct Option {
 impl Option {
     pub fn new(
         data: Data,
-        summary: &str,
+        description: &str,
         short: std::option::Option<char>,
         value_notation: std::option::Option<String>,
     ) -> Self {
         Self {
             name: data.name,
-            summary: summary.to_string(),
+            description: description.to_string(),
             choices: data.choices,
             multiple: data.multiple,
             required: data.required,

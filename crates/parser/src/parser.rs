@@ -265,7 +265,7 @@ fn parse_tag_param(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
-/// Parses the input as if it was a flag parameter like `@flag -h --help <summary>`.
+/// Parses the input as if it was a flag parameter like `@flag -h --help <description>`.
 fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
     nom::combinator::map(
         nom::sequence::tuple((
@@ -279,11 +279,11 @@ fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
             ),
             parse_tail,
         )),
-        |(short, data, summary)| param::Flag::new(data, summary, short),
+        |(short, data, description)| param::Flag::new(data, description, short),
     )(input)
 }
 
-/// Parses the input as if it was an on option parameter like `@option --help <summary>`.
+/// Parses the input as if it was an on option parameter like `@option --help <description>`.
 fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
     nom::combinator::map(
         nom::sequence::tuple((
@@ -305,13 +305,18 @@ fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
             parse_value_notation,
             parse_tail,
         )),
-        |(short, data, value_notation, summary)| {
-            param::Option::new(data, summary, short, value_notation.map(|v| v.to_string()))
+        |(short, data, value_notation, description)| {
+            param::Option::new(
+                data,
+                description,
+                short,
+                value_notation.map(|v| v.to_string()),
+            )
         },
     )(input)
 }
 
-/// Parses the input as if it was a positional parameter like `@arg name <summary>`.
+/// Parses the input as if it was a positional parameter like `@arg name <description>`.
 fn parse_arg_param(input: &str) -> nom::IResult<&str, param::PositionalArgument> {
     nom::combinator::map(
         nom::sequence::tuple((
@@ -326,8 +331,8 @@ fn parse_arg_param(input: &str) -> nom::IResult<&str, param::PositionalArgument>
             parse_value_notation,
             parse_tail,
         )),
-        |(data, value_notation, summary)| {
-            param::PositionalArgument::new(data, summary, value_notation.map(|v| v.to_string()))
+        |(data, value_notation, description)| {
+            param::PositionalArgument::new(data, description, value_notation.map(|v| v.to_string()))
         },
     )(input)
 }
@@ -658,7 +663,7 @@ mod tests {
             "# @flag --flag A flag",
             Data::Flag(param::Flag {
                 name: "flag".to_string(),
-                summary: "A flag".to_string(),
+                description: "A flag".to_string(),
                 ..Default::default()
             })
         );
@@ -667,14 +672,14 @@ mod tests {
             Data::Flag(param::Flag {
                 name: "flag".to_string(),
                 short: Some('f'),
-                summary: "A flag with a short and long name".to_string(),
+                description: "A flag with a short and long name".to_string(),
             })
         );
         assert_token!(
             "# @option --option An option",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option".to_string(),
+                description: "An option".to_string(),
                 ..Default::default()
             })
         );
@@ -682,7 +687,7 @@ mod tests {
             "# @option --option <VALUE_NOTATION> An option with a specific value notation",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option with a specific value notation".to_string(),
+                description: "An option with a specific value notation".to_string(),
                 value_notation: Some("VALUE_NOTATION".to_string()),
                 ..Default::default()
             })
@@ -692,7 +697,7 @@ mod tests {
             "# @option -o --option An option with a short and long version",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option with a short and long version".to_string(),
+                description: "An option with a short and long version".to_string(),
                 short: Some('o'),
                 ..Default::default()
             })
@@ -701,7 +706,7 @@ mod tests {
             "# @option --option! A required option",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "A required option".to_string(),
+                description: "A required option".to_string(),
                 required: true,
                 ..Default::default()
             })
@@ -710,7 +715,7 @@ mod tests {
             "# @option --option=foo An option with a default value",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option with a default value".to_string(),
+                description: "An option with a default value".to_string(),
                 default: Some("foo".to_string()),
                 ..Default::default()
             })
@@ -719,7 +724,7 @@ mod tests {
             "# @option --option=\"foo bar\" An option with a default multi word value",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option with a default multi word value".to_string(),
+                description: "An option with a default multi word value".to_string(),
                 default: Some("foo bar".to_string()),
                 ..Default::default()
             })
@@ -728,7 +733,7 @@ mod tests {
             "# @option --option* An option that takes multiple values",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that takes multiple values".to_string(),
+                description: "An option that takes multiple values".to_string(),
                 multiple: true,
                 ..Default::default()
             })
@@ -737,7 +742,7 @@ mod tests {
             "# @option --option+ An option that takes multiple values and its required",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that takes multiple values and its required".to_string(),
+                description: "An option that takes multiple values and its required".to_string(),
                 multiple: true,
                 required: true,
                 ..Default::default()
@@ -747,7 +752,7 @@ mod tests {
             "# @option --option[a|b|c] An option that supports predefined values",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that supports predefined values".to_string(),
+                description: "An option that supports predefined values".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 ..Default::default()
             })
@@ -756,7 +761,7 @@ mod tests {
             "# @option --option[=a|b|c] An option that supports predefined values and has a default",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that supports predefined values and has a default".to_string(),
+                description: "An option that supports predefined values and has a default".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 default: Some("a".to_string()),
                 ..Default::default()
@@ -766,7 +771,8 @@ mod tests {
             "# @option --option![a|b|c] An option that supports predefined values and its required",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that supports predefined values and its required".to_string(),
+                description: "An option that supports predefined values and its required"
+                    .to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 required: true,
                 ..Default::default()
@@ -776,7 +782,8 @@ mod tests {
             "# @option --option*[a|b|c] An option that supports predefined values and its multiple",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that supports predefined values and its multiple".to_string(),
+                description: "An option that supports predefined values and its multiple"
+                    .to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 multiple: true,
                 ..Default::default()
@@ -786,7 +793,7 @@ mod tests {
             "# @option --option+[a|b|c] An option that supports predefined values and its multiple and required",
             Data::Option(param::Option {
                 name: "option".to_string(),
-                summary: "An option that supports predefined values and its multiple and required".to_string(),
+                description: "An option that supports predefined values and its multiple and required".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 multiple: true,
                 required: true,
@@ -798,7 +805,7 @@ mod tests {
             "# @arg positional_argument A positional argument",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument".to_string(),
+                description: "A positional argument".to_string(),
                 ..Default::default()
             })
         );
@@ -806,7 +813,7 @@ mod tests {
             "# @arg positional_argument! A required option",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A required option".to_string(),
+                description: "A required option".to_string(),
                 required: true,
                 ..Default::default()
             })
@@ -815,7 +822,7 @@ mod tests {
             "# @arg positional_argument=foo A positional argument with a default value",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument with a default value".to_string(),
+                description: "A positional argument with a default value".to_string(),
                 default: Some("foo".to_string()),
                 ..Default::default()
             })
@@ -824,7 +831,7 @@ mod tests {
             "# @arg positional_argument=\"foo bar\" A positional argument with a default multi word value",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument with a default multi word value".to_string(),
+                description: "A positional argument with a default multi word value".to_string(),
                 default: Some("foo bar".to_string()),
                 ..Default::default()
             })
@@ -833,7 +840,7 @@ mod tests {
             "# @arg positional_argument[a|b|c] A positional argument that supports predefined values",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument that supports predefined values".to_string(),
+                description: "A positional argument that supports predefined values".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 ..Default::default()
             })
@@ -842,7 +849,7 @@ mod tests {
             "# @arg positional_argument[=a|b|c] A positional argument that supports predefined values and has a default",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument that supports predefined values and has a default".to_string(),
+                description: "A positional argument that supports predefined values and has a default".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 default: Some("a".to_string()),
                 ..Default::default()
@@ -852,7 +859,7 @@ mod tests {
             "# @arg positional_argument![a|b|c] A positional argument that supports predefined values and its required",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument that supports predefined values and its required".to_string(),
+                description: "A positional argument that supports predefined values and its required".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 required: true,
                 ..Default::default()
@@ -862,7 +869,7 @@ mod tests {
             "# @arg positional_argument <VALUE_NOTATION> A positional argument with a specific value notation.",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
-                summary: "A positional argument with a specific value notation.".to_string(),
+                description: "A positional argument with a specific value notation.".to_string(),
                 value_notation: Some("VALUE_NOTATION".to_string()),
                 ..Default::default()
             })
