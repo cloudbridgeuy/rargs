@@ -258,4 +258,68 @@ fn test_render() {
             }
         })
     );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a positional argument with a custom value notation",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "source",
+                    "description": "Source file",
+                    "value_notation": "VALUE_NOTATION"
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a multiple positional argument with a custom value notation",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "source",
+                    "description": "Source file",
+                    "multiple": true,
+                    "value_notation": "VALUE_NOTATION"
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a required positional argument with a custom value notation",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "source",
+                    "description": "Source file",
+                    "required": true,
+                    "value_notation": "VALUE_NOTATION"
+                }]
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a required multiple positional argument with a custom value notation",
+        serde_json::json!({
+            "command": {
+                "name": "usage",
+                "description": "Test simple usage",
+                "positional_arguments": [{
+                    "name": "source",
+                    "description": "Source file",
+                    "required": true,
+                    "multiple": true,
+                    "value_notation": "VALUE_NOTATION"
+                }]
+            }
+        })
+    );
 }

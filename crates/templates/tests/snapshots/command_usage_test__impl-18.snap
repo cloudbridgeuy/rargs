@@ -1,0 +1,16 @@
+---
+source: crates/templates/tests/command_usage_test.rs
+description: Command usage with a required multiple positional argument with a custom value notation
+expression: output
+---
+usage_usage() {
+  printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage [OPTIONS] VALUE_NOTATION... \n"
+  printf "  usage -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
