@@ -1,0 +1,15 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with default positional argument
+expression: output
+---
+# Function with a default positional argument
+foo() {
+
+  
+  if [[ -z "${args['default']}" ]]; then
+    args['default']="true"
+  fi
+
+}
+

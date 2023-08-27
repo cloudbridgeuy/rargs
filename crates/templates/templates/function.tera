@@ -33,12 +33,12 @@
   {%- endif -%}
 {%- endif -%}
 {%- if command["positional_arguments"] -%}
-  {%- for key, option in command["positional_arguments"] -%}
-    {%- if option["required"] -%}
-      {%- set_global required = required | concat(with=option) -%}
+  {%- for arg in command["positional_arguments"] -%}
+    {%- if arg["required"] -%}
+      {%- set_global required = required | concat(with=arg) -%}
     {%- endif -%}
-    {%- if option["default"] -%}
-      {%- set_global defaults = defaults | concat(with=option) -%}
+    {%- if arg["default"] -%}
+      {%- set_global defaults = defaults | concat(with=arg) -%}
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}

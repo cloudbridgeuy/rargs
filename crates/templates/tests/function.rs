@@ -176,14 +176,13 @@ fn test_function_template() {
         "command": {
             "name": "foo",
             "description": "Function with a local required option",
-                "options": {
-                    "default": {
-                        "name": "default",
-                        "default": "foo"
-                    }
-                },
-            }
-        })
+            "options": {
+                "default": {
+                    "name": "default",
+                    "default": "foo"
+                }
+            },
+        }})
     );
     test_template!(
         "function.tera",
@@ -202,13 +201,52 @@ fn test_function_template() {
         "command": {
             "name": "foo",
             "description": "Function with a local default option",
-                "options": {
-                    "default": {
-                        "name": "default",
-                        "default": true
-                    }
-                },
-            }
-        })
+            "options": {
+                "default": {
+                    "name": "default",
+                    "default": true
+                }
+            },
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with required positional argument",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a required positional argument",
+            "positional_arguments": [{
+                "name": "default",
+                "required": true
+            }],
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with default positional argument",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a default positional argument",
+            "positional_arguments": [{
+                "name": "default",
+                "default": true
+            }],
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with default and required positional argument",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a default positional argument",
+            "positional_arguments": [{
+                "name": "default",
+                "required": true,
+                "default": true
+            }],
+        }})
     );
 }
