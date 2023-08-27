@@ -10,7 +10,9 @@ usage() {
 
   printf "  usage -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
-  printf "  foo\tTest foo command\n"
+  cat <<EOF
+  foo .... Test foo command
+EOF
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -cm --choices [<CHOICES>]\n"

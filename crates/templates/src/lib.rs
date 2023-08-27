@@ -9,6 +9,30 @@ use tera::{Context, Tera};
 
 static TEMPLATES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/templates");
 
+pub fn pairs_to_dot_columns(pairs: Vec<(&str, &str)>, indent: usize) -> String {
+    // Get the maximum length of the name and description fields.
+    let max = pairs
+        .iter()
+        .map(|(first, _)| first.len() + indent + 1)
+        .max()
+        .unwrap();
+
+    // Create a string builder to store the output.
+    let mut output = String::new();
+
+    // Iterate over the commands and add them to the string builder.
+    for (first, second) in pairs {
+        // Pad the name and description fields to the maximum length.
+        let padded_first = format!("{:.<width$}", "  ".to_string() + first + " ", width = max);
+
+        // Add the name and description to the string builder, separated by dots.
+        output.push_str(&format!("{}.... {}\n", padded_first, second));
+    }
+
+    // Return the string builder as a string.
+    output
+}
+
 /// Merges two Map<String, Value> objects. The second object takes precedence over the first.
 pub fn merge_maps(
     first: &mut Map<String, Value>,
@@ -29,6 +53,52 @@ pub fn merge_maps(
     }
 
     first.clone()
+}
+
+/// Tera filter that takes a collection and returns a dot column representation for two of its keys.
+pub fn object_value_to_dot_columns(
+    value: &Value,
+    args: &HashMap<String, Value>,
+) -> tera::Result<Value> {
+    let key = args.get("key").ok_or_else(|| {
+        tera::Error::msg("The filter `merge_json_objects` requires an argument named `second`")
+    })?;
+    let indent = args.get("indent").ok_or_else(|| {
+        tera::Error::msg("The filter `merge_json_objects` requires an argument named `second`")
+    })?;
+    let key = key.as_str().ok_or_else(|| {
+        tera::Error::msg(format!(
+            "The filter `merge_json_objects` received an invalid argument: {:?}",
+            args
+        ))
+    })?;
+    let indent = indent.as_u64().ok_or_else(|| {
+        tera::Error::msg(format!(
+            "The filter `merge_json_objects` received an invalid argument: {:?}",
+            args
+        ))
+    })? as usize;
+    // Convert the value to an object then iterate over the keys and map its values to a
+    // Vec<( &str,&str )> wher the first value is the first key and the second value is the second key.
+    let pairs: Vec<(&str, &str)> = value
+        .as_object()
+        .unwrap()
+        .iter()
+        .map(|(name, object)| {
+            (
+                name.as_str(),
+                if object.get(key).is_some() {
+                    object.get(key).unwrap().as_str().unwrap()
+                } else {
+                    ""
+                },
+            )
+        })
+        .collect();
+
+    println!("{:?}", pairs);
+
+    Ok(serde_json::to_value(pairs_to_dot_columns(pairs, indent)).unwrap())
 }
 
 /// Tera filter that uses the merge_json_objects function to merge two values that are JSON objects.
@@ -80,6 +150,7 @@ lazy_static! {
         }
 
         tera.register_filter("merge", merge_json_objects_filter);
+        tera.register_filter("object_value_to_dot_columns", object_value_to_dot_columns);
 
         tera
     };

@@ -1,0 +1,19 @@
+---
+source: crates/templates/tests/command_usage_test.rs
+description: Command usage with multiple option
+expression: output
+---
+usage_usage() {
+  printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage [OPTIONS]\n"
+  printf "  usage -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -m --multiple [<MULTIPLE>]\n"
+  printf "    Test multiple option\n"
+  printf "    [@multiple]\n"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+

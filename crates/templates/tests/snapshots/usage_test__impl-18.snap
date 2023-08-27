@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/usage_test.rs
-description: Usage with commands and options
+description: Usage with multiple commands
 expression: output
 ---
 usage() {
@@ -11,13 +11,14 @@ usage() {
   printf "  usage -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   cat <<EOF
+  bar .... Test bar command
+  baz .... Test baz command
   foo .... Test foo command
 EOF
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -cm --choices [<CHOICES>]\n"
-  printf "    Test option with choices and multiple\n"
-  printf "    [@multiple, @choices foo, bar, baz]\n"
+  printf "  --verbose\n"
+  printf "    Test verbose flag\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }

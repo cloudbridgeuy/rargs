@@ -34,17 +34,12 @@ usage() {
 
   {%- if commands %}
   printf "\n\033[4m%s\033[0m\n" "Commands:"
-  {%- for key, command in commands %}
-  printf "  {{ key }}\t{%- if command["description"] -%}{{ command["description"] }}{%- endif -%}\n"
-  {%- if command["help"] %}
-  printf "    \t{{ command["help"] }}\n"
-  {%- endif -%}
-  {%- if default is defined %}
-  {%- if key == default %}
-  printf "    \t[@default]"
-  {%- endif %}
-  {%- endif %}
-  {%- endfor %}
+  cat <<EOF
+{{ commands | object_value_to_dot_columns(key="description", indent=2) -}}
+EOF
+    {%- if default and default != "" %}
+  printf "  [@default {{ default }}]\n"
+    {%- endif %}
   {%- endif %}
 
   printf "\n\033[4m%s\033[0m\n" "Options:"

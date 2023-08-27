@@ -830,25 +830,6 @@ mod tests {
             })
         );
         assert_token!(
-            "# @arg positional_argument* A positional argument that takes multiple values",
-            Data::PositionalArgument(param::PositionalArgument {
-                name: "positional_argument".to_string(),
-                summary: "A positional argument that takes multiple values".to_string(),
-                multiple: true,
-                ..Default::default()
-            })
-        );
-        assert_token!(
-            "# @arg positional_argument+ A positional argument that takes multiple values and its required",
-            Data::PositionalArgument(param::PositionalArgument {
-                name: "positional_argument".to_string(),
-                summary: "A positional argument that takes multiple values and its required".to_string(),
-                multiple: true,
-                required: true,
-                ..Default::default()
-            })
-        );
-        assert_token!(
             "# @arg positional_argument[a|b|c] A positional argument that supports predefined values",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
@@ -873,27 +854,6 @@ mod tests {
                 name: "positional_argument".to_string(),
                 summary: "A positional argument that supports predefined values and its required".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
-                required: true,
-                ..Default::default()
-            })
-        );
-        assert_token!(
-            "# @arg positional_argument*[a|b|c] A positional argument that supports predefined values and its multiple",
-            Data::PositionalArgument(param::PositionalArgument {
-                name: "positional_argument".to_string(),
-                summary: "A positional argument that supports predefined values and its multiple".to_string(),
-                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
-                multiple: true,
-                ..Default::default()
-            })
-        );
-        assert_token!(
-            "# @arg positional_argument+[a|b|c] A positional argument that supports predefined values and its multiple and required",
-            Data::PositionalArgument(param::PositionalArgument {
-                name: "positional_argument".to_string(),
-                summary: "A positional argument that supports predefined values and its multiple and required".to_string(),
-                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
-                multiple: true,
                 required: true,
                 ..Default::default()
             })

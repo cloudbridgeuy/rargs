@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/function.rs
-description: Function with no lines
+description: Normal function
 expression: output
 ---
 # Simple function

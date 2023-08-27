@@ -1,0 +1,19 @@
+---
+source: crates/templates/tests/command_usage_test.rs
+description: Command usage with default and multiple option
+expression: output
+---
+usage_usage() {
+  printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage [OPTIONS]\n"
+  printf "  usage -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -dm --default [<DEFAULT>]\n"
+  printf "    Test default and multiple option\n"
+  printf "    [@multiple, @default foo]\n"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+

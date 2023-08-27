@@ -21,8 +21,16 @@ usage() {
   printf "  args -h|--help\n"
   printf "  args --version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
-  printf "  download\tDownload a file\n"
-  printf "  upload\tUpload a file\n"
+  cat <<EOF
+  choice_default .......... Choice + Default
+  choice_default_value .... Choice + Default + Value Notation
+  choices ................. Choices
+  default ................. Default
+  required ................ Required
+  simplest ................ Simplest
+  value ................... Value Notation
+EOF
+  printf "  [@default simplest]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -51,12 +59,32 @@ parse_arguments() {
   action="${1:-}"
 
   case $action in
-    download)
-      action="download"
+    choice_default)
+      action="choice_default"
       input=("${input[@]:1}")
       ;;
-    upload)
-      action="upload"
+    choice_default_value)
+      action="choice_default_value"
+      input=("${input[@]:1}")
+      ;;
+    choices)
+      action="choices"
+      input=("${input[@]:1}")
+      ;;
+    default)
+      action="default"
+      input=("${input[@]:1}")
+      ;;
+    required)
+      action="required"
+      input=("${input[@]:1}")
+      ;;
+    simplest)
+      action="simplest"
+      input=("${input[@]:1}")
+      ;;
+    value)
+      action="value"
       input=("${input[@]:1}")
       ;;
     -h | --help)
@@ -64,32 +92,31 @@ parse_arguments() {
       exit
       ;;
     "")
+      action="simplest"
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
-      exit 1
+      action="simplest"
       ;;
   esac
 }
 
 
-download_usage() {
-  printf "Download a file\n"
+choice_default_usage() {
+  printf "Choice + Default\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
-  printf "  download [OPTIONS]\n"
-  printf "  download -h|--help\n"
+  printf "  choice_default [OPTIONS] [CHOICE_DEFAULT]\n"
+  printf "  choice_default -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
-parse_download_arguments() {
+parse_choice_default_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
-        download_usage
+        choice_default_usage
         exit
         ;;
       *)
@@ -113,30 +140,28 @@ parse_download_arguments() {
   done
 }
 
-# Download a file
-download() {
+# Choice + Default
+choice_default() {
 
-    echo "Downloading ${args["source"]} to ${args["target"]}"
-    inspect_args
+    :;
 }
 
-upload_usage() {
-  printf "Upload a file\n"
+choice_default_value_usage() {
+  printf "Choice + Default + Value Notation\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
-  printf "  upload [OPTIONS]\n"
-  printf "  upload -h|--help\n"
+  printf "  choice_default_value [OPTIONS] [CHOICE_DEFAULT_VALUE]\n"
+  printf "  choice_default_value -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
-parse_upload_arguments() {
+parse_choice_default_value_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
-        upload_usage
+        choice_default_value_usage
         exit
         ;;
       *)
@@ -160,11 +185,235 @@ parse_upload_arguments() {
   done
 }
 
-# Upload a file
-upload() {
+# Choice + Default + Value Notation
+choice_default_value() {
 
-    echo "Uploading using ${args["user"]}:${args["password"]}"
-    inspect_args
+    :;
+}
+
+choices_usage() {
+  printf "Choices\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  choices [OPTIONS] [CHOICES]\n"
+  printf "  choices -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
+parse_choices_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        choices_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Choices
+choices() {
+
+    :;
+}
+
+default_usage() {
+  printf "Default\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  default [OPTIONS] [DEFAULT]\n"
+  printf "  default -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
+parse_default_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        default_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Default
+default() {
+
+    :;
+}
+
+required_usage() {
+  printf "Required\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  required [OPTIONS] REQUIRED\n"
+  printf "  required -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
+parse_required_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        required_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Required
+required() {
+
+    :;
+}
+
+simplest_usage() {
+  printf "Simplest\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  simplest [OPTIONS] [SIMPLEST]\n"
+  printf "  simplest -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
+parse_simplest_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        simplest_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Simplest
+simplest() {
+
+    :;
+}
+
+value_usage() {
+  printf "Value Notation\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  value [OPTIONS] [VALUE]\n"
+  printf "  value -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+
+parse_value_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        value_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# Value Notation
+value() {
+
+    :;
 }
 
 normalize_input() {
@@ -217,20 +466,48 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  # Global script code
-  declare -A args=()
   # Call the right command action
   case "$action" in
-    "download")
-      parse_download_arguments "${input[@]}"
+    "choice_default")
+      parse_choice_default_arguments "${input[@]}"
       shift $#
-      download
+      choice_default
       ;;
   
-    "upload")
-      parse_upload_arguments "${input[@]}"
+    "choice_default_value")
+      parse_choice_default_value_arguments "${input[@]}"
       shift $#
-      upload
+      choice_default_value
+      ;;
+  
+    "choices")
+      parse_choices_arguments "${input[@]}"
+      shift $#
+      choices
+      ;;
+  
+    "default")
+      parse_default_arguments "${input[@]}"
+      shift $#
+      default
+      ;;
+  
+    "required")
+      parse_required_arguments "${input[@]}"
+      shift $#
+      required
+      ;;
+  
+    "simplest")
+      parse_simplest_arguments "${input[@]}"
+      shift $#
+      simplest
+      ;;
+  
+    "value")
+      parse_value_arguments "${input[@]}"
+      shift $#
+      value
       ;;
   esac
 }

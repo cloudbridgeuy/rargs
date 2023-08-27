@@ -1,12 +1,17 @@
-{%- set name = name | default(value="script") -%}
-
 {%- set_global required = [] -%}
 {%- if options -%}
-{%- for key, option in options -%}
-  {%- if option["required"] -%}
-    {%- set_global required = required | concat(with=option) -%}
-  {%- endif -%}
-{%- endfor -%}
+  {%- for key, option in options -%}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if command["options"] -%}
+  {%- for key, option in command["options"] -%}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
 {%- endif -%}
 
 {{ command["name"] }}_usage() {
@@ -19,8 +24,11 @@
   {% endif -%}
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
+  {% if command["positional_arguments"] -%}
+  printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{{ arg["name"] | upper }}{% else %}[{{ arg["name"] | upper }}]{% endif %}{% endfor %}\n"
+  {% else -%}
   printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
+  {% endif -%}
   printf "  {{ command["name"] }} -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -67,7 +75,6 @@
   {%- endif -%}
   {%- endfor -%}
   {%- endif %}
-
   {%- if flags %}
   {%- for key, flag in flags %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"

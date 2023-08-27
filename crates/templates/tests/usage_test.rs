@@ -177,9 +177,7 @@ fn test_render() {
             "description": "Test simple usage",
             "commands": {
                 "foo": {
-                    "meta": {
-                        "description": "Test foo command"
-                    }
+                    "description": "Test foo command"
                 }
             }
         })
@@ -197,9 +195,7 @@ fn test_render() {
             },
             "commands": {
                 "foo": {
-                    "meta": {
-                        "description": "Test foo command"
-                    }
+                    "description": "Test foo command"
                 }
             }
         })
@@ -221,9 +217,7 @@ fn test_render() {
             },
             "commands": {
                 "foo": {
-                    "meta": {
-                        "description": "Test foo command"
-                    }
+                    "description": "Test foo command"
                 }
             }
         })
@@ -301,6 +295,61 @@ fn test_render() {
                     "default": "foo"
                 }
             }
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with multiple commands with default",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "default": "foo",
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "description": "Test foo command",
+                    "help": "Some additional help message"
+                },
+                "bar": {
+                    "description": "Test bar command",
+                    "help": "Some additional help message"
+                },
+                "baz": {
+                    "description": "Test baz command",
+                    "help": "Some additional help message"
+                }
+            },
+        })
+    );
+    test_template!(
+        "usage.tera",
+        "Usage with multiple commands",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "flags": {
+                "verbose": {
+                    "summary": "Test verbose flag"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "description": "Test foo command",
+                    "help": "Some additional help message"
+                },
+                "bar": {
+                    "description": "Test bar command",
+                    "help": "Some additional help message"
+                },
+                "baz": {
+                    "description": "Test baz command",
+                    "help": "Some additional help message"
+                }
+            },
         })
     );
 }
