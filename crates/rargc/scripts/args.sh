@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
-echo "Hello from the other side!!!"
-echo "Your editor of choice is ${EDITOR:-}"
+declare -A args=()
 
-# @name commands
-# @description Commands example
+# @name args
+# @description Commands with arguments example
 # @version 0.1.0
 
 # @cmd Download a file
 # @alias d
 # @arg source URL to download.
 download() {
-  # shellcheck disable=SC2154
   echo "Downloading ${args["source"]} to ${args["target"]}"
   inspect_args
 }
@@ -20,7 +18,6 @@ download() {
 # @alias u
 # @arg source URL to download.
 upload() {
-  # shellcheck disable=SC2154
   echo "Uploading using ${args["user"]}:${args["password"]}"
   inspect_args
 }

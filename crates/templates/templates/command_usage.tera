@@ -23,9 +23,9 @@
   printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
   printf "  {{ command["name"] }} -h|--help\n"
 
+  printf "\n\033[4m%s\033[0m\n" "Options:"
   {%- if command["options"] or command["flags"] %}
   {%- if command["options"] %}
-  printf "\n\033[4m%s\033[0m\n" "Options:"
   {%- for key, option in command["options"] %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
   printf "    {{ option["summary"] }}\n"
@@ -44,6 +44,8 @@
   {%- endfor -%}
   {%- endif %}
   {%- endif %}
+  printf "  -h --help\n"
+  printf "    Print help\n"
 
   {%- if options or flags %}
   printf "\n\033[4m%s\033[0m\n" "Global Options:"
@@ -72,7 +74,5 @@
   printf "    {{ flag["summary"] }}\n"
   {%- endfor %}
   {%- endif %}
-  printf "  -h --help\n"
-  printf "    Print help\n"
   {%- endif %}
 }

@@ -6,11 +6,12 @@ expression: output
 usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
   printf "  usage [OPTIONS]\n"
 
   printf "  usage -h|--help\n"
 
-  
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
 }
 

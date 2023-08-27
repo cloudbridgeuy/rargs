@@ -6,16 +6,14 @@ expression: output
 usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
   printf "  usage -a|--all <ALL> [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
 
   printf "  usage -h|--help\n"
-
-  
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   printf "  foo\tTest foo command\n"
   printf "    \tSome additional help message\n"
   printf "    \t[@default]"
+
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -a --all <ALL>\n"
   printf "    Test option with all attributes\n"

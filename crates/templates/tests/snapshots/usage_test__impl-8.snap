@@ -6,12 +6,10 @@ expression: output
 usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-
   printf "  usage -rm|--required-multiple <REQUIRED-MULTIPLE> [OPTIONS]\n"
 
   printf "  usage -h|--help\n"
 
-  
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -rm --required <REQUIRED>\n"
   printf "    Test required and multiple option\n"

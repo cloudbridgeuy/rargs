@@ -20,15 +20,15 @@ usage() {
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
 
-  {% if commands -%}
+  {%- if commands %}
   printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  {%- else -%}
+  {%- else %}
   printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
   {%- endif %}
 
   printf "  {{ name }} -h|--help\n"
 
-  {% if version -%}
+  {%- if version %}
   printf "  {{ name }} --version\n"
   {%- endif %}
 
@@ -47,8 +47,8 @@ usage() {
   {%- endfor %}
   {%- endif %}
 
-  {%- if options or flags %}
   printf "\n\033[4m%s\033[0m\n" "Options:"
+  {%- if options or flags %}
   {%- if options %}
   {%- for key, option in options %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
@@ -74,11 +74,11 @@ usage() {
   printf "    {{ flag["summary"] }}\n"
   {%- endfor %}
   {%- endif %}
+  {%- endif %}
   printf "  -h --help\n"
   printf "    Print help\n"
   {%- if version %}
   printf "  --version\n"
   printf "    Pring version\n"
-  {%- endif %}
   {%- endif %}
 }
