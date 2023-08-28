@@ -1,0 +1,41 @@
+---
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse command with multiple global options
+expression: output
+---
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -f | --foo)
+        if [[ -z ${args['foo']+x} ]]; then
+            args['foo']=$2
+          else
+            args['foo']="${args['foo']:-} $2"
+          fi
+        shift 2
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+

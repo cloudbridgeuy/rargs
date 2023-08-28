@@ -309,4 +309,22 @@ fn test_render() {
             },
         })
     );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one multiple option",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "foo",
+                "options": {
+                    "multiple": {
+                        "name": "foo",
+                        "required": true,
+                        "multiple": true
+                    }
+                }
+            },
+        })
+    );
 }

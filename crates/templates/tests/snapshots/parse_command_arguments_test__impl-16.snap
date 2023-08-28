@@ -1,0 +1,40 @@
+---
+source: crates/templates/tests/parse_command_arguments_test.rs
+description: Parse commands with one multiple option
+expression: output
+---
+parse_foo_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h | --help)
+        foo_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --multiple)
+        if [[ -z ${args['multiple']+x} ]]; then
+            args['multiple']=$2
+          else
+            args['multiple']="${args['multiple']:-} $2"
+          fi
+        shift 2
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$1" >&2
+        exit 1
+    esac
+  done
+}
+

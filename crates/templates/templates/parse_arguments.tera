@@ -71,7 +71,15 @@ parse_arguments() {
     {%- endfor -%}{% endif %}
     {%- if options -%}{%- for key, option in options %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
-        args['{{ key }}']=$2
+        {% if option["multiple"] -%}
+          if [[ -z ${args['{{ key }}']+x} ]]; then
+            args['{{ key }}']=$2
+          else
+            args['{{ key }}']="${args['{{ key }}']:-} $2"
+          fi
+        {% else -%}
+          args['{{ key }}']=$2
+        {% endif -%}
         shift 2
         ;;
     {%- endfor -%}{% endif %}
