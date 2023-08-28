@@ -18,10 +18,10 @@ pub enum Data {
     SheBang(String),
     Author(Vec<String>),
     Alias(String),
-    Example(String),
     PositionalArgument(param::PositionalArgument),
     Cmd(String),
     Description(String),
+    Example(param::Example),
     Flag(param::Flag),
     Func(String),
     Help(String),
@@ -101,6 +101,29 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
+/// Parses an input as if it was an example definition like `# @example Example description $
+/// command --option`.
+fn parse_example(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::pair(
+                nom::bytes::complete::tag("example"),
+                nom::character::complete::space1,
+            ),
+            nom::sequence::tuple((
+                nom::bytes::complete::take_till(|c| c == '$'),
+                nom::sequence::preceded(nom::character::complete::char('$'), parse_tail),
+            )),
+        ),
+        |(description, command)| {
+            Some(Data::Example(param::Example::new(
+                description.trim(),
+                command.trim(),
+            )))
+        },
+    )(input)
+}
+
 /// Parses an input as if it was a bash comment with a tag such as
 /// `# @name rest...`, `# @description rest...`, etc.
 fn parse_tag(input: &str) -> nom::IResult<&str, Option<Data>> {
@@ -110,7 +133,12 @@ fn parse_tag(input: &str) -> nom::IResult<&str, Option<Data>> {
             nom::character::complete::space0,
             nom::character::complete::char('@'),
         )),
-        nom::branch::alt((parse_tag_text, parse_tag_param, parse_tag_unknown)),
+        nom::branch::alt((
+            parse_tag_text,
+            parse_tag_param,
+            parse_example,
+            parse_tag_unknown,
+        )),
     )(input)
 }
 
@@ -122,7 +150,6 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 nom::bytes::complete::tag("author"),
                 nom::bytes::complete::tag("cmd"),
                 nom::bytes::complete::tag("alias"),
-                nom::bytes::complete::tag("example"),
                 nom::bytes::complete::tag("description"),
                 nom::bytes::complete::tag("default"),
                 nom::bytes::complete::tag("help"),
@@ -139,7 +166,6 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "author" => Data::Author(text.split(',').map(|v| v.trim().to_string()).collect()),
                 "cmd" => Data::Cmd(text),
                 "alias" => Data::Alias(text),
-                "example" => Data::Example(text),
                 "description" => Data::Description(text),
                 "default" => Data::Default(text),
                 "help" => Data::Help(text),
@@ -894,6 +920,20 @@ mod tests {
         assert_token!("#!/bin/bash", Data::SheBang("#!/bin/bash".to_string()));
         assert_token!("foo=bar", Data::Line("foo=bar".to_string()));
         assert_token!("# @alias foo", Data::Alias("foo".to_string()));
+        assert_token!(
+            "# @example Something awesome $ something awesome",
+            Data::Example(param::Example {
+                description: "Something awesome".to_string(),
+                command: "something awesome".to_string(),
+            })
+        );
+        assert_token!(
+            "# @example Nothing $",
+            Data::Example(param::Example {
+                description: "Nothing".to_string(),
+                command: "".to_string(),
+            })
+        );
         assert_token!("# @flag -f", Ignore);
         assert_token!("# @option -foo![=a|b]", Ignore);
         assert_token!(

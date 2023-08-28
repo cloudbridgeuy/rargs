@@ -65,6 +65,22 @@ impl Param for Flag {
     }
 }
 
+/// Represents an `@example` param. E.g. `@example Prints hello world $ greet`
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
+pub struct Example {
+    pub description: String,
+    pub command: String,
+}
+
+impl Example {
+    pub fn new(description: &str, command: &str) -> Self {
+        Self {
+            description: description.to_string(),
+            command: command.to_string(),
+        }
+    }
+}
+
 /// Represents an `@arg` param. E.g. `@arg name Your name`.
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct PositionalArgument {

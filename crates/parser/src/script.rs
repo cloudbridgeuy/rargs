@@ -17,7 +17,7 @@ pub struct Command {
     pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
     pub aliases: Option<Vec<String>>,
-    pub examples: Option<Vec<String>>,
+    pub examples: Option<Vec<param::Example>>,
 }
 
 impl Command {
@@ -44,7 +44,7 @@ pub struct Script {
     pub commands: HashMap<String, Command>,
     pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
-    pub examples: Option<Vec<String>>,
+    pub examples: Option<Vec<param::Example>>,
 }
 
 impl Script {
@@ -235,7 +235,7 @@ impl Script {
                         command.examples.get_or_insert_with(Vec::new).push(value);
                     } else {
                         eyre::bail!(
-                            "No command in scope in when parsing example {} in line {}. Did you forget the @cmd directive?",
+                            "No command in scope in when parsing example {:?} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
                         );
