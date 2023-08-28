@@ -106,6 +106,10 @@ choice_default_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  choice_default [OPTIONS] [CHOICE_DEFAULT] \n"
   printf "  choice_default -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  CHOICE_DEFAULT\n"
+  printf "    Positional argument with choices and default value.\n"
+  printf "    [@default a, @choices a, b, c]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -148,6 +152,15 @@ choice_default() {
     args['choice_default']="a"
   fi
 
+  
+  if [[ -n "${args['choice_default']}" ]]; then
+    if [[ ! "(a b c)" =~ ${args['choice_default']} ]]; then
+      echo "Invalid option for choice_default: ${args['choice_default']}"
+      choice_default_usage
+      exit 1
+    fi
+  fi
+
     :;
 }
 
@@ -156,6 +169,10 @@ choice_default_value_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  choice_default_value [OPTIONS] [VALUE_NOTATION] \n"
   printf "  choice_default_value -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  VALUE_NOTATION\n"
+  printf "    Positional argument with choices, default value and value notation.\n"
+  printf "    [@default a, @choices a, b, c]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -198,6 +215,15 @@ choice_default_value() {
     args['choice_default_value']="a"
   fi
 
+  
+  if [[ -n "${args['choice_default_value']}" ]]; then
+    if [[ ! "(a b c)" =~ ${args['choice_default_value']} ]]; then
+      echo "Invalid option for choice_default_value: ${args['choice_default_value']}"
+      choice_default_value_usage
+      exit 1
+    fi
+  fi
+
     :;
 }
 
@@ -206,6 +232,10 @@ choices_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  choices [OPTIONS] [CHOICES] \n"
   printf "  choices -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  CHOICES\n"
+  printf "    Positional argument with choices.\n"
+  printf "    [@choices a, b, c]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -243,6 +273,15 @@ parse_choices_arguments() {
 # Choices
 choices() {
 
+  
+  if [[ -n "${args['choices']}" ]]; then
+    if [[ ! "(a b c)" =~ ${args['choices']} ]]; then
+      echo "Invalid option for choices: ${args['choices']}"
+      choices_usage
+      exit 1
+    fi
+  fi
+
     :;
 }
 
@@ -251,6 +290,10 @@ default_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  default [OPTIONS] [DEFAULT] \n"
   printf "  default -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  DEFAULT\n"
+  printf "    Positional argument with default value.\n"
+  printf "    [@default default_value]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -301,6 +344,10 @@ required_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  required [OPTIONS] REQUIRED \n"
   printf "  required -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  REQUIRED\n"
+  printf "    Required positional argument.\n"
+  printf "    [@required]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -353,6 +400,9 @@ simplest_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  simplest [OPTIONS] [SIMPLEST] \n"
   printf "  simplest -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  SIMPLEST\n"
+  printf "    Simplest positional argument definition.\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
@@ -398,6 +448,9 @@ value_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  value [OPTIONS] [VALUE_NOTATION] \n"
   printf "  value -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  VALUE_NOTATION\n"
+  printf "    Positional argument with value notation.\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"

@@ -13,17 +13,20 @@ version() {
   echo "0.1.0"
 }
 
-
 usage() {
   printf "Commands example\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  commands [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+
   printf "  commands -h|--help\n"
   printf "  commands --version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
-  printf "  download\tDownload a file\n"
-  printf "  upload\tUpload a file\n"
-  printf "\n\033[4m%s\033[0m\n" "Flags:"
+  cat <<EOF
+  download .... Download a file
+  upload ...... Upload a file
+EOF
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  --version\n"
@@ -32,7 +35,7 @@ usage() {
 
 
 parse_arguments() {
-    while [[ $# -gt 0 ]]; do
+  while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       --version)
         version
@@ -42,18 +45,14 @@ parse_arguments() {
         usage
         exit
         ;;
-
       *)
         break
         ;;
     esac
   done
-
-  
   action="${1:-}"
 
   case $action in
-
     download)
       action="download"
       input=("${input[@]:1}")
@@ -73,62 +72,70 @@ parse_arguments() {
       exit 1
       ;;
   esac
-
 }
+
 
 download_usage() {
   printf "Download a file\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  download [OPTIONS]\n"
+  printf "  download [OPTIONS] SOURCE TARGET \n"
   printf "  download -h|--help\n"
-  printf "\n\033[4m%s\033[0m\n" "Flags:"
-  printf "  -f --force\n"
-  printf "    Overwrite existing files\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  SOURCE\n"
+  printf "    URL to download from\n"
+  printf "    [@required]\n"
+  printf "  TARGET\n"
+  printf "    Target filename (default: same as source)\n"
+  printf "    [@required]\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
 parse_download_arguments() {
-    while [[ $# -gt 0 ]]; do
+  while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
         download_usage
         exit
         ;;
-
       *)
         break
         ;;
     esac
   done
 
-  action="download"
-  
-
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-
-      -f | --force)
-        args['--force']=1
-        shift
-        ;;
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
         ;;
-
       *)
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
         ;;
     esac
   done
-
 }
 
 # Download a file
 download() {
+
+  
+  if [[ -z "${args['source']}" ]]; then
+    echo "Missing required option: source"
+    download_usage
+    exit 1
+  fi
+
+  if [[ -z "${args['target']}" ]]; then
+    echo "Missing required option: target"
+    download_usage
+    exit 1
+  fi
 
     # shellcheck disable=SC2154
     echo "Downloading ${args["source"]} to ${args["target"]}"
@@ -140,63 +147,61 @@ upload_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  upload -u|--user <USER> [OPTIONS]\n"
   printf "  upload -h|--help\n"
+
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -p --password [<PASSWORD>]\n"
   printf "    Password to use for logging in\n"
   printf "  -u --user <USER>\n"
   printf "    Username to use for logging in\n"
-  printf "\n\033[4m%s\033[0m\n" "Flags:"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
 
 parse_upload_arguments() {
-    while [[ $# -gt 0 ]]; do
+  while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
         upload_usage
         exit
         ;;
-
       *)
         break
         ;;
     esac
   done
 
-  action="upload"
-  
-
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-
       -p | --password)
         args['password']=$2
         shift 2
         ;;
-
       -u | --user)
         args['user']=$2
         shift 2
         ;;
-
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
         ;;
-
       *)
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
         ;;
     esac
   done
-
 }
 
 # Upload a file
 upload() {
+
+  
+  if [[ -z "${args['user']}" ]]; then
+    echo "Missing required option: user"
+    upload_usage
+    exit 1
+  fi
 
     # shellcheck disable=SC2154
     echo "Uploading using ${args["user"]}:${args["password"]}"
