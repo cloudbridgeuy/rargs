@@ -22,6 +22,8 @@
 
 {% include "initialize.tera" %}
 
+{% include "root_command.tera" %}
+
 {% include "run.tera" %}
 
 initialize

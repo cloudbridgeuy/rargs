@@ -13,11 +13,9 @@ run() {
   fi
 {%- endif %}
   {%- if lines and lines | length > 0 %}
-  # Global script code
-  {%- for line in lines %}
-  {{ line }}
-  {%- endfor -%}
-{%- endif %}
+  # Call the root command
+  root_command
+  {%- endif %}
   {% if commands -%}
   # Call the right command action
   case "$action" in

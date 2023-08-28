@@ -19,17 +19,17 @@ parse_arguments() {
 
   case $action in
     bar)
-      action="bar"
-      input=("${input[@]:1}")
-      ;;
+        action="bar"
+        input=("${input[@]:1}")
+        ;;
     baz)
-      action="baz"
-      input=("${input[@]:1}")
-      ;;
+        action="baz"
+        input=("${input[@]:1}")
+        ;;
     foo)
-      action="foo"
-      input=("${input[@]:1}")
-      ;;
+        action="foo"
+        input=("${input[@]:1}")
+        ;;
     -h | --help)
       usage
       exit

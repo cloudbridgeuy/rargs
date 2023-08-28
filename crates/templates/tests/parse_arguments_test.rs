@@ -140,4 +140,14 @@ fn test_render() {
             },
         })
     );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse command with positional arguments and no commands",
+        serde_json::json!({
+            "name": "foo",
+            "positional_arguments": [{
+                "name": "foo",
+            }],
+        })
+    );
 }

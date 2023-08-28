@@ -8,16 +8,16 @@ use crate::parser;
 
 #[derive(Serialize, Default, Debug, Clone)]
 pub struct Command {
-    pub name: Option<String>,
-    pub help: Option<String>,
+    pub aliases: Option<Vec<String>>,
     pub description: Option<String>,
+    pub examples: Option<Vec<param::Example>>,
     pub flags: HashMap<String, param::Flag>,
+    pub help: Option<String>,
+    pub lines: Option<Vec<String>>,
+    pub name: Option<String>,
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
-    pub lines: Option<Vec<String>>,
     pub rules: Option<Vec<String>>,
-    pub aliases: Option<Vec<String>>,
-    pub examples: Option<Vec<param::Example>>,
 }
 
 impl Command {
@@ -31,20 +31,21 @@ impl Command {
 
 #[derive(Serialize, Default, Debug)]
 pub struct Script {
-    pub name: Option<String>,
-    pub help: Option<String>,
-    pub description: Option<String>,
-    pub shebang: String,
-    pub flags: HashMap<String, param::Flag>,
-    pub options: HashMap<String, param::Option>,
     pub author: Option<Vec<String>>,
-    pub version: Option<String>,
-    pub rargc_version: String,
-    pub default: Option<String>,
     pub commands: HashMap<String, Command>,
-    pub lines: Option<Vec<String>>,
-    pub rules: Option<Vec<String>>,
+    pub default: Option<String>,
+    pub description: Option<String>,
     pub examples: Option<Vec<param::Example>>,
+    pub flags: HashMap<String, param::Flag>,
+    pub help: Option<String>,
+    pub lines: Option<Vec<String>>,
+    pub name: Option<String>,
+    pub options: HashMap<String, param::Option>,
+    pub positional_arguments: Vec<param::PositionalArgument>,
+    pub rargc_version: String,
+    pub rules: Option<Vec<String>>,
+    pub shebang: String,
+    pub version: Option<String>,
 }
 
 impl Script {
@@ -152,13 +153,34 @@ impl Script {
                         );
                     }
                 }
-                parser::Data::PositionalArgument(mut value) => {
+                parser::Data::PositionalArgument(value) => {
                     if is_root_scope {
-                        eyre::bail!(
-                            "Args are not supported at the root scope. Found declaration for arg {} in line {}.",
-                            value.name,
-                            event.position
-                        )
+                        // Check if the arg is already declared.
+                        if script
+                            .positional_arguments
+                            .iter()
+                            .any(|v| v.name == value.name)
+                        {
+                            eyre::bail!(
+                                "Duplicate arg {} for in line {}.",
+                                value.name,
+                                event.position
+                            );
+                        }
+
+                        // Check if there is a previous positional argument.
+                        if let Some(arg) = script.positional_arguments.last_mut() {
+                            if arg.multiple {
+                                eyre::bail!(
+                                    "Arg {} in line {} is declared after a multiple arg.",
+                                    value.name,
+                                    event.position
+                                );
+                            }
+                            arg.required = true;
+                        }
+
+                        script.positional_arguments.push(value);
                     } else if let Some(command) = maybe_command.as_mut() {
                         // Check if the arg is already declared.
                         if command
@@ -173,7 +195,7 @@ impl Script {
                             );
                         }
 
-                        // Check if there is a previous positional argument.
+                        // Check if there is a previous multiple positional argument.
                         if let Some(arg) = command.positional_arguments.last_mut() {
                             if arg.multiple {
                                 eyre::bail!(
@@ -183,7 +205,6 @@ impl Script {
                                 );
                             }
                             arg.required = true;
-                            value.required = true;
                         }
 
                         command.positional_arguments.push(value);

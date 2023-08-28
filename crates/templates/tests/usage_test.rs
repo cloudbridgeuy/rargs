@@ -396,4 +396,36 @@ fn test_render() {
             },
         })
     );
+    test_template!(
+        "usage.tera",
+        "Usage with positional arguments",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test usage with positional arguments",
+            "positional_arguments": [{
+                "name": "foo",
+                "description": "Test foo command"
+            }, {
+                "name": "bar",
+                "description": "Test bar command"
+            }]
+        })
+    );
+
+    test_template!(
+        "usage.tera",
+        "Usage with positional arguments",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test usage with positional arguments, one of them required",
+            "positional_arguments": [{
+                "name": "foo",
+                "description": "Test foo command",
+                "required": true
+            }, {
+                "name": "bar",
+                "description": "Test bar command"
+            }]
+        })
+    );
 }

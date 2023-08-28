@@ -1,13 +1,13 @@
 ---
-source: crates/templates/tests/parse_command_arguments_test.rs
-description: Parse commands with two positional arguments
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse command with positional arguments and no commands
 expression: output
 ---
-parse_bar_arguments() {
+parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
       -h | --help)
-        bar_usage
+        usage
         exit
         ;;
       *)
@@ -15,7 +15,6 @@ parse_bar_arguments() {
         ;;
     esac
   done
-
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
@@ -26,9 +25,6 @@ parse_bar_arguments() {
       *)
         if [[ -z ${args['foo']+x} ]]; then
           args['foo']=$key
-          shift
-        elif [[ -z ${args['bar']+x} ]]; then
-          args['bar']=$key
           shift
         else
           printf "Invalid argument: %s\n" "$key" >&2

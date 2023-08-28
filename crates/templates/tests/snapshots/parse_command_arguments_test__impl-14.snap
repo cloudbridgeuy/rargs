@@ -25,18 +25,19 @@ parse_bar_arguments() {
         ;;
       *)
         if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$1
+          args['foo']=$key
           shift
         elif [[ -z ${args['bar']+x} ]]; then
-          args['bar']=$1
+          args['bar']=$key
           shift
         elif [[ -z ${args['baz']+x} ]]; then
-          args['baz']=$1
+          args['baz']=$key
           shift
         else
-          args['baz']="${args['baz']} \"$1\""
+          args['baz']="${args['baz']} \"$key\""
           shift
         fi
+        ;;
     esac
   done
 }

@@ -8,10 +8,9 @@ foo() {
 
   
   if [[ -z "${args['require']}" ]]; then
-    echo "Missing required option: require"
-    foo_usage
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "require" >&2
+    foo_usage >&2
     exit 1
   fi
-
 }
 

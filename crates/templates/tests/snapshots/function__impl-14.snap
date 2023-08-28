@@ -10,6 +10,5 @@ foo() {
   if [[ -z "${args['default']}" ]]; then
     args['default']="true"
   fi
-
 }
 

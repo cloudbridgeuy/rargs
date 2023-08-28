@@ -25,12 +25,13 @@ parse_foo_arguments() {
         ;;
       *)
         if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$1
+          args['foo']=$key
           shift
         else
-          args['foo']="${args['foo']} \"$1\""
+          args['foo']="${args['foo']} \"$key\""
           shift
         fi
+        ;;
     esac
   done
 }

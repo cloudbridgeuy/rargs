@@ -9,11 +9,10 @@ foo() {
   
   if [[ -n "${args['choices']}" ]]; then
     if [[ ! "(one two three)" =~ ${args['choices']} ]]; then
-      echo "Invalid option for choices: ${args['choices']}"
-      foo_usage
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "choices" ": " "${args['choices']}" >&2
+      foo_usage >&2
       exit 1
     fi
   fi
-
 }
 

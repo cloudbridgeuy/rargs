@@ -79,27 +79,27 @@
   if [[ -z "${args['{{ option["name"] }}']}" ]]; then
     args['{{ option["name"] }}']="{{ option["default"] }}"
   fi
-{% endfor %}
+  {%- endfor %}
 {%- endif %}
 {%- if choices | length > 0 %}
   {% for option in choices %}
   if [[ -n "${args['{{ option["name"] }}']}" ]]; then
     if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${args['{{ option["name"] }}']} ]]; then
-      echo "Invalid option for {{ option["name"] }}: ${args['{{ option["name"] }}']}"
-      {{ command["name"] }}_usage
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${args['{{ option["name"] }}']}" >&2
+      {{ command["name"] }}_usage >&2
       exit 1
     fi
   fi
-{% endfor %}
+  {%- endfor %}
 {%- endif %}
 {%- if required | length > 0 %}
   {% for option in required %}
   if [[ -z "${args['{{ option["name"] }}']}" ]]; then
-    echo "Missing required option: {{ option["name"] }}"
-    {{ command["name"] }}_usage
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "{{ option["name"] }}" >&2
+    {{ command["name"] }}_usage >&2
     exit 1
   fi
-{% endfor %}
+  {%- endfor %}
 {%- endif %}
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}

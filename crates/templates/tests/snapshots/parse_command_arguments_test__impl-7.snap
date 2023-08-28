@@ -25,12 +25,13 @@ parse_bar_arguments() {
         ;;
       *)
         if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$1
+          args['foo']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$1" >&2
+          printf "Invalid argument: %s\n" "$key" >&2
           exit 1
         fi
+        ;;
     esac
   done
 }
