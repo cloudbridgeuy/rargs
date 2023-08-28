@@ -792,7 +792,7 @@ mod tests {
                 default: Some("a".to_string()),
                 ..Default::default()
             })
-        );
+            );
         assert_token!(
             "# @option --option![a|b|c] An option that supports predefined values and its required",
             Data::Option(param::Option {
@@ -825,7 +825,7 @@ mod tests {
                 required: true,
                 ..Default::default()
             })
-        );
+            );
 
         assert_token!(
             "# @arg positional_argument A positional argument",
@@ -861,7 +861,7 @@ mod tests {
                 default: Some("foo bar".to_string()),
                 ..Default::default()
             })
-        );
+            );
         assert_token!(
             "# @arg positional_argument[a|b|c] A positional argument that supports predefined values",
             Data::PositionalArgument(param::PositionalArgument {
@@ -870,7 +870,7 @@ mod tests {
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 ..Default::default()
             })
-        );
+            );
         assert_token!(
             "# @arg positional_argument[=a|b|c] A positional argument that supports predefined values and has a default",
             Data::PositionalArgument(param::PositionalArgument {
@@ -880,7 +880,7 @@ mod tests {
                 default: Some("a".to_string()),
                 ..Default::default()
             })
-        );
+            );
         assert_token!(
             "# @arg positional_argument![a|b|c] A positional argument that supports predefined values and its required",
             Data::PositionalArgument(param::PositionalArgument {
@@ -890,7 +890,7 @@ mod tests {
                 required: true,
                 ..Default::default()
             })
-        );
+            );
         assert_token!(
             "# @arg positional_argument <VALUE_NOTATION> A positional argument with a specific value notation.",
             Data::PositionalArgument(param::PositionalArgument {
@@ -899,7 +899,7 @@ mod tests {
                 value_notation: Some("VALUE_NOTATION".to_string()),
                 ..Default::default()
             })
-        );
+            );
 
         assert_token!("foo()", Data::Func("foo".to_string()));
         assert_token!("foo ()", Data::Func("foo".to_string()));

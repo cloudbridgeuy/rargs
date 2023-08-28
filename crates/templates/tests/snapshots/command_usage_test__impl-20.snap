@@ -1,17 +1,18 @@
 ---
-source: crates/templates/tests/usage_test.rs
-description: Usage with commands and options
+source: crates/templates/tests/command_usage_test.rs
+description: Commans usage with examples
 expression: output
 ---
-usage() {
+usage_usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  usage [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  usage [OPTIONS]\n"
   printf "  usage -h|--help\n"
-  printf "\n\033[4m%s\033[0m\n" "Commands:"
-  cat <<EOF
-  foo .... Test foo command
-EOF
+  printf "\n\033[4m%s\033[0m\n" "Examples:"
+  printf "  usage -v|--verbose\n"
+  printf "    Verbose mode\n"
+  printf "  usage -v|--verbose foo\n"
+  printf "    Call command foo in verbose mode\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -cm --choices [<CHOICES>]\n"

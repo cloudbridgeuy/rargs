@@ -340,4 +340,35 @@ fn test_render() {
             }
         })
     );
+    test_template!(
+        "command_usage.tera",
+        "Commans usage with examples",
+        serde_json::json!({
+        "command": {
+            "name": "usage",
+            "description": "Test simple usage",
+            "examples": [{
+                "description": "Verbose mode",
+                "command": "-v|--verbose"
+            }, {
+                "description": "Call command foo in verbose mode",
+                "command": "-v|--verbose foo",
+            }],
+            "flags": {
+                "verbose": {
+                    "short": "v",
+                    "description": "Test verbose flag"
+                }
+            },
+            "options": {
+                "choices": {
+                    "short": "cm",
+                    "name": "choices-multiple",
+                    "description": "Test option with choices and multiple",
+                    "choices": ["foo", "bar", "baz"],
+                    "multiple": "true"
+                }
+            },
+        }})
+    );
 }
