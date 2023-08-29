@@ -26,6 +26,10 @@ run() {
       shift $#
       foo
       ;;
+    "")
+      usage
+      exit
+      ;;
   esac
 }
 

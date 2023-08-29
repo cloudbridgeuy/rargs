@@ -12,20 +12,26 @@ run() {
     exit 0
   fi
 {%- endif %}
-  {%- if lines and lines | length > 0 %}
+{%- if lines and lines | length > 0 %}
   # Call the root command
   root_command
-  {%- endif %}
-  {% if commands -%}
+{%- endif %}
+{%- if commands %}
   # Call the right command action
   case "$action" in
-    {%- for key, command in commands %}
+  {%- for key, command in commands %}
     "{{ key }}")
       parse_{{ key }}_arguments "${input[@]}"
       shift $#
       {{ key }}
       ;;
-  {% endfor -%}
+  {%- endfor %}
+  {%- if rules and rules is containing("no-force-default") %}
+    "")
+      usage
+      exit
+      ;;
+  {%- endif %}
   esac
 {%- endif %}
 }

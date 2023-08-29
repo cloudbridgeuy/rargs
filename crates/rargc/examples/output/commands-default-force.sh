@@ -16,19 +16,19 @@ version() {
 usage() {
   printf "Sample application that uses the default command option\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  commands [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  printf "  commands -h|--help\n"
-  printf "  commands -v|--version\n"
+  printf "  commands-default-force [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  commands-default-force -h|--help\n"
+  printf "  commands-default-force -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  commands \n"
+  printf "  commands-default-force \n"
   printf "    Run the default command\n"
-  printf "  commands --help\n"
+  printf "  commands-default-force --help\n"
   printf "    Print the global help\n"
-  printf "  commands download something\n"
+  printf "  commands-default-force download something\n"
   printf "    Download something\n"
-  printf "  commands upload something\n"
+  printf "  commands-default-force upload something\n"
   printf "    Upload something\n"
-  printf "  commands something\n"
+  printf "  commands-default-force something\n"
   printf "    Upload something using the default command\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   cat <<EOF
@@ -77,6 +77,7 @@ parse_arguments() {
       exit
       ;;
     "")
+      action="upload"
       ;;
     *)
       action="upload"
@@ -162,8 +163,6 @@ upload_usage() {
   printf "    [@required]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -f --force\n"
-  printf "    Force upload\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
@@ -184,10 +183,6 @@ parse_upload_arguments() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-      -f | --force)
-        args['--force']=1
-        shift
-        ;;
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
@@ -283,10 +278,6 @@ run() {
       parse_upload_arguments "${input[@]}"
       shift $#
       upload
-      ;;
-    "")
-      usage
-      exit
       ;;
   esac
 }

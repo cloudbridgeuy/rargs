@@ -23,9 +23,9 @@ parse_arguments() {
 
   case $action in
     bar|baz|foo)
-        action="foo"
-        input=("${input[@]:1}")
-        ;;
+      action="foo"
+      input=("${input[@]:1}")
+      ;;
     -h|--help)
       usage
       exit

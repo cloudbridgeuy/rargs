@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @name commands
+# @name commands-default-force
 # @version 0.0.1
 # @description Sample application that uses the default command option
 # @example Run the default command $
@@ -8,11 +8,9 @@
 # @example Upload something $ upload something
 # @example Upload something using the default command $ something
 # @default upload
-# @rule no-force-default
 
 # @cmd Upload a file
 # @alias u
-# @flag -f --force Force upload
 # @arg source! URL to download from
 upload() {
   echo "# this file is located in './crates/rargc/examples/output.sh'"

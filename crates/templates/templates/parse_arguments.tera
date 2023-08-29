@@ -53,9 +53,9 @@ parse_arguments() {
   case $action in
   {%- for key, command in commands %}
     {% if command["aliases"] %}{{ command["aliases"] | join(sep="|") }}|{% endif %}{{ key }})
-        action="{{ key }}"
-        input=("${input[@]:1}")
-        ;;
+      action="{{ key }}"
+      input=("${input[@]:1}")
+      ;;
   {%- endfor %}
     {% if not uses_h %}-h|{% endif %}--help)
       usage
@@ -63,7 +63,9 @@ parse_arguments() {
       ;;
     "")
   {%- if default and default != "" %}
+    {%- if not rules or rules is not containing("no-force-default") %}
       action="{{ default }}"
+    {%- endif %}
   {%- elif required | length > 0 %}
       usage >&2
       exit 1

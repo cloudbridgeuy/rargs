@@ -14,13 +14,11 @@ run() {
       shift $#
       bar
       ;;
-  
     "baz")
       parse_baz_arguments "${input[@]}"
       shift $#
       baz
       ;;
-  
     "foo")
       parse_foo_arguments "${input[@]}"
       shift $#
