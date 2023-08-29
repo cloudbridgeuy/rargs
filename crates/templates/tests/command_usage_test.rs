@@ -11,7 +11,7 @@ fn test_render() {
         "Typical Command usage",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
             }
         })
@@ -21,7 +21,7 @@ fn test_render() {
         "Command usage with single option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "foo": {
@@ -38,7 +38,7 @@ fn test_render() {
         "Command usage with required option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "required": {
@@ -56,7 +56,7 @@ fn test_render() {
         "Command usage with multiple option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "multiple": {
@@ -74,7 +74,7 @@ fn test_render() {
         "Command usage with default option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "default": {
@@ -92,7 +92,7 @@ fn test_render() {
         "Command usage with choices option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "choices": {
@@ -110,7 +110,7 @@ fn test_render() {
         "Command usage with required and multiple option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "required": {
@@ -129,7 +129,7 @@ fn test_render() {
         "Command usage with default and multiple option",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "options": {
                     "default": {
@@ -148,7 +148,7 @@ fn test_render() {
         "Command usage with options and flags",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "flags": {
                     "verbose": {
@@ -176,7 +176,7 @@ fn test_render() {
         "Command usage with positional arguments",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "foo",
@@ -190,7 +190,7 @@ fn test_render() {
         "Command usage with one positional arguments supporting multiple values",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "foo",
@@ -205,7 +205,7 @@ fn test_render() {
         "Command usage with positional arguments with default value",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "foo",
@@ -220,7 +220,7 @@ fn test_render() {
         "Command usage with two positional arguments",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "foo",
@@ -241,7 +241,7 @@ fn test_render() {
         "Command usage with two positional arguments, the last muliple",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "foo",
@@ -263,7 +263,7 @@ fn test_render() {
         "Command usage with a positional argument with a custom value notation",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "source",
@@ -278,7 +278,7 @@ fn test_render() {
         "Command usage with a multiple positional argument with a custom value notation",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "source",
@@ -294,7 +294,7 @@ fn test_render() {
         "Command usage with a required positional argument with a custom value notation",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "source",
@@ -310,7 +310,7 @@ fn test_render() {
         "Command usage with a required multiple positional argument with a custom value notation",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "source",
@@ -327,7 +327,7 @@ fn test_render() {
         "Command usage with a required multiple positional argument with a custom value notation and choices",
         serde_json::json!({
             "command": {
-                "name": "usage",
+                "name": "foo",
                 "description": "Test simple usage",
                 "positional_arguments": [{
                     "name": "source",
@@ -342,10 +342,10 @@ fn test_render() {
     );
     test_template!(
         "command_usage.tera",
-        "Commans usage with examples",
+        "Command usage with examples",
         serde_json::json!({
         "command": {
-            "name": "usage",
+            "name": "foo",
             "description": "Test simple usage",
             "examples": [{
                 "description": "Verbose mode",
@@ -370,5 +370,73 @@ fn test_render() {
                 }
             },
         }})
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with an option that uses -h as short",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Test simple usage",
+                "options": {
+                    "host": {
+                        "short": "h",
+                        "name": "host",
+                        "description": "Test host option"
+                    }
+                }
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a flag that uses -h as short",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Test simple usage",
+                "flags": {
+                    "height": {
+                        "short": "h",
+                        "name": "height",
+                        "description": "Test height option"
+                    }
+                }
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a global flag that uses -h as short",
+        serde_json::json!({
+            "flags": {
+                "height": {
+                    "short": "h",
+                    "name": "height",
+                    "description": "Test height option"
+                }
+            },
+            "command": {
+                "name": "foo",
+                "description": "Test simple usage",
+            }
+        })
+    );
+    test_template!(
+        "command_usage.tera",
+        "Command usage with a global option that uses -h as short",
+        serde_json::json!({
+            "options": {
+                "height": {
+                    "short": "h",
+                    "name": "height",
+                    "description": "Test height option"
+                }
+            },
+            "command": {
+                "name": "foo",
+                "description": "Test simple usage",
+            }
+        })
     );
 }

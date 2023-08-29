@@ -150,4 +150,49 @@ fn test_render() {
             }],
         })
     );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse command with a global option that uses h as short",
+        serde_json::json!({
+            "name": "foo",
+            "options": {
+                "host": {
+                    "description": "The host to connect to",
+                    "short": "h",
+                },
+            },
+        })
+    );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse command with a command option that uses h as short",
+        serde_json::json!({
+            "name": "foo",
+            "commands": {
+                "foo": {
+                    "short": "f",
+                    "options": {
+                        "host": {
+                            "description": "The host to connect to",
+                            "short": "h",
+                        },
+                    },
+                },
+            },
+        })
+    );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse command with a global option that uses v as short",
+        serde_json::json!({
+            "name": "foo",
+            "version": "0.1.0",
+            "flags": {
+                "verbose": {
+                    "description": "Enable verbose mode",
+                    "short": "v"
+                },
+            },
+        })
+    );
 }

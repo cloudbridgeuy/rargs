@@ -1,19 +1,18 @@
 ---
 source: crates/templates/tests/command_usage_test.rs
-description: Command usage with choices option
+description: Command usage with an option that uses -h as short
 expression: output
 ---
 foo_usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  foo [OPTIONS]\n"
-  printf "  foo -h|--help\n"
+  printf "  foo --help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -c --choices [<CHOICES>]\n"
-  printf "    Test choices option\n"
-  printf "    [@choices foo, bar, baz]\n"
-  printf "  -h --help\n"
+  printf "  -h --host [<HOST>]\n"
+  printf "    Test host option\n"
+  printf "  --help\n"
   printf "    Print help\n"
 }
 

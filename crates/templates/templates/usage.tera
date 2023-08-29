@@ -1,13 +1,32 @@
 {%- set name = name | default(value="script") -%}
 
 {%- set_global required = [] -%}
+{%- set_global uses_h = false %}
+{%- set_global uses_v = false %}
 {%- if options -%}
-{%- for key, option in options -%}
-  {%- if option["required"] -%}
-    {%- set_global required = required | concat(with=option) -%}
-  {%- endif -%}
-{%- endfor -%}
+  {%- for key, option in options -%}
+    {%- if option["short"] and option["short"] == "h" %}
+      {%- set_global uses_h = true %}
+    {%- endif %}
+    {%- if option["short"] and option["short"] == "v" %}
+      {%- set_global uses_v = true %}
+    {%- endif %}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
 {%- endif -%}
+{%- if flags -%}
+  {%- for key, flag in flags -%}
+    {%- if flag["short"] and flag["short"] == "h" %}
+      {%- set_global uses_h = true %}
+    {%- endif %}
+    {%- if flag["short"] and flag["short"] == "v" %}
+      {%- set_global uses_v = true %}
+    {%- endif %}
+  {%- endfor -%}
+{%- endif -%}
+
 
 usage() {
   {% if description -%}
@@ -29,10 +48,10 @@ usage() {
   printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
     {%- endif %}
   {%- endif %}
-  printf "  {{ name }} -h|--help\n"
+  printf "  {{ name }} {% if not uses_h %}-h|{% endif %}--help\n"
 
   {%- if version %}
-  printf "  {{ name }} --version\n"
+  printf "  {{ name }} {% if not uses_v %}-v|{% endif %}--version\n"
   {%- endif %}
 
   {%- if examples and examples | length > 0 %}
@@ -96,7 +115,6 @@ EOF
   {%- endif -%}
   {%- endfor -%}
   {%- endif %}
-
   {%- if flags %}
   {%- for key, flag in flags %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
@@ -104,10 +122,10 @@ EOF
   {%- endfor %}
   {%- endif %}
   {%- endif %}
-  printf "  -h --help\n"
+  printf "  {% if not uses_h %}-h {% endif %}--help\n"
   printf "    Print help\n"
   {%- if version %}
-  printf "  --version\n"
+  printf "  {% if not uses_v %}-v {% endif %}--version\n"
   printf "    Pring version\n"
   {%- endif %}
 }

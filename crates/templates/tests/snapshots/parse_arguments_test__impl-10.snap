@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/parse_arguments_test.rs
-description: Parse commands with a default value
+description: Parse command with a command option that uses h as short
 expression: output
 ---
 parse_arguments() {
@@ -18,14 +18,6 @@ parse_arguments() {
   action="${1:-}"
 
   case $action in
-    bar)
-        action="bar"
-        input=("${input[@]:1}")
-        ;;
-    baz)
-        action="baz"
-        input=("${input[@]:1}")
-        ;;
     foo)
         action="foo"
         input=("${input[@]:1}")
@@ -35,10 +27,10 @@ parse_arguments() {
       exit
       ;;
     "")
-      action="baz"
       ;;
     *)
-      action="baz"
+      printf "Invalid command: %s\n" "$action" >&2
+      exit 1
       ;;
   esac
 }

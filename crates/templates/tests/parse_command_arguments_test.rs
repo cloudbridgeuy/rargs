@@ -327,4 +327,40 @@ fn test_render() {
             },
         })
     );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one option that uses -h as short",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "foo",
+                "options": {
+                    "host": {
+                        "name": "host",
+                        "description": "The host to connect to",
+                        "short": "h"
+                    }
+                }
+            },
+        })
+    );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands with one flag that uses -h as short",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "foo",
+                "flags": {
+                    "host": {
+                        "name": "host",
+                        "description": "The host to connect to",
+                        "short": "h"
+                    }
+                }
+            },
+        })
+    );
 }

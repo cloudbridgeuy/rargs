@@ -3,11 +3,11 @@ source: crates/templates/tests/command_usage_test.rs
 description: Command usage with required option
 expression: output
 ---
-usage_usage() {
+foo_usage() {
   printf "Test simple usage\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  usage -r|--required <REQUIRED> [OPTIONS]\n"
-  printf "  usage -h|--help\n"
+  printf "  foo -r|--required <REQUIRED> [OPTIONS]\n"
+  printf "  foo -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -r --required <REQUIRED>\n"

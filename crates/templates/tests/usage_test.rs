@@ -428,4 +428,70 @@ fn test_render() {
             }]
         })
     );
+
+    test_template!(
+        "usage.tera",
+        "Usage with a global option that uses -h as short",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test usage with a global option that uses -h as short",
+            "options": {
+                "host": {
+                    "short": "h",
+                    "name": "host",
+                    "description": "Test host option"
+                }
+            }
+        })
+    );
+
+    test_template!(
+        "usage.tera",
+        "Usage with a global flag that uses -h as short",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test usage with a global option that uses -h as short",
+            "flags": {
+                "host": {
+                    "short": "h",
+                    "name": "host",
+                    "description": "Test host option"
+                }
+            }
+        })
+    );
+
+    test_template!(
+        "usage.tera",
+        "Usage with a global option that uses -v as short",
+        serde_json::json!({
+            "name": "usage",
+            "version": "0.0.1",
+            "description": "Test usage with a global option that uses -v as short",
+            "options": {
+                "verbose": {
+                    "short": "v",
+                    "name": "host",
+                    "description": "Test verbose option"
+                }
+            }
+        })
+    );
+
+    test_template!(
+        "usage.tera",
+        "Usage with a global flag that uses -v as short",
+        serde_json::json!({
+            "name": "usage",
+            "version": "0.0.1",
+            "description": "Test usage with a global option that uses -v as short",
+            "flags": {
+                "verbose": {
+                    "short": "v",
+                    "name": "host",
+                    "description": "Test verbose option"
+                }
+            }
+        })
+    );
 }

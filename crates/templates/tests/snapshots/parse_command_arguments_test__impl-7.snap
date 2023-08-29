@@ -6,7 +6,7 @@ expression: output
 parse_bar_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      -h | --help)
+      -h|--help)
         bar_usage
         exit
         ;;
