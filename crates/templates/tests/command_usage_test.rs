@@ -439,4 +439,15 @@ fn test_render() {
             }
         })
     );
+    test_template!(
+        "command_usage.tera",
+        "Command with aliases",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Test simple usage",
+                "aliases": ["bar", "baz"]
+            }
+        })
+    );
 }

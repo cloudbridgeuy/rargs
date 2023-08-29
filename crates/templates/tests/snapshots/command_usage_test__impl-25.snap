@@ -1,19 +1,17 @@
 ---
 source: crates/templates/tests/command_usage_test.rs
-description: Command usage with required and multiple option
+description: Command with aliases
 expression: output
 ---
 foo_usage() {
   printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Alias:" bar, baz
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  foo -rm|--required-multiple <REQUIRED-MULTIPLE> [OPTIONS]\n"
+  printf "  foo [OPTIONS]\n"
   printf "  foo -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -rm --required <REQUIRED>\n"
-  printf "    Test required and multiple option\n"
-  printf "    [@multiple]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }

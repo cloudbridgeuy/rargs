@@ -5,6 +5,7 @@ expression: output
 ---
 foo_usage() {
   printf "Test simple usage\n"
+
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  foo [OPTIONS] FOO BAR... \n"
   printf "  foo -h|--help\n"

@@ -45,78 +45,82 @@
 {%- endif -%}
 
 {{ command["name"] }}_usage() {
-  {% if command["description"] -%}
+{%- if command["description"] %}
   printf "{{ command["description"] }}\n"
-  {% endif -%}
+{%- endif %}
 
-  {% if command["help"] -%}
+{%- if command["help"] %}
   printf "{{ command["help"] }}\n"
-  {% endif -%}
+{%- endif %}
+
+{%- if command["aliases"] %}
+  printf "\n\033[4m%s\033[0m\n" "Alias:" {{ command["aliases"] | join(sep=", ") }}
+{%- endif %}
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  {% if command["positional_arguments"] -%}
+{%- if command["positional_arguments"] %}
   printf "  {{ command["name"] }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in command["positional_arguments"] %}{% if arg["required"] %}{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}\n"
-  {% else -%}
+{%- else %}
   printf "  {{ command["name"] }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]\n"
-  {% endif -%}
+{%- endif %}
   printf "  {{ command["name"] }} {% if not uses_h %}-h|{% endif %}--help\n"
 
-  {%- if command["examples"] and command["examples"] | length > 0 %}
+{%- if command["examples"] and command["examples"] | length > 0 %}
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-    {%- for example in command["examples"] %}
+  {%- for example in command["examples"] %}
   printf "  {{ command["name"] }} {{ example["command"] }}\n"
   printf "    {{ example["description"] }}\n"
-    {%- endfor %}
-  {%- endif %}
+  {%- endfor %}
+{%- endif %}
 
-  {%- if command["positional_arguments"] %}
+{%- if command["positional_arguments"] %}
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   {%- for arg in command["positional_arguments"] %}
   printf "  {% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}\n"
   printf "    {{ arg["description"] }}\n"
-  {%- if arg["required"] or arg["multiple"] or arg["default"] or arg["choices"] %}
+    {%- if arg["required"] or arg["multiple"] or arg["default"] or arg["choices"] %}
   printf "    [
-    {%- if arg["required"] -%}
+      {%- if arg["required"] -%}
       @required
+      {%- endif -%}
+      {%- if arg["multiple"] -%}
+        {%- if arg["required"] -%}, {% endif -%}@multiple
+      {%- endif -%}
+      {%- if arg["default"] -%}
+        {%- if arg["required"] or arg["multiple"] -%}, {% endif -%}@default {{ arg["default"] }}
+      {%- endif -%}
+      {%- if arg["choices"] -%}
+        {%- if arg["required"] or arg["multiple"] or arg["default"] -%}, {% endif -%}@choices {{ arg["choices"] | join(sep=", ") }}
+      {%- endif -%}]\n"
     {%- endif -%}
-    {%- if arg["multiple"] -%}
-      {%- if arg["required"] -%}, {% endif -%}@multiple
-    {%- endif -%}
-    {%- if arg["default"] -%}
-      {%- if arg["required"] or arg["multiple"] -%}, {% endif -%}@default {{ arg["default"] }}
-    {%- endif -%}
-    {%- if arg["choices"] -%}
-      {%- if arg["required"] or arg["multiple"] or arg["default"] -%}, {% endif -%}@choices {{ arg["choices"] | join(sep=", ") }}
-    {%- endif -%}]\n"
-  {%- endif -%}
   {%- endfor -%}
-  {%- endif %}
+{%- endif %}
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  {%- if opts %}
-    {%- for key, option in opts %}
+{%- if opts %}
+  {%- for key, option in opts %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
   printf "    {{ option["description"] }}\n"
-      {%- if option["multiple"] or option["default"] or option["choices"] %}
+    {%- if option["multiple"] or option["default"] or option["choices"] %}
   printf "    [
-        {%- if option["multiple"] -%}
+      {%- if option["multiple"] -%}
       @multiple
-        {%- endif -%}
-        {%- if option["default"] -%}
-          {%- if option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
-        {%- endif -%}
-        {%- if option["choices"] -%}
-          {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
-        {%- endif -%}]\n"
       {%- endif -%}
-    {%- endfor -%}
-  {%- endif %}
-  {%- if fls %}
-    {%- for key, flag in fls %}
+      {%- if option["default"] -%}
+        {%- if option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
+      {%- endif -%}
+      {%- if option["choices"] -%}
+        {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
+      {%- endif -%}]\n"
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif %}
+{%- if fls %}
+  {%- for key, flag in fls %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
   printf "    {{ flag["description"] }}\n"
-    {%- endfor %}
-  {%- endif %}
+  {%- endfor %}
+{%- endif %}
   printf "  {% if not uses_h %}-h {% endif %}--help\n"
   printf "    Print help\n"
 }

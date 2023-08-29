@@ -240,7 +240,13 @@ impl Script {
                             event.position
                         )
                     } else if let Some(command) = maybe_command.as_mut() {
-                        command.aliases.get_or_insert_with(Vec::new).push(value);
+                        // Check if the value has spaces, and if it does, split it into multiple aliases.
+                        for alias in value.split(' ') {
+                            command
+                                .aliases
+                                .get_or_insert_with(Vec::new)
+                                .push(alias.to_string());
+                        }
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing alias {} in line {}. Did you forget the @cmd directive?",
