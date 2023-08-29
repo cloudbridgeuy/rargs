@@ -363,4 +363,16 @@ fn test_render() {
             },
         })
     );
+
+    test_template!(
+        "parse_command_arguments.tera",
+        "Parse commands defined as a sub-command",
+        serde_json::json!({
+            "name": "foo",
+            "command": {
+                "name": "foo",
+                "subcommand": "./bar"
+            },
+        })
+    );
 }

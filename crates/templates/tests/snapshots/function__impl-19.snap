@@ -1,0 +1,13 @@
+---
+source: crates/templates/tests/function.rs
+description: Function that is configured to use a subcommand
+expression: output
+---
+# Function with a local option with choices
+foo() {
+
+  local sub="./subcommand.sh"
+  echo "Hello, world!"
+  $sub $@
+}
+

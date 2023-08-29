@@ -31,6 +31,7 @@ pub enum Data {
     Default(String),
     Line(String),
     Rule(String),
+    Subcommand(String),
     Unknown(String),
 }
 
@@ -156,6 +157,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 nom::bytes::complete::tag("name"),
                 nom::bytes::complete::tag("version"),
                 nom::bytes::complete::tag("rule"),
+                nom::bytes::complete::tag("sub"),
             )),
             parse_tail,
         ),
@@ -172,6 +174,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "name" => Data::Name(text),
                 "version" => Data::Version(text),
                 "rule" => Data::Rule(text),
+                "sub" => Data::Subcommand(text),
                 _ => unreachable!(),
             })
         },

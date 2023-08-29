@@ -101,6 +101,9 @@
   fi
   {%- endfor %}
 {%- endif %}
+{%- if command["subcommand"] %}
+  local sub="{{ command["subcommand"] }}"
+{%- endif %}
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}
     {%- for line in command["lines"] %}

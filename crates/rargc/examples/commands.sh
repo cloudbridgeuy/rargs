@@ -8,7 +8,7 @@
 # @example Upload command example $ upload [OPTIONS] SOURCE
 
 # @cmd Download a file
-# @alias d ddd
+# @alias d
 # @alias down
 # @arg source! URL to download from
 # @arg target Target filename (default: same as source)

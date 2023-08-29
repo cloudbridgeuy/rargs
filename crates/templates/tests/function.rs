@@ -292,4 +292,18 @@ fn test_function_template() {
             },
         }})
     );
+    test_template!(
+        "function.tera",
+        "Function that is configured to use a subcommand",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "subcommand": "./subcommand.sh",
+            "description": "Function with a local option with choices",
+            "lines": [
+                "echo \"Hello, world!\"",
+                "$sub $@"
+            ]
+        }})
+    );
 }

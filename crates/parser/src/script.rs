@@ -18,6 +18,7 @@ pub struct Command {
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
     pub rules: Option<Vec<String>>,
+    pub subcommand: Option<String>,
 }
 
 impl Command {
@@ -255,6 +256,23 @@ impl Script {
                         );
                     }
                 }
+                parser::Data::Subcommand(value) => {
+                    if is_root_scope {
+                        eyre::bail!(
+                            "Subcommands are not supported at the root scope. Found declaration for subcommand {} in line {}.",
+                            value,
+                            event.position
+                        )
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.subcommand = Some(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing subcommand {} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
+                }
                 parser::Data::Example(value) => {
                     if is_root_scope {
                         script.examples.get_or_insert_with(Vec::new).push(value);
@@ -278,7 +296,7 @@ impl Script {
                             .unwrap()
                             .lines
                             .get_or_insert_with(Vec::new)
-                            .push(value);
+                            .push(value.trim().to_string());
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing line {} in line {}. Did you forget the @cmd directive?",

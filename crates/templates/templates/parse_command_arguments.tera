@@ -47,19 +47,21 @@
 {%- endif -%}
 
 parse_{{ command["name"] }}_arguments() {
+{%- if not command["subcommand"] %}
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-    {%- if rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
+  {%- if rules is not defined or rules is not containing("no-first-option-help") and rules is not containing("custom-usage") %}
       {% if not uses_h %}-h|{% endif %}--help)
         {{ command["name"] }}_usage
         exit
         ;;
-    {%- endif %}
+  {%- endif %}
       *)
         break
         ;;
     esac
   done
+{%- endif %}
 
   while [[ $# -gt 0 ]]; do
     key="$1"
@@ -89,11 +91,13 @@ parse_{{ command["name"] }}_arguments() {
         args['--help']=1
         shift 1
         ;;
-    {% endif %}
+    {%- endif %}
+    {%- if not command["subcommand"] %}
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
         ;;
+    {%- endif %}
       *)
         {%- if command["positional_arguments"] %}
           {%- for arg in command["positional_arguments"] %}
@@ -134,8 +138,12 @@ parse_{{ command["name"] }}_arguments() {
             {%- endif %}
           {%- endfor %}
       {%- else %}
+        {%- if not command["subcommand"] %}
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
+        {%- else %}
+        break
+        {%- endif %}
       {%- endif %}
         ;;
     esac
