@@ -30,7 +30,7 @@ parse_arguments() {
         action="foo"
         input=("${input[@]:1}")
         ;;
-      -h|--help)
+    -h|--help)
       usage
       exit
       ;;

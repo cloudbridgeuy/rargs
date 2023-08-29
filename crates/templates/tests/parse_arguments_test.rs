@@ -195,4 +195,24 @@ fn test_render() {
             },
         })
     );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse command with aliases",
+        serde_json::json!({
+            "name": "foo",
+            "version": "0.1.0",
+            "commands": {
+                "foo": {
+                    "short": "f",
+                    "aliases": ["bar", "baz"],
+                    "options": {
+                        "host": {
+                            "description": "The host to connect to",
+                            "short": "h",
+                        },
+                    },
+                },
+            },
+        })
+    );
 }

@@ -54,7 +54,7 @@
 {%- endif %}
 
 {%- if command["aliases"] %}
-  printf "\n\033[4m%s\033[0m\n" "Alias:" {{ command["aliases"] | join(sep=", ") }}
+  printf "\n\033[4m%s\033[0m %s\n" "Alias:" "{{ command["aliases"] | join(sep=", ") }}"
 {%- endif %}
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"

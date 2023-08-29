@@ -1,11 +1,15 @@
 ---
 source: crates/templates/tests/parse_arguments_test.rs
-description: Parse commands with a required global option
+description: Parse command with aliases
 expression: output
 ---
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
+      -v|--version)
+        version
+        exit
+        ;;
       -h|--help)
         usage
         exit
@@ -18,15 +22,7 @@ parse_arguments() {
   action="${1:-}"
 
   case $action in
-    bar)
-        action="bar"
-        input=("${input[@]:1}")
-        ;;
-    baz)
-        action="baz"
-        input=("${input[@]:1}")
-        ;;
-    foo)
+    bar|baz|foo)
         action="foo"
         input=("${input[@]:1}")
         ;;
@@ -35,9 +31,6 @@ parse_arguments() {
       exit
       ;;
     "")
-      usage >&2
-      exit 1
-  
       ;;
     *)
       printf "Invalid command: %s\n" "$action" >&2

@@ -61,15 +61,15 @@ parse_arguments() {
   action="${1:-}"
 
   case $action in
-    download)
+    d|ddd|down|download)
         action="download"
         input=("${input[@]:1}")
         ;;
-    upload)
+    u|upload)
         action="upload"
         input=("${input[@]:1}")
         ;;
-      -h|--help)
+    -h|--help)
       usage
       exit
       ;;
@@ -85,6 +85,8 @@ parse_arguments() {
 
 download_usage() {
   printf "Download a file\n"
+  printf "\n\033[4m%s\033[0m %s\n" "Alias:" "d, ddd, down"
+
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  download [OPTIONS] SOURCE [TARGET] \n"
   printf "  download -h|--help\n"
@@ -163,6 +165,8 @@ download() {
 
 upload_usage() {
   printf "Upload a file\n"
+  printf "\n\033[4m%s\033[0m %s\n" "Alias:" "u"
+
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  upload [OPTIONS] SOURCE \n"
   printf "  upload -h|--help\n"
