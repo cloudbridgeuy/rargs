@@ -65,6 +65,20 @@ impl Param for Flag {
     }
 }
 
+/// Represents a `@dep` param. E.g. `@dep foo`, `@dep foo,bar,bax`, `@dep foo Optional
+/// message`, or `@dep foo,bar,bax Optional message`.
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
+pub struct Dep {
+    pub list: Vec<String>,
+    pub message: std::option::Option<String>,
+}
+
+impl Dep {
+    pub fn new(list: Vec<String>, message: std::option::Option<String>) -> Self {
+        Self { list, message }
+    }
+}
+
 /// Represents an `@example` param. E.g. `@example Prints hello world $ greet`
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct Example {

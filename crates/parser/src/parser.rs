@@ -32,6 +32,7 @@ pub enum Data {
     Line(String),
     Rule(String),
     Subcommand(String),
+    Dep(param::Dep),
     Unknown(String),
 }
 
@@ -102,9 +103,38 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
+/// Parse an input as if it was a dependency definition like `# @dep foo`.
+fn parse_tag_dep(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::pair(
+                nom::bytes::complete::tag("dep"),
+                nom::character::complete::space1,
+            ),
+            nom::branch::alt((
+                nom::sequence::tuple((
+                    nom::bytes::complete::take_till(|c| c == ' '),
+                    nom::sequence::preceded(nom::character::complete::space1, parse_tail),
+                )),
+                nom::combinator::map(parse_tail, |value| (value, "")),
+            )),
+        ),
+        |(list, message)| {
+            Some(Data::Dep(param::Dep::new(
+                list.split(',').map(|s| s.to_string()).collect(),
+                if message.is_empty() {
+                    None
+                } else {
+                    Some(message.to_string())
+                },
+            )))
+        },
+    )(input)
+}
+
 /// Parses an input as if it was an example definition like `# @example Example description $
 /// command --option`.
-fn parse_example(input: &str) -> nom::IResult<&str, Option<Data>> {
+fn parse_tag_example(input: &str) -> nom::IResult<&str, Option<Data>> {
     nom::combinator::map(
         nom::sequence::preceded(
             nom::sequence::pair(
@@ -137,7 +167,8 @@ fn parse_tag(input: &str) -> nom::IResult<&str, Option<Data>> {
         nom::branch::alt((
             parse_tag_text,
             parse_tag_param,
-            parse_example,
+            parse_tag_example,
+            parse_tag_dep,
             parse_tag_unknown,
         )),
     )(input)
@@ -923,6 +954,34 @@ mod tests {
         assert_token!("#!/bin/bash", Data::SheBang("#!/bin/bash".to_string()));
         assert_token!("foo=bar", Data::Line("foo=bar".to_string()));
         assert_token!("# @alias foo", Data::Alias("foo".to_string()));
+        assert_token!(
+            "# @dep git",
+            Data::Dep(param::Dep {
+                list: vec!("git".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @dep git,curl,docker",
+            Data::Dep(param::Dep {
+                list: vec!("git".to_string(), "curl".to_string(), "docker".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @dep git Install with: sudo apt-get install git",
+            Data::Dep(param::Dep {
+                list: vec!("git".to_string()),
+                message: Some("Install with: sudo apt-get install git".to_string()),
+            })
+        );
+        assert_token!(
+            "# @dep git,curl,docker Install with: sudo apt-get install $dep",
+            Data::Dep(param::Dep {
+                list: vec!("git".to_string(), "curl".to_string(), "docker".to_string()),
+                message: Some("Install with: sudo apt-get install $dep".to_string()),
+            })
+        );
         assert_token!(
             "# @example Something awesome $ something awesome",
             Data::Example(param::Example {

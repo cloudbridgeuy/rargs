@@ -19,6 +19,7 @@ pub struct Command {
     pub positional_arguments: Vec<param::PositionalArgument>,
     pub rules: Option<Vec<String>>,
     pub subcommand: Option<String>,
+    pub dep: Option<Vec<param::Dep>>,
 }
 
 impl Command {
@@ -47,6 +48,7 @@ pub struct Script {
     pub rules: Option<Vec<String>>,
     pub shebang: String,
     pub version: Option<String>,
+    pub dep: Option<Vec<param::Dep>>,
 }
 
 impl Script {
@@ -281,6 +283,19 @@ impl Script {
                     } else {
                         eyre::bail!(
                             "No command in scope in when parsing example {:?} in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        );
+                    }
+                }
+                parser::Data::Dep(value) => {
+                    if is_root_scope {
+                        script.dep.get_or_insert_with(Vec::new).push(value);
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.dep.get_or_insert_with(Vec::new).push(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing dep {:?} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
                         );

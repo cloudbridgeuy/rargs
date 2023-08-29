@@ -12,6 +12,10 @@ run() {
     exit 0
   fi
 {%- endif %}
+{%- if dep and dep | length > 0 %}
+  # Check global dependencies
+  {% include "check_dependencies.tera" %}
+{%- endif %}
 {%- if lines and lines | length > 0 %}
   # Call the root command
   root_command
