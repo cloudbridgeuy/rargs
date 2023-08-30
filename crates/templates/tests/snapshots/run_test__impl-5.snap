@@ -30,5 +30,6 @@ run() {
       exit
       ;;
   esac
+  usage
 }
 

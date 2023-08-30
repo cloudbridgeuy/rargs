@@ -1,0 +1,13 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Root function should not work with no-force-default rule
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+  usage
+}
+

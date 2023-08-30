@@ -12,9 +12,11 @@ run() {
     exit 0
   fi
 {%- endif %}
-{%- if dep and dep | length > 0 %}
+{%- if not rules or rules is not containing("use-global-deps-for-root") %}
+  {%- if dep and dep | length > 0 %}
   # Check global dependencies
   {% include "check_dependencies.tera" %}
+  {%- endif %}
 {%- endif %}
 {%- if commands %}
   # Call the right command action
@@ -34,8 +36,12 @@ run() {
   {%- endif %}
   esac
 {%- endif %}
-{%- if root and root | length > 0 %}
+{%- if not rules or rules is not containing("no-force-default") %}
+  {%- if root and root | length > 0 %}
   parse_root "${input[@]}"
   root
+  {%- endif %}
+{%- else %}
+  usage
 {%- endif %}
 }

@@ -1,0 +1,12 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Global dependencies are used only for the root command if the use-global-deps-for-root rule is set
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+}
+

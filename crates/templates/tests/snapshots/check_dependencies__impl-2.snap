@@ -6,7 +6,6 @@ expression: output
 
   for dependency in git; do
     if ! command -v $dependency >/dev/null 2>&1; then
-      printf "missing dependency: $dependency\n" >&2
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "Install with: \e[32mgem install $dependency\e[0m\n\n" >&2
       exit 1

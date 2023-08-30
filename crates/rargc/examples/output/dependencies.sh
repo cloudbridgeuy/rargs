@@ -13,6 +13,42 @@ fi
 
 set -e
 
+parse_root() {
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+root() {
+# Check dependencies
+  for dependency in fail; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "This is meant to fail\n" >&2
+      exit 1
+    fi
+  done
+  for dependency in again; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "Also this\n" >&2
+      exit 1
+    fi
+  done
+
+  echo "Fallback to root command"
+}
+
 
 
 normalize_input() {
@@ -105,10 +141,10 @@ parse_arguments() {
       exit
       ;;
     "")
+      action="root"
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
-      exit 1
+      action="root"
       ;;
   esac
 }
@@ -176,10 +212,17 @@ parse_download_arguments() {
 download() {
 
   # Check dependencies
-  for dependency in git curl shmurl; do
+  for dependency in foo bar baz; do
     if ! command -v $dependency >/dev/null 2>&1; then
-      printf "missing dependency: $dependency\n" >&2
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "install with \e[32mgem install foo bar baz\e[0m\n" >&2
+      exit 1
+    fi
+  done
+  for dependency in git; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "You can install git with \e[32mapt install git\e[0m\n" >&2
       exit 1
     fi
   done
@@ -259,19 +302,23 @@ parse_upload_arguments() {
 upload() {
 
   # Check dependencies
-  for dependency in mini-docker; do
+  for dependency in docker; do
     if ! command -v $dependency >/dev/null 2>&1; then
-      printf "missing dependency: $dependency\n" >&2
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
-      printf "install with \e[32mgem install mini-docker\e[0m\\n" >&2
+      printf "visit https://docker.com for more information\n" >&2
       exit 1
     fi
   done
-  for dependency in docker; do
+  for dependency in foo; do
     if ! command -v $dependency >/dev/null 2>&1; then
-      printf "missing dependency: $dependency\n" >&2
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
-      printf "visit https://docker.com for more information\n" >&2
+      exit 1
+    fi
+  done
+  for dependency in git; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "You don't have git?\n" >&2
       exit 1
     fi
   done
@@ -305,6 +352,8 @@ run() {
       upload
       ;;
   esac
+  parse_root "${input[@]}"
+  root
 }
 
 run "$@"
