@@ -74,6 +74,11 @@
   fi
   {%- endif -%}
 {%- endif -%}
+{%- if command["dep"] and command["dep"] | length > 0 -%}
+  {% set dep = command["dep"] %}
+  # Check dependencies
+  {%- include "check_dependencies.tera" %}
+{%- endif %}
 {%- if defaults | length > 0 %}
   {% for option in defaults %}
   if [[ -z "${args['{{ option["name"] }}']}" ]]; then

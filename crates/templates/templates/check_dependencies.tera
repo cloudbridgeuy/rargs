@@ -4,8 +4,8 @@
     if ! command -v $dependency >/dev/null 2>&1; then
       printf "missing dependency: $dependency\n" >&2
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
-      {%- if dep["message"] %}
-      printf "{{ dep["message"] }}\n" >&2
+      {%- if d["message"] %}
+      printf "{{ d["message"] }}\n" >&2
       {%- endif %}
       exit 1
     fi

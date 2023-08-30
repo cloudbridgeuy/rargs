@@ -306,4 +306,29 @@ fn test_function_template() {
             ]
         }})
     );
+    test_template!(
+        "function.tera",
+        "Function with dependencies",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a local option with choices",
+            "dep": [{
+                "list": ["foo", "bar"]
+            }]
+        }})
+    );
+    test_template!(
+        "function.tera",
+        "Function with mulitple dependencies and a message",
+        serde_json::json!({
+        "command": {
+            "name": "foo",
+            "description": "Function with a local option with choices",
+            "dep": [{
+                "list": ["foo", "bar"],
+                "message": "Installing dependencies"
+            }]
+        }})
+    );
 }
