@@ -1,9 +1,11 @@
 ---
 source: crates/templates/tests/run_test.rs
+description: Run function with multiple commands
 expression: output
 ---
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
