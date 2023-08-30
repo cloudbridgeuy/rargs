@@ -112,11 +112,7 @@
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}
     {%- for line in command["lines"] %}
-      {%- if loop.last %}
-        {%- break %}
-      {%- else %}
   {{ line }}
-      {%- endif %}
     {%- endfor %}
   {%- else %}
   echo "No implementation body found for function {{ name }}"

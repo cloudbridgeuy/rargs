@@ -7,6 +7,55 @@ if [[ "${BASH_VERSINFO:-0}" -lt 4 ]]; then
   exit 1
 fi
 
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+set -e
+
+parse_root() {
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -f | --force)
+        args['--force']=1
+        shift
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -z ${args['source']+x} ]]; then
+          args['source']=$key
+          shift
+        elif [[ -z ${args['target']+x} ]]; then
+          args['target']=$key
+          shift
+        else
+          printf "Invalid argument: %s\n" "$key" >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+}
+root() {
+
+  
+  if [[ -z "${args['source']}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "source" >&2
+    usage >&2
+    exit 1
+  fi
+  echo "# this file is located in './crates/rargc/examples/output.sh'"
+  echo "# you can edit it freely and regenerate (it will not be overwritten)"
+  inspect_args
+}
+
+
+
 normalize_input() {
   local arg flags
 
@@ -41,12 +90,6 @@ inspect_args() {
   fi
 }
 
-
-# Root level lines
-inspect() {
-  inspect_args
-}
-inspect
 
 version() {
   echo "0.0.1"
@@ -95,39 +138,20 @@ parse_arguments() {
         ;;
     esac
   done
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      -f | --force)
-        args['--force']=1
-        shift
-        ;;
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-      *)
-        if [[ -z ${args['source']+x} ]]; then
-          args['source']=$key
-          shift
-        elif [[ -z ${args['target']+x} ]]; then
-          args['target']=$key
-          shift
-        else
-          printf "Invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
-        ;;
-    esac
-  done
-}
+  action="${1:-}"
 
-initialize() {
-  if [[ -n "${DEBUG:-}" ]]; then
-    set -x
-  fi
-
-  set -e
+  case $action in
+    -h|--help)
+      usage
+      exit
+      ;;
+    "")
+      action="root"
+      ;;
+    *)
+      action="root"
+      ;;
+  esac
 }
 
 run() {
@@ -135,7 +159,8 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  parse_root "${input[@]}"
+  root
 }
 
-initialize
 run "$@"

@@ -7,6 +7,14 @@ if [[ "${BASH_VERSINFO:-0}" -lt 4 ]]; then
   exit 1
 fi
 
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+set -e
+
+
+
 normalize_input() {
   local arg flags
 
@@ -229,14 +237,6 @@ remove() {
   inspect_args
 }
 
-initialize() {
-  if [[ -n "${DEBUG:-}" ]]; then
-    set -x
-  fi
-
-  set -e
-}
-
 run() {
   declare -A args=()
   declare -a input=()
@@ -257,5 +257,4 @@ run() {
   esac
 }
 
-initialize
 run "$@"

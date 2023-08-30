@@ -1,0 +1,14 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with a root command
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+  parse_root "${input[@]}"
+  root
+}
+

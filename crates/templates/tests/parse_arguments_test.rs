@@ -237,4 +237,13 @@ fn test_render() {
             },
         })
     );
+    test_template!(
+        "parse_arguments.tera",
+        "Parse arguments with a root command",
+        serde_json::json!({
+            "name": "foo",
+            "version": "0.1.0",
+            "root": ["foo", "bar"]
+        })
+    );
 }

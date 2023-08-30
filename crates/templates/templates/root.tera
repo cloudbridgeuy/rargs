@@ -1,0 +1,82 @@
+{%- set_global required = [] -%}
+{%- set_global defaults = [] -%}
+{%- set_global choices = [] -%}
+{%- if options -%}
+  {%- for key, option in options -%}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+    {%- if option["default"] -%}
+      {%- set_global defaults = defaults | concat(with=option) -%}
+    {%- endif -%}
+    {% if option["choices"] -%}
+      {%- set_global choices = choices | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if positional_arguments -%}
+  {%- for arg in positional_arguments -%}
+    {%- if arg["required"] -%}
+      {%- set_global required = required | concat(with=arg) -%}
+    {%- endif -%}
+    {%- if arg["default"] -%}
+      {%- set_global defaults = defaults | concat(with=arg) -%}
+    {%- endif -%}
+    {% if arg["choices"] -%}
+      {%- set_global choices = choices | concat(with=arg) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+root() {
+{% if rules -%}
+  {%- if rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "${args['--help']}" ]]; then
+    usage
+    exit 0
+  fi
+  {%- endif -%}
+{%- endif -%}
+{%- if dep and dep | length > 0 -%}
+  # Check dependencies
+  {%- include "check_dependencies.tera" %}
+{%- endif %}
+{%- if defaults | length > 0 %}
+  {% for option in defaults %}
+  if [[ -z "${args['{{ option["name"] }}']}" ]]; then
+    args['{{ option["name"] }}']="{{ option["default"] }}"
+  fi
+  {%- endfor %}
+{%- endif %}
+{%- if choices | length > 0 %}
+  {% for option in choices %}
+  if [[ -n "${args['{{ option["name"] }}']}" ]]; then
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${args['{{ option["name"] }}']} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${args['{{ option["name"] }}']}" >&2
+      usage >&2
+      exit 1
+    fi
+  fi
+  {%- endfor %}
+{%- endif %}
+{%- if required | length > 0 %}
+  {% for option in required %}
+  if [[ -z "${args['{{ option["name"] }}']}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "{{ option["name"] }}" >&2
+    usage >&2
+    exit 1
+  fi
+  {%- endfor %}
+{%- endif %}
+{%- if root and root | length > 0 %}
+  {%- for line in root %}
+  {{ line }}
+  {%- endfor %}
+{%- else %}
+  echo "No implementation body found for root function"
+{%- endif %}
+}
+

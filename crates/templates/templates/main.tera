@@ -1,6 +1,19 @@
 {%- set rules = rules | default(value=[]) -%}
 {{ shebang }}
 {% include "intro.tera" %}
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
+set -e
+
+{% if root and root | length > 0 -%}
+parse_root() {
+{% include "parse_arguments_while.tera" -%}
+}
+{% include "root.tera" %}
+{%- endif %}
+
 {% include "raw.tera" %}
 {% if lines and lines | length > 0 %}
 # Root level lines
@@ -18,7 +31,5 @@
   {%- include "parse_command_arguments.tera" %}
   {%- include "function.tera" %}
 {% endfor -%}
-{% include "initialize.tera" %}
 {% include "run.tera" %}
-initialize
 run "$@"

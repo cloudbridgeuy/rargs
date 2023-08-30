@@ -34,4 +34,8 @@ run() {
   {%- endif %}
   esac
 {%- endif %}
+{%- if root and root | length > 0 %}
+  parse_root "${input[@]}"
+  root
+{%- endif %}
 }

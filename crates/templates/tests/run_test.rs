@@ -139,4 +139,12 @@ fn test_render() {
             }]
         })
     );
+
+    test_template!(
+        "run.tera",
+        "Run function with a root command",
+        serde_json::json!({
+            "root": ["foo", "bar"]
+        })
+    );
 }

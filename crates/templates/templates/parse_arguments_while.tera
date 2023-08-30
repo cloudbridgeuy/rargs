@@ -1,0 +1,144 @@
+{%- set_global required = [] -%}
+{%- set opts = false %}
+{%- set fls = false %}
+{%- set args = false %}
+{%- if options %}
+  {%- if command["options"] %}
+    {%- set opts = options | merge(with=command["options"]) %}
+  {%- else %}
+    {%- set opts = options %}
+  {%- endif %}
+{%- else %}
+  {%- if command["options"] %}
+    {%- set opts = command["options"] %}
+  {%- endif %}
+{%- endif %}
+{%- if flags %}
+  {%- if command["flags"] %}
+    {%- set fls = flags | merge(with=command["flags"]) %}
+  {%- else %}
+    {%- set fls = flags %}
+  {%- endif %}
+{%- else %}
+  {%- if command["flags"] %}
+    {%- set fls = command["flags"] %}
+  {%- endif %}
+{%- endif %}
+{%- if positional_arguments %}
+  {%- if command["positional_arguments"] %}
+    {%- set args = command["positional_arguments"] %}
+  {%- else %}
+    {%- set args = positional_arguments %}
+  {%- endif %}
+{%- else %}
+  {%- if command["positional_arguments"] %}
+    {%- set args = command["positional_arguments"] %}
+  {%- endif %}
+{%- endif %}
+
+{%- if opts -%}
+  {%- for key, option in opts -%}
+    {%- if option["short"] and option["short"] == "h" %}
+      {%- set_global uses_h = true %}
+    {%- endif %}
+    {%- if option["short"] and option["short"] == "v" %}
+      {%- set_global uses_v = true %}
+    {%- endif %}
+    {%- if option["required"] -%}
+      {%- set_global required = required | concat(with=option) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if fls -%}
+  {%- for key, flag in fls -%}
+    {%- if flag["short"] and flag["short"] == "h" %}
+      {%- set_global uses_h = true %}
+      {%- break -%}
+    {%- endif %}
+  {%- endfor -%}
+{%- endif %}
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+    {%- if fls %}{%- for key, flag in fls %}
+      {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
+        args['--{{ key }}']=1
+        shift
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if opts -%}{%- for key, option in opts %}
+      {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
+        {% if option["multiple"] -%}
+          if [[ -z ${args['{{ key }}']+x} ]]; then
+            args['{{ key }}']=$2
+          else
+            args['{{ key }}']="${args['{{ key }}']:-} $2"
+          fi
+        {% else -%}
+          args['{{ key }}']=$2
+        {% endif -%}
+        shift 2
+        ;;
+    {%- endfor -%}{% endif %}
+    {%- if rules and rules is containing("no-first-option-help") %}
+      {% if not uses_h %}-h|{% endif %}--help)
+        args['--help']=1
+        shift 1
+        ;;
+    {%- endif %}
+    {%- if not command["subcommand"] %}
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+    {%- endif %}
+      *)
+        {%- if args %}
+          {%- for arg in args %}
+            {%- if loop.first and loop.last %}
+        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$key
+          shift
+        else
+              {%- if arg["multiple"] %}
+          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          shift
+              {%- else %}
+          printf "Invalid argument: %s\n" "$key" >&2
+          exit 1
+              {%- endif %}
+        fi
+            {%- elif loop.first %}
+        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$key
+          shift
+            {%- elif loop.last %}
+        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$key
+          shift
+        else
+              {%- if arg["multiple"] %}
+          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          shift
+              {%- else %}
+          printf "Invalid argument: %s\n" "$key" >&2
+          exit 1
+              {%- endif %}
+        fi
+            {%- else %}
+        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
+          args['{{ arg["name"] }}']=$key
+          shift
+            {%- endif %}
+          {%- endfor %}
+      {%- else %}
+        {%- if not command["subcommand"] %}
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        {%- else %}
+        break
+        {%- endif %}
+      {%- endif %}
+        ;;
+    esac
+  done

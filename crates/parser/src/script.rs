@@ -49,6 +49,7 @@ pub struct Script {
     pub shebang: String,
     pub version: Option<String>,
     pub dep: Option<Vec<param::Dep>>,
+    pub root: Option<Vec<String>>,
 }
 
 impl Script {
@@ -60,6 +61,10 @@ impl Script {
         }
     }
 }
+
+static RE: once_cell::sync::Lazy<regex::Regex> =
+    once_cell::sync::Lazy::new(|| regex::Regex::new(r"^\}$").unwrap());
+const ROOT: &str = "root";
 
 impl Script {
     pub fn from_source(source: &str) -> Result<Self> {
@@ -113,12 +118,18 @@ impl Script {
                             .entry(value.clone())
                             .or_insert(command.clone());
                         last_command = Some(value);
+                    } else if value == ROOT {
+                        log::debug!("root command found");
+                        is_root_scope = false;
+                        script.root = Some(Vec::new());
+                        last_command = Some(ROOT.to_string());
                     } else {
                         script
                             .lines
                             .get_or_insert_with(Vec::new)
                             .push(format!("{}() {{", value));
                     }
+                    maybe_command = None;
                 }
                 parser::Data::Unknown(value) => {
                     // TODO: Change this to a debug! tracing command.
@@ -308,16 +319,30 @@ impl Script {
                     if is_root_scope {
                         script.lines.get_or_insert_with(Vec::new).push(value);
                     } else if let Some(last_command) = &last_command {
-                        script
-                            .commands
-                            .get_mut(last_command)
-                            .unwrap()
-                            .lines
-                            .get_or_insert_with(Vec::new)
-                            .push(value.trim().to_string());
+                        if RE.is_match(&value) {
+                            is_root_scope = true;
+                        } else if last_command == ROOT {
+                            if let Some(root) = script.root.as_mut() {
+                                root.push(value.trim().to_string());
+                            } else {
+                                eyre::bail!(
+                                    "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
+                                    value,
+                                    event.position
+                                );
+                            }
+                        } else {
+                            script
+                                .commands
+                                .get_mut(last_command)
+                                .unwrap()
+                                .lines
+                                .get_or_insert_with(Vec::new)
+                                .push(value.trim().to_string());
+                        }
                     } else {
                         eyre::bail!(
-                            "No command in scope in when parsing line {} in line {}. Did you forget the @cmd directive?",
+                                    "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
                         );

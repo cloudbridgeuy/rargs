@@ -47,16 +47,18 @@ parse_arguments() {
     esac
   done
 
-{%- if commands %}
+{%- if commands or root and root | length > 0 %}
   action="${1:-}"
 
   case $action in
-  {%- for key, command in commands %}
+  {%- if commands %}
+    {%- for key, command in commands %}
     {% if command["aliases"] %}{{ command["aliases"] | join(sep="|") }}|{% endif %}{{ key }})
       action="{{ key }}"
       input=("${input[@]:1}")
       ;;
-  {%- endfor %}
+    {%- endfor %}
+  {%- endif %}
     {% if not uses_h %}-h|{% endif %}--help)
       usage
       exit
@@ -66,6 +68,8 @@ parse_arguments() {
     {%- if not rules or rules is not containing("no-force-default") %}
       action="{{ default }}"
     {%- endif %}
+  {%- elif root %}
+      action="root"
   {%- elif required | length > 0 %}
       usage >&2
       exit 1
@@ -74,6 +78,8 @@ parse_arguments() {
     *)
   {%- if default and default != "" %}
       action="{{ default }}"
+  {%- elif root %}
+      action="root"
   {%- else %}
       printf "Invalid command: %s\n" "$action" >&2
       exit 1

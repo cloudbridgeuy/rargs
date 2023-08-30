@@ -7,45 +7,6 @@ if [[ "${BASH_VERSINFO:-0}" -lt 4 ]]; then
   exit 1
 fi
 
-if [[ -n "${DEBUG:-}" ]]; then
-  set -x
-fi
-
-set -e
-
-parse_root() {
-
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      -v | --verbose)
-        args['--verbose']=1
-        shift
-        ;;
-      -h | --host)
-        args['host']=$2
-        shift 2
-        ;;
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-      *)
-        printf "Invalid argument: %s\n" "$key" >&2
-        exit 1
-        ;;
-    esac
-  done
-}
-root() {
-
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
-  inspect_args
-}
-
-
-
 normalize_input() {
   local arg flags
 
@@ -81,41 +42,51 @@ inspect_args() {
 }
 
 
+# Root level lines
+inspect() {
+  inspect_args
+}
+inspect
+
 version() {
   echo "0.0.1"
 }
 
 usage() {
-  printf "Example that replaces the default behavior of -v and -h\n"
+  printf "Sample minimal application without commands\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  minus-v [OPTIONS]\n"
-  printf "  minus-v --help\n"
-  printf "  minus-v --version\n"
+  printf "  minimal [OPTIONS] SOURCE [TARGET] \n"
+  printf "  minimal -h|--help\n"
+  printf "  minimal -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  minus-v -h|--host localhost\n"
-  printf "    Set host\n"
-  printf "  minus-v -v|--verbose\n"
-  printf "    Set verbose mode on\n"
+  printf "  minimal example.com\n"
+  printf "    Download a file from the internet\n"
+  printf "  minimal example.com ./output -f\n"
+  printf "    Download a file from the internet and force save it to ./output\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  SOURCE\n"
+  printf "    URL to download from\n"
+  printf "    [@required]\n"
+  printf "  TARGET\n"
+  printf "    Target filename (default: same as source)\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -h --host [<HOST>]\n"
-  printf "    Show verbose output\n"
-  printf "  -v --verbose\n"
-  printf "    Show verbose output\n"
-  printf "  --help\n"
+  printf "  -f --force\n"
+  printf "    Overwrite existing files\n"
+  printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  --version\n"
+  printf "  -v --version\n"
   printf "    Pring version\n"
 }
 
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      --version)
+      -v|--version)
         version
         exit
         ;;
-      --help)
+      -h|--help)
         usage
         exit
         ;;
@@ -124,20 +95,39 @@ parse_arguments() {
         ;;
     esac
   done
-  action="${1:-}"
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -f | --force)
+        args['--force']=1
+        shift
+        ;;
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -z ${args['source']+x} ]]; then
+          args['source']=$key
+          shift
+        elif [[ -z ${args['target']+x} ]]; then
+          args['target']=$key
+          shift
+        else
+          printf "Invalid argument: %s\n" "$key" >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+}
 
-  case $action in
-    --help)
-      usage
-      exit
-      ;;
-    "")
-      action="root"
-      ;;
-    *)
-      action="root"
-      ;;
-  esac
+initialize() {
+  if [[ -n "${DEBUG:-}" ]]; then
+    set -x
+  fi
+
+  set -e
 }
 
 run() {
@@ -145,8 +135,7 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  parse_root "${input[@]}"
-  root
 }
 
+initialize
 run "$@"

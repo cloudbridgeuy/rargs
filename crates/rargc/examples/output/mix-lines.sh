@@ -13,6 +13,29 @@ fi
 
 set -e
 
+parse_root() {
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+      *)
+        printf "Invalid argument: %s\n" "$key" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+root() {
+
+  top
+  middle
+  bottom
+}
+
 
 
 normalize_input() {
@@ -50,24 +73,36 @@ inspect_args() {
 }
 
 
+# Root level lines
+set +x
+top() {
+  echo top
+}
+middle() {
+  echo middle
+}
+bottom() {
+  echo bottom
+}
+
 version() {
   echo "0.0.1"
 }
 
 usage() {
-  printf "Sample application\n"
+  printf "Sample script that shows how lines between commands are handled\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  command-aliases [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  printf "  command-aliases -h|--help\n"
-  printf "  command-aliases -v|--version\n"
+  printf "  mix-lines [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  mix-lines -h|--help\n"
+  printf "  mix-lines -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  command-aliases download -h\n"
+  printf "  mix-lines download -h\n"
   printf "    Download command help\n"
-  printf "  command-aliases download [OPTIONS] SOURCE [TARGET]\n"
+  printf "  mix-lines download [OPTIONS] SOURCE [TARGET]\n"
   printf "    Download command example\n"
-  printf "  command-aliases upload -h\n"
+  printf "  mix-lines upload -h\n"
   printf "    Upload command help\n"
-  printf "  command-aliases upload [OPTIONS] SOURCE\n"
+  printf "  mix-lines upload [OPTIONS] SOURCE\n"
   printf "    Upload command example\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   cat <<EOF
@@ -105,7 +140,7 @@ parse_arguments() {
       action="download"
       input=("${input[@]:1}")
       ;;
-    u|push|upload)
+    u|upload)
       action="upload"
       input=("${input[@]:1}")
       ;;
@@ -114,10 +149,10 @@ parse_arguments() {
       exit
       ;;
     "")
+      action="root"
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
-      exit 1
+      action="root"
       ;;
   esac
 }
@@ -132,8 +167,8 @@ download_usage() {
   printf "\n\033[4m%s\033[0m\n" "Examples:"
   printf "  download download example.com\n"
   printf "    Download a file from the internet\n"
-  printf "  download down example.com\n"
-  printf "    Download a file and use a different alias\n"
+  printf "  download download example.com ./output -f\n"
+  printf "    Download a file from the internet and force save it to ./output\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  SOURCE\n"
   printf "    URL to download from\n"
@@ -198,20 +233,16 @@ download() {
   echo "# this file is located in './crates/rargc/examples/output.sh'"
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
+  bottom
 }
 
 upload_usage() {
   printf "Upload a file\n"
-  printf "\n\033[4m%s\033[0m %s\n" "Alias:" "u, push"
+  printf "\n\033[4m%s\033[0m %s\n" "Alias:" "u"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  upload [OPTIONS] SOURCE \n"
   printf "  upload -h|--help\n"
-  printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  upload upload example.com\n"
-  printf "    Upload a file to the internet\n"
-  printf "  upload push example.com\n"
-  printf "    Upload a file and use a different alias\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  SOURCE\n"
   printf "    URL to download from\n"
@@ -277,6 +308,7 @@ upload() {
   echo "# this file is located in './crates/rargc/examples/output.sh'"
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
+  top
 }
 
 run() {
@@ -296,7 +328,13 @@ run() {
       shift $#
       upload
       ;;
+    "")
+      usage
+      exit
+      ;;
   esac
+  parse_root "${input[@]}"
+  root
 }
 
 run "$@"
