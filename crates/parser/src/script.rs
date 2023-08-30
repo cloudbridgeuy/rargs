@@ -106,8 +106,6 @@ impl Script {
                     }
                 }
                 parser::Data::Func(value) => {
-                    is_root_scope = false;
-
                     if let Some(command) = maybe_command.as_mut() {
                         command.name = Some(value.clone());
                         script
@@ -115,6 +113,11 @@ impl Script {
                             .entry(value.clone())
                             .or_insert(command.clone());
                         last_command = Some(value);
+                    } else {
+                        script
+                            .lines
+                            .get_or_insert_with(Vec::new)
+                            .push(format!("{}() {{", value));
                     }
                 }
                 parser::Data::Unknown(value) => {

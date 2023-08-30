@@ -47,20 +47,11 @@ version() {
 }
 
 usage() {
-  printf "Sample application\n"
+  printf "Sample application that requires dependencies\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  commands [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
-  printf "  commands -h|--help\n"
-  printf "  commands -v|--version\n"
-  printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  commands download -h\n"
-  printf "    Download command help\n"
-  printf "  commands download [OPTIONS] SOURCE [TARGET]\n"
-  printf "    Download command example\n"
-  printf "  commands upload -h\n"
-  printf "    Upload command help\n"
-  printf "  commands upload [OPTIONS] SOURCE\n"
-  printf "    Upload command example\n"
+  printf "  dependencies [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  dependencies -h|--help\n"
+  printf "  dependencies -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   cat <<EOF
   download .... Download a file
@@ -121,11 +112,6 @@ download_usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  download [OPTIONS] SOURCE [TARGET] \n"
   printf "  download -h|--help\n"
-  printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  download download example.com\n"
-  printf "    Download a file from the internet\n"
-  printf "  download download example.com ./output -f\n"
-  printf "    Download a file from the internet and force save it to ./output\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  SOURCE\n"
   printf "    URL to download from\n"
@@ -180,6 +166,15 @@ parse_download_arguments() {
 }
 # Download a file
 download() {
+
+  # Check dependencies
+  for dependency in git curl shmurl; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "missing dependency: $dependency\n" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      exit 1
+    fi
+  done
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -254,6 +249,24 @@ parse_upload_arguments() {
 }
 # Upload a file
 upload() {
+
+  # Check dependencies
+  for dependency in mini-docker; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "missing dependency: $dependency\n" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "install with \e[32mgem install mini-docker\e[0m\\n" >&2
+      exit 1
+    fi
+  done
+  for dependency in docker; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "missing dependency: $dependency\n" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "visit https://docker.com for more information\n" >&2
+      exit 1
+    fi
+  done
 
   
   if [[ -z "${args['source']}" ]]; then

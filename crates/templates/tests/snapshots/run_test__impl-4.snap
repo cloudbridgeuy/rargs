@@ -1,5 +1,6 @@
 ---
 source: crates/templates/tests/run_test.rs
+description: Run function with multiple commands and a default value
 expression: output
 ---
 run() {
@@ -14,8 +15,6 @@ run() {
     usage
     exit 0
   fi
-  # Call the root command
-  root_command
   # Call the right command action
   case "$action" in
     "bar")

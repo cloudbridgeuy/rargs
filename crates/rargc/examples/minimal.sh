@@ -8,6 +8,8 @@
 # @example Download a file from the internet $ example.com
 # @example Download a file from the internet and force save it to ./output $ example.com ./output -f
 
-echo "# this file is located in './crates/rargc/examples/output.sh'"
-echo "# you can edit it freely and regenerate (it will not be overwritten)"
-inspect_args
+inspect() {
+  inspect_args
+}
+
+inspect

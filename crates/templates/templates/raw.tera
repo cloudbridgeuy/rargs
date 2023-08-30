@@ -1,4 +1,4 @@
-{% raw -%}
+{%- raw -%}
 normalize_input() {
   local arg flags
 
@@ -32,4 +32,4 @@ inspect_args() {
     echo args: none
   fi
 }
-{% endraw %}
+{%- endraw %}

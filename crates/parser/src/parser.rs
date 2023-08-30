@@ -1,6 +1,4 @@
 use color_eyre::eyre::{self, Result};
-use lazy_static::lazy_static;
-use regex::Regex;
 use serde::Serialize;
 
 use crate::param;
@@ -56,10 +54,6 @@ pub fn parse_source(source: &str) -> Result<Vec<Token>> {
     Ok(tokens)
 }
 
-lazy_static! {
-    static ref RE: Regex = Regex::new(r"^(\}\s*$|\s*$)").unwrap();
-}
-
 /// Parse a line into a token.
 pub fn parse_line(line: &str) -> Result<Option<Data>> {
     let maybe = nom::branch::alt((
@@ -75,7 +69,7 @@ pub fn parse_line(line: &str) -> Result<Option<Data>> {
                 } else {
                     Ok(Some(Data::Unknown(line.to_string())))
                 }
-            } else if !RE.is_match(_rest_of_line) {
+            } else if !_rest_of_line.is_empty() {
                 Ok(Some(Data::Line(_rest_of_line.to_string())))
             } else {
                 Ok(None)

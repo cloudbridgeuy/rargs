@@ -16,10 +16,6 @@ run() {
   # Check global dependencies
   {% include "check_dependencies.tera" %}
 {%- endif %}
-{%- if lines and lines | length > 0 %}
-  # Call the root command
-  root_command
-{%- endif %}
 {%- if commands %}
   # Call the right command action
   case "$action" in
