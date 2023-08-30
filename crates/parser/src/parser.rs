@@ -97,8 +97,55 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
-/// Parse an input as if it was a dependency definition like `# @dep foo`.
+/// Parse an input as if it was a required or optional dependency definition
 fn parse_tag_dep(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::branch::alt((parse_tag_dep_optional, parse_tag_dep_required))(input)
+}
+
+/// Parse an input as if it was an optional dependency definition liks `# @dep [foo] foo`.
+fn parse_tag_dep_optional(input: &str) -> nom::IResult<&str, Option<Data>> {
+    println!("parse_tag_dep_optional: {}", input);
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::tuple((
+                nom::bytes::complete::tag("dep"),
+                nom::character::complete::space1,
+                nom::bytes::complete::tag("["),
+            )),
+            nom::sequence::tuple((
+                nom::bytes::complete::take_till(|c| c == ']'),
+                nom::sequence::preceded(
+                    nom::sequence::pair(
+                        nom::character::complete::char(']'),
+                        nom::character::complete::space1,
+                    ),
+                    nom::sequence::tuple((
+                        nom::bytes::complete::take_till(|c| c == ' '),
+                        nom::sequence::preceded(nom::character::complete::space1, parse_tail),
+                    )),
+                ),
+            )),
+        ),
+        |(list, (alias, message))| {
+            Some(Data::Dep(param::Dep::new(
+                list.split(',').map(|s| s.to_string()).collect(),
+                if message.is_empty() {
+                    None
+                } else {
+                    Some(message.to_string())
+                },
+                if alias.is_empty() {
+                    None
+                } else {
+                    Some(alias.to_string())
+                },
+            )))
+        },
+    )(input)
+}
+
+/// Parse an input as if it was a dependency definition like `# @dep foo`.
+fn parse_tag_dep_required(input: &str) -> nom::IResult<&str, Option<Data>> {
     nom::combinator::map(
         nom::sequence::preceded(
             nom::sequence::pair(
@@ -121,6 +168,7 @@ fn parse_tag_dep(input: &str) -> nom::IResult<&str, Option<Data>> {
                 } else {
                     Some(message.to_string())
                 },
+                None,
             )))
         },
     )(input)
@@ -967,6 +1015,7 @@ mod tests {
             Data::Dep(param::Dep {
                 list: vec!("git".to_string()),
                 message: Some("Install with: sudo apt-get install git".to_string()),
+                alias: None,
             })
         );
         assert_token!(
@@ -974,6 +1023,20 @@ mod tests {
             Data::Dep(param::Dep {
                 list: vec!("git".to_string(), "curl".to_string(), "docker".to_string()),
                 message: Some("Install with: sudo apt-get install $dep".to_string()),
+                alias: None,
+            })
+        );
+        assert_token!(
+            "# @dep [foo,bar,baz,git] scm install with \\e[32mgem install foo bar baz\\e[0m",
+            Data::Dep(param::Dep {
+                list: vec!(
+                    "foo".to_string(),
+                    "bar".to_string(),
+                    "baz".to_string(),
+                    "git".to_string()
+                ),
+                message: Some("install with \\e[32mgem install foo bar baz\\e[0m".to_string()),
+                alias: Some("scm".to_string()),
             })
         );
         assert_token!(

@@ -71,11 +71,20 @@ impl Param for Flag {
 pub struct Dep {
     pub list: Vec<String>,
     pub message: std::option::Option<String>,
+    pub alias: std::option::Option<String>,
 }
 
 impl Dep {
-    pub fn new(list: Vec<String>, message: std::option::Option<String>) -> Self {
-        Self { list, message }
+    pub fn new(
+        list: Vec<String>,
+        message: std::option::Option<String>,
+        alias: std::option::Option<String>,
+    ) -> Self {
+        Self {
+            list,
+            message,
+            alias,
+        }
     }
 }
 
