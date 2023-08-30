@@ -27,6 +27,7 @@ run() {
       parse_{{ key }}_arguments "${input[@]}"
       shift $#
       {{ key }}
+      exit
       ;;
   {%- endfor %}
   {%- if rules and rules is containing("no-force-default") %}

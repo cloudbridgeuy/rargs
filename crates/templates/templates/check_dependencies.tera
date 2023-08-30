@@ -1,5 +1,17 @@
 {%- if dep and dep | length > 0 -%}
   {%- for d in dep %}
+    {%- if d["alias"] %}
+  if ! command -v {{ d["list"] | join(sep=" ") }} >/dev/null 2>&1; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: {{ d["alias"] }}" "({{ d["list"] | join(dep=" ") }})" >&2
+    {%- if d["message"] %}
+    dependencies="{{ d["list"] | join(sep="|") }}"
+    printf "{{ d["message"] }}\n" >&2
+      {%- endif %}
+    exit 1
+  else
+    deps["{{ d["alias"] }}"]="$(command -v {{ d["list"] | join(sep=" ") }} | head -n1)"
+  fi
+    {%- else %}
   for dependency in {{ d["list"] | join(sep=" ")  }}; do
     if ! command -v $dependency >/dev/null 2>&1; then
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
@@ -7,7 +19,10 @@
       printf "{{ d["message"] }}\n" >&2
       {%- endif %}
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
+    {%- endif %}
   {%- endfor %}
 {%- endif %}

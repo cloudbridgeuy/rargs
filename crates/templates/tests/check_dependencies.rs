@@ -44,4 +44,15 @@ fn test_render() {
             }]
         })
     );
+    test_template!(
+        "check_dependencies.tera",
+        "Should support optional dependencies",
+        serde_json::json!({
+            "dep": [{
+                "list": ["git", "curl", "make"],
+                "message": "Install with: \\e[32mgem install $dependencies\\e[0m\\n",
+                "alias": "scm"
+            }]
+        })
+    );
 }

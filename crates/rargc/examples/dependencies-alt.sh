@@ -7,7 +7,7 @@
 # @cmd Download a file
 # @alias d
 # @alias down
-# @dep [foo,bar,baz,git] install with \e[32mgem install foo bar baz\e[0m
+# @dep [foo,bar,baz,git] scm Install with \e[32mgem install foo bar baz\e[0m
 # @arg source! URL to download from
 # @arg target Target filename (default: same as source)
 # @flag -f --force Overwrite existing files
