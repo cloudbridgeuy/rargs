@@ -1,8 +1,10 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-default.sh upload --help"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stderr] commands-default.sh upload -f"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+[31mMissing required option: [33msource[31m[0m
+
 Upload a file
 
 [4mAlias:[0m u

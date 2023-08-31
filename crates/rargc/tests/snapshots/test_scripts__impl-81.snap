@@ -1,20 +1,24 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-nested.sh dir list -h"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stderr] commands-nested.sh dir"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Show files in the directory
+[31mMissing command. Select one of[33mlist,remove[31m[0m
+
+Directory commands
 
 [4mUsage:[0m
-  list [OPTIONS] PATH 
-  list -h|--help
+  dir [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  dir -h|--help
+  dir -v|--version
 
-[4mArguments:[0m
-  PATH
-    Directory path
-    [@required]
+[4mCommands:[0m
+  list ...... Show files in the directory
+  remove .... Remove directory
 
 [4mOptions:[0m
   -h --help
     Print help
+  -v --version
+    Pring version
 

@@ -1,10 +1,7 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-default-force.sh upload source"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stderr] commands-default-force.sh upload -f"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-# this file is located in './crates/rargc/examples/output.sh'
-# you can edit it freely and regenerate (it will not be overwritten)
-args:
-- ${args[source]} = source
+invalid option: -f
 

@@ -306,6 +306,12 @@ run() {
       upload
       exit
       ;;
+    "")
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "download,upload" >&2
+      usage >&2
+      exit 1
+      ;;
+    
   esac
 }
 

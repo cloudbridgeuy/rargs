@@ -79,5 +79,15 @@ macro_rules! build_script {
 
         log::info!("Check that the {dst} file exists");
         assert!(std::path::Path::new(&dst).exists());
+
+        // Read the `dst` file into a variable of type `&str`
+        let dst = std::fs::read_to_string(&dst)
+            .unwrap_or_else(|e| panic!("failed to read the '{dst}' script with error: {e}"));
+
+        insta::with_settings!({
+            description => script_name,
+        }, {
+            insta::assert_snapshot!(dst)
+        });
     };
 }

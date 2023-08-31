@@ -1,0 +1,22 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stderr] commands-nested.sh dir list"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+[31mMissing required option: [33mpath[31m[0m
+
+Show files in the directory
+
+[4mUsage:[0m
+  list [OPTIONS] PATH 
+  list -h|--help
+
+[4mArguments:[0m
+  PATH
+    Directory path
+    [@required]
+
+[4mOptions:[0m
+  -h --help
+    Print help
+

@@ -216,6 +216,7 @@ run() {
       exit
       ;;
     "")
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "dir,file" >&2
       usage >&2
       exit 1
       ;;

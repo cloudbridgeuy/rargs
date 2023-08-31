@@ -118,6 +118,21 @@ fn test_scripts() {
                 stderr: vec!["", "dir", "file", "dir list"],
             },
         ),
+        (
+            "commands-aliases.sh",
+            Commands {
+                stdout: vec![
+                    "download --help",
+                    "d --help",
+                    "down --help",
+                    "upload --help",
+                    "u --help",
+                    "push --help",
+                    "push example.com",
+                ],
+                stderr: vec!["", "download", "upload", "d", "u", "down", "push"],
+            },
+        ),
     ];
 
     for (script, commands) in scripts {
