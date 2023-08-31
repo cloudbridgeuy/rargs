@@ -39,10 +39,15 @@ run() {
       exit
       ;;
   {%- endfor %}
+  {%- if root %}
+    root)
+      root
+      exit
+      ;;
+  {%- endif %}
     "")
     {%- if not default and not root %}
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "{% for name, _ in
-      commands %}{{ name }}{%- if not loop.last %}, {%- endif %}{%- endfor %}" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "{% for name, _ in commands %}{{ name }}{%- if not loop.last %}, {%- endif %}{%- endfor %}" >&2
       usage >&2
       exit 1
       ;;

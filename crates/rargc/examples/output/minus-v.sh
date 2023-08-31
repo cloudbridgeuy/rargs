@@ -31,6 +31,9 @@ parse_root() {
         exit 1
         ;;
       *)
+        if [[ "$key" == "" ]]; then
+          break
+        fi
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
         ;;

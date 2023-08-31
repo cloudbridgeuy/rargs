@@ -133,6 +133,13 @@ fn test_scripts() {
                 stderr: vec!["", "download", "upload", "d", "u", "down", "push"],
             },
         ),
+        (
+            "dependencies.sh",
+            Commands {
+                stdout: vec![],
+                stderr: vec!["", "download", "upload"],
+            },
+        ),
     ];
 
     for (script, commands) in scripts {

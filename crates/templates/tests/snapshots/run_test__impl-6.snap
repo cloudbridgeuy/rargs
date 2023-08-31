@@ -11,14 +11,13 @@ run() {
   parse_arguments "${input[@]}"
   # Check global dependencies
   
-  for dependency in git; do
-    if ! command -v $dependency >/dev/null 2>&1; then
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
-      exit 1
-    else
-      deps["$dependency"]="$(command -v $dependency | head -n1)"
-    fi
-  done
+  dependency="git"
+  if ! command -v $dependency >/dev/null 2>&1; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+    exit 1
+  else
+    deps["$dependency"]="$(command -v $dependency | head -n1)"
+  fi
 
   printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add" "commands or a root command" >&2
   usage >&2
