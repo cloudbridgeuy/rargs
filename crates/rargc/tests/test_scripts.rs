@@ -81,6 +81,22 @@ fn test_scripts() {
                 ],
             },
         ),
+        (
+            "commands-default.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "--help",
+                    "source",
+                    "source -f",
+                    "upload --help",
+                    "upload -h",
+                    "upload source",
+                    "upload source -f",
+                ],
+                stderr: vec!["-f", "upload", "upload -f"],
+            },
+        ),
     ];
 
     for (script, commands) in scripts {
