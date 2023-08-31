@@ -1,6 +1,6 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] commands.sh d"
+description: "[stderr] commands.sh download"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 [31mMissing required option: [33msource[31m[0m
