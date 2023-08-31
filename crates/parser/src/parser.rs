@@ -13,25 +13,26 @@ pub struct Token {
 
 #[derive(Serialize, Debug, PartialEq, Eq, Clone)]
 pub enum Data {
-    SheBang(String),
-    Author(Vec<String>),
     Alias(String),
-    PositionalArgument(param::PositionalArgument),
+    Author(Vec<String>),
     Cmd(String),
+    Default(String),
+    Dep(param::Dep),
     Description(String),
+    Env(param::Env),
     Example(param::Example),
     Flag(param::Flag),
     Func(String),
     Help(String),
+    Line(String),
     Name(String),
     Option(param::Option),
-    Version(String),
-    Default(String),
-    Line(String),
+    PositionalArgument(param::PositionalArgument),
     Rule(String),
+    SheBang(String),
     Subcommand(String),
-    Dep(param::Dep),
     Unknown(String),
+    Version(String),
 }
 
 /// Parse a source string into a list of tokens.
@@ -104,7 +105,6 @@ fn parse_tag_dep(input: &str) -> nom::IResult<&str, Option<Data>> {
 
 /// Parse an input as if it was an optional dependency definition liks `# @dep [foo] foo`.
 fn parse_tag_dep_optional(input: &str) -> nom::IResult<&str, Option<Data>> {
-    println!("parse_tag_dep_optional: {}", input);
     nom::combinator::map(
         nom::sequence::preceded(
             nom::sequence::tuple((
@@ -326,9 +326,20 @@ fn parse_tag_param(input: &str) -> nom::IResult<&str, Option<Data>> {
         nom::bytes::complete::tag("flag"),
         nom::bytes::complete::tag("option"),
         nom::bytes::complete::tag("arg"),
+        nom::bytes::complete::tag("env"),
     )));
 
     let arg = nom::branch::alt((
+        nom::combinator::map(
+            nom::sequence::preceded(
+                nom::sequence::pair(
+                    nom::bytes::complete::tag("env"),
+                    nom::character::complete::space1,
+                ),
+                parse_env_param,
+            ),
+            |param| Some(Data::Env(param)),
+        ),
         nom::combinator::map(
             nom::sequence::preceded(
                 nom::sequence::pair(
@@ -385,7 +396,21 @@ fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
     )(input)
 }
 
-/// Parses the input as if it was an on option parameter like `@option --help <description>`.
+/// Parses the input as if it was an env parameter like `@env ENV_VAR! <description>`.
+fn parse_env_param(input: &str) -> nom::IResult<&str, param::Env> {
+    nom::combinator::map(
+        nom::sequence::tuple((
+            nom::branch::alt((parse_env_option, parse_env_mark)),
+            nom::sequence::preceded(nom::character::complete::space0, parse_tail),
+        )),
+        |(mut env, description)| {
+            env.description = description.to_string();
+            env
+        },
+    )(input)
+}
+
+/// Parses the input as if it was an option parameter like `@option --help <description>`.
 fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
     nom::combinator::map(
         nom::sequence::tuple((
@@ -451,7 +476,34 @@ fn parse_value_notation(input: &str) -> nom::IResult<&str, Option<&str>> {
     ))(input)
 }
 
-/// Parses the input as if was marked as `required` or `multiple`. E.g. `@param!`, `@param*`, `@param+`.
+/// Parses the input as if it was an option setter. E.g. `:option`, or `:host`.
+fn parse_env_option(input: &str) -> nom::IResult<&str, param::Env> {
+    nom::combinator::map(
+        nom::sequence::tuple((
+            parse_env_name,
+            nom::sequence::preceded(nom::bytes::complete::tag(":"), parse_param_name),
+        )),
+        |(mut env, data)| {
+            env.option = Some(data.name);
+            env
+        },
+    )(input)
+}
+
+fn parse_env_mark(input: &str) -> nom::IResult<&str, param::Env> {
+    nom::branch::alt((
+        nom::combinator::map(
+            nom::sequence::terminated(parse_env_name, nom::bytes::complete::tag("!")),
+            |mut data| {
+                data.required = true;
+                data
+            },
+        ),
+        parse_env_name,
+    ))(input)
+}
+
+/// Parses the input as if it was marked as `required` or `multiple`. E.g. `@param!`, `@param*`, `@param+`.
 fn parse_param_mark(input: &str) -> nom::IResult<&str, param::Data> {
     nom::branch::alt((
         nom::combinator::map(
@@ -692,6 +744,14 @@ fn parse_param_name(input: &str) -> nom::IResult<&str, param::Data> {
     nom::combinator::map(parse_name, param::Data::new)(input)
 }
 
+/// Parses the input as if it was an envirionment variable name like `ENV_VAR`.
+fn parse_env_name(input: &str) -> nom::IResult<&str, param::Env> {
+    nom::combinator::map(
+        nom::bytes::complete::take_while1(is_env_char),
+        |name: &str| param::Env::new(name, None, false, None),
+    )(input)
+}
+
 /// Parses the input as if it was a string of ascii alphanumeric text, plus `-` or `_`.
 fn parse_name(input: &str) -> nom::IResult<&str, &str> {
     nom::bytes::complete::take_while1(is_name_char)(input)
@@ -719,6 +779,11 @@ fn is_not_fn_name_char(c: char) -> bool {
             | ';'
             | '|'
     )
+}
+
+/// Returns true if the character is an upper case alphanumeric character or an underscore.
+fn is_env_char(c: char) -> bool {
+    c.is_ascii_uppercase() || c == '_'
 }
 
 /// Returns true if the character is an ascii alphanumeric character, underscore, or dash.
@@ -794,7 +859,15 @@ mod tests {
                 ..Default::default()
             })
         );
-
+        assert_token!(
+            "# @option --option<VALUE_NOTATION> An option with a specific value notation and configurable through an environment variable",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option with a specific value notation and configurable through an environment variable".to_string(),
+                value_notation: Some("VALUE_NOTATION".to_string()),
+                ..Default::default()
+            })
+        );
         assert_token!(
             "# @option -o --option An option with a short and long version",
             Data::Option(param::Option {
@@ -1044,6 +1117,48 @@ mod tests {
             Data::Example(param::Example {
                 description: "Something awesome".to_string(),
                 command: "something awesome".to_string(),
+            })
+        );
+        assert_token!(
+            "# @env ENV_VAR",
+            Data::Env(param::Env {
+                name: "ENV_VAR".to_string(),
+                description: "".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @env ENV_VAR A documented environment variable",
+            Data::Env(param::Env {
+                name: "ENV_VAR".to_string(),
+                description: "A documented environment variable".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @env ENV_VAR! A required environment variable",
+            Data::Env(param::Env {
+                name: "ENV_VAR".to_string(),
+                description: "A required environment variable".to_string(),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @env ENV_VAR!",
+            Data::Env(param::Env {
+                name: "ENV_VAR".to_string(),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @env ENV_VAR:option A documented environment variable that can be loaded into an option",
+            Data::Env(param::Env {
+                name: "ENV_VAR".to_string(),
+                description: "A documented environment variable that can be loaded into an option".to_string(),
+                option: Some("option".to_string()),
+                ..Default::default()
             })
         );
         assert_token!(

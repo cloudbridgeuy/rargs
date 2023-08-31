@@ -12,7 +12,7 @@ pub type Names = (
     HashMap<char, parser::Position>,
 );
 
-/// A struct representin a param tag E.g. `@arg`, `@option`, `@flag`.
+/// A struct representin a param tag E.g. `@arg`, `@option`, `@flag`, `@env`
 #[derive(Serialize, Debug, Clone, Default)]
 pub struct Data {
     pub name: String,
@@ -62,6 +62,31 @@ impl Param for Flag {
 
     fn tag_name(&self) -> &str {
         "@flag"
+    }
+}
+
+/// Represents an `@env` param. E.g. `@env FOO! description` or `@env FOO!`.
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
+pub struct Env {
+    pub name: String,
+    pub description: String,
+    pub required: bool,
+    pub option: std::option::Option<String>,
+}
+
+impl Env {
+    pub fn new(
+        name: &str,
+        description: std::option::Option<String>,
+        required: bool,
+        option: std::option::Option<String>,
+    ) -> Self {
+        Self {
+            name: name.to_string(),
+            description: description.unwrap_or_default(),
+            required,
+            option,
+        }
     }
 }
 

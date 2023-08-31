@@ -20,6 +20,7 @@ pub struct Command {
     pub rules: Option<Vec<String>>,
     pub subcommand: Option<String>,
     pub dep: Option<Vec<param::Dep>>,
+    pub envs: HashMap<String, param::Env>,
 }
 
 impl Command {
@@ -50,6 +51,7 @@ pub struct Script {
     pub version: Option<String>,
     pub dep: Option<Vec<param::Dep>>,
     pub root: Option<Vec<String>>,
+    pub envs: HashMap<String, param::Env>,
 }
 
 impl Script {
@@ -156,6 +158,19 @@ impl Script {
                 }
                 parser::Data::Default(value) => {
                     script.default = Some(value);
+                }
+                parser::Data::Env(value) => {
+                    if is_root_scope {
+                        script.envs.entry(value.name.clone()).or_insert(value);
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        command.envs.entry(value.name.clone()).or_insert(value);
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing env --{} in line {}. Did you forget the @cmd directive?",
+                            value.name,
+                            event.position
+                        );
+                    }
                 }
                 parser::Data::Option(value) => {
                     if is_root_scope {
