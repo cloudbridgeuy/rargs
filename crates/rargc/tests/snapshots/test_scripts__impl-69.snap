@@ -1,7 +1,10 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] minimal.sh --version"
+description: "[stdout] commands-default-force.sh source"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-0.0.1
+# this file is located in './crates/rargc/examples/output.sh'
+# you can edit it freely and regenerate (it will not be overwritten)
+args:
+- ${args[source]} = source
 

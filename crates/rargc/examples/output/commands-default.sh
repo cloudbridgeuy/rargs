@@ -282,11 +282,11 @@ run() {
       exit
       ;;
     "")
-      usage
+      upload
       exit
       ;;
+    
   esac
-  usage
 }
 
 run "$@"

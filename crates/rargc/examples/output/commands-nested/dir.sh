@@ -264,6 +264,11 @@ run() {
       remove
       exit
       ;;
+    "")
+      usage >&2
+      exit 1
+      ;;
+    
   esac
 }
 

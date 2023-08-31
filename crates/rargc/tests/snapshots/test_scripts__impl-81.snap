@@ -1,7 +1,20 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] minimal.sh --version"
+description: "[stdout] commands-nested.sh dir list -h"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-0.0.1
+Show files in the directory
+
+[4mUsage:[0m
+  list [OPTIONS] PATH 
+  list -h|--help
+
+[4mArguments:[0m
+  PATH
+    Directory path
+    [@required]
+
+[4mOptions:[0m
+  -h --help
+    Print help
 

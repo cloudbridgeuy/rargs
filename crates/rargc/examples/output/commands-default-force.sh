@@ -276,6 +276,11 @@ run() {
       upload
       exit
       ;;
+    "")
+      upload
+      exit
+      ;;
+    
   esac
 }
 

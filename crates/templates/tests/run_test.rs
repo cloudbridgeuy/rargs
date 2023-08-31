@@ -150,15 +150,6 @@ fn test_render() {
 
     test_template!(
         "run.tera",
-        "Root function should not work with no-force-default rule",
-        serde_json::json!({
-            "rules": ["no-force-default"],
-            "root": ["foo", "bar"]
-        })
-    );
-
-    test_template!(
-        "run.tera",
         "Global dependencies are used only for the root command if the use-global-deps-for-root rule is set",
         serde_json::json!({
             "rules": ["use-global-deps-for-root"],

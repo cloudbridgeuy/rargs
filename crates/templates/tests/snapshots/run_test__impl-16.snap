@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/run_test.rs
-description: Script has a required environment variable
+description: Script has a required documented environment variable
 expression: output
 ---
 run() {
@@ -17,5 +17,8 @@ run() {
     exit 1
   fi
 
+  printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add" "commands or a root command" >&2
+  usage >&2
+  exit 1
 }
 

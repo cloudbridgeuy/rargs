@@ -23,6 +23,11 @@ run() {
       foo
       exit
       ;;
+    "")
+      foo
+      exit
+      ;;
+    
   esac
 }
 

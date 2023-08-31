@@ -24,10 +24,10 @@ run() {
       exit
       ;;
     "")
-      usage
-      exit
+      usage >&2
+      exit 1
       ;;
+    
   esac
-  usage
 }
 

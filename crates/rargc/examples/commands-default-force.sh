@@ -26,6 +26,3 @@ download() {
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
-
-
-

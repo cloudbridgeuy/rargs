@@ -85,7 +85,6 @@ fn test_scripts() {
             "commands-default.sh",
             Commands {
                 stdout: vec![
-                    "",
                     "--help",
                     "source",
                     "source -f",
@@ -93,8 +92,30 @@ fn test_scripts() {
                     "upload -h",
                     "upload source",
                     "upload source -f",
+                    "download source",
                 ],
-                stderr: vec!["-f", "upload", "upload -f"],
+                stderr: vec!["", "-f", "upload", "upload -f"],
+            },
+        ),
+        (
+            "commands-default-force.sh",
+            Commands {
+                stdout: vec![
+                    "--help",
+                    "source",
+                    "upload --help",
+                    "upload -h",
+                    "upload source",
+                    "download source",
+                ],
+                stderr: vec!["", "upload", "upload -f"],
+            },
+        ),
+        (
+            "commands-nested.sh",
+            Commands {
+                stdout: vec!["--help", "dir -h", "file -h", "dir list -h"],
+                stderr: vec!["", "dir", "file", "dir list"],
             },
         ),
     ];

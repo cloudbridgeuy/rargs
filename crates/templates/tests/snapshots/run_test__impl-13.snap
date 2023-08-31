@@ -1,6 +1,6 @@
 ---
 source: crates/templates/tests/run_test.rs
-description: Global dependencies are used only for the root command if the use-global-deps-for-root rule is set
+description: Script has an undocumented environment variable
 expression: output
 ---
 run() {
@@ -9,5 +9,10 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  
+
+  printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add" "commands or a root command" >&2
+  usage >&2
+  exit 1
 }
 

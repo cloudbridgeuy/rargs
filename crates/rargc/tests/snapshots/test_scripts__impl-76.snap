@@ -1,26 +1,22 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] commands-default.sh upload -f"
+description: "[stderr] commands-nested.sh file"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing required option: [33msource[31m[0m
-
-Upload a file
-
-[4mAlias:[0m u
+File commands
 
 [4mUsage:[0m
-  upload [OPTIONS] SOURCE 
-  upload -h|--help
+  file [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  file -h|--help
+  file -v|--version
 
-[4mArguments:[0m
-  SOURCE
-    URL to download from
-    [@required]
+[4mCommands:[0m
+  remove .... Edit the file
+  show ...... Show file contents
 
 [4mOptions:[0m
-  -f --force
-    Force upload
   -h --help
     Print help
+  -v --version
+    Pring version
 
