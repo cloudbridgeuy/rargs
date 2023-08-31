@@ -1,21 +1,22 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] minimal.sh -f"
+description: "[stderr] commands.sh d"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 [31mMissing required option: [33msource[31m[0m
 
-Sample minimal application without commands
+Download a file
+
+[4mAlias:[0m d, down
 
 [4mUsage:[0m
-  minimal [OPTIONS] SOURCE [TARGET] 
-  minimal -h|--help
-  minimal -v|--version
+  download [OPTIONS] SOURCE [TARGET] 
+  download -h|--help
 
 [4mExamples:[0m
-  minimal example.com
+  download download example.com
     Download a file from the internet
-  minimal example.com ./output -f
+  download download example.com ./output -f
     Download a file from the internet and force save it to ./output
 
 [4mArguments:[0m
@@ -30,6 +31,4 @@ Sample minimal application without commands
     Overwrite existing files
   -h --help
     Print help
-  -v --version
-    Pring version
 

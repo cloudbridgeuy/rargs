@@ -1,0 +1,6 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] minus-v.sh -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+

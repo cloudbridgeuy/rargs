@@ -27,7 +27,8 @@ macro_rules! test_script {
     ($script:expr, $stream:expr, $options:expr) => {
         let script_name = $script.to_string();
         let options = $options.to_string();
-        let description = format!("Run the {script_name} script with '{options}'");
+        let stream = $stream.to_string();
+        let description = format!("[{stream}] {script_name} {options}");
         let output_dir = "./examples/output".to_string();
         let src = format!("./examples/{script_name}");
         let dst = format!("./examples/output/{script_name}");
