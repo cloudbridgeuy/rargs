@@ -5,6 +5,9 @@ expression: output
 ---
 # Simple function
 foo() {
+  # Parse command arguments
+  parse_foo_arguments "${input[@]}"
 
+  echo "No implementation body found for function foo"
 }
 

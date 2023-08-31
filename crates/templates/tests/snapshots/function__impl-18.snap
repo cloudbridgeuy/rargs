@@ -5,6 +5,8 @@ expression: output
 ---
 # Function with a local option with choices
 foo() {
+  # Parse command arguments
+  parse_foo_arguments "${input[@]}"
 
   
   if [[ -n "${args['choices']}" ]]; then
@@ -14,5 +16,6 @@ foo() {
       exit 1
     fi
   fi
+  echo "No implementation body found for function foo"
 }
 

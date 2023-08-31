@@ -1,0 +1,21 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Script has a required environment variable
+expression: output
+---
+run() {
+  declare -A args=()
+  declare -A deps=()
+  declare -a input=()
+  normalize_input "$@"
+  parse_arguments "${input[@]}"
+  # Check global environment variables
+  
+  if [[ -z "${FOO:-}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required environment variable: " "FOO" >&2
+    usage >&2
+    exit 1
+  fi
+
+}
+

@@ -1,0 +1,23 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with default and required positional argument
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  
+  if [[ -z "${args['default']}" ]]; then
+    args['default']="true"
+  fi
+  
+  if [[ -z "${args['default']}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "default" >&2
+    usage >&2
+    exit 1
+  fi
+  echo "No implementation body found for root function"
+}
+
+

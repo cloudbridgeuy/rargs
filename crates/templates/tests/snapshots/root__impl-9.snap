@@ -1,0 +1,17 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with global default option
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  
+  if [[ -z "${args['default']}" ]]; then
+    args['default']="foo"
+  fi
+  echo "No implementation body found for root function"
+}
+
+

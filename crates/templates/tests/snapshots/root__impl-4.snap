@@ -1,0 +1,13 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with custom-usage rule
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  echo "No implementation body found for root function"
+}
+
+

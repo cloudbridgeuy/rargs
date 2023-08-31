@@ -171,4 +171,58 @@ fn test_render() {
             }]
         })
     );
+    test_template!(
+        "run.tera",
+        "Script has an undocumented environment variable",
+        serde_json::json!({
+            "envs": {
+                "FOO": {}
+            }
+        })
+    );
+    test_template!(
+        "run.tera",
+        "Script has an documented environment variable",
+        serde_json::json!({
+            "envs": {
+                "FOO": {
+                    "description": "Foo bar baz"
+                }
+            }
+        })
+    );
+    test_template!(
+        "run.tera",
+        "Script has a required environment variable",
+        serde_json::json!({
+            "envs": {
+                "FOO": {
+                    "required": true
+                }
+            }
+        })
+    );
+    test_template!(
+        "run.tera",
+        "Script has a required documented environment variable",
+        serde_json::json!({
+            "envs": {
+                "FOO": {
+                    "required": true,
+                    "description": "Foo bar baz"
+                }
+            }
+        })
+    );
+    test_template!(
+        "run.tera",
+        "Script has an environment variable that should be set on an option",
+        serde_json::json!({
+            "envs": {
+                "FOO": {
+                    "option": "foo"
+                }
+            }
+        })
+    );
 }

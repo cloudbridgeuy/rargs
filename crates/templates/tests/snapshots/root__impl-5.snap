@@ -1,0 +1,19 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with global required option
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  
+  if [[ -z "${args['require']}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "require" >&2
+    usage >&2
+    exit 1
+  fi
+  echo "No implementation body found for root function"
+}
+
+

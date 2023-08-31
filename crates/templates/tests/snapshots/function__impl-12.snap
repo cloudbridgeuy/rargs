@@ -5,6 +5,8 @@ expression: output
 ---
 # Function with a local default option
 foo() {
+  # Parse command arguments
+  parse_foo_arguments "${input[@]}"
 
   
   if [[ -z "${args['default']}" ]]; then
@@ -13,5 +15,6 @@ foo() {
   if [[ -z "${args['foo']}" ]]; then
     args['foo']="foo"
   fi
+  echo "No implementation body found for function foo"
 }
 

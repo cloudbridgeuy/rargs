@@ -1,0 +1,20 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with no-first-option-help rule
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "${args['--help']}" ]]; then
+    usage
+    exit 0
+  fi
+  echo "No implementation body found for root function"
+}
+
+

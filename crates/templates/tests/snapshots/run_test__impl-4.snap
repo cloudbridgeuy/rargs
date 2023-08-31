@@ -19,20 +19,14 @@ run() {
   # Call the right command action
   case "$action" in
     "bar")
-      parse_bar_arguments "${input[@]}"
-      shift $#
       bar
       exit
       ;;
     "baz")
-      parse_baz_arguments "${input[@]}"
-      shift $#
       baz
       exit
       ;;
     "foo")
-      parse_foo_arguments "${input[@]}"
-      shift $#
       foo
       exit
       ;;

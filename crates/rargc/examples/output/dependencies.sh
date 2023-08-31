@@ -30,12 +30,17 @@ parse_root() {
   done
 }
 root() {
-# Check dependencies
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  # Check dependencies
   for dependency in fail; do
     if ! command -v $dependency >/dev/null 2>&1; then
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "This is meant to fail\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
   for dependency in again; do
@@ -43,6 +48,8 @@ root() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "Also this\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
 
@@ -82,6 +89,13 @@ inspect_args() {
     for k in "${sorted_keys[@]}"; do echo "- \${args[$k]} = ${args[$k]}"; done
   else
     echo args: none
+  fi
+
+  if ((${#deps[@]})); then
+    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
+    echo
+    echo deps:
+    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
 }
 
@@ -210,6 +224,8 @@ parse_download_arguments() {
 }
 # Download a file
 download() {
+  # Parse command arguments
+  parse_download_arguments "${input[@]}"
 
   # Check dependencies
   for dependency in foo bar baz; do
@@ -217,6 +233,8 @@ download() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "install with \e[32mgem install foo bar baz\e[0m\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
   for dependency in git; do
@@ -224,6 +242,8 @@ download() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "You can install git with \e[32mapt install git\e[0m\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
 
@@ -300,6 +320,8 @@ parse_upload_arguments() {
 }
 # Upload a file
 upload() {
+  # Parse command arguments
+  parse_upload_arguments "${input[@]}"
 
   # Check dependencies
   for dependency in docker; do
@@ -307,12 +329,16 @@ upload() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "visit https://docker.com for more information\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
   for dependency in foo; do
     if ! command -v $dependency >/dev/null 2>&1; then
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
   for dependency in git; do
@@ -320,6 +346,8 @@ upload() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "You don't have git?\n" >&2
       exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
 
@@ -336,23 +364,21 @@ upload() {
 
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
   # Call the right command action
   case "$action" in
     "download")
-      parse_download_arguments "${input[@]}"
-      shift $#
       download
+      exit
       ;;
     "upload")
-      parse_upload_arguments "${input[@]}"
-      shift $#
       upload
+      exit
       ;;
   esac
-  parse_root "${input[@]}"
   root
 }
 

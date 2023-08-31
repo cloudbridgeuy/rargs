@@ -30,7 +30,10 @@ parse_root() {
   done
 }
 root() {
-# Check dependencies
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  # Check dependencies
   for dependency in fail; do
     if ! command -v $dependency >/dev/null 2>&1; then
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
@@ -221,6 +224,8 @@ parse_download_arguments() {
 }
 # Download a file
 download() {
+  # Parse command arguments
+  parse_download_arguments "${input[@]}"
 
   # Check dependencies
   if ! command -v foo bar baz git >/dev/null 2>&1; then
@@ -305,6 +310,8 @@ parse_upload_arguments() {
 }
 # Upload a file
 upload() {
+  # Parse command arguments
+  parse_upload_arguments "${input[@]}"
 
   # Check dependencies
   for dependency in docker; do
@@ -354,19 +361,14 @@ run() {
   # Call the right command action
   case "$action" in
     "download")
-      parse_download_arguments "${input[@]}"
-      shift $#
       download
       exit
       ;;
     "upload")
-      parse_upload_arguments "${input[@]}"
-      shift $#
       upload
       exit
       ;;
   esac
-  parse_root "${input[@]}"
   root
 }
 

@@ -19,13 +19,17 @@ run() {
   {% include "check_dependencies.tera" %}
   {%- endif %}
 {%- endif %}
+{%- if not rules or rules is not containing("use-global-envs-for-root") %}
+  {%- if envs and envs | length > 0 %}
+  # Check global environment variables
+  {% include "check_environment_variables.tera" %}
+  {%- endif %}
+{%- endif %}
 {%- if commands %}
   # Call the right command action
   case "$action" in
   {%- for key, command in commands %}
     "{{ key }}")
-      parse_{{ key }}_arguments "${input[@]}"
-      shift $#
       {{ key }}
       exit
       ;;
@@ -40,7 +44,6 @@ run() {
 {%- endif %}
 {%- if not rules or rules is not containing("no-force-default") %}
   {%- if root and root | length > 0 %}
-  parse_root "${input[@]}"
   root
   {%- endif %}
 {%- else %}

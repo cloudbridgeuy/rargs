@@ -47,6 +47,13 @@ inspect_args() {
   else
     echo args: none
   fi
+
+  if ((${#deps[@]})); then
+    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
+    echo
+    echo deps:
+    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
+  fi
 }
 
 
@@ -162,6 +169,8 @@ parse_list_arguments() {
 }
 # Show files in the directory
 list() {
+  # Parse command arguments
+  parse_list_arguments "${input[@]}"
 
   
   if [[ -z "${args['path']}" ]]; then
@@ -227,6 +236,8 @@ parse_remove_arguments() {
 }
 # Remove directory
 remove() {
+  # Parse command arguments
+  parse_remove_arguments "${input[@]}"
 
   
   if [[ -z "${args['path']}" ]]; then
@@ -239,20 +250,19 @@ remove() {
 
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
   # Call the right command action
   case "$action" in
     "list")
-      parse_list_arguments "${input[@]}"
-      shift $#
       list
+      exit
       ;;
     "remove")
-      parse_remove_arguments "${input[@]}"
-      shift $#
       remove
+      exit
       ;;
   esac
 }

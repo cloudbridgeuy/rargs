@@ -5,6 +5,8 @@ expression: output
 ---
 # Function with a required positional argument
 foo() {
+  # Parse command arguments
+  parse_foo_arguments "${input[@]}"
 
   
   if [[ -z "${args['default']}" ]]; then
@@ -12,5 +14,6 @@ foo() {
     foo_usage >&2
     exit 1
   fi
+  echo "No implementation body found for function foo"
 }
 

@@ -23,7 +23,6 @@ fn test_function_template() {
             "command": {
                 "name": "foo",
                 "description": "Simple function",
-                "lines": ["foo", "bar", "baz"],
             }
         })
     );
@@ -330,5 +329,28 @@ fn test_function_template() {
                 "message": "Installing dependencies"
             }]
         }})
+    );
+    test_template!(
+        "function.tera",
+        "Function global environment variables",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Function with a local option with choices",
+            },
+            "envs": {
+                "FOO": {
+                    "name": "FOO",
+                },
+                "BAR": {
+                    "name": "BAR",
+                    "required": true
+                },
+                "BAZ": {
+                    "name": "BAZ",
+                    "option": "baz"
+                }
+            }
+        })
     );
 }

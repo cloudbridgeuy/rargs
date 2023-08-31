@@ -55,6 +55,16 @@
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
+{%- set _envs = false %}
+{%- if command["envs"] %}
+  {%- if envs %}
+    {%- set _envs = envs | merge(with=command["envs"]) %}
+  {%- else %}
+    {%- set _envs = command["envs"] %}
+  {%- endif %}
+{%- elif envs %}
+  {%- set _envs = envs %}
+{%- endif %}
 
 {%- if command["description"] -%}
 # {{ command["description"] }}
@@ -63,6 +73,12 @@
 # {{ command["help"] }}
 {% endif -%}
 {{ command["name"] }}() {
+{%- if _envs and _envs | length > 0 %}
+  # Parse environment variables
+  {% include "check_environment_variables.tera" %}
+{%- endif %}
+  # Parse command arguments
+  parse_{{ command["name"] }}_arguments "${input[@]}"
 {% if rules -%}
   {%- if rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
@@ -114,8 +130,8 @@
     {%- for line in command["lines"] %}
   {{ line }}
     {%- endfor %}
-  {%- else %}
-  echo "No implementation body found for function {{ name }}"
   {%- endif %}
+{%- else %}
+  echo "No implementation body found for function {{ command["name"] }}"
 {%- endif %}
 }

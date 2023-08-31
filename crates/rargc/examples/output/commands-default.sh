@@ -47,6 +47,13 @@ inspect_args() {
   else
     echo args: none
   fi
+
+  if ((${#deps[@]})); then
+    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
+    echo
+    echo deps:
+    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
+  fi
 }
 
 
@@ -174,6 +181,8 @@ parse_download_arguments() {
 }
 # Download a file
 download() {
+  # Parse command arguments
+  parse_download_arguments "${input[@]}"
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -242,6 +251,8 @@ parse_upload_arguments() {
 }
 # Upload a file
 upload() {
+  # Parse command arguments
+  parse_upload_arguments "${input[@]}"
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -256,26 +267,26 @@ upload() {
 
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
   # Call the right command action
   case "$action" in
     "download")
-      parse_download_arguments "${input[@]}"
-      shift $#
       download
+      exit
       ;;
     "upload")
-      parse_upload_arguments "${input[@]}"
-      shift $#
       upload
+      exit
       ;;
     "")
       usage
       exit
       ;;
   esac
+  usage
 }
 
 run "$@"

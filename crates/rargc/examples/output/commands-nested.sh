@@ -47,6 +47,13 @@ inspect_args() {
   else
     echo args: none
   fi
+
+  if ((${#deps[@]})); then
+    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
+    echo
+    echo deps:
+    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
+  fi
 }
 
 
@@ -149,6 +156,8 @@ parse_dir_arguments() {
 }
 # Directory commands
 dir() {
+  # Parse command arguments
+  parse_dir_arguments "${input[@]}"
 
   local sub="/Users/guzmanmonne/Projects/Rust/rargc/crates/rargc/examples/output/commands-nested/dir.sh"
   # shellcheck disable=SC2068
@@ -181,6 +190,8 @@ parse_file_arguments() {
 }
 # File commands
 file() {
+  # Parse command arguments
+  parse_file_arguments "${input[@]}"
 
   local sub="/Users/guzmanmonne/Projects/Rust/rargc/crates/rargc/examples/output/commands-nested/file.sh"
   # shellcheck disable=SC2068
@@ -190,20 +201,19 @@ file() {
 
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
   # Call the right command action
   case "$action" in
     "dir")
-      parse_dir_arguments "${input[@]}"
-      shift $#
       dir
+      exit
       ;;
     "file")
-      parse_file_arguments "${input[@]}"
-      shift $#
       file
+      exit
       ;;
   esac
 }

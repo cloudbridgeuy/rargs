@@ -29,6 +29,12 @@
 {%- endif -%}
 
 root() {
+{%- if envs and envs | length > 0 %}
+  # Parse environment variables
+  {% include "check_environment_variables.tera" %}
+{%- endif %}
+  # Parse command arguments
+  parse_root "${input[@]}"
 {% if rules -%}
   {%- if rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
@@ -40,7 +46,7 @@ root() {
   fi
   {%- endif -%}
 {%- endif -%}
-{%- if dep and dep | length > 0 -%}
+{%- if dep and dep | length > 0 %}
   # Check dependencies
   {%- include "check_dependencies.tera" %}
 {%- endif %}

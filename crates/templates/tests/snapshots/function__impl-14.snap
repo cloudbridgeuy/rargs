@@ -5,10 +5,13 @@ expression: output
 ---
 # Function with a default positional argument
 foo() {
+  # Parse command arguments
+  parse_foo_arguments "${input[@]}"
 
   
   if [[ -z "${args['default']}" ]]; then
     args['default']="true"
   fi
+  echo "No implementation body found for function foo"
 }
 

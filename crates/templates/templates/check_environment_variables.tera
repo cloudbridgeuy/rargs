@@ -1,0 +1,29 @@
+{%- set _envs = false %}
+{%- if command["envs"] %}
+  {%- if envs %}
+    {%- set _envs = envs | merge(with=command["envs"]) %}
+  {%- else %}
+    {%- set _envs = command["envs"] %}
+  {%- endif %}
+{%- elif envs %}
+  {%- set _envs = envs %}
+{%- endif %}
+{%- if _envs and _envs | length > 0 %}
+  {%- for name, env in _envs %}
+    {%- if env["option"] %}
+  if [[ -n "${% raw %}{{% endraw %}{{ name }}:-}" ]]; then
+    args['{{ env["option"] }}']="${% raw %}{{% endraw %}{{ name }}:-}"
+  fi
+    {%- elif env["required"] %}
+  if [[ -z "${% raw %}{{% endraw %}{{ name }}:-}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required environment variable: " "{{ name }}" >&2
+      {%- if command %}
+    {{ command["name"] }}_usage >&2
+      {%- else %}
+    usage >&2
+      {%- endif %}
+    exit 1
+  fi
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}

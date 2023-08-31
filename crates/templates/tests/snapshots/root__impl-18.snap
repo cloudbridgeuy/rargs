@@ -1,0 +1,21 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with a local option with choices
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
+
+  
+  if [[ -n "${args['choices']}" ]]; then
+    if [[ ! "(one two three)" =~ ${args['choices']} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "choices" ": " "${args['choices']}" >&2
+      usage >&2
+      exit 1
+    fi
+  fi
+  echo "No implementation body found for root function"
+}
+
+

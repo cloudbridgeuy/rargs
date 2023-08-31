@@ -42,6 +42,8 @@ parse_root() {
   done
 }
 root() {
+  # Parse command arguments
+  parse_root "${input[@]}"
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -87,6 +89,13 @@ inspect_args() {
     for k in "${sorted_keys[@]}"; do echo "- \${args[$k]} = ${args[$k]}"; done
   else
     echo args: none
+  fi
+
+  if ((${#deps[@]})); then
+    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
+    echo
+    echo deps:
+    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
 }
 
@@ -156,10 +165,10 @@ parse_arguments() {
 
 run() {
   declare -A args=()
+  declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  parse_root "${input[@]}"
   root
 }
 
