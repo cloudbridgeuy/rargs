@@ -70,12 +70,12 @@
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
         {% if option["multiple"] -%}
           if [[ -z ${args['{{ key }}']+x} ]]; then
-            args['{{ key }}']=$2
+            args['{{ key }}']="$2"
           else
             args['{{ key }}']="${args['{{ key }}']:-} $2"
           fi
         {% else -%}
-          args['{{ key }}']=$2
+          args['{{ key }}']="$2"
         {% endif -%}
         shift 2
         ;;
@@ -87,9 +87,31 @@
         ;;
     {%- endif %}
     {%- if not command["subcommand"] %}
+      {%- if rules and rules is containing("catch-all") %}
+      --)
+        shift
+        other_args+=("$@")
+        break
+        ;;
+      -?*)
+        other_args+=("$1")
+        shift
+        ;;
+      {%- else %}
       -?*)
         printf "invalid option: %s\n" "$key" >&2
         exit 1
+        ;;
+      {%- endif %}
+    {%- elif rules and rules is containing("catch-all") %}
+      --)
+        shift
+        other_args+=("$@")
+        break
+        ;;
+      -?*)
+        other_args+=("$1")
+        shift
         ;;
     {%- endif %}
       *)
@@ -104,8 +126,13 @@
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
               {%- else %}
+                {%- if rules and rules is containing("catch-all") %}
+          other_args+=("$1")
+          shift
+                {%- else %}
           printf "Invalid argument: %s\n" "$key" >&2
           exit 1
+                {%- endif %}
               {%- endif %}
         fi
             {%- elif loop.first %}
@@ -121,8 +148,13 @@
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
               {%- else %}
+                {%- if rules and rules is containing("catch-all") %}
+          other_args+=("$1")
+          shift
+                {%- else %}
           printf "Invalid argument: %s\n" "$key" >&2
           exit 1
+                {%- endif %}
               {%- endif %}
         fi
             {%- else %}
@@ -139,7 +171,12 @@
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
         {%- else %}
+          {%- if rules and rules is containing("catch-all") %}
+        other_args+=("$1")
+        shift
+          {%- else %}
         break
+          {%- endif %}
         {%- endif %}
       {%- endif %}
         ;;

@@ -10,9 +10,7 @@ fi
 if [[ -n "${DEBUG:-}" ]]; then
   set -x
 fi
-
 set -e
-
 
 
 normalize_input() {
@@ -54,13 +52,19 @@ inspect_args() {
     echo deps:
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
+
+  if ((${#other_args[@]})); then
+    echo
+    echo other_args:
+    echo "- \${other_args[*]} = ${other_args[*]}"
+    for i in "${!other_args[@]}"; do
+      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    done
+  fi
 }
-
-
 version() {
   echo "0.0.1"
 }
-
 usage() {
   printf "Sample application with nested commands\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
@@ -130,7 +134,6 @@ parse_arguments() {
       ;;
   esac
 }
-
 dir_usage() {
   printf "Directory commands\n"
   printf "\n\033[4m%s\033[0m %s\n" "Alias:" "d"
@@ -140,6 +143,8 @@ dir_usage() {
   printf "  dir -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -v --verbose [<VERBOSE>]\n"
+  printf "    Verbose mode\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
@@ -148,6 +153,10 @@ parse_dir_arguments() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
+      -v | --verbose)
+        args['verbose']="$2"
+        shift 2
+        ;;
       *)
         break
         ;;
@@ -164,7 +173,6 @@ dir() {
   # shellcheck disable=SC2154
   "$sub" ${input[@]}
 }
-
 file_usage() {
   printf "File commands\n"
   printf "\n\033[4m%s\033[0m %s\n" "Alias:" "f"
@@ -198,7 +206,6 @@ file() {
   # shellcheck disable=SC2154
   "$sub" ${input[@]}
 }
-
 run() {
   declare -A args=()
   declare -A deps=()

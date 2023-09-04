@@ -4,32 +4,30 @@
 if [[ -n "${DEBUG:-}" ]]; then
   set -x
 fi
-
 set -e
 
-{% if root and root | length > 0 -%}
+{% if root and root | length > 0 %}
 parse_root() {
 {% include "parse_arguments_while.tera" -%}
 }
+
 {% include "root.tera" %}
 {%- endif %}
-
 {% include "raw.tera" %}
-{% if lines and lines | length > 0 %}
+{%- if lines and lines | length > 0 %}
 # Root level lines
   {%- for line in lines %}
 {{ line }}
   {%- endfor %}
-{% endif %}
+{%- endif %}
 {% include "version.tera" %}
-
 {% include "usage.tera" %}
 {% include "parse_arguments.tera" %}
-{% for key, command in commands -%}
+{%- for key, command in commands -%}
   {%- set rules = rules | concat(with=command["rules"]) -%}
   {%- include "command_usage.tera" %}
   {%- include "parse_command_arguments.tera" %}
   {%- include "function.tera" %}
-{% endfor -%}
-{% include "run.tera" %}
+{%- endfor -%}
+{%- include "run.tera" %}
 run "$@"

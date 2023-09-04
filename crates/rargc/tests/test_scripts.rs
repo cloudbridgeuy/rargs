@@ -26,16 +26,14 @@ fn test_scripts() {
                     "--fail",
                 ],
                 stderr: vec!["", "-f"],
-            },
-        ),
-        (
+            }
+        ), (
             "minus-v.sh",
             Commands {
                 stdout: vec!["--help", "-h", "--version", "-v"],
                 stderr: vec![],
             },
-        ),
-        (
+        ), (
             "commands.sh",
             Commands {
                 stdout: vec![
@@ -65,23 +63,22 @@ fn test_scripts() {
                     "u source --user Foo",
                     "u source --password Bar",
                     "u source --password Foo --password Bar",
-                ],
-                stderr: vec![
-                    "",
-                    "download",
-                    "d",
-                    "upload --user Foo",
-                    "upload --password Bar",
-                    "upload --password Foo --password Bar",
-                    "u --help",
-                    "u -h",
-                    "u --user Foo",
-                    "u --password Bar",
-                    "u --user Foo --password Bar",
-                ],
+                    ],
+                    stderr: vec![
+                        "",
+                        "download",
+                        "d",
+                        "upload --user Foo",
+                        "upload --password Bar",
+                        "upload --password Foo --password Bar",
+                        "u --help",
+                        "u -h",
+                        "u --user Foo",
+                        "u --password Bar",
+                        "u --user Foo --password Bar",
+                    ],
             },
-        ),
-        (
+        ), (
             "commands-default.sh",
             Commands {
                 stdout: vec![
@@ -96,8 +93,7 @@ fn test_scripts() {
                 ],
                 stderr: vec!["", "-f", "upload", "upload -f"],
             },
-        ),
-        (
+        ), (
             "commands-default-force.sh",
             Commands {
                 stdout: vec![
@@ -110,15 +106,13 @@ fn test_scripts() {
                 ],
                 stderr: vec!["", "upload", "upload -f"],
             },
-        ),
-        (
+        ), (
             "commands-nested.sh",
             Commands {
                 stdout: vec!["--help", "dir -h", "file -h", "dir list -h"],
                 stderr: vec!["", "dir", "file", "dir list"],
             },
-        ),
-        (
+        ), (
             "commands-aliases.sh",
             Commands {
                 stdout: vec![
@@ -132,24 +126,27 @@ fn test_scripts() {
                 ],
                 stderr: vec!["", "download", "upload", "d", "u", "down", "push"],
             },
-        ),
-        (
+        ), (
             "dependencies.sh",
             Commands {
                 stdout: vec![],
                 stderr: vec!["", "download", "upload"],
             },
-        ),
-        (
+        ), (
             "catch-all.sh",
             Commands {
                 stdout: vec![
                     "-h",
-                    "--help",
-                    "something",
-                    "something with --additional args",
-                    "something with --additional args and --debug",
-                    "something with --additional args and --debug -- with something else",
+                    "multiple -h",
+                    "no-multiple -h",
+                    "multiple something",
+                    "no-multiple something",
+                    "multiple something with --additional args",
+                    "no-multiple something with --additional args",
+                    "multiple something with --additional args and --debug",
+                    "no-multiple something with --additional args and --debug",
+                    "multiple something with --additional args and --debug -- with something else",
+                    "no-multiple something with --additional args and --debug -- with something else",
                 ],
                 stderr: vec![""],
             },

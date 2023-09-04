@@ -1,6 +1,9 @@
 run() {
   declare -A args=()
   declare -A deps=()
+{%- if rules and rules is containing("catch-all") %}
+  declare -a other_args=()
+{%- endif %}
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"

@@ -2,11 +2,12 @@
 # @name catch-all
 # @version 0.0.1
 # @description Catch All example
+# @flag -d --debug Debug mode
 # @rule catch-all
 
-# @flag -d --debug Debug mode
-# @arg message+ Message
-root() {
+# @cmd Command with a simple optional argument
+# @arg message Message
+no-multiple() {
   if [[ -z "${args['--debug']}" ]]; then
     set -x
   fi
@@ -14,3 +15,12 @@ root() {
   inspect_args
 }
 
+# @cmd With a multiple required argument
+# @arg message+ Message
+multiple() {
+  if [[ -z "${args['--debug']}" ]]; then
+    set -x
+  fi
+
+  inspect_args
+}

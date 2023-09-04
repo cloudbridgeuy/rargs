@@ -20,7 +20,7 @@ parse_arguments() {
     case "$key" in
       -f | --foo)
         if [[ -z ${args['foo']+x} ]]; then
-            args['foo']=$2
+            args['foo']="$2"
           else
             args['foo']="${args['foo']:-} $2"
           fi

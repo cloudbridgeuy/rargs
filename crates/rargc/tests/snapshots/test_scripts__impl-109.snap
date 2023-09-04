@@ -6,14 +6,13 @@ expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => out
 Catch All example
 
 [4mUsage:[0m
-  catch-all [OPTIONS] MESSAGE... 
+  catch-all [OPTIONS] [COMMAND] [COMMAND_OPTIONS] ...
   catch-all -h|--help
   catch-all -v|--version
 
-[4mArguments:[0m
-  MESSAGE
-    Message
-    [@required, @multiple]
+[4mCommands:[0m
+  multiple ....... With a multiple required argument
+  no-multiple .... Command with a simple optional argument
 
 [4mOptions:[0m
   -d --debug

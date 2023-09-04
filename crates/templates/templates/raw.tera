@@ -38,5 +38,14 @@ inspect_args() {
     echo deps:
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
+
+  if ((${#other_args[@]})); then
+    echo
+    echo other_args:
+    echo "- \${other_args[*]} = ${other_args[*]}"
+    for i in "${!other_args[@]}"; do
+      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    done
+  fi
 }
-{%- endraw %}
+{%- endraw -%}

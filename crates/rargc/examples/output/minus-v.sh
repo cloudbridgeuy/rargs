@@ -10,8 +10,8 @@ fi
 if [[ -n "${DEBUG:-}" ]]; then
   set -x
 fi
-
 set -e
+
 
 parse_root() {
 
@@ -23,7 +23,7 @@ parse_root() {
         shift
         ;;
       -h | --host)
-        args['host']=$2
+        args['host']="$2"
         shift 2
         ;;
       -?*)
@@ -40,6 +40,7 @@ parse_root() {
     esac
   done
 }
+
 root() {
   # Parse command arguments
   parse_root "${input[@]}"
@@ -48,7 +49,6 @@ root() {
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
-
 
 
 normalize_input() {
@@ -90,13 +90,19 @@ inspect_args() {
     echo deps:
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
+
+  if ((${#other_args[@]})); then
+    echo
+    echo other_args:
+    echo "- \${other_args[*]} = ${other_args[*]}"
+    for i in "${!other_args[@]}"; do
+      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    done
+  fi
 }
-
-
 version() {
   echo "0.0.1"
 }
-
 usage() {
   printf "Example that replaces the default behavior of -v and -h\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
@@ -151,7 +157,6 @@ parse_arguments() {
       ;;
   esac
 }
-
 run() {
   declare -A args=()
   declare -A deps=()

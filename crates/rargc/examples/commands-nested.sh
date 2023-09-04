@@ -11,6 +11,7 @@
 # @cmd Directory commands
 # @alias d
 # @sub ./commands-nested/dir.sh
+# @option -v --verbose Verbose mode
 dir() {
   # shellcheck disable=SC2068
   # shellcheck disable=SC2154

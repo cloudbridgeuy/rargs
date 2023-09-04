@@ -20,15 +20,15 @@ parse_bar_arguments() {
     key="$1"
     case "$key" in
       -b | --bar)
-        args['bar']=$2
+        args['bar']="$2"
         shift 2
         ;;
       --baz)
-        args['baz']=$2
+        args['baz']="$2"
         shift 2
         ;;
       -f | --foo)
-        args['foo']=$2
+        args['foo']="$2"
         shift 2
         ;;
       -?*)
