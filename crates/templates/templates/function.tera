@@ -128,7 +128,7 @@
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}
     {%- for line in command["lines"] %}
-  {{ line }}
+{{ line }}
     {%- endfor %}
   {%- endif %}
 {%- else %}

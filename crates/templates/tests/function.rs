@@ -13,7 +13,7 @@ fn test_function_template() {
         "command": {
             "name": "foo",
             "description": "Simple function",
-            "lines": ["foo", "bar", "baz"],
+            "lines": ["  foo", "  bar", "  baz"],
         }})
     );
     test_template!(
@@ -300,8 +300,8 @@ fn test_function_template() {
             "subcommand": "./subcommand.sh",
             "description": "Function with a local option with choices",
             "lines": [
-                "echo \"Hello, world!\"",
-                "$sub $@"
+                "  echo \"Hello, world!\"",
+                "  $sub $@"
             ]
         }})
     );

@@ -140,6 +140,20 @@ fn test_scripts() {
                 stderr: vec!["", "download", "upload"],
             },
         ),
+        (
+            "catch-all.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "--help",
+                    "something",
+                    "something with --additional args",
+                    "something with --additional args and --debug",
+                    "something with --additional args and --debug -- with something else",
+                ],
+                stderr: vec![""],
+            },
+        ),
     ];
 
     for (script, commands) in scripts {

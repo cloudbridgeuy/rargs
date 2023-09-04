@@ -79,7 +79,7 @@ root() {
 {%- endif %}
 {%- if root and root | length > 0 %}
   {%- for line in root %}
-  {{ line }}
+{{ line }}
   {%- endfor %}
 {%- else %}
   echo "No implementation body found for root function"

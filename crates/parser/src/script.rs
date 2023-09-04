@@ -338,7 +338,7 @@ impl Script {
                             is_root_scope = true;
                         } else if last_command == ROOT {
                             if let Some(root) = script.root.as_mut() {
-                                root.push(value.trim().to_string());
+                                root.push(value);
                             } else {
                                 eyre::bail!(
                                     "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
@@ -353,7 +353,7 @@ impl Script {
                                 .unwrap()
                                 .lines
                                 .get_or_insert_with(Vec::new)
-                                .push(value.trim().to_string());
+                                .push(value);
                         }
                     } else {
                         eyre::bail!(
