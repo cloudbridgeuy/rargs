@@ -127,7 +127,7 @@ remove_usage() {
   printf "Edit the file\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  remove [OPTIONS] PATH \n"
+  printf "  remove [OPTIONS] PATH\n"
   printf "  remove -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  PATH\n"
@@ -187,7 +187,7 @@ show_usage() {
   printf "Show file contents\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  show [OPTIONS] PATH \n"
+  printf "  show [OPTIONS] PATH\n"
   printf "  show -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  PATH\n"
@@ -243,6 +243,7 @@ show() {
   fi
   inspect_args
 }
+
 run() {
   declare -A args=()
   declare -A deps=()

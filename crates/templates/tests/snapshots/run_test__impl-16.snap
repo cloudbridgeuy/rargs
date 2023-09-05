@@ -3,6 +3,7 @@ source: crates/templates/tests/run_test.rs
 description: Script has a required documented environment variable
 expression: output
 ---
+
 run() {
   declare -A args=()
   declare -A deps=()

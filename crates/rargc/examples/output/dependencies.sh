@@ -174,7 +174,7 @@ download_usage() {
   printf "\n\033[4m%s\033[0m %s\n" "Alias:" "d, down"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  download [OPTIONS] SOURCE [TARGET] \n"
+  printf "  download [OPTIONS] SOURCE [TARGET]\n"
   printf "  download -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  SOURCE\n"
@@ -267,7 +267,7 @@ upload_usage() {
   printf "\n\033[4m%s\033[0m %s\n" "Alias:" "u"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  upload [OPTIONS] SOURCE \n"
+  printf "  upload [OPTIONS] SOURCE\n"
   printf "  upload -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  SOURCE\n"
@@ -362,6 +362,7 @@ upload() {
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
+
 run() {
   declare -A args=()
   declare -A deps=()

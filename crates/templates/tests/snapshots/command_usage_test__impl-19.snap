@@ -7,7 +7,7 @@ foo_usage() {
   printf "Test simple usage\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  foo [OPTIONS] VALUE_NOTATION... \n"
+  printf "  foo [OPTIONS] VALUE_NOTATION...\n"
   printf "  foo -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  VALUE_NOTATION\n"

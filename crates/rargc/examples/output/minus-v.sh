@@ -157,6 +157,7 @@ parse_arguments() {
       ;;
   esac
 }
+
 run() {
   declare -A args=()
   declare -A deps=()

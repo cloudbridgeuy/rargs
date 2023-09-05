@@ -21,6 +21,7 @@ pub struct Command {
     pub subcommand: Option<String>,
     pub dep: Option<Vec<param::Dep>>,
     pub envs: HashMap<String, param::Env>,
+    pub any: Option<param::Any>,
 }
 
 impl Command {
@@ -52,6 +53,7 @@ pub struct Script {
     pub dep: Option<Vec<param::Dep>>,
     pub root: Option<Vec<String>>,
     pub envs: HashMap<String, param::Env>,
+    pub any: Option<param::Any>,
 }
 
 impl Script {
@@ -181,6 +183,26 @@ impl Script {
                         eyre::bail!(
                             "No command in scope in when parsing option --{} in line {}. Did you forget the @cmd directive?",
                             value.name,
+                            event.position
+                        );
+                    }
+                }
+                parser::Data::Any(value) => {
+                    if is_root_scope {
+                        if script.any.is_some() {
+                            eyre::bail!("Duplicate @any in line {}.", event.position);
+                        } else {
+                            script.any = Some(value);
+                        };
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        if command.any.is_some() {
+                            eyre::bail!("Duplicate @any in line {}.", event.position);
+                        } else {
+                            command.any = Some(value);
+                        };
+                    } else {
+                        eyre::bail!(
+                            "No command in scope in when parsing @any in line {}. Did you forget the @cmd directive?",
                             event.position
                         );
                     }

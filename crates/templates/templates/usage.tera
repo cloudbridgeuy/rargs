@@ -27,7 +27,6 @@
   {%- endfor -%}
 {%- endif -%}
 
-
 usage() {
   {% if description -%}
   printf "{{ description }}\n"
@@ -40,12 +39,12 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
 
   {%- if commands %}
-  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]{%- if rules and rules is containing("catch-all") %} ...{%- endif %}\n"
+  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]{%- if any %} ...{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{%- endif %}\n"
   {%- else %}
     {%- if positional_arguments %}
-  printf "  {{ name }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in positional_arguments %}{% if arg["required"] %}{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}{%- if rules and rules is containing("catch-all") %} ...{%- endif %}\n"
+  printf "  {{ name }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in positional_arguments %}{% if arg["required"] %}{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}{%- if any %} ...{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{%- endif %}\n"
     {%- else %}
-  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]{%- if rules and rules is containing("catch-all") %} ...{%- endif %}\n"
+  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS]{%- if any %} ...{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{%- endif %}\n"
     {%- endif %}
   {%- endif %}
   printf "  {{ name }} {% if not uses_h %}-h|{% endif %}--help\n"
@@ -62,8 +61,9 @@ usage() {
     {%- endfor %}
   {%- endif %}
 
-  {%- if positional_arguments %}
+  {%- if positional_arguments or any %}
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
+    {%- if positional_arguments %}
   {%- for arg in positional_arguments %}
   printf "  {% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}\n"
   printf "    {{ arg["description"] }}\n"
@@ -83,6 +83,13 @@ usage() {
     {%- endif -%}]\n"
   {%- endif -%}
   {%- endfor -%}
+  {%- endif %}
+  {%- if any %}
+  printf "  {% if any["value_notation"] %}{{ any["value_notation"] }}{% else %}OTHER_ARGUMENTS{% endif %}\n"
+  {%- if any["description"] %}
+  printf "    {{ any["description"] }}\n"
+  {%- endif %}
+  {%- endif %}
   {%- endif %}
 
   {%- if commands %}

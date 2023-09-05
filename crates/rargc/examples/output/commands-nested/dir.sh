@@ -127,7 +127,7 @@ list_usage() {
   printf "Show files in the directory\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  list [OPTIONS] PATH \n"
+  printf "  list [OPTIONS] PATH\n"
   printf "  list -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  PATH\n"
@@ -187,7 +187,7 @@ remove_usage() {
   printf "Remove directory\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  remove [OPTIONS] PATH \n"
+  printf "  remove [OPTIONS] PATH\n"
   printf "  remove -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  PATH\n"
@@ -249,6 +249,7 @@ remove() {
   fi
   inspect_args
 }
+
 run() {
   declare -A args=()
   declare -A deps=()

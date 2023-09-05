@@ -129,6 +129,28 @@ impl Example {
     }
 }
 
+/// Represents an `@any` param. E.g. `@any! <VALUE_NOTATION> Any value requiring at least one."
+#[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
+pub struct Any {
+    pub description: std::option::Option<String>,
+    pub value_notation: std::option::Option<String>,
+    pub required: bool,
+}
+
+impl Any {
+    pub fn new(
+        description: std::option::Option<String>,
+        value_notation: std::option::Option<String>,
+        required: bool,
+    ) -> Self {
+        Self {
+            description,
+            value_notation,
+            required,
+        }
+    }
+}
+
 /// Represents an `@arg` param. E.g. `@arg name Your name`.
 #[derive(Serialize, Default, Debug, PartialEq, Eq, Clone)]
 pub struct PositionalArgument {

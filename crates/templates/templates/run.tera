@@ -1,7 +1,18 @@
+{%- set _any = false %}
+{%- if any %}
+  {%- set _any = any %}
+{%- elif commands %}
+  {%- for _, command in commands %}
+    {%- if command["any"] %}
+      {%- set_global _any = command["any"] %}
+      {%- break %}
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
 run() {
   declare -A args=()
   declare -A deps=()
-{%- if rules and rules is containing("catch-all") %}
+{%- if _any %}
   declare -a other_args=()
 {%- endif %}
   declare -a input=()

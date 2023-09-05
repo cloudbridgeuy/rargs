@@ -73,13 +73,14 @@ version() {
 usage() {
   printf "Catch All example\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  catch-all [OPTIONS] [COMMAND] [COMMAND_OPTIONS] ...\n"
+  printf "  catch-all [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
   printf "  catch-all -h|--help\n"
   printf "  catch-all -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Commands:"
   cat <<EOF
   multiple ....... With a multiple required argument
   no-multiple .... Command with a simple optional argument
+  other .......... Any arguments without description
 EOF
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -118,6 +119,10 @@ parse_arguments() {
       action="no-multiple"
       input=("${input[@]:1}")
       ;;
+    other)
+      action="other"
+      input=("${input[@]:1}")
+      ;;
     -h|--help)
       usage
       exit
@@ -134,7 +139,7 @@ multiple_usage() {
   printf "With a multiple required argument\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  multiple [OPTIONS] MESSAGE... \n"
+  printf "  multiple [OPTIONS] MESSAGE...\n"
   printf "  multiple -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  MESSAGE\n"
@@ -199,7 +204,7 @@ multiple() {
     multiple_usage >&2
     exit 1
   fi
-  if [[ -z "${args['--debug']}" ]]; then
+  if [[ -n "${args['--debug']}" ]]; then
     set -x
   fi
   inspect_args
@@ -208,7 +213,7 @@ no-multiple_usage() {
   printf "Command with a simple optional argument\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  no-multiple [OPTIONS] [MESSAGE] \n"
+  printf "  no-multiple [OPTIONS] [MESSAGE]\n"
   printf "  no-multiple -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  MESSAGE\n"
@@ -266,11 +271,71 @@ no-multiple() {
   # Parse command arguments
   parse_no-multiple_arguments "${input[@]}"
 
-  if [[ -z "${args['--debug']}" ]]; then
+  if [[ -n "${args['--debug']}" ]]; then
     set -x
   fi
   inspect_args
 }
+other_usage() {
+  printf "Any arguments without description\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  other [OPTIONS]\n"
+  printf "  other -h|--help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -d --debug\n"
+  printf "    Debug mode\n"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+parse_other_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h|--help)
+        other_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -d | --debug)
+        args['--debug']=1
+        shift
+        ;;
+      --)
+        shift
+        other_args+=("$@")
+        break
+        ;;
+      -?*)
+        other_args+=("$1")
+        shift
+        ;;
+      *)
+        other_args+=("$1")
+        shift
+        ;;
+    esac
+  done
+}
+# Any arguments without description
+other() {
+  # Parse command arguments
+  parse_other_arguments "${input[@]}"
+
+  if [[ -n "${args['--debug']}" ]]; then
+    set -x
+  fi
+  inspect_args
+}
+
 run() {
   declare -A args=()
   declare -A deps=()
@@ -288,8 +353,12 @@ run() {
       no-multiple
       exit
       ;;
+    "other")
+      other
+      exit
+      ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "multiple,no-multiple" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "multiple,no-multiple,other" >&2
       usage >&2
       exit 1
       ;;

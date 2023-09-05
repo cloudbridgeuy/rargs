@@ -3,6 +3,7 @@ source: crates/templates/tests/run_test.rs
 description: Run function with multiple global dependencies
 expression: output
 ---
+
 run() {
   declare -A args=()
   declare -A deps=()

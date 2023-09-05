@@ -1,0 +1,23 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] catch-all-global.sh no-multiple -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Command with a simple optional argument
+
+[4mUsage:[0m
+  no-multiple [OPTIONS] [MESSAGE] ...GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS
+  no-multiple -h|--help
+
+[4mArguments:[0m
+  MESSAGE
+    Message
+  GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS
+    Required additional arguments
+
+[4mOptions:[0m
+  -d --debug
+    Debug mode
+  -h --help
+    Print help
+

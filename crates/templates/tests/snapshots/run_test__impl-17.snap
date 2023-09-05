@@ -3,6 +3,7 @@ source: crates/templates/tests/run_test.rs
 description: Script has an environment variable that should be set on an option
 expression: output
 ---
+
 run() {
   declare -A args=()
   declare -A deps=()

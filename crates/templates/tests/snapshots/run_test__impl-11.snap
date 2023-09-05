@@ -3,6 +3,7 @@ source: crates/templates/tests/run_test.rs
 description: Run function with a root command
 expression: output
 ---
+
 run() {
   declare -A args=()
   declare -A deps=()

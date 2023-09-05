@@ -10,7 +10,7 @@ Download a file
 [4mAlias:[0m d, down
 
 [4mUsage:[0m
-  download [OPTIONS] SOURCE [TARGET] 
+  download [OPTIONS] SOURCE [TARGET]
   download -h|--help
 
 [4mExamples:[0m

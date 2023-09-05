@@ -1,7 +1,8 @@
-{%- set_global required = [] -%}
+{%- set required = [] -%}
 {%- set opts = false %}
 {%- set fls = false %}
 {%- set args = false %}
+{%- set _any = false %}
 {%- if options %}
   {%- if command["options"] %}
     {%- set opts = options | merge(with=command["options"]) %}
@@ -34,6 +35,15 @@
   {%- if command["positional_arguments"] %}
     {%- set args = command["positional_arguments"] %}
   {%- endif %}
+{%- endif %}
+{%- if any %}
+  {%- if command["any"] %}
+    {%- set _any = command["any"] %}
+  {%- else %}
+    {%- set _any = any %}
+  {%- endif %}
+{%- elif command["any"] %}
+  {%- set _any = command["any"] %}
 {%- endif %}
 
 {%- if opts -%}
@@ -87,7 +97,7 @@
         ;;
     {%- endif %}
     {%- if not command["subcommand"] %}
-      {%- if rules and rules is containing("catch-all") %}
+      {%- if _any %}
       --)
         shift
         other_args+=("$@")
@@ -103,7 +113,7 @@
         exit 1
         ;;
       {%- endif %}
-    {%- elif rules and rules is containing("catch-all") %}
+    {%- elif _any %}
       --)
         shift
         other_args+=("$@")
@@ -126,7 +136,7 @@
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
               {%- else %}
-                {%- if rules and rules is containing("catch-all") %}
+                {%- if _any %}
           other_args+=("$1")
           shift
                 {%- else %}
@@ -148,7 +158,7 @@
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
               {%- else %}
-                {%- if rules and rules is containing("catch-all") %}
+                {%- if _any %}
           other_args+=("$1")
           shift
                 {%- else %}
@@ -165,13 +175,18 @@
           {%- endfor %}
       {%- else %}
         {%- if not command["subcommand"] %}
+          {%- if _any %}
+        other_args+=("$1")
+        shift
+          {%- else %}
         if [[ "$key" == "" ]]; then
           break
         fi
         printf "Invalid argument: %s\n" "$key" >&2
         exit 1
+          {%- endif %}
         {%- else %}
-          {%- if rules and rules is containing("catch-all") %}
+          {%- if _any %}
         other_args+=("$1")
         shift
           {%- else %}

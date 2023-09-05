@@ -14,6 +14,7 @@ pub struct Token {
 #[derive(Serialize, Debug, PartialEq, Eq, Clone)]
 pub enum Data {
     Alias(String),
+    Any(param::Any),
     Author(Vec<String>),
     Cmd(String),
     Default(String),
@@ -98,9 +99,66 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
     )(input)
 }
 
+/// Parse an input as if it was an any definition.
+fn parse_tag_any(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::branch::alt((parse_tag_any_required, parse_tag_any_optional))(input)
+}
+
 /// Parse an input as if it was a required or optional dependency definition
 fn parse_tag_dep(input: &str) -> nom::IResult<&str, Option<Data>> {
     nom::branch::alt((parse_tag_dep_optional, parse_tag_dep_required))(input)
+}
+
+/// Parse an input as if it was an optional any definition like `# @any <FOO> foo`.
+fn parse_tag_any_optional(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::pair(
+                nom::bytes::complete::tag("any"),
+                nom::character::complete::space0,
+            ),
+            nom::sequence::pair(parse_value_notation, parse_tail),
+        ),
+        |(value_notation, description)| {
+            Some(Data::Any(param::Any::new(
+                match description.is_empty() {
+                    true => None,
+                    false => Some(description.to_string()),
+                },
+                match value_notation.is_some() {
+                    true => Some(value_notation.unwrap().to_string()),
+                    false => None,
+                },
+                false,
+            )))
+        },
+    )(input)
+}
+
+/// Parse an input as if it was an optional any definition like `# @any! <FOO> foo`.
+fn parse_tag_any_required(input: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::pair(
+                nom::bytes::complete::tag("any!"),
+                nom::character::complete::space0,
+            ),
+            nom::sequence::pair(parse_value_notation, parse_tail),
+        ),
+        |(value_notation, description)| {
+            Some(Data::Any(param::Any::new(
+                match description.is_empty() {
+                    true => None,
+                    false => Some(description.to_string()),
+                },
+                match value_notation.is_some() {
+                    true => Some(value_notation.unwrap().to_string()),
+                    false => None,
+                },
+                true,
+            )))
+        },
+    )(input)
 }
 
 /// Parse an input as if it was an optional dependency definition liks `# @dep [foo] foo`.
@@ -207,6 +265,7 @@ fn parse_tag(input: &str) -> nom::IResult<&str, Option<Data>> {
             nom::character::complete::char('@'),
         )),
         nom::branch::alt((
+            parse_tag_any,
             parse_tag_text,
             parse_tag_param,
             parse_tag_example,
@@ -1048,7 +1107,42 @@ mod tests {
                 value_notation: Some("VALUE_NOTATION".to_string()),
                 ..Default::default()
             })
-            );
+        );
+
+        assert_token!(
+            "# @any",
+            Data::Any(param::Any {
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @any Accept any option, flag, or argument with a description",
+            Data::Any(param::Any {
+                description: Some(
+                    "Accept any option, flag, or argument with a description".to_string()
+                ),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @any! Accept any option, flag, or argument and require at least one value.",
+            Data::Any(param::Any {
+                description: Some(
+                    "Accept any option, flag, or argument and require at least one value."
+                        .to_string()
+                ),
+                required: true,
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @any! <VALUE_NOTATION> Accept any option, flag, or argument and require at least one value with a specific value notation.",
+            Data::Any(param::Any {
+                description: Some("Accept any option, flag, or argument and require at least one value with a specific value notation.".to_string()),
+                required: true,
+                value_notation: Some("VALUE_NOTATION".to_string()),
+            })
+        );
 
         assert_token!("foo()", Data::Func("foo".to_string()));
         assert_token!("foo ()", Data::Func("foo".to_string()));

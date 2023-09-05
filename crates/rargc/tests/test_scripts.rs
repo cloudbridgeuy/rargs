@@ -137,6 +137,7 @@ fn test_scripts() {
             Commands {
                 stdout: vec![
                     "-h",
+                    "other",
                     "multiple -h",
                     "no-multiple -h",
                     "multiple something",
@@ -147,8 +148,34 @@ fn test_scripts() {
                     "no-multiple something with --additional args and --debug",
                     "multiple something with --additional args and --debug -- with something else",
                     "no-multiple something with --additional args and --debug -- with something else",
+                    "other something with --additional args and --debug -- with something else",
                 ],
                 stderr: vec![""],
+            },
+        ), (
+            "catch-all-global.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "other",
+                    "no-multiple",
+                    "something, something, the dark side",
+                    "-h",
+                    "multiple -h",
+                    "no-multiple -h",
+                    "multiple something",
+                    "no-multiple something",
+                    "multiple something with --additional args",
+                    "no-multiple something with --additional args",
+                    "multiple something with --additional args and --debug",
+                    "no-multiple something with --additional args and --debug",
+                    "multiple something with --additional args and --debug -- with something else",
+                    "no-multiple something with --additional args and --debug -- with something else",
+                    "other something with --additional args and --debug -- with something else",
+                ],
+                stderr: vec![
+                    "multiple",
+                ],
             },
         ),
     ];
