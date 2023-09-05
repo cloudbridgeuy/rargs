@@ -1,0 +1,12 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] whitelist.sh eu production --user admin --protocol ssh"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Root
+args:
+- ${args[environment]} = production
+- ${args[protocol]} = ssh
+- ${args[region]} = eu
+- ${args[user]} = admin
+

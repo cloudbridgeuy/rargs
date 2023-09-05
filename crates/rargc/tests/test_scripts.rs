@@ -223,6 +223,22 @@ fn test_scripts() {
                     "download",
                 ],
             },
+        ), (
+            "whitelist.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "eu --user admin",
+                    "eu production --user admin --protocol ssh",
+                ],
+                stderr: vec![
+                    "",
+                    "america",
+                    "america --user admin",
+                    "eu --user hacker",
+                    "eu --user hacker --protocol icmp",
+                ],
+            },
         ),
     ];
 
