@@ -189,6 +189,40 @@ fn test_scripts() {
                     "--format toml"
                 ],
             },
+        ), (
+            "extensible.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "example --debug -f",
+                    "download -h",
+                    "download SOURCE",
+                    "upload -h",
+                    "upload SOURCE",
+                ],
+                stderr: vec![
+                    "",
+                    "upload",
+                    "download",
+                ],
+            },
+        ), (
+            "extensible-delegate.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "log --pretty",
+                    "download -h",
+                    "download SOURCE",
+                    "upload -h",
+                    "upload SOURCE",
+                ],
+                stderr: vec![
+                    "",
+                    "upload",
+                    "download",
+                ],
+            },
         ),
     ];
 

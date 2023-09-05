@@ -1,0 +1,26 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stderr] extensible-delegate.sh download"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+[31mMissing required option: [33msource[31m[0m
+
+Download a file
+
+[4mAlias:[0m d
+
+[4mUsage:[0m
+  download [OPTIONS] SOURCE ...[]
+  download -h|--help
+
+[4mArguments:[0m
+  SOURCE
+    File to download
+    [@required]
+  EXTERNAL_COMMAND
+    External command to run
+
+[4mOptions:[0m
+  -h --help
+    Print help
+
