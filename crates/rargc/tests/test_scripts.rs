@@ -178,6 +178,17 @@ fn test_scripts() {
                     "no-multiple",
                 ],
             },
+        ), (
+            "catch-all-stdin.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "<<<foo",
+                ],
+                stderr: vec![
+                    "--format toml"
+                ],
+            },
         ),
     ];
 
