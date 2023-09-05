@@ -43,6 +43,11 @@ root() {
   # Parse command arguments
   parse_root "${input[@]}"
 
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    usage >&2
+    exit 1
+  fi
   if [[ -n "${args['--debug']}" ]]; then
     set -x
   fi
@@ -176,7 +181,7 @@ multiple_usage() {
   printf "With a multiple required argument\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  multiple [OPTIONS] MESSAGE... ...GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS\n"
+  printf "  multiple [OPTIONS] MESSAGE... ...\n"
   printf "  multiple -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  MESSAGE\n"
@@ -252,7 +257,7 @@ no-multiple_usage() {
   printf "Command with a simple optional argument\n"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  no-multiple [OPTIONS] [MESSAGE] ...GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS\n"
+  printf "  no-multiple [OPTIONS] [MESSAGE] ...\n"
   printf "  no-multiple -h|--help\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  MESSAGE\n"
@@ -312,6 +317,11 @@ no-multiple() {
   # Parse command arguments
   parse_no-multiple_arguments "${input[@]}"
 
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    no-multiple_usage >&2
+    exit 1
+  fi
   if [[ -n "${args['--debug']}" ]]; then
     set -x
   fi

@@ -3,7 +3,7 @@ source: crates/rargc/tests/test_scripts.rs
 description: "[stderr] catch-all.sh "
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing command. Select one of[33mmultiple,no-multiple,other[31m[0m
+[31mMissing command. Select one of[33mmultiple,no-multiple,other,required[31m[0m
 
 Catch All example
 
@@ -16,6 +16,7 @@ Catch All example
   multiple ....... With a multiple required argument
   no-multiple .... Command with a simple optional argument
   other .......... Any arguments without description
+  required ....... Required additional arguments
 
 [4mOptions:[0m
   -d --debug

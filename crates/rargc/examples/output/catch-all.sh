@@ -76,6 +76,7 @@ usage() {
   multiple ....... With a multiple required argument
   no-multiple .... Command with a simple optional argument
   other .......... Any arguments without description
+  required ....... Required additional arguments
 EOF
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
@@ -116,6 +117,10 @@ parse_arguments() {
       ;;
     other)
       action="other"
+      input=("${input[@]:1}")
+      ;;
+    required)
+      action="required"
       input=("${input[@]:1}")
       ;;
     -h|--help)
@@ -266,6 +271,11 @@ no-multiple() {
   # Parse command arguments
   parse_no-multiple_arguments "${input[@]}"
 
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    no-multiple_usage >&2
+    exit 1
+  fi
   if [[ -n "${args['--debug']}" ]]; then
     set -x
   fi
@@ -330,6 +340,78 @@ other() {
   fi
   inspect_args
 }
+required_usage() {
+  printf "Required additional arguments\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  required [OPTIONS] [MESSAGE]\n"
+  printf "  required -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  MESSAGE\n"
+  printf "    Message\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -d --debug\n"
+  printf "    Debug mode\n"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}
+parse_required_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h|--help)
+        required_usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -d | --debug)
+        args['--debug']=1
+        shift
+        ;;
+      --)
+        shift
+        other_args+=("$@")
+        break
+        ;;
+      -?*)
+        other_args+=("$1")
+        shift
+        ;;
+      *)
+        if [[ -z ${args['message']+x} ]]; then
+          args['message']=$key
+          shift
+        else
+          other_args+=("$1")
+          shift
+        fi
+        ;;
+    esac
+  done
+}
+# Required additional arguments
+required() {
+  # Parse command arguments
+  parse_required_arguments "${input[@]}"
+
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    required_usage >&2
+    exit 1
+  fi
+  if [[ -n "${args['--debug']}" ]]; then
+    set -x
+  fi
+  inspect_args
+}
 
 run() {
   declare -A args=()
@@ -352,8 +434,12 @@ run() {
       other
       exit
       ;;
+    "required")
+      required
+      exit
+      ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "multiple,no-multiple,other" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "multiple,no-multiple,other,required" >&2
       usage >&2
       exit 1
       ;;

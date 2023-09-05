@@ -1,6 +1,7 @@
 {%- set_global required = [] -%}
 {%- set_global defaults = [] -%}
 {%- set_global choices = [] -%}
+{%- set_global _any = false %}
 {%- if options -%}
   {%- if command["options"] %}
     {%- for key, option in options | merge(with=command["options"]) -%}
@@ -65,6 +66,15 @@
 {%- elif envs %}
   {%- set _envs = envs %}
 {%- endif %}
+{%- if any %}
+  {%- if command["any"] %}
+    {%- set _any = command["any"] %}
+  {%- else %}
+    {%- set _any = any %}
+  {%- endif %}
+{%- elif command["any"] %}
+  {%- set _any = command["any"] %}
+{%- endif %}
 
 {%- if command["description"] -%}
 # {{ command["description"] }}
@@ -112,6 +122,17 @@
     fi
   fi
   {%- endfor %}
+{%- endif %}
+{%- if _any and _any["required"] %}
+  {%- raw %}
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    {%- endraw %}
+    {{ command["name"] }}_usage >&2
+    {%- raw %}
+    exit 1
+  fi
+  {%- endraw %}
 {%- endif %}
 {%- if required | length > 0 %}
   {% for option in required %}

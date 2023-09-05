@@ -4,6 +4,18 @@
 # @description Catch All example
 # @flag -d --debug Debug mode
 
+# @cmd Required additional arguments
+# @arg message Message
+# @any!
+required() {
+  if [[ -n "${args['--debug']}" ]]; then
+    set -x
+  fi
+
+  inspect_args
+}
+
+
 # @cmd Command with a simple optional argument
 # @arg message Message
 # @any! <VALUE_NOTATION> Required additional arguments

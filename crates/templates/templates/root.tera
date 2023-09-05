@@ -77,6 +77,15 @@ root() {
   fi
   {%- endfor %}
 {%- endif %}
+{%- if any and any["required"] %}
+  {%- raw %}
+  if [[ "${#other_args[@]}" == "0" ]]; then
+    printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
+    usage >&2
+    exit 1
+  fi
+  {%- endraw %}
+{%- endif %}
 {%- if root and root | length > 0 %}
   {%- for line in root %}
 {{ line }}
