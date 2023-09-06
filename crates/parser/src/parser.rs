@@ -484,6 +484,7 @@ fn parse_option_param(input: &str) -> nom::IResult<&str, param::Option> {
                     parse_param_choices_required,
                     parse_param_choices_multiple,
                     parse_param_choices,
+                    parse_param_mark_assign,
                     parse_param_assign,
                     parse_param_mark,
                 )),
@@ -591,6 +592,33 @@ fn parse_param_mark(input: &str) -> nom::IResult<&str, param::Data> {
     ))(input)
 }
 
+/// Parses the input as if it was a value notation like `str*=value`.
+fn parse_param_mark_assign(input: &str) -> nom::IResult<&str, param::Data> {
+    nom::combinator::map(
+        nom::sequence::tuple((
+            parse_param_name,
+            nom::branch::alt((
+                nom::character::complete::char('*'),
+                nom::character::complete::char('+'),
+            )),
+            nom::sequence::preceded(
+                nom::character::complete::char('='),
+                nom::branch::alt((
+                    parse_quoted_string,
+                    // Take while not a space or the end of the input.
+                    nom::bytes::complete::take_while(|c: char| c != ' ' && c != '\n' && c != '\r'),
+                )),
+            ),
+        )),
+        |(mut data, mark, default)| {
+            data.default = Some(default.to_string());
+            data.required = mark == '+';
+            data.multiple = mark == '*' || mark == '+';
+            data
+        },
+    )(input)
+}
+
 /// Parses the input as if it was a value notation like `str=value`.
 fn parse_param_assign(input: &str) -> nom::IResult<&str, param::Data> {
     nom::combinator::map(
@@ -634,6 +662,15 @@ fn parse_delimited_choices(input: &str) -> nom::IResult<&str, (Vec<&str>, Option
     )(input)
 }
 
+/// Parses the input as if it was a delimited multiple option value like `[=a|b|c]`.
+fn parse_delimited_choices_default(input: &str) -> nom::IResult<&str, (Vec<&str>, Option<&str>)> {
+    nom::sequence::delimited(
+        nom::character::complete::char('['),
+        parse_choices_default,
+        nom::character::complete::char(']'),
+    )(input)
+}
+
 /// Parses the input as if it was a value notation with a multiple or multiple and required mark
 /// like `str*[a|b|c]` or `str+[a|b|c]`.
 fn parse_param_choices_multiple(input: &str) -> nom::IResult<&str, param::Data> {
@@ -652,8 +689,33 @@ fn parse_param_choices_multiple(input: &str) -> nom::IResult<&str, param::Data> 
         ),
         nom::combinator::map(
             nom::sequence::pair(
+                nom::sequence::terminated(parse_param_name, nom::character::complete::char('*')),
+                parse_delimited_choices_default,
+            ),
+            |(mut data, (choices, default))| {
+                data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
+                data.multiple = true;
+                data.default = default.map(|v| v.to_string());
+                data
+            },
+        ),
+        nom::combinator::map(
+            nom::sequence::pair(
                 nom::sequence::terminated(parse_param_name, nom::character::complete::char('+')),
                 parse_delimited_choices,
+            ),
+            |(mut data, (choices, default))| {
+                data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
+                data.multiple = true;
+                data.required = true;
+                data.default = default.map(|v| v.to_string());
+                data
+            },
+        ),
+        nom::combinator::map(
+            nom::sequence::pair(
+                nom::sequence::terminated(parse_param_name, nom::character::complete::char('+')),
+                parse_delimited_choices_default,
             ),
             |(mut data, (choices, default))| {
                 data.choices = Some(choices.iter().map(|v| v.to_string()).collect());
@@ -681,6 +743,8 @@ fn parse_param_choices_required(input: &str) -> nom::IResult<&str, param::Data> 
         },
     )(input)
 }
+
+/// Parses the input as if it was a value notation with a default value like `str*[=a|b|c]`
 
 /// Parses the input as if it was a value notation with a default value like `str[=a|b|c]`.
 fn parse_param_choices_default(input: &str) -> nom::IResult<&str, param::Data> {
@@ -973,6 +1037,48 @@ mod tests {
             })
         );
         assert_token!(
+            "# @option --option*=a An option that takes multiple values and has a default",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that takes multiple values and has a default".to_string(),
+                multiple: true,
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option+=a An option that takes multiple values, is required, and has a default",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that takes multiple values, is required, and has a default".to_string(),
+                required: true,
+                multiple: true,
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option*=\"a quoted default\" An option that takes multiple values and has a quoted default",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that takes multiple values and has a quoted default".to_string(),
+                multiple: true,
+                default: Some("a quoted default".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option+=\"a quoted default\" An option that takes multiple values, is required, and has a default",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that takes multiple values, is required, and has a default".to_string(),
+                required: true,
+                multiple: true,
+                default: Some("a quoted default".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
             "# @option --option+ An option that takes multiple values and its required",
             Data::Option(param::Option {
                 name: "option".to_string(),
@@ -1033,7 +1139,32 @@ mod tests {
                 required: true,
                 ..Default::default()
             })
-            );
+        );
+        assert_token!(
+            "# @option -o --option+[=a|b|c] An option that supports predefined values, has a default, its multiple and required",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that supports predefined values, has a default, its multiple and required".to_string(),
+                short: Some('o'),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: true,
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --option*[=a|b|c] An option that supports predefined values, has a default, its multiple and optional",
+            Data::Option(param::Option {
+                name: "option".to_string(),
+                description: "An option that supports predefined values, has a default, its multiple and optional".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: false,
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+        );
 
         assert_token!(
             "# @arg positional_argument A positional argument",
@@ -1090,12 +1221,56 @@ mod tests {
             })
             );
         assert_token!(
+            "# @arg positional_argument+ A required positional argument that supports multiple values",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                description: "A required positional argument that supports multiple values".to_string(),
+                required: true,
+                multiple: true,
+                ..Default::default()
+            })
+            );
+        assert_token!(
+            "# @arg positional_argument* An optional positional argument that supports multiple values",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                description: "An optional positional argument that supports multiple values".to_string(),
+                required: false,
+                multiple: true,
+                ..Default::default()
+            })
+            );
+        assert_token!(
             "# @arg positional_argument![a|b|c] A positional argument that supports predefined values and its required",
             Data::PositionalArgument(param::PositionalArgument {
                 name: "positional_argument".to_string(),
                 description: "A positional argument that supports predefined values and its required".to_string(),
                 choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
                 required: true,
+                ..Default::default()
+            })
+            );
+        assert_token!(
+            "# @arg positional_argument*[=a|b|c] A positional argument that supports predefined values, multiple values, has a default, and its optional",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                description: "A positional argument that supports predefined values, multiple values, has a default, and its optional".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: false,
+                default: Some("a".to_string()),
+                ..Default::default()
+            })
+            );
+        assert_token!(
+            "# @arg positional_argument+[=a|b|c] A positional argument that supports predefined values, multiple values, has a default, and its required",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "positional_argument".to_string(),
+                description: "A positional argument that supports predefined values, multiple values, has a default, and its required".to_string(),
+                choices: Some(vec!("a".to_string(), "b".to_string(), "c".to_string())),
+                multiple: true,
+                required: true,
+                default: Some("a".to_string()),
                 ..Default::default()
             })
             );

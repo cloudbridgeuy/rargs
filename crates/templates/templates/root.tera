@@ -59,6 +59,16 @@ root() {
 {%- endif %}
 {%- if choices | length > 0 %}
   {% for option in choices %}
+    {%- if option["multiple"] %}
+  eval "local args_{{ option["name"] }}=(${args['{{ option["name"] }}']})"
+  for value in "${args_{{ option["name"] }}[@]}"; do
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${value} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${value}" >&2
+      usage >&2
+      exit 1
+    fi
+  done
+    {%- else %}
   if [[ -n "${args['{{ option["name"] }}']}" ]]; then
     if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${args['{{ option["name"] }}']} ]]; then
       printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${args['{{ option["name"] }}']}" >&2
@@ -66,6 +76,7 @@ root() {
       exit 1
     fi
   fi
+    {%- endif %}
   {%- endfor %}
 {%- endif %}
 {%- if required | length > 0 %}

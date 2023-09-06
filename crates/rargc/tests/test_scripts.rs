@@ -239,6 +239,27 @@ fn test_scripts() {
                     "eu --user hacker --protocol icmp",
                 ],
             },
+        ), (
+            "repeatable-arg.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "file1",
+                    "file file2 file3* --action downcase",
+                    "file file2 file3 --action downcase --action upcase",
+                    "formats -h",
+                    "formats --action downcase",
+                    "formats jpg --action downcase",
+                    "formats jpg --action downcase gif",
+                    "formats jpg png --action downcase gif",
+                    "formats jpg --action upcase png --action downcase gif",
+                ],
+                stderr: vec![
+                    "",
+                    "file file2 file3 --action downcase --action --upcase",
+                    "formats jpg tiff --action upcase png --action downcase gif",
+                ],
+            },
         ),
     ];
 
