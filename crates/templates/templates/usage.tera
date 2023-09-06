@@ -126,6 +126,9 @@ EOF
   {%- for key, flag in flags %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
   printf "    {{ flag["description"] }}\n"
+  {%- if flag["multiple"] -%}
+  printf "    [@multiple]"
+  {%- endif -%}
   {%- endfor %}
   {%- endif %}
   {%- endif %}

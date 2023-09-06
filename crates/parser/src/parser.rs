@@ -447,7 +447,7 @@ fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
                     nom::character::complete::space0,
                     nom::bytes::complete::tag("--"),
                 ),
-                parse_param_name,
+                nom::branch::alt((parse_param_mark, parse_param_name)),
             ),
             parse_tail,
         )),
@@ -592,7 +592,7 @@ fn parse_param_mark(input: &str) -> nom::IResult<&str, param::Data> {
     ))(input)
 }
 
-/// Parses the input as if it was a value notation like `str*=value`.
+/// Parses the input as if it was a value notation like `str*=value` or `str+=value`.
 fn parse_param_mark_assign(input: &str) -> nom::IResult<&str, param::Data> {
     nom::combinator::map(
         nom::sequence::tuple((
@@ -963,6 +963,25 @@ mod tests {
                 name: "flag".to_string(),
                 short: Some('f'),
                 description: "A flag with a short and long name".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @flag -f --flag* A flag with a short and long name that can be provided multiple times",
+            Data::Flag(param::Flag {
+                name: "flag".to_string(),
+                short: Some('f'),
+                multiple: true,
+                description: "A flag with a short and long name that can be provided multiple times".to_string(),
+            })
+        );
+        assert_token!(
+            "# @flag -f --flag+ A flag with a short and long name that can be provided multiple times",
+            Data::Flag(param::Flag {
+                name: "flag".to_string(),
+                short: Some('f'),
+                multiple: true,
+                description: "A flag with a short and long name that can be provided multiple times".to_string(),
             })
         );
         assert_token!(

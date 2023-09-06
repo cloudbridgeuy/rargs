@@ -260,6 +260,23 @@ fn test_scripts() {
                     "formats jpg tiff --action upcase png --action downcase gif",
                 ],
             },
+        ), (
+            "repeatable-flag.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "-d 1 -d 2 -d3",
+                    "-d 1 -d 2 -d 3",
+                    "-d 1 -d 2 -d 3 -v",
+                    "-d 1 -d 2 -d 3 -v -v",
+                    "-d 1 -d 2 -d 3 -v -v -v",
+                    "-d 1 -d 2 -d 3 -vvv",
+                    "-d 1 -d 2 -d 3 -vv -v",
+                ],
+                stderr: vec![
+                ],
+            },
         ),
     ];
 

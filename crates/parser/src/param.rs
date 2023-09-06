@@ -43,14 +43,20 @@ pub struct Flag {
     pub name: String,
     pub description: String,
     pub short: std::option::Option<char>,
+    pub multiple: bool,
 }
 
 impl Flag {
-    pub fn new(data: Data, description: &str, short: std::option::Option<char>) -> Self {
+    pub fn new(
+        data: Data,
+        description: &str,
+        short: std::option::Option<char>,
+    ) -> Self {
         Self {
             name: data.name,
             description: description.to_string(),
             short,
+            multiple: data.multiple,
         }
     }
 }

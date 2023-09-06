@@ -1,0 +1,31 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] repeatable-flag.sh -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Sample application to demonstrate the use of repeatable flags
+
+[4mUsage:[0m
+  repeatable-arg -d|--data <DATA> [OPTIONS]
+  repeatable-arg -h|--help
+  repeatable-arg --version
+
+[4mExamples:[0m
+  repeatable-arg -d 1 -d 2 -d 3
+    Multiple data values
+  repeatable-arg -d 1 -d 2 -d 3 -v
+    Multiple data values with verbosity enabled
+  repeatable-arg -d 1 -d 2 -d 3 -vvv
+    Multiple data values with high verbosity enabled
+
+[4mOptions:[0m
+  -d --data <DATA>
+    Provide data values
+    [@multiple]
+  -v --verbose
+    Set verbosity level
+printf  -h --help
+    Print help
+  --version
+    Pring version
+

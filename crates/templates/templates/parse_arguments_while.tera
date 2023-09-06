@@ -72,7 +72,15 @@
     case "$key" in
     {%- if fls %}{%- for key, flag in fls %}
       {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
-        args['--{{ key }}']=1
+        {% if flag["multiple"] -%}
+          if [[ -z ${args['--{{ key }}']+x} ]]; then
+            args['--{{ key }}']=1
+          else
+            args['--{{ key }}']=$(("${args['--{{ key }}']:-}" + 1))
+          fi
+        {% else -%}
+          args['--{{ key }}']=1
+        {% endif -%}
         shift
         ;;
     {%- endfor -%}{% endif %}

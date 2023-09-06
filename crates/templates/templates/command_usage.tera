@@ -138,6 +138,9 @@
   {%- for key, flag in fls %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
   printf "    {{ flag["description"] }}\n"
+  {%- if flag["multiple"] -%}
+  printf "    [@multiple]"
+  {%- endif -%}
   {%- endfor %}
 {%- endif %}
   printf "  {% if not uses_h %}-h {% endif %}--help\n"
