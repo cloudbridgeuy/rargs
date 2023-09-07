@@ -10,6 +10,6 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  root
+  root "${input[@]}"
 }
 

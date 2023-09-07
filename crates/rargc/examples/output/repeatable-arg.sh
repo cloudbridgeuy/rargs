@@ -27,7 +27,7 @@ parse_root() {
         shift 2
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -45,7 +45,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   
   eval "local args_action=(${args['action']})"
@@ -247,7 +247,7 @@ parse_formats_arguments() {
         shift 2
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -265,7 +265,7 @@ parse_formats_arguments() {
 # Formats
 formats() {
   # Parse command arguments
-  parse_formats_arguments "${input[@]}"
+  parse_formats_arguments "$@"
 
   
   if [[ -z "${args['formats']}" ]]; then
@@ -327,15 +327,15 @@ run() {
   # Call the right command action
   case "$action" in
     "formats")
-      formats
+      formats "${input[@]}"
       exit
       ;;
     root)
-      root
+      root "${input[@]}"
       exit
       ;;
     "")
-      root
+      root "${input[@]}"
       ;;
     
   esac

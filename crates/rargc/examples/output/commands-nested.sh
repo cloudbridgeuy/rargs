@@ -129,7 +129,7 @@ parse_arguments() {
     "")
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid command: " "$action" >&2
       exit 1
       ;;
   esac
@@ -166,7 +166,7 @@ parse_dir_arguments() {
 # Directory commands
 dir() {
   # Parse command arguments
-  parse_dir_arguments "${input[@]}"
+  parse_dir_arguments "$@"
 
   local sub="/Users/guzmanmonne/Projects/Rust/rargc/crates/rargc/examples/output/commands-nested/dir.sh"
   # shellcheck disable=SC2068
@@ -199,7 +199,7 @@ parse_file_arguments() {
 # File commands
 file() {
   # Parse command arguments
-  parse_file_arguments "${input[@]}"
+  parse_file_arguments "$@"
 
   local sub="/Users/guzmanmonne/Projects/Rust/rargc/crates/rargc/examples/output/commands-nested/file.sh"
   # shellcheck disable=SC2068
@@ -216,15 +216,15 @@ run() {
   # Call the right command action
   case "$action" in
     "dir")
-      dir
+      dir "${input[@]}"
       exit
       ;;
     "file")
-      file
+      file "${input[@]}"
       exit
       ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "dir,file" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "dir, file" >&2
       usage >&2
       exit 1
       ;;

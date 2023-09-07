@@ -6,7 +6,7 @@ expression: output
 # Function with global required option
 foo() {
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   
   if [[ -z "${args['require']}" ]]; then

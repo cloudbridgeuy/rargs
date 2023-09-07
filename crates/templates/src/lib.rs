@@ -84,6 +84,13 @@ pub fn object_value_to_dot_columns(
         .as_object()
         .unwrap()
         .iter()
+        .filter(|(_, object)| {
+            if object.get("private").is_some() {
+                !object.get("private").unwrap().as_bool().unwrap()
+            } else {
+                true
+            }
+        })
         .map(|(name, object)| {
             (
                 name.as_str(),

@@ -130,7 +130,7 @@ parse_arguments() {
     "")
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid command: " "$action" >&2
       exit 1
       ;;
   esac
@@ -196,7 +196,7 @@ parse_multiple_arguments() {
 # With a multiple required argument
 multiple() {
   # Parse command arguments
-  parse_multiple_arguments "${input[@]}"
+  parse_multiple_arguments "$@"
 
   
   if [[ -z "${args['message']}" ]]; then
@@ -269,7 +269,7 @@ parse_no-multiple_arguments() {
 # Command with a simple optional argument
 no-multiple() {
   # Parse command arguments
-  parse_no-multiple_arguments "${input[@]}"
+  parse_no-multiple_arguments "$@"
 
   if [[ "${#other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
@@ -333,7 +333,7 @@ parse_other_arguments() {
 # Any arguments without description
 other() {
   # Parse command arguments
-  parse_other_arguments "${input[@]}"
+  parse_other_arguments "$@"
 
   if [[ -n "${args['--debug']}" ]]; then
     set -x
@@ -400,7 +400,7 @@ parse_required_arguments() {
 # Required additional arguments
 required() {
   # Parse command arguments
-  parse_required_arguments "${input[@]}"
+  parse_required_arguments "$@"
 
   if [[ "${#other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
@@ -423,23 +423,23 @@ run() {
   # Call the right command action
   case "$action" in
     "multiple")
-      multiple
+      multiple "${input[@]}"
       exit
       ;;
     "no-multiple")
-      no-multiple
+      no-multiple "${input[@]}"
       exit
       ;;
     "other")
-      other
+      other "${input[@]}"
       exit
       ;;
     "required")
-      required
+      required "${input[@]}"
       exit
       ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "multiple,no-multiple,other,required" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "multiple, no-multiple, other, required" >&2
       usage >&2
       exit 1
       ;;

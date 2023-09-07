@@ -6,7 +6,7 @@ expression: output
 # Function with a local positional argument with choices
 foo() {
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   
   if [[ -n "${args['choices']}" ]]; then

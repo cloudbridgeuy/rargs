@@ -32,6 +32,7 @@ pub enum Data {
     Rule(String),
     SheBang(String),
     Subcommand(String),
+    Private,
     Unknown(String),
     Version(String),
 }
@@ -290,6 +291,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 nom::bytes::complete::tag("version"),
                 nom::bytes::complete::tag("rule"),
                 nom::bytes::complete::tag("sub"),
+                nom::bytes::complete::tag("private"),
             )),
             parse_tail,
         ),
@@ -307,6 +309,7 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "version" => Data::Version(text),
                 "rule" => Data::Rule(text),
                 "sub" => Data::Subcommand(text),
+                "private" => Data::Private,
                 _ => unreachable!(),
             })
         },

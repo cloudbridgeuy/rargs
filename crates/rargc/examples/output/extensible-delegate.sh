@@ -37,7 +37,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   echo "Here you would call the following command"
   # shellcheck disable=SC2068
@@ -219,7 +219,7 @@ parse_download_arguments() {
 # Download a file
 download() {
   # Parse command arguments
-  parse_download_arguments "${input[@]}"
+  parse_download_arguments "$@"
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -288,7 +288,7 @@ parse_upload_arguments() {
 # Upload a file
 upload() {
   # Parse command arguments
-  parse_upload_arguments "${input[@]}"
+  parse_upload_arguments "$@"
 
   
   if [[ -z "${args['source']}" ]]; then
@@ -310,19 +310,19 @@ run() {
   # Call the right command action
   case "$action" in
     "download")
-      download
+      download "${input[@]}"
       exit
       ;;
     "upload")
-      upload
+      upload "${input[@]}"
       exit
       ;;
     root)
-      root
+      root "${input[@]}"
       exit
       ;;
     "")
-      root
+      root "${input[@]}"
       ;;
     
   esac

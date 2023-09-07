@@ -27,7 +27,7 @@ parse_root() {
         shift 2
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -38,7 +38,7 @@ parse_root() {
           args['environment']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;
@@ -48,7 +48,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   
   if [[ -z "${args['protocol']}" ]]; then
@@ -219,7 +219,7 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  root
+  root "${input[@]}"
 }
 
 run "$@"

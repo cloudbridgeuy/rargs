@@ -118,7 +118,7 @@ parse_arguments() {
     "")
       ;;
     *)
-      printf "Invalid command: %s\n" "$action" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid command: " "$action" >&2
       exit 1
       ;;
   esac
@@ -155,7 +155,7 @@ parse_remove_arguments() {
     key="$1"
     case "$key" in
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -163,7 +163,7 @@ parse_remove_arguments() {
           args['path']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;
@@ -173,7 +173,7 @@ parse_remove_arguments() {
 # Edit the file
 remove() {
   # Parse command arguments
-  parse_remove_arguments "${input[@]}"
+  parse_remove_arguments "$@"
 
   
   if [[ -z "${args['path']}" ]]; then
@@ -215,7 +215,7 @@ parse_show_arguments() {
     key="$1"
     case "$key" in
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -223,7 +223,7 @@ parse_show_arguments() {
           args['path']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;
@@ -233,7 +233,7 @@ parse_show_arguments() {
 # Show file contents
 show() {
   # Parse command arguments
-  parse_show_arguments "${input[@]}"
+  parse_show_arguments "$@"
 
   
   if [[ -z "${args['path']}" ]]; then
@@ -253,15 +253,15 @@ run() {
   # Call the right command action
   case "$action" in
     "remove")
-      remove
+      remove "${input[@]}"
       exit
       ;;
     "show")
-      show
+      show "${input[@]}"
       exit
       ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "remove,show" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "remove, show" >&2
       usage >&2
       exit 1
       ;;

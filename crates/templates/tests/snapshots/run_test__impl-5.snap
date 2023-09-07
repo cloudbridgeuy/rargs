@@ -13,19 +13,19 @@ run() {
   # Call the right command action
   case "$action" in
     "bar")
-      bar
+      bar "${input[@]}"
       exit
       ;;
     "baz")
-      baz
+      baz "${input[@]}"
       exit
       ;;
     "foo")
-      foo
+      foo "${input[@]}"
       exit
       ;;
     "")
-      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of" "bar,baz,foo" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "bar, baz, foo" >&2
       usage >&2
       exit 1
       ;;

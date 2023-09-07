@@ -6,7 +6,7 @@ expression: output
 # Function with a local option with choices
 foo() {
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   # Check dependencies
   for dependency in foo bar; do

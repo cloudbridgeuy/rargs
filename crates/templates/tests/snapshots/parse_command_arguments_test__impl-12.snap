@@ -20,7 +20,7 @@ parse_bar_arguments() {
     key="$1"
     case "$key" in
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -34,7 +34,7 @@ parse_bar_arguments() {
           args['baz']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;

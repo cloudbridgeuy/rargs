@@ -46,7 +46,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   
   if [[ -z "${args['format']}" ]]; then
@@ -214,7 +214,7 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  root
+  root "${input[@]}"
 }
 
 run "$@"

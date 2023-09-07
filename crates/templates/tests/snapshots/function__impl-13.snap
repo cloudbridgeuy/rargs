@@ -6,7 +6,7 @@ expression: output
 # Function with a required positional argument
 foo() {
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   
   if [[ -z "${args['default']}" ]]; then

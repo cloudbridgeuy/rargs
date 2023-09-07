@@ -27,14 +27,14 @@ parse_root() {
         shift 2
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
         if [[ "$key" == "" ]]; then
           break
         fi
-        printf "Invalid argument: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
         exit 1
         ;;
     esac
@@ -43,7 +43,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   echo "# this file is located in './crates/rargc/examples/output.sh'"
   echo "# you can edit it freely and regenerate (it will not be overwritten)"
@@ -164,7 +164,7 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
-  root
+  root "${input[@]}"
 }
 
 run "$@"

@@ -5,7 +5,7 @@ expression: output
 ---
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   
   if [[ -z "${args['default']}" ]]; then

@@ -41,7 +41,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   if [[ "${#other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
@@ -240,7 +240,7 @@ parse_multiple_arguments() {
 # With a multiple required argument
 multiple() {
   # Parse command arguments
-  parse_multiple_arguments "${input[@]}"
+  parse_multiple_arguments "$@"
 
   
   if [[ -z "${args['message']}" ]]; then
@@ -315,7 +315,7 @@ parse_no-multiple_arguments() {
 # Command with a simple optional argument
 no-multiple() {
   # Parse command arguments
-  parse_no-multiple_arguments "${input[@]}"
+  parse_no-multiple_arguments "$@"
 
   if [[ "${#other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
@@ -382,7 +382,7 @@ parse_other_arguments() {
 # Any arguments without description
 other() {
   # Parse command arguments
-  parse_other_arguments "${input[@]}"
+  parse_other_arguments "$@"
 
   if [[ -n "${args['--debug']}" ]]; then
     set -x
@@ -400,23 +400,23 @@ run() {
   # Call the right command action
   case "$action" in
     "multiple")
-      multiple
+      multiple "${input[@]}"
       exit
       ;;
     "no-multiple")
-      no-multiple
+      no-multiple "${input[@]}"
       exit
       ;;
     "other")
-      other
+      other "${input[@]}"
       exit
       ;;
     root)
-      root
+      root "${input[@]}"
       exit
       ;;
     "")
-      root
+      root "${input[@]}"
       ;;
     
   esac

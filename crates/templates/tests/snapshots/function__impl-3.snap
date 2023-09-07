@@ -6,7 +6,7 @@ expression: output
 # Simple function
 foo() {
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.

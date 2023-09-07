@@ -19,6 +19,7 @@ pub struct Data {
     pub choices: std::option::Option<Vec<String>>,
     pub multiple: bool,
     pub required: bool,
+    pub private: bool,
     pub default: std::option::Option<String>,
 }
 
@@ -47,11 +48,7 @@ pub struct Flag {
 }
 
 impl Flag {
-    pub fn new(
-        data: Data,
-        description: &str,
-        short: std::option::Option<char>,
-    ) -> Self {
+    pub fn new(data: Data, description: &str, short: std::option::Option<char>) -> Self {
         Self {
             name: data.name,
             description: description.to_string(),

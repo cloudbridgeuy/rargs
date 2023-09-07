@@ -22,6 +22,7 @@ pub struct Command {
     pub dep: Option<Vec<param::Dep>>,
     pub envs: HashMap<String, param::Env>,
     pub any: Option<param::Any>,
+    pub private: bool,
 }
 
 impl Command {
@@ -101,6 +102,16 @@ impl Script {
                 }
                 parser::Data::Version(value) => {
                     script.version = Some(value);
+                }
+                parser::Data::Private => {
+                    if let Some(command) = maybe_command.as_mut() {
+                        command.private = true;
+                    } else {
+                        eyre::bail!(
+                            "No command in scope when parsing a @private param in line {}. Did you forget the @cmd directive?",
+                            event.position
+                        );
+                    }
                 }
                 parser::Data::Help(value) => {
                     if is_root_scope {

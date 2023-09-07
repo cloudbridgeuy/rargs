@@ -277,6 +277,25 @@ fn test_scripts() {
                 stderr: vec![
                 ],
             },
+        ), (
+            "private.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "connect --protocol ssh localhost",
+                    "connect --protocol ftp localhost",
+                    "connect --protocol ftp -v localhost",
+                    "connect --protocol ssh -v localhost",
+                    "connect-ssh --username foo localhost",
+                    "connect-ftp --username foo localhost",
+                ],
+                stderr: vec![
+                    "",
+                    "connect --protocol http -v",
+                    "connect-ftp -v --username foo localhost",
+                    "connect-ssh --protocol ftp --username foo localhost",
+                ],
+            },
         ),
     ];
 

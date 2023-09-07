@@ -17,7 +17,7 @@ foo() {
   fi
 
   # Parse command arguments
-  parse_foo_arguments "${input[@]}"
+  parse_foo_arguments "$@"
 
   echo "No implementation body found for function foo"
 }

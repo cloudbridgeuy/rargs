@@ -81,7 +81,7 @@ parse_arguments() {
   {%- elif root %}
       action="root"
   {%- else %}
-      printf "Invalid command: %s\n" "$action" >&2
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid command: " "$action" >&2
       exit 1
   {%- endif %}
       ;;
@@ -121,7 +121,7 @@ parse_arguments() {
         ;;
   {% endif %}
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -136,7 +136,7 @@ parse_arguments() {
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
         {%- else %}
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         {%- endif %}
         fi
@@ -153,7 +153,7 @@ parse_arguments() {
           args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
           shift
         {%- else %}
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         {%- endif %}
         fi
@@ -164,7 +164,7 @@ parse_arguments() {
       {%- endif %}
     {%- endfor %}
   {%- else %}
-        printf "Invalid argument: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
         exit 1
   {%- endif %}
         ;;

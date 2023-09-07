@@ -34,7 +34,7 @@ root() {
   {% include "check_environment_variables.tera" %}
 {%- endif %}
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 {% if rules -%}
   {%- if rules is containing("no-first-option-help") and rules is not containing("custom-usage") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is

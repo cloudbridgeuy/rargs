@@ -13,15 +13,15 @@ run() {
   # Call the right command action
   case "$action" in
     "bar")
-      bar
+      bar "${input[@]}"
       exit
       ;;
     "baz")
-      baz
+      baz "${input[@]}"
       exit
       ;;
     "foo")
-      foo
+      foo "${input[@]}"
       exit
       ;;
     "")

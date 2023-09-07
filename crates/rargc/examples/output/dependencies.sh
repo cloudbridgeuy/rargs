@@ -19,14 +19,14 @@ parse_root() {
     key="$1"
     case "$key" in
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
         if [[ "$key" == "" ]]; then
           break
         fi
-        printf "Invalid argument: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
         exit 1
         ;;
     esac
@@ -35,7 +35,7 @@ parse_root() {
 
 root() {
   # Parse command arguments
-  parse_root "${input[@]}"
+  parse_root "$@"
 
   # Check dependencies
   dependency="fail"
@@ -210,7 +210,7 @@ parse_download_arguments() {
         shift
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -221,7 +221,7 @@ parse_download_arguments() {
           args['target']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;
@@ -231,7 +231,7 @@ parse_download_arguments() {
 # Download a file
 download() {
   # Parse command arguments
-  parse_download_arguments "${input[@]}"
+  parse_download_arguments "$@"
 
   # Check dependencies
   for dependency in foo bar baz; do
@@ -307,7 +307,7 @@ parse_upload_arguments() {
         shift 2
         ;;
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
         ;;
       *)
@@ -315,7 +315,7 @@ parse_upload_arguments() {
           args['source']=$key
           shift
         else
-          printf "Invalid argument: %s\n" "$key" >&2
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
         fi
         ;;
@@ -325,7 +325,7 @@ parse_upload_arguments() {
 # Upload a file
 upload() {
   # Parse command arguments
-  parse_upload_arguments "${input[@]}"
+  parse_upload_arguments "$@"
 
   # Check dependencies
   dependency="docker"
@@ -372,19 +372,19 @@ run() {
   # Call the right command action
   case "$action" in
     "download")
-      download
+      download "${input[@]}"
       exit
       ;;
     "upload")
-      upload
+      upload "${input[@]}"
       exit
       ;;
     root)
-      root
+      root "${input[@]}"
       exit
       ;;
     "")
-      root
+      root "${input[@]}"
       ;;
     
   esac
