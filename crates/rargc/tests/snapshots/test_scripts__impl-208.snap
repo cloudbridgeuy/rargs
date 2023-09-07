@@ -8,5 +8,5 @@ args:
 - ${args[--verbose]} = 1
 - ${args[host]} = localhost
 - ${args[protocol]} = ssh
-- ${args[username]} = ssh_user
+- ${args[username]} = ssh_ser
 

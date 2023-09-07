@@ -28,9 +28,9 @@ parse_root() {
         ;;
       -d | --data)
         if [[ -z ${args['data']+x} ]]; then
-            args['data']="$2"
+            args['data']="\"$2\""
           else
-            args['data']="${args['data']:-} $2"
+            args['data']="${args['data']:-} \"$2\""
           fi
         shift 2
         ;;

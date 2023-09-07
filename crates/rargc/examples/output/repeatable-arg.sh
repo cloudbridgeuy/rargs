@@ -20,9 +20,9 @@ parse_root() {
     case "$key" in
       -a | --action)
         if [[ -z ${args['action']+x} ]]; then
-            args['action']="$2"
+            args['action']="\"$2\""
           else
-            args['action']="${args['action']:-} $2"
+            args['action']="${args['action']:-} \"$2\""
           fi
         shift 2
         ;;
@@ -240,9 +240,9 @@ parse_formats_arguments() {
     case "$key" in
       -a | --action)
         if [[ -z ${args['action']+x} ]]; then
-            args['action']="$2"
+            args['action']="\"$2\""
           else
-            args['action']="${args['action']:-} $2"
+            args['action']="${args['action']:-} \"$2\""
           fi
         shift 2
         ;;

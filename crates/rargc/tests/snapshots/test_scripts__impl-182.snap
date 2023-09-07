@@ -16,6 +16,6 @@ files:
     upcase FILE3
 
 args:
-- ${args[action]} = downcase upcase
+- ${args[action]} = "downcase" "upcase"
 - ${args[files]} = file "file2" "file3"
 

@@ -21,9 +21,9 @@ parse_foo_arguments() {
     case "$key" in
       --multiple)
         if [[ -z ${args['multiple']+x} ]]; then
-            args['multiple']="$2"
+            args['multiple']="\"$2\""
           else
-            args['multiple']="${args['multiple']:-} $2"
+            args['multiple']="${args['multiple']:-} \"$2\""
           fi
         shift 2
         ;;

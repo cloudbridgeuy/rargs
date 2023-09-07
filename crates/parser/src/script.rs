@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 
-use color_eyre::eyre::{self, Result};
+use color_eyre::eyre::{ Result, WrapErr};
 use serde::Serialize;
+use thiserror::Error;
 
 use crate::param;
 use crate::parser;
@@ -67,6 +68,24 @@ impl Script {
     }
 }
 
+#[derive(Error, Debug)]
+pub enum ScriptError {
+    #[error("Unknown error")]
+    Unknown,
+    #[error("No command in scope")]
+    NoCommandInScope(String),
+    #[error("Duplicate argument name")]
+    DuplicateArgument(String),
+    #[error("Can't declare an argument after a declaring a multiple argument")]
+    NoArgumentAfterMultiple(String),
+    #[error("Can't define an alias at the root scope")]
+    NoAliasAtRootScope(String),
+    #[error("Can't define a subcommand at the root scope")]
+    NoSubcommandAtRootScope(String),
+    #[error("Duplicate any")]
+    DuplicateAny(String),
+}
+
 static RE: once_cell::sync::Lazy<regex::Regex> =
     once_cell::sync::Lazy::new(|| regex::Regex::new(r"^\}$").unwrap());
 const ROOT: &str = "root";
@@ -80,6 +99,7 @@ impl Script {
 
         let events = parser::parse_source(source)?;
 
+        let mut err: Option<ScriptError> = None;
         for event in events {
             match event.data {
                 parser::Data::Name(value) => {
@@ -91,10 +111,11 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.description = Some(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope when parsing a @description param in line {}. Did you forget the @cmd directive?",
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Author(value) => {
@@ -107,10 +128,11 @@ impl Script {
                     if let Some(command) = maybe_command.as_mut() {
                         command.private = true;
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope when parsing a @private param in line {}. Did you forget the @cmd directive?",
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Help(value) => {
@@ -119,10 +141,11 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.help = Some(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope when parsing a @help param in line {}. Did you forget the @cmd directive?",
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Func(value) => {
@@ -134,7 +157,6 @@ impl Script {
                             .or_insert(command.clone());
                         last_command = Some(value);
                     } else if value == ROOT {
-                        log::debug!("root command found");
                         is_root_scope = false;
                         script.root = Some(Vec::new());
                         last_command = Some(ROOT.to_string());
@@ -147,7 +169,6 @@ impl Script {
                     maybe_command = None;
                 }
                 parser::Data::Unknown(value) => {
-                    // TODO: Change this to a debug! tracing command.
                     log::warn!("unknown: {}", value);
                 }
                 parser::Data::Flag(value) => {
@@ -156,11 +177,12 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.flags.entry(value.name.clone()).or_insert(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing flag --{} in line {}. Did you forget the @cmd directive?",
                             value.name,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Cmd(value) => {
@@ -178,11 +200,12 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.envs.entry(value.name.clone()).or_insert(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing env --{} in line {}. Did you forget the @cmd directive?",
                             value.name,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Option(value) => {
@@ -191,31 +214,41 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.options.entry(value.name.clone()).or_insert(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing option --{} in line {}. Did you forget the @cmd directive?",
                             value.name,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Any(value) => {
                     if is_root_scope {
                         if script.any.is_some() {
-                            eyre::bail!("Duplicate @any in line {}.", event.position);
+                            err = Some(ScriptError::DuplicateAny(format!(
+                                "Duplicate @any in line {}.",
+                                event.position
+                            )));
+                            break;
                         } else {
                             script.any = Some(value);
                         };
                     } else if let Some(command) = maybe_command.as_mut() {
                         if command.any.is_some() {
-                            eyre::bail!("Duplicate @any in line {}.", event.position);
+                            err = Some(ScriptError::DuplicateAny(format!(
+                                "Duplicate @any in line {}.",
+                                event.position
+                            )));
+                            break;
                         } else {
                             command.any = Some(value);
                         };
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing @any in line {}. Did you forget the @cmd directive?",
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::PositionalArgument(value) => {
@@ -226,21 +259,21 @@ impl Script {
                             .iter()
                             .any(|v| v.name == value.name)
                         {
-                            eyre::bail!(
+                            err = Some(ScriptError::DuplicateArgument(format!(
                                 "Duplicate arg {} for in line {}.",
-                                value.name,
-                                event.position
-                            );
+                                value.name, event.position,
+                            )));
+                            break;
                         }
 
                         // Check if there is a previous positional argument.
                         if let Some(arg) = script.positional_arguments.last_mut() {
                             if arg.multiple {
-                                eyre::bail!(
+                                err = Some(ScriptError::NoArgumentAfterMultiple(format!(
                                     "Arg {} in line {} is declared after a multiple arg.",
-                                    value.name,
-                                    event.position
-                                );
+                                    value.name, event.position
+                                )));
+                                break;
                             }
                             arg.required = true;
                         }
@@ -253,32 +286,33 @@ impl Script {
                             .iter()
                             .any(|v| v.name == value.name)
                         {
-                            eyre::bail!(
+                            err = Some(ScriptError::DuplicateArgument(format!(
                                 "Duplicate arg {} for in line {}.",
-                                value.name,
-                                event.position
-                            );
+                                value.name, event.position
+                            )));
+                            break;
                         }
 
                         // Check if there is a previous multiple positional argument.
                         if let Some(arg) = command.positional_arguments.last_mut() {
                             if arg.multiple {
-                                eyre::bail!(
+                                err = Some(ScriptError::NoArgumentAfterMultiple(format!(
                                     "Arg {} in line {} is declared after a multiple arg.",
-                                    value.name,
-                                    event.position
-                                );
+                                    value.name, event.position
+                                )));
+                                break;
                             }
                             arg.required = true;
                         }
 
                         command.positional_arguments.push(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing arg {} in line {}. Did you forget the @cmd directive?",
                             value.name,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::SheBang(value) => {
@@ -290,20 +324,22 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.rules.get_or_insert_with(Vec::new).push(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing rule {} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Alias(value) => {
                     if is_root_scope {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoAliasAtRootScope(format!(
                             "Aliases are not supported at the root scope. Found declaration for alias {} in line {}.",
                             value,
                             event.position
-                        )
+                        )));
+                        break;
                     } else if let Some(command) = maybe_command.as_mut() {
                         // Check if the value has spaces, and if it does, split it into multiple aliases.
                         for alias in value.split(' ') {
@@ -313,28 +349,31 @@ impl Script {
                                 .push(alias.to_string());
                         }
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing alias {} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Subcommand(value) => {
                     if is_root_scope {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoSubcommandAtRootScope(format!(
                             "Subcommands are not supported at the root scope. Found declaration for subcommand {} in line {}.",
                             value,
                             event.position
-                        )
+                        )));
+                        break;
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.subcommand = Some(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing subcommand {} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Example(value) => {
@@ -343,11 +382,12 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.examples.get_or_insert_with(Vec::new).push(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing example {:?} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Dep(value) => {
@@ -356,11 +396,12 @@ impl Script {
                     } else if let Some(command) = maybe_command.as_mut() {
                         command.dep.get_or_insert_with(Vec::new).push(value);
                     } else {
-                        eyre::bail!(
+                        err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope in when parsing dep {:?} in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
                 parser::Data::Line(value) => {
@@ -373,11 +414,12 @@ impl Script {
                             if let Some(root) = script.root.as_mut() {
                                 root.push(value);
                             } else {
-                                eyre::bail!(
+                                err = Some(ScriptError::NoCommandInScope(format!(
                                     "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
                                     value,
                                     event.position
-                                );
+                                )));
+                                break;
                             }
                         } else {
                             script
@@ -389,14 +431,20 @@ impl Script {
                                 .push(value);
                         }
                     } else {
-                        eyre::bail!(
-                                    "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
+                        err = Some(ScriptError::NoCommandInScope(format!(
+                            "No root command in scope in when parsing `{}` in line {}. Did you forget the @cmd directive?",
                             value,
                             event.position
-                        );
+                        )));
+                        break;
                     }
                 }
             }
+        }
+
+        if let Some(err) = err {
+            log::error!("Error while parsing script: {:#?}", &err);
+            return Err(err).wrap_err("Error while parsing script.");
         }
 
         log::debug!("script: {:#?}", &script);

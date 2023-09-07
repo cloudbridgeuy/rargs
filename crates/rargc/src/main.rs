@@ -10,9 +10,16 @@ fn main() -> Result<()> {
 
     let cli = Cli::parse();
 
-    match cli.command {
+    let result = match cli.command {
         Some(SubCommands::Tree(options)) => commands::tree::Command::new(options.into()).run(),
         Some(SubCommands::Build(options)) => commands::build::Command::new(options.into()).run(),
         None => Err(eyre::format_err!("No subcommand provided")),
+    };
+
+    if let Err(err) = result {
+        log::error!("{}", err);
+        std::process::exit(1);
     }
+
+    Ok(())
 }

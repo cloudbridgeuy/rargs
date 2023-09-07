@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use color_eyre::eyre::{self, Result};
+use color_eyre::eyre::{self, Result, WrapErr};
 
 use parser::script::Script;
 
@@ -46,8 +46,10 @@ impl Command {
             None => return Err(eyre::format_err!("Unable to get parent dir of script_root")),
         };
 
-        let source = fs::read_to_string(&script_root)
-            .unwrap_or_else(|_| panic!("Unable to read file: {}", &self.options.script_root));
+        let source = fs::read_to_string(&script_root).wrap_err(format!(
+            "Unable to read file: {}",
+            &self.options.script_root
+        ))?;
 
         let mut script = Script::from_source(&source)?;
 

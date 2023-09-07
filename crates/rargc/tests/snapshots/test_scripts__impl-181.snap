@@ -13,6 +13,6 @@ files:
     downcase file3*
 
 args:
-- ${args[action]} = downcase
+- ${args[action]} = "downcase"
 - ${args[files]} = file "file2" "file3*"
 

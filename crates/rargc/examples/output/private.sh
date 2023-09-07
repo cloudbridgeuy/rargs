@@ -216,7 +216,7 @@ connect() {
   if [[ "${args["protocol"]}" == "ftp" ]]; then
     connect-ftp --username ftp_user
   else
-    connect-ssh --username ssh_user
+    connect-ssh --username ssh_ser
   fi
 }
 connect-ftp_usage() {

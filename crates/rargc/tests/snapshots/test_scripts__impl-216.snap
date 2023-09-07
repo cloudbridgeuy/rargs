@@ -1,0 +1,26 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] novelai.sh -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+NovelAI CLI to call the NovelAI API
+
+[4mUsage:[0m
+  novelai [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  novelai -h|--help
+  novelai -v|--version
+
+[4mCommands:[0m
+  generate-stream .... Generate a completion stream
+
+[4mOptions:[0m
+  --novelai-api-key [<NOVELAI-API-KEY>]
+    NovelAI API Key
+  --novelai-endpoint [<NOVELAI-ENDPOINT>]
+    NovelAI API Endpoint
+    [@default https://api.novelai.net/ai/generate-stream]
+  -h --help
+    Print help
+  -v --version
+    Pring version
+

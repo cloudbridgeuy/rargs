@@ -1,6 +1,6 @@
 ---
 source: crates/rargc/tests/test_scripts.rs
-description: repeatable-flag.sh
+description: examples.sh
 expression: dst
 ---
 #!/usr/bin/env bash
@@ -23,22 +23,6 @@ parse_root() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-      -v | --verbose)
-        if [[ -z ${args['--verbose']+x} ]]; then
-            args['--verbose']=1
-          else
-            args['--verbose']=$(("${args['--verbose']:-}" + 1))
-          fi
-        shift
-        ;;
-      -d | --data)
-        if [[ -z ${args['data']+x} ]]; then
-            args['data']="\"$2\""
-          else
-            args['data']="${args['data']:-} \"$2\""
-          fi
-        shift 2
-        ;;
       -?*)
         printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
@@ -58,23 +42,6 @@ root() {
   # Parse command arguments
   parse_root "$@"
 
-  
-  if [[ -z "${args['data']}" ]]; then
-    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "data" >&2
-    usage >&2
-    exit 1
-  fi
-  # Convert the space delimited string to an array
-  eval "data=(${args[data]})"
-  echo "Data elements:"
-  for i in "${data[@]}"; do
-    echo "$i"
-  done
-  # The --verbose arg will contain the number of times it was used by the user
-  verbose="${args[--verbose]}"
-  echo ""
-  echo "Verbosity level: $verbose"
-  echo ""
   inspect_args
 }
 
@@ -129,38 +96,33 @@ inspect_args() {
   fi
 }
 version() {
-  echo "0.0.1"
+  echo "0.1.0"
 }
 usage() {
-  printf "Sample application to demonstrate the use of repeatable flags\n"
+  printf "A script with long examples\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  repeatable-arg -d|--data <DATA> [OPTIONS]\n"
-  printf "  repeatable-arg -h|--help\n"
-  printf "  repeatable-arg --version\n"
+  printf "  examples [OPTIONS]\n"
+  printf "  examples -h|--help\n"
+  printf "  examples -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  repeatable-arg -d 1 -d 2 -d 3\n"
-  printf "    Multiple data values\n"
-  printf "  repeatable-arg -d 1 -d 2 -d 3 -v\n"
-  printf "    Multiple data values with verbosity enabled\n"
-  printf "  repeatable-arg -d 1 -d 2 -d 3 -vvv\n"
-  printf "    Multiple data values with high verbosity enabled\n"
+  printf "  examples \"Write me a poem about the scripting language bash.\"\n"
+  printf "    The simplest way of providing a prompt\n"
+  printf "  examples --role system --content \"You are acting as an ironical writer.\" \"Write me a poem about the scripting language bash.\"\n"
+  printf "    Add a system prompt\n"
+  printf "  examples --role system --content \"You are acting as an ironical writer.\" --role assistant --content \"Hello my dear user! How can I assist you today!?.\" \"Write me a poem about the scripting language bash.\"\n"
+  printf "    Add a previous assistant message\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -d --data <DATA>\n"
-  printf "    Provide data values\n"
-  printf "    [@multiple]\n"
-  printf "  -v --verbose\n"
-  printf "    Set verbosity level\n"printf "    [@multiple]"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  --version\n"
+  printf "  -v --version\n"
   printf "    Pring version\n"
 }
 
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      --version)
+      -v|--version)
         version
         exit
         ;;

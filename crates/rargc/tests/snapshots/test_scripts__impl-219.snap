@@ -1,0 +1,26 @@
+---
+source: crates/rargc/tests/test_scripts.rs
+description: "[stdout] examples.sh -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+A script with long examples
+
+[4mUsage:[0m
+  examples [OPTIONS]
+  examples -h|--help
+  examples -v|--version
+
+[4mExamples:[0m
+  examples "Write me a poem about the scripting language bash."
+    The simplest way of providing a prompt
+  examples --role system --content "You are acting as an ironical writer." "Write me a poem about the scripting language bash."
+    Add a system prompt
+  examples --role system --content "You are acting as an ironical writer." --role assistant --content "Hello my dear user! How can I assist you today!?." "Write me a poem about the scripting language bash."
+    Add a previous assistant message
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Pring version
+

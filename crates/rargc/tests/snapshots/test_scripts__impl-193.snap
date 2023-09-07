@@ -11,5 +11,5 @@ Data elements:
 Verbosity level: 
 
 args:
-- ${args[data]} = 1 2 3
+- ${args[data]} = "1" "2" "3"
 

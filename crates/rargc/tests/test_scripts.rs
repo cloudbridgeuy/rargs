@@ -307,6 +307,25 @@ fn test_scripts() {
                 stderr: vec![
                 ],
             },
+        ), (
+            "novelai.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "generate-stream --help",
+                ],
+                stderr: vec![
+                ],
+            },
+        ), (
+            "examples.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                ],
+                stderr: vec![
+                ],
+            },
         ),
     ];
 

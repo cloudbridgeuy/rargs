@@ -12,5 +12,5 @@ Verbosity level: 1
 
 args:
 - ${args[--verbose]} = 1
-- ${args[data]} = 1 2 3
+- ${args[data]} = "1" "2" "3"
 

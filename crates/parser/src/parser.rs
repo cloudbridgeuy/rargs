@@ -250,7 +250,7 @@ fn parse_tag_example(input: &str) -> nom::IResult<&str, Option<Data>> {
         |(description, command)| {
             Some(Data::Example(param::Example::new(
                 description.trim(),
-                command.trim(),
+                command.trim().replace('"', "\\\"").as_str(),
             )))
         },
     )(input)
