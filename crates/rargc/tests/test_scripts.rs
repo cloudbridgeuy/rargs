@@ -296,6 +296,17 @@ fn test_scripts() {
                     "connect-ssh --protocol ftp --username foo localhost",
                 ],
             },
+        ), (
+            "stdin.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "arg --help",
+                    "option --help",
+                ],
+                stderr: vec![
+                ],
+            },
         ),
     ];
 
