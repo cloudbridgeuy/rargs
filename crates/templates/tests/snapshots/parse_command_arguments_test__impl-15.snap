@@ -24,11 +24,11 @@ parse_foo_arguments() {
         exit 1
         ;;
       *)
-        if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$key
+        if [[ -z "$rargs_foo" ]]; then
+          rargs_foo+=($key)
           shift
         else
-          args['foo']="${args['foo']} \"$key\""
+          rargs_foo+=($key)
           shift
         fi
         ;;

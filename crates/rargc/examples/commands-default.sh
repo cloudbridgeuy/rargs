@@ -15,8 +15,6 @@
 # @flag -f --force Force upload
 # @arg source! URL to download from
 upload() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
 
@@ -24,8 +22,6 @@ upload() {
 # @alias d
 # @arg source! URL to download from
 download() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
 

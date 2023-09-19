@@ -9,12 +9,16 @@ foo() {
   parse_foo_arguments "$@"
 
   
-  if [[ -z "${args['default']}" ]]; then
-    args['default']="true"
+    
+  if [[ -z "$rargs_default" ]]; then
+    rargs_default="true"
   fi
-  if [[ -z "${args['foo']}" ]]; then
-    args['foo']="foo"
+    
+    
+  if [[ -z "$rargs_foo" ]]; then
+    rargs_foo="foo"
   fi
+    
   echo "No implementation body found for function foo"
 }
 

@@ -16,8 +16,6 @@
 # @example Download a file from the internet $ download example.com
 # @example Download a file and use a different alias $ down example.com
 download() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
 
@@ -30,8 +28,5 @@ download() {
 # @example Upload a file to the internet $ upload example.com
 # @example Upload a file and use a different alias $ push example.com
 upload() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
-

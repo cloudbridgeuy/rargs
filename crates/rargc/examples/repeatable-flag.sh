@@ -9,18 +9,14 @@
 # @example Multiple data values with verbosity enabled $ -d 1 -d 2 -d 3 -v
 # @example Multiple data values with high verbosity enabled $ -d 1 -d 2 -d 3 -vvv
 root() {
-  # Convert the space delimited string to an array
-  eval "data=(${args[data]})"
-
   echo "Data elements:"
-  for i in "${data[@]}"; do
+  for i in "${rargs_data[@]}"; do
     echo "$i"
   done
 
   # The --verbose arg will contain the number of times it was used by the user
-  verbose="${args[--verbose]}"
   echo ""
-  echo "Verbosity level: $verbose"
+  echo "Verbosity level: $rargs_verbose"
   echo ""
 
   inspect_args

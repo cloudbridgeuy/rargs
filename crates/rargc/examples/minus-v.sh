@@ -8,7 +8,5 @@
 # @example Set verbose mode on $ -v|--verbose
 
 root() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }

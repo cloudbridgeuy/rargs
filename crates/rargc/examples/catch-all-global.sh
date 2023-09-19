@@ -9,7 +9,7 @@
 # @arg message Message
 # @any! <VALUE_NOTATION> Command specific required additional arguments
 no-multiple() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargs_debug" ]]; then
     set -x
   fi
 
@@ -20,7 +20,7 @@ no-multiple() {
 # @arg message+ Message
 # @any Optional additional arguments
 multiple() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargs_debug" ]]; then
     set -x
   fi
 
@@ -30,7 +30,7 @@ multiple() {
 # @cmd Any arguments without description
 # @any
 other() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargs_debug" ]]; then
     set -x
   fi
 
@@ -39,7 +39,7 @@ other() {
 
 # Root command
 root() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargs_debug" ]]; then
     set -x
   fi
 

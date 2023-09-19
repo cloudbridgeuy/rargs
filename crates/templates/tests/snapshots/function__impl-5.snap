@@ -9,7 +9,7 @@ foo() {
   parse_foo_arguments "$@"
 
   
-  if [[ -z "${args['require']}" ]]; then
+  if [[ -z "$rargs_require" ]]; then
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "require" >&2
     foo_usage >&2
     exit 1

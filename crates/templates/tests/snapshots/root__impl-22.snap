@@ -11,8 +11,8 @@ root() {
     usage >&2
     exit 1
   fi
-  if [[ -n "${BAZ:-}" ]]; then
-    args['baz']="${BAZ:-}"
+  if [[ -n "$rargc_baz" ]]; then
+    rargc_baz="${BAZ:-}"
   fi
 
   # Parse command arguments

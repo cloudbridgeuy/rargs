@@ -5,15 +5,14 @@ expression: output
 ---
 
 run() {
-  declare -A args=()
   declare -A deps=()
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
   # Check global environment variables
   
-  if [[ -n "${FOO:-}" ]]; then
-    args['foo']="${FOO:-}"
+  if [[ -n "$rargc_foo" ]]; then
+    rargc_foo="${FOO:-}"
   fi
 
   printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add" "commands or a root command" >&2

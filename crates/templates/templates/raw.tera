@@ -24,12 +24,14 @@ normalize_input() {
 }
 
 inspect_args() {
-  if ((${#args[@]})); then
-    readarray -t sorted_keys < <(printf '%s\n' "${!args[@]}" | sort)
+  prefix="rargs_"
+  args="$(set | grep ^$prefix || true)"
+  if [[ -n "$args" ]]; then
+    echo
     echo args:
-    for k in "${sorted_keys[@]}"; do echo "- \${args[$k]} = ${args[$k]}"; done
-  else
-    echo args: none
+    for var in $args; do
+      echo "- $var" | sed 's/=/ = /g'
+    done
   fi
 
   if ((${#deps[@]})); then

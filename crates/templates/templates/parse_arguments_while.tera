@@ -73,13 +73,13 @@
     {%- if fls %}{%- for key, flag in fls %}
       {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
         {% if flag["multiple"] -%}
-          if [[ -z ${args['--{{ key }}']+x} ]]; then
-            args['--{{ key }}']=1
-          else
-            args['--{{ key }}']=$(("${args['--{{ key }}']:-}" + 1))
-          fi
+        if [[ -z "$rargs_{{ key }}" ]]; then
+          rargs_{{ key }}=1
+        else
+          rargs_{{ key }}=$(("$rargs_{{ key }}" + 1))
+        fi
         {% else -%}
-          args['--{{ key }}']=1
+        rargs_{{ key }}=1
         {% endif -%}
         shift
         ;;
@@ -87,20 +87,16 @@
     {%- if opts -%}{%- for key, option in opts %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
         {% if option["multiple"] -%}
-          if [[ -z ${args['{{ key }}']+x} ]]; then
-            args['{{ key }}']="\"$2\""
-          else
-            args['{{ key }}']="${args['{{ key }}']:-} \"$2\""
-          fi
+        rargs_{{ key }}+=("$2")
         {% else -%}
-          args['{{ key }}']="$2"
+        rargs_{{ key }}="$2"
         {% endif -%}
         shift 2
         ;;
     {%- endfor -%}{% endif %}
     {%- if rules and rules is containing("no-first-option-help") %}
       {% if not uses_h %}-h|{% endif %}--help)
-        args['--help']=1
+        rargs_help=1
         shift 1
         ;;
     {%- endif %}
@@ -136,12 +132,16 @@
         {%- if args %}
           {%- for arg in args %}
             {%- if loop.first and loop.last %}
-        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
         else
               {%- if arg["multiple"] %}
-          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          rargs_{{ arg["name"] }}+=($key)
           shift
               {%- else %}
                 {%- if _any %}
@@ -154,16 +154,24 @@
               {%- endif %}
         fi
             {%- elif loop.first %}
-        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
             {%- elif loop.last %}
-        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
         else
               {%- if arg["multiple"] %}
-          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          rargs_{{ arg["name"] }}+=($key)
           shift
               {%- else %}
                 {%- if _any %}
@@ -176,8 +184,12 @@
               {%- endif %}
         fi
             {%- else %}
-        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
             {%- endif %}
           {%- endfor %}

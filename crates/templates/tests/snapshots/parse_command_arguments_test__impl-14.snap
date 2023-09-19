@@ -24,17 +24,17 @@ parse_bar_arguments() {
         exit 1
         ;;
       *)
-        if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$key
+        if [[ -z "$rargs_foo" ]]; then
+          rargs_foo=$key
           shift
-        elif [[ -z ${args['bar']+x} ]]; then
-          args['bar']=$key
+        elif [[ -z "$rargs_bar" ]]; then
+          rargs_bar=$key
           shift
-        elif [[ -z ${args['baz']+x} ]]; then
-          args['baz']=$key
+        elif [[ -z "$rargs_baz" ]]; then
+          rargs_baz+=($key)
           shift
         else
-          args['baz']="${args['baz']} \"$key\""
+          rargs_baz+=($key)
           shift
         fi
         ;;

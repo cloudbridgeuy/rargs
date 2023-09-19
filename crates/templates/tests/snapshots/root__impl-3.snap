@@ -10,7 +10,7 @@ root() {
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling individual functions case by case.
-  if [[ -n "${args['--help']}" ]]; then
+  if [[ -n "$rargs_help" ]]; then
     usage
     exit 0
   fi

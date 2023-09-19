@@ -8,8 +8,8 @@ root() {
   parse_root "$@"
 
   
-  if [[ -z "${args['default']}" ]]; then
-    args['default']="foo"
+  if [[ -z "$rargs_default" ]]; then
+    rargs_default="foo"
   fi
   echo "No implementation body found for root function"
 }

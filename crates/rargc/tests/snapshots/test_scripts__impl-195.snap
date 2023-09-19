@@ -10,7 +10,10 @@ Data elements:
 
 Verbosity level: 2
 
+
 args:
-- ${args[--verbose]} = 2
-- ${args[data]} = "1" "2" "3"
+- rargs_data = ([0] = "1"
+- [1] = "2"
+- [2] = "3")
+- rargs_verbose = 2
 

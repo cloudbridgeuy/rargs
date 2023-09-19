@@ -12,7 +12,10 @@ files:
   path: file3*
     downcase file3*
 
+
 args:
-- ${args[action]} = "downcase"
-- ${args[files]} = file "file2" "file3*"
+- rargs_action = ([0] = "downcase")
+- rargs_files = ([0] = "file"
+- [1] = "file2"
+- [2] = "file3*")
 

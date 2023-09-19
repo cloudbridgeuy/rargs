@@ -4,6 +4,7 @@ description: "[stdout] extensible-delegate.sh upload SOURCE"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 Upload
+
 args:
-- ${args[source]} = SOURCE
+- rargs_source = SOURCE
 

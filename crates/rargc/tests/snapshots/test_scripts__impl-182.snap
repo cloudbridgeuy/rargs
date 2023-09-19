@@ -15,7 +15,11 @@ files:
     downcase file3
     upcase FILE3
 
+
 args:
-- ${args[action]} = "downcase" "upcase"
-- ${args[files]} = file "file2" "file3"
+- rargs_action = ([0] = "downcase"
+- [1] = "upcase")
+- rargs_files = ([0] = "file"
+- [1] = "file2"
+- [2] = "file3")
 

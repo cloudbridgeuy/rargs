@@ -23,8 +23,8 @@ parse_arguments() {
         exit 1
         ;;
       *)
-        if [[ -z ${args['foo']+x} ]]; then
-          args['foo']=$key
+        if [[ -z "$rargs_foo" ]]; then
+          rargs_foo=$key
           shift
         else
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2

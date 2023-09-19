@@ -20,7 +20,7 @@ parse_foo_arguments() {
     key="$1"
     case "$key" in
       -h | --host)
-        args['host']="$2"
+        rargs_host="$2"
         shift 2
         ;;
       -?*)

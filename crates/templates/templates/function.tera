@@ -75,6 +75,42 @@
 {%- elif command["any"] %}
   {%- set _any = command["any"] %}
 {%- endif %}
+{%- set opts = false %}
+{%- set fls = false %}
+{%- set args = false %}
+{%- if options %}
+  {%- if command["options"] %}
+    {%- set opts = options | merge(with=command["options"]) %}
+  {%- else %}
+    {%- set opts = options %}
+  {%- endif %}
+{%- else %}
+  {%- if command["options"] %}
+    {%- set opts = command["options"] %}
+  {%- endif %}
+{%- endif %}
+{%- if flags %}
+  {%- if command["flags"] %}
+    {%- set fls = flags | merge(with=command["flags"]) %}
+  {%- else %}
+    {%- set fls = flags %}
+  {%- endif %}
+{%- else %}
+  {%- if command["flags"] %}
+    {%- set fls = command["flags"] %}
+  {%- endif %}
+{%- endif %}
+{%- if positional_arguments %}
+  {%- if command["positional_arguments"] %}
+    {%- set args = command["positional_arguments"] %}
+  {%- else %}
+    {%- set args = positional_arguments %}
+  {%- endif %}
+{%- else %}
+  {%- if command["positional_arguments"] %}
+    {%- set args = command["positional_arguments"] %}
+  {%- endif %}
+{%- endif %}
 
 {%- if command["description"] -%}
 # {{ command["description"] }}
@@ -83,6 +119,22 @@
 # {{ command["help"] }}
 {% endif -%}
 {{ command["name"] }}() {
+{%- if opts %}
+  {%- for name, option in opts %}
+    {%- if option["multiple"] %}
+  declare -a rargs_{{ name | replace(from="-", to="_") }}
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
+
+{%- if args %}
+  {%- for arg in args %}
+    {%- if arg["multiple"] %}
+  declare -a rargs_{{ name | replace(from="-", to="_") }}
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
+
 {%- if _envs and _envs | length > 0 %}
   # Parse environment variables
   {% include "check_environment_variables.tera" %}
@@ -94,7 +146,7 @@
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling individual functions case by case.
-  if [[ -n "${args['--help']}" ]]; then
+  if [[ -n "$rargs_help" ]]; then
     {{ command["name"] }}_usage
     exit 0
   fi
@@ -107,17 +159,22 @@
 {%- endif %}
 {%- if defaults | length > 0 %}
   {% for option in defaults %}
-  if [[ -z "${args['{{ option["name"] }}']}" ]]; then
-    args['{{ option["name"] }}']="{{ option["default"] }}"
+    {% if option["multiple"] %}
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ option["name"] }}[@]}" -eq 0 ]]; then
+    rargs_{{ option["name"] }}=({{ option["default"] }})
   fi
+    {% else %}
+  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
+    rargs_{{ option["name"] }}="{{ option["default"] }}"
+  fi
+    {% endif %}
   {%- endfor %}
 {%- endif %}
 {%- if choices | length > 0 %}
   {% for option in choices %}
-  if [[ -n "${args['{{ option["name"] }}']}" ]]; then
+  if [[ -n "$rargs_{{ option["name"] }}" ]]; then
     {%- if option["multiple"] %}
-    eval "local args_{{ option["name"] }}=(${args['{{ option["name"] }}']})"
-    for value in "${args_{{ option["name"] }}[@]}"; do
+    for value in "${rargs_{{ option["name"] }}[@]}"; do
       if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${value} ]]; then
         printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${value}" >&2
         {{ command["name"] }}_usage >&2
@@ -125,8 +182,8 @@
       fi
     done
     {%- else %}
-    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${args['{{ option["name"] }}']} ]]; then
-      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${args['{{ option["name"] }}']}" >&2
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ $rargs_{{ option["name"] }} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "$rargs_{{ option["name"] }}" >&2
       {{ command["name"] }}_usage >&2
       exit 1
     fi
@@ -135,10 +192,8 @@
   {%- endfor %}
 {%- endif %}
 {%- if _any and _any["required"] %}
-  {%- raw %}
-  if [[ "${#other_args[@]}" == "0" ]]; then
+  if [[ "{%- raw %}${{%- endraw %}#other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
-    {%- endraw %}
     {{ command["name"] }}_usage >&2
     {%- raw %}
     exit 1
@@ -147,7 +202,11 @@
 {%- endif %}
 {%- if required | length > 0 %}
   {% for option in required %}
-  if [[ -z "${args['{{ option["name"] }}']}" ]]; then
+    {%- if option["multiple"] %}
+  if [[ "{% raw %}${{%endraw %}#rargs_{{ option["name"] }}[@]}" == 0 ]]; then
+    {%- else %}
+  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
+    {%- endif %}
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "{{ option["name"] }}" >&2
     {{ command["name"] }}_usage >&2
     exit 1

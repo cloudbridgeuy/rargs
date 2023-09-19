@@ -12,8 +12,6 @@
 # @arg target Target filename (default: same as source)
 # @flag -f --force Overwrite existing files
 download() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
 
@@ -26,8 +24,6 @@ download() {
 # @option -u --user Username to use for logging in
 # @option -p --password Password to use for logging in
 upload() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
 }
 

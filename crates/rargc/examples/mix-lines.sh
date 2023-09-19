@@ -23,8 +23,6 @@ top() {
 # @example Download a file from the internet $ download example.com
 # @example Download a file from the internet and force save it to ./output $ download example.com ./output -f
 download() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
   bottom
 }
@@ -39,8 +37,6 @@ middle() {
 # @option -u --user Username to use for logging in
 # @option -p --password Password to use for logging in
 upload() {
-  echo "# this file is located in './crates/rargc/examples/output.sh'"
-  echo "# you can edit it freely and regenerate (it will not be overwritten)"
   inspect_args
   top
 }

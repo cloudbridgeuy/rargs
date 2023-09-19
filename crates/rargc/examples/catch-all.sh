@@ -8,7 +8,7 @@
 # @arg message Message
 # @any!
 required() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargc_debug" ]]; then
     set -x
   fi
 
@@ -20,7 +20,7 @@ required() {
 # @arg message Message
 # @any! <VALUE_NOTATION> Required additional arguments
 no-multiple() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargc_debug" ]]; then
     set -x
   fi
 
@@ -31,7 +31,7 @@ no-multiple() {
 # @arg message+ Message
 # @any Optional additional arguments
 multiple() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargc_debug" ]]; then
     set -x
   fi
 
@@ -41,7 +41,7 @@ multiple() {
 # @cmd Any arguments without description
 # @any
 other() {
-  if [[ -n "${args['--debug']}" ]]; then
+  if [[ -n "$rargc_debug" ]]; then
     set -x
   fi
 

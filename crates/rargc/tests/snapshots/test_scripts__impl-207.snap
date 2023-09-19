@@ -4,9 +4,10 @@ description: "[stdout] private.sh connect --protocol ftp -v localhost"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 FTP!!!
+
 args:
-- ${args[--verbose]} = 1
-- ${args[host]} = localhost
-- ${args[protocol]} = ftp
-- ${args[username]} = ftp_user
+- rargs_host = localhost
+- rargs_protocol = ftp
+- rargs_username = ftp_user
+- rargs_verbose = 1
 

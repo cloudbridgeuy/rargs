@@ -93,7 +93,15 @@ parse_arguments() {
   {%- if flags %}
     {%- for key, flag in flags %}
       {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
-        args['--{{ key }}']=1
+        {% if flag["multiple"] -%}
+        if [[ -z "$rargs_{{ key }}" ]]; then
+          rargs_{{ key }}=1
+        else
+          rargs_{{ key }}=$(("$rargs_{{ key }}" + 1))
+        fi
+        {% else -%}
+        rargs_{{ key }}=1
+        {% endif -%}
         shift
         ;;
     {%- endfor -%}
@@ -102,21 +110,16 @@ parse_arguments() {
     {%- for key, option in options %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
         {% if option["multiple"] -%}
-          if [[ -z ${args['{{ key }}']+x} ]]; then
-            args['{{ key }}']="$2"
-          else
-            args['{{ key }}']="${args['{{ key }}']:-} $2"
-          fi
+        rargs_{{ key }}+=("$2")
         {% else -%}
-          args['{{ key }}']="$2"
+        rargs_{{ key }}="$2"
         {% endif -%}
         shift 2
-        ;;
     {%- endfor -%}
   {% endif %}
   {%- if rules and rules is containing("no-first-option-help") %}
       {% if not uses_h %}-h|{% endif %}--help)
-        args['--help']=1
+        rargs_help=1
         shift 1
         ;;
   {% endif %}
@@ -128,44 +131,78 @@ parse_arguments() {
   {%- if positional_arguments %}
     {%- for arg in positional_arguments %}
       {%- if loop.first and loop.last %}
-        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          rargs_{{ arg["name"] }}+=($key)
           shift
         {%- else %}
+          {%- if _any %}
+          other_args+=("$1")
+          shift
+          {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
+          {%- endif %}
         {%- endif %}
         fi
       {%- elif loop.first %}
-        if [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
       {%- elif loop.last %}
-        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+              {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+              {%- else %}
+          rargs_{{ arg["name"] }}=$key
+              {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          args['{{ arg["name"] }}']="${args['{{ arg["name"] }}']} \"$key\""
+          rargs_{{ arg["name"] }}+=($key)
           shift
         {%- else %}
+          {%- if _any %}
+          other_args+=("$1")
+          shift
+          {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
           exit 1
+          {%- endif %}
         {%- endif %}
         fi
       {%- else %}
-        elif [[ -z ${args['{{ arg["name"] }}']+x} ]]; then
-          args['{{ arg["name"] }}']=$key
+        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+        {%- if arg["multiple"] %}
+          rargs_{{ arg["name"] }}+=($key)
+        {%- else %}
+          rargs_{{ arg["name"] }}=$key
+        {%- endif %}
           shift
       {%- endif %}
     {%- endfor %}
   {%- else %}
+    {%- if _any %}
+        other_args+=("$1")
+        shift
+    {%- else %}
+        if [[ "$key" == "" ]]; then
+          break
+        fi
         printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
         exit 1
+    {%- endif %}
   {%- endif %}
         ;;
     esac

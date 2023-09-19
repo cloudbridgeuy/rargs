@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use color_eyre::eyre::{ Result, WrapErr};
+use color_eyre::eyre::{Result, WrapErr};
 use serde::Serialize;
 use thiserror::Error;
 
@@ -48,7 +48,7 @@ pub struct Script {
     pub name: Option<String>,
     pub options: HashMap<String, param::Option>,
     pub positional_arguments: Vec<param::PositionalArgument>,
-    pub rargc_version: String,
+    pub rargs_version: String,
     pub rules: Option<Vec<String>>,
     pub shebang: String,
     pub version: Option<String>,
@@ -61,7 +61,7 @@ pub struct Script {
 impl Script {
     pub fn new() -> Self {
         Self {
-            rargc_version: env!("CARGO_PKG_VERSION").to_string(),
+            rargs_version: env!("CARGO_PKG_VERSION").to_string(),
             shebang: "#!/usr/bin/env bash".to_string(),
             ..Default::default()
         }

@@ -8,7 +8,7 @@ root() {
   parse_root "$@"
 
   
-  if [[ -z "${args['default']}" ]]; then
+  if [[ -z "$rargs_default" ]]; then
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "default" >&2
     usage >&2
     exit 1

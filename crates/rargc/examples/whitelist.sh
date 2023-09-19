@@ -8,6 +8,5 @@
 # @arg region![eu|us] <REGION> Region to connect to
 # @arg environment[=development|stagin|production] <ENVIRONMENT> Environment to connect to
 root() {
-  echo "Root"
   inspect_args
 }

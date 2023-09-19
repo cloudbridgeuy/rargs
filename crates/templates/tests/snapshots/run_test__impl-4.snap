@@ -5,7 +5,6 @@ expression: output
 ---
 
 run() {
-  declare -A args=()
   declare -A deps=()
   declare -a input=()
   normalize_input "$@"
@@ -13,7 +12,7 @@ run() {
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling the case where no action was selected.
-  if [[ -n "${args['--help']}" ]] && [[ -z "$action" ]]; then
+  if [[ -n "$rargs_help" ]] && [[ -z "$action" ]]; then
     usage
     exit 0
   fi

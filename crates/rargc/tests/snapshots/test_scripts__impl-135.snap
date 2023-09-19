@@ -3,8 +3,11 @@ source: crates/rargc/tests/test_scripts.rs
 description: "[stdout] catch-all-global.sh multiple something with --additional args"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+
 args:
-- ${args[message]} = something "with" "args"
+- rargs_message = ([0] = "something"
+- [1] = "with"
+- [2] = "args")
 
 other_args:
 - ${other_args[*]} = --additional

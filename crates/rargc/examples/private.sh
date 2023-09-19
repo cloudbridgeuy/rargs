@@ -10,7 +10,7 @@
 # @flag -v --verbose Verbose output
 # @arg host! Hostname to connect to
 connect() {
-  if [[ "${args["protocol"]}" == "ftp" ]]; then
+  if [[ "$rargs_protocol" == "ftp" ]]; then
     connect-ftp --username ftp_user
   else
     connect-ssh --username ssh_ser

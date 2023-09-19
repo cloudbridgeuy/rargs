@@ -3,8 +3,9 @@ source: crates/rargc/tests/test_scripts.rs
 description: "[stdout] catch-all-global.sh other something with --additional args and --debug -- with something else"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+
 args:
-- ${args[--debug]} = 1
+- rargs_debug = 1
 
 other_args:
 - ${other_args[*]} = something with --additional args and with something else
