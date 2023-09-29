@@ -92,7 +92,7 @@ EOF
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  -v --version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
 }
 
 parse_arguments() {
@@ -182,11 +182,11 @@ parse_generate-stream_arguments() {
     key="$1"
     case "$key" in
       -M | --max-length)
-        rargs_max-length="$2"
+        rargs_max_length="$2"
         shift 2
         ;;
       -m | --min-length)
-        rargs_min-length="$2"
+        rargs_min_length="$2"
         shift 2
         ;;
       -m | --model)
@@ -194,11 +194,11 @@ parse_generate-stream_arguments() {
         shift 2
         ;;
       --novelai-api-key)
-        rargs_novelai-api-key="$2"
+        rargs_novelai_api_key="$2"
         shift 2
         ;;
       --novelai-endpoint)
-        rargs_novelai-endpoint="$2"
+        rargs_novelai_endpoint="$2"
         shift 2
         ;;
       -t | --temperature)
@@ -206,7 +206,7 @@ parse_generate-stream_arguments() {
         shift 2
         ;;
       -u | --use-string)
-        rargs_use-string="$2"
+        rargs_use_string="$2"
         shift 2
         ;;
       -?*)
@@ -241,13 +241,13 @@ generate-stream() {
 
   
     
-  if [[ -z "$rargs_max-length" ]]; then
-    rargs_max-length="40"
+  if [[ -z "$rargs_max_length" ]]; then
+    rargs_max_length="40"
   fi
     
     
-  if [[ -z "$rargs_min-length" ]]; then
-    rargs_min-length="1"
+  if [[ -z "$rargs_min_length" ]]; then
+    rargs_min_length="1"
   fi
     
     
@@ -256,8 +256,8 @@ generate-stream() {
   fi
     
     
-  if [[ -z "$rargs_novelai-endpoint" ]]; then
-    rargs_novelai-endpoint="https://api.novelai.net/ai/generate-stream"
+  if [[ -z "$rargs_novelai_endpoint" ]]; then
+    rargs_novelai_endpoint="https://api.novelai.net/ai/generate-stream"
   fi
     
     
@@ -266,8 +266,8 @@ generate-stream() {
   fi
     
     
-  if [[ -z "$rargs_use-string" ]]; then
-    rargs_use-string="true"
+  if [[ -z "$rargs_use_string" ]]; then
+    rargs_use_string="true"
   fi
     
     
@@ -283,9 +283,9 @@ generate-stream() {
       exit 1
     fi
   fi
-  if [[ -n "$rargs_use-string" ]]; then
-    if [[ ! "(true false)" =~ $rargs_use-string ]]; then
-      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "use-string" ": " "$rargs_use-string" >&2
+  if [[ -n "$rargs_use_string" ]]; then
+    if [[ ! "(true false)" =~ $rargs_use_string ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "use-string" ": " "$rargs_use_string" >&2
       generate-stream_usage >&2
       exit 1
     fi

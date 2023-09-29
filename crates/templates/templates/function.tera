@@ -160,21 +160,21 @@
 {%- if defaults | length > 0 %}
   {% for option in defaults %}
     {% if option["multiple"] %}
-  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ option["name"] }}[@]}" -eq 0 ]]; then
-    rargs_{{ option["name"] }}=({{ option["default"] }})
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
+    rargs_{{ option["name"] | replace(from="-", to="_") }}=({{ option["default"] }})
   fi
     {% else %}
-  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
-    rargs_{{ option["name"] }}="{{ option["default"] }}"
+  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ option["name"] | replace(from="-", to="_") }}="{{ option["default"] }}"
   fi
     {% endif %}
   {%- endfor %}
 {%- endif %}
 {%- if choices | length > 0 %}
   {% for option in choices %}
-  if [[ -n "$rargs_{{ option["name"] }}" ]]; then
+  if [[ -n "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
     {%- if option["multiple"] %}
-    for value in "${rargs_{{ option["name"] }}[@]}"; do
+    for value in "${rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}"; do
       if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${value} ]]; then
         printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${value}" >&2
         {{ command["name"] }}_usage >&2
@@ -182,8 +182,8 @@
       fi
     done
     {%- else %}
-    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ $rargs_{{ option["name"] }} ]]; then
-      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "$rargs_{{ option["name"] }}" >&2
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ $rargs_{{ option["name"] | replace(from="-", to="_") }} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "$rargs_{{ option["name"] | replace(from="-", to="_") }}" >&2
       {{ command["name"] }}_usage >&2
       exit 1
     fi
@@ -203,9 +203,9 @@
 {%- if required | length > 0 %}
   {% for option in required %}
     {%- if option["multiple"] %}
-  if [[ "{% raw %}${{%endraw %}#rargs_{{ option["name"] }}[@]}" == 0 ]]; then
+  if [[ "{% raw %}${{%endraw %}#rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}" == 0 ]]; then
     {%- else %}
-  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
+  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
     {%- endif %}
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "{{ option["name"] }}" >&2
     {{ command["name"] }}_usage >&2

@@ -1,5 +1,5 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
+source: crates/rargs/tests/test_scripts.rs
 description: repeatable-flag.sh
 expression: dst
 ---
@@ -150,7 +150,7 @@ usage() {
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  --version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
 }
 
 parse_arguments() {

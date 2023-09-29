@@ -339,6 +339,32 @@ fn test_scripts() {
                     "",
                 ],
             },
+        ), (
+            "hello-world.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-v",
+                    "--version",
+                    "-help",
+                    "-h",
+                ],
+                stderr: vec![
+                ],
+            },
+        ), (
+            "huggingface.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-v",
+                    "--version",
+                    "-help",
+                    "-h",
+                ],
+                stderr: vec![
+                ],
+            },
         ),
     ];
 

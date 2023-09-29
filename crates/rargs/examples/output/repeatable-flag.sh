@@ -145,7 +145,7 @@ usage() {
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  --version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
 }
 
 parse_arguments() {

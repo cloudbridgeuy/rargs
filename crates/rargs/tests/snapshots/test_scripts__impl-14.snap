@@ -1,5 +1,5 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
+source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] minus-v.sh --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
@@ -24,5 +24,5 @@ Example that replaces the default behavior of -v and -h
   --help
     Print help
   --version
-    Pring version
+    Print version
 

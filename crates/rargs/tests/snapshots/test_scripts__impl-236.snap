@@ -1,0 +1,21 @@
+---
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] huggingface.sh -help"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Call the Huggingface API through curl
+
+[4mUsage:[0m
+  huggingface [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  huggingface -h|--help
+  huggingface -v|--version
+
+[4mCommands:[0m
+  fill-mask .... Fill Mask
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
+

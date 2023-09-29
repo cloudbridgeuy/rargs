@@ -68,15 +68,15 @@ root() {
 {%- endif %}
 {%- if defaults | length > 0 %}
   {% for option in defaults %}
-  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
-    rargs_{{ option["name"] }}="{{ option["default"] }}"
+  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ option["name"] | replace(from="-", to="_") }}="{{ option["default"] }}"
   fi
   {%- endfor %}
 {%- endif %}
 {%- if choices | length > 0 %}
   {% for option in choices %}
     {%- if option["multiple"] %}
-  for value in "${rargs_{{ option["name"] }}[@]}"; do
+  for value in "${rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}"; do
     if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ ${value} ]]; then
       printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "${value}" >&2
       usage >&2
@@ -84,9 +84,9 @@ root() {
     fi
   done
     {%- else %}
-  if [[ -n "$rargs_{{ option["name"] }}" ]]; then
-    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ $rargs_{{ option["name"] }} ]]; then
-      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "$rargs_{{ option["name"] }}" >&2
+  if [[ -n "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
+    if [[ ! "({{ option["choices"] | join(sep=" ") }})" =~ $rargs_{{ option["name"] | replace(from="-", to="_") }} ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "{{ option["name"] }}" ": " "$rargs_{{ option["name"] | replace(from="-", to="_") }}" >&2
       usage >&2
       exit 1
     fi
@@ -97,9 +97,9 @@ root() {
 {%- if required | length > 0 %}
   {% for option in required %}
     {%- if option["multiple"] %}
-  if [[ "{%- raw %}${{%- endraw %}#rargs_{{ option["name"] }}[@]}" == 0 ]]; then
+  if [[ "{%- raw %}${{%- endraw %}#rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}" == 0 ]]; then
     {%- else %}
-  if [[ -z "$rargs_{{ option["name"] }}" ]]; then
+  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
     {%- endif %}
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "{{ option["name"] }}" >&2
     usage >&2

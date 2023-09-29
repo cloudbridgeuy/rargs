@@ -1,5 +1,5 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
+source: crates/rargs/tests/test_scripts.rs
 description: minus-v.sh
 expression: dst
 ---
@@ -128,7 +128,7 @@ usage() {
   printf "  --help\n"
   printf "    Print help\n"
   printf "  --version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
 }
 
 parse_arguments() {

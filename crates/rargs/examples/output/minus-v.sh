@@ -123,7 +123,7 @@ usage() {
   printf "  --help\n"
   printf "    Print help\n"
   printf "  --version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
 }
 
 parse_arguments() {

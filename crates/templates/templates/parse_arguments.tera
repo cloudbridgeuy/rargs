@@ -94,13 +94,13 @@ parse_arguments() {
     {%- for key, flag in flags %}
       {% if flag["short"] -%}-{{ flag["short"] }} | {% endif -%}--{{ key }})
         {% if flag["multiple"] -%}
-        if [[ -z "$rargs_{{ key }}" ]]; then
-          rargs_{{ key }}=1
+        if [[ -z "$rargs_{{ key | replace(from="-", to="_") }}" ]]; then
+          rargs_{{ key | replace(from="-", to="_") }}=1
         else
-          rargs_{{ key }}=$(("$rargs_{{ key }}" + 1))
+          rargs_{{ key | replace(from="-", to="_") }}=$(("$rargs_{{ key }}" + 1))
         fi
         {% else -%}
-        rargs_{{ key }}=1
+        rargs_{{ key | replace(from="-", to="_") }}=1
         {% endif -%}
         shift
         ;;
@@ -110,9 +110,9 @@ parse_arguments() {
     {%- for key, option in options %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
         {% if option["multiple"] -%}
-        rargs_{{ key }}+=("$2")
+        rargs_{{ key | replace(from="-", to="_") }}+=("$2")
         {% else -%}
-        rargs_{{ key }}="$2"
+        rargs_{{ key | replace(from="-", to="_") }}="$2"
         {% endif -%}
         shift 2
     {%- endfor -%}
@@ -131,16 +131,16 @@ parse_arguments() {
   {%- if positional_arguments %}
     {%- for arg in positional_arguments %}
       {%- if loop.first and loop.last %}
-        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+        if [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
               {%- else %}
-          rargs_{{ arg["name"] }}=$key
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
           shift
         {%- else %}
           {%- if _any %}
@@ -153,24 +153,24 @@ parse_arguments() {
         {%- endif %}
         fi
       {%- elif loop.first %}
-        if [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+        if [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
               {%- else %}
-          rargs_{{ arg["name"] }}=$key
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
           shift
       {%- elif loop.last %}
-        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+        elif [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
               {%- else %}
-          rargs_{{ arg["name"] }}=$key
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
           shift
         {%- else %}
           {%- if _any %}
@@ -183,11 +183,11 @@ parse_arguments() {
         {%- endif %}
         fi
       {%- else %}
-        elif [[ -z "$rargs_{{ arg["name"] }}" ]]; then
+        elif [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
         {%- else %}
-          rargs_{{ arg["name"] }}=$key
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
         {%- endif %}
           shift
       {%- endif %}

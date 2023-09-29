@@ -136,6 +136,6 @@ EOF
   printf "    Print help\n"
   {%- if version %}
   printf "  {% if not uses_v %}-v {% endif %}--version\n"
-  printf "    Pring version\n"
+  printf "    Print version\n"
   {%- endif %}
 }
