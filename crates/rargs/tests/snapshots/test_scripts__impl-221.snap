@@ -1,0 +1,20 @@
+---
+source: crates/rargs/tests/test_scripts.rs
+description: "[stderr] empty.sh "
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+[31mNothing to do. Please add [33mcommands or a root command[31m[0m
+
+Empty script
+
+[4mUsage:[0m
+  emtpy [OPTIONS]
+  emtpy -h|--help
+  emtpy -v|--version
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Pring version
+

@@ -20,7 +20,7 @@ run() {
     deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
 
-  printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add" "commands or a root command" >&2
+  printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add " "commands or a root command" >&2
   usage >&2
   exit 1
 }

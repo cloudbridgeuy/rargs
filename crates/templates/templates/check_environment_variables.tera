@@ -11,8 +11,8 @@
 {%- if _envs and _envs | length > 0 %}
   {%- for name, env in _envs %}
     {%- if env["option"] %}
-  if [[ -n "$rargc_{{ env["option"] | replace(from="-", to="_") }}" ]]; then
-    rargc_{{ env["option"] | replace(from="-", to="_") }}="${% raw %}{{% endraw %}{{ name }}:-}"
+  if [[ -n "$rargs_{{ env["option"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ env["option"] | replace(from="-", to="_") }}="${% raw %}{{% endraw %}{{ name }}:-}"
   fi
     {%- elif env["required"] %}
   if [[ -z "${% raw %}{{% endraw %}{{ name }}:-}" ]]; then

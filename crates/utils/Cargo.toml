@@ -1,7 +1,7 @@
 [package]
 name = "utils"
 version = "0.0.0"
-homepage = "https://github.com/cloudbridgeuy/rargc"
+homepage = "https://github.com/cloudbridgeuy/rargs"
 description = "Tests utility library"
 autobins = false
 

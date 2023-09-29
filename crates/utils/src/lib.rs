@@ -63,7 +63,7 @@ macro_rules! build_script {
             .args([
                 "run",
                 "--bin",
-                "rargc",
+                "rargs",
                 "--release",
                 "--",
                 "build",
@@ -72,7 +72,7 @@ macro_rules! build_script {
                 &src,
             ])
             .output()
-            .unwrap_or_else(|e| panic!("failed to build rargc script with error: {e}"));
+            .unwrap_or_else(|e| panic!("failed to build rargs script with error: {e}"));
 
         println!("stdout: {}", String::from_utf8(output.stdout).unwrap());
         println!("stderr: {}", String::from_utf8(output.stderr).unwrap());

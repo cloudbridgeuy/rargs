@@ -1,29 +1,32 @@
 [package]
-name = "templates"
+name = "rargs"
 version = "0.0.0"
 homepage = "https://github.com/cloudbridgeuy/rargs"
-description = "Template library for rargs"
+description = "A bash framework based on argc and bashly"
 autobins = false
 
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 
+[[bin]]
+name = "rargs"
+path = "src/main.rs"
+
 [lib]
-name = "templates"
+name = "rargs"
 path = "src/lib.rs"
 
 [dependencies]
+clap = { version = "4.3.10", features = ["derive", "string"] }
 color-eyre = "0.6.2"
+env_logger = "0.10.0"
 log = "0.4.19"
-tera = "1"
-lazy_static = "1.4.0"
-serde = { version = "1.0.186", features = ["derive"] }
-serde_json = "1.0.105"
-include_dir = "0.7.3"
+parser = { path = "../parser", version = "0.0.0" }
+templates = { path = "../templates", version = "0.0.0" }
 
 [dev-dependencies]
 utils = { path = "../utils", version = "0.0.0" }
 insta = { version = "1.31.0", features = ["yaml"] }
-env_logger = "*"
 test-log = "0.2.12"
+tera = "1"

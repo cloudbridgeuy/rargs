@@ -1,8 +1,8 @@
 [package]
 name = "parser"
 version = "0.0.0"
-homepage = "https://github.com/cloudbridgeuy/rargc"
-description = "Parser library for rargc"
+homepage = "https://github.com/cloudbridgeuy/rargs"
+description = "Parser library for rargs"
 autobins = false
 
 authors.workspace = true
