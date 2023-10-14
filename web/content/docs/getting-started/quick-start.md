@@ -14,27 +14,38 @@ toc = true
 top = false
 +++
 
-## Requirements
+## Table of Contents
 
-The only requirements to run `rargs` is `bash` version 4 and the `rargs` binary. You may try to run
-the resulting scripts on a lower version of `bash` but there's no guarantee that they will work.
+1. [Requirements](#requirements)
+2. [Your First Script](#your-first-script)
+3. [Something More Complex](#something-more-complex)
+4. [Rules](#rules)
+5. [Conclusion](#conclusion)
 
-## Your first script
+## Requirements <a name="requirements"></a>
+
+The only requirements to run `rargs` are `bash` version 4 and the `rargs` binary. You may try to run
+the resulting scripts on a lower version of `bash`, but there's no guarantee that they will work.
+
+## Your First Script <a name="your-first-script"></a>
 
 `rargs` is heavily inspired by two other `bash` frameworks: `bashly`, and `argc`. The latter uses
-comments with a JsDoc inspired syntax to add functionality to the scripts at runtime. To be able to
-do this, you need to run the `argc` command and pass the output to an `eval` call somewhere on your
-script. `rargs` uses the same comment decorators, and adds a few of its own, but instead of
+comments with a `JsDoc` inspired syntax to add functionality to the scripts at runtime. This syntax,
+known as a `comment decorator`, is a normal bash comment followed by an ` @` sign and a
+tag. It's how the `rargs` parser identifies configuration.
+
+To utilize this, you need to run the `argc` command and pass the output to an `eval` call somewhere
+in your script. `rargs` uses the same comment decorators, and adds a few of its own, but instead of
 requiring you to invoke it at runtime, you use the `rargs` binary to build your script. `rargs`
 takes every decorator and transforms it into `bash`, while rearranging your functions along the way.
-The result is a new `bash` script with all your logic, plus additional funcionality like argument
+The result is a new `bash` script with all your logic, plus additional functionality like argument
 and option parsing, `--help` documentation, and more.
 
-The easiest script you can make is one that only outputs it's `help` message:
+The easiest script you can make is one that only outputs its `help` message:
 
 ```bash
 #!/usr/bin/env bash
-# @name emtpy
+# @name empty
 # @version 0.0.1
 # @description Empty script
 # @author @cloudbridgeuy
@@ -42,25 +53,26 @@ The easiest script you can make is one that only outputs it's `help` message:
 
 > You can use any `shebang` you want.
 
-Assume our current directory looks like this:
+Assume our current directory looks like this, with empty.sh residing in the src directory:
 
 ```txt
- .
-├──  bin
-└──  src
+📂 .
+├── 📂 bin
+└── 📂 src
+    └── empty.sh
 ```
 
-Compile this script with `rargs` and execute it.
+Compile this script with rargs and execute it.
 
 ```bash
 # Compile the file to ./bin/empty.sh
 rargs build -d ./bin src/empty.sh
 
 # Execute it
-./bin/emtpy -h
+./bin/empty -h
 ```
 
-> On unix bases systems `rargs` tries to set the build file as executable.
+> On Unix-based systems, rargs tries to set the build file as executable.
 
 If you try to run it, you'll get an error asking you to configure a `root` command or a sub-command
 function. You can use `root` commands if you don't wan to support multiple sub-commands. For
@@ -128,7 +140,7 @@ $ DEBUG=true ./empty.sh
 Hello, World!
 ```
 
-### Something more complex
+### Something More Complex <a name="something-more-complex"></a>
 
 Let's do something more complex. We'll use most of the features supported by `rargs` on the
 following example. We won't get too deep on how they work on this section. You can check their
@@ -327,3 +339,72 @@ We can change this behavior by setting the `no-first-option-help` rule.
 Just as with other features, we set rules at the `global` or `command` scope by appending the right
 comment decorator. In this case we need to use the `@rule` decorator plus the name of the rule we
 want to activate. Let's add it at the root scope.
+
+```bash
+#!/usr/bin/env bash
+# @name huggingface
+# @version 0.0.1
+# @description Call the Huggingface API through curl
+# @author @cloudbridgeuy
+# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+# @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
+# @rule no-first-option-help
+```
+
+If we run the command once again we'll get the expected behavior.
+
+```text
+./huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model --help
+Fill Mask
+Tries to fill a hole with a missing word (token to be precise).
+
+...
+```
+
+## Conclusion <a name="conclusion"></a>
+
+Here's the complete script:
+
+```bash
+#!/usr/bin/env bash
+# @name huggingface
+# @version 0.0.1
+# @description Call the Huggingface API through curl
+# @author @cloudbridgeuy
+# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew\e[0m or \e[32mapt-get\e[0m
+# @env HUGGING_FACE_API_TOKEN! Please set your Hugging Face API token
+# @rule no-first-option-help
+
+# @cmd Fill Mask
+# @help Tries to fill a hole with a missing word (token to be precise).
+# @option -m --model=bert-base-uncased Model to use.
+# @option -u --url="https://api-inference.huggingface.co/models" Hugging Face API base URL.
+# @flag --no-use-cache Do not use the cache layer on the interface API to speedup requests.
+# @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
+# @arg text! Text with mask to fill
+# @example Replace the value of [MASK] with the most likely word $ "The capital of France is [MASK]"
+# @dep jo Please install \e[32mjo\e[0m with your OS package manager
+fill-mask() {
+  body="$(jo inputs="$rargs_text")"
+
+  if [[ -n "$rargs_no_use_cache" ]]; then
+    body="$(jo -f <(echo -n "$body") use_cache=false)"
+  fi
+
+  if [[ -n "$rargs_wait_for_model" ]]; then
+    body="$(jo -f <(echo -n "$body") wait_for_model=true)"
+  fi
+
+  curl -sL "$rargs_url/$rargs_model" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $HUGGING_FACE_API_TOKEN" \
+    -d "$body"
+}
+```
+
+The previous examples showcases almost all of the most important `rargs` features. You can use it as
+a starting point to create your own scripts.
+
+You can find more information about each of these features on their corresponding page in the docs.
+
+Happy scripting!

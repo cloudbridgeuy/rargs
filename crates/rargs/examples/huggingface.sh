@@ -5,6 +5,7 @@
 # @author @cloudbridgeuy
 # @dep curl,jo Please install \e[32mcurl\e[0m with \e[32mbrew\e[0m or \e[32maapt-get\e[0m
 # @env HUGGING_FACE_API_TOKEN! Please set your Hugging Face API token
+# @rule no-first-option-help
 
 # @cmd Fill Mask
 # @help Tries to fill a hole with a missing word (token to be precise).

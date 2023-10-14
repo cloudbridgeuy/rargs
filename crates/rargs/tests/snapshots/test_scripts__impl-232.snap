@@ -97,10 +97,6 @@ parse_arguments() {
         version
         exit
         ;;
-      -h|--help)
-        usage
-        exit
-        ;;
       *)
         break
         ;;
@@ -157,10 +153,6 @@ fill-mask_usage() {
 parse_fill-mask_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      -h|--help)
-        fill-mask_usage
-        exit
-        ;;
       *)
         break
         ;;
@@ -185,6 +177,10 @@ parse_fill-mask_arguments() {
       -u | --url)
         rargs_url="$2"
         shift 2
+        ;;
+      -h|--help)
+        rargs_help=1
+        shift 1
         ;;
       -?*)
         printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
@@ -216,6 +212,13 @@ fill-mask() {
   # Parse command arguments
   parse_fill-mask_arguments "$@"
 
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling individual functions case by case.
+  if [[ -n "$rargs_help" ]]; then
+    fill-mask_usage
+    exit 0
+  fi
   
     
   if [[ -z "$rargs_model" ]]; then
@@ -251,6 +254,13 @@ run() {
   declare -a input=()
   normalize_input "$@"
   parse_arguments "${input[@]}"
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling the case where no action was selected.
+  if [[ -n "$rargs_help" ]] && [[ -z "$action" ]]; then
+    usage
+    exit 0
+  fi
   # Check global dependencies
   
   for dependency in curl jo; do
