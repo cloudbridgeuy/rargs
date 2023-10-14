@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Rargs</title>
+    <subtitle>Rargs is your next Bash scripting framework</subtitle>
+    <link href="https://rargs.cloudbridge.uy/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://rargs.cloudbridge.uy"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-10-14T07:00:00+00:00</updated>
+    <id>https://rargs.cloudbridge.uy/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Say hello to Rargs 👋</title>
+        <published>2023-10-14T07:00:00+00:00</published>
+        <updated>2023-10-14T07:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/blog/say-hello-to-rargs/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/blog/say-hello-to-rargs/</id>
+        
+        <content type="html"></content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Installation</title>
+        <published>2023-09-22T08:20:00+00:00</published>
+        <updated>2023-09-22T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/getting-started/installation/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/getting-started/installation/</id>
+        
+        <content type="html">&lt;p&gt;The best way to install &lt;code&gt;rargs&lt;&#x2F;code&gt; is to download the pre-built version from the project &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;code&gt;Release&lt;&#x2F;code&gt;
+page.&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;build-from-source&quot;&gt;Build from source&lt;&#x2F;h2&gt;
+&lt;p&gt;You can build your own version of &lt;code&gt;rargs&lt;&#x2F;code&gt; using &lt;code&gt;cargo&lt;&#x2F;code&gt;, Rust build tool. To do so, clone the
+project into a directory, change into the cloned directory and run cargo.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; clone https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs.git
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span&gt; rargs
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cargo&lt;&#x2F;span&gt;&lt;span&gt; build&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --bin&lt;&#x2F;span&gt;&lt;span&gt; rargs
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;You can find the build binary in the created &lt;code&gt;target&#x2F;release&lt;&#x2F;code&gt; dirctory by the name &lt;code&gt;rargs&lt;&#x2F;code&gt;. Copy it
+into a directory on your path, or add the &lt;code&gt;release&lt;&#x2F;code&gt; directory you your &lt;code&gt;PATH&lt;&#x2F;code&gt;, and give the &lt;code&gt;rargs&lt;&#x2F;code&gt;
+binary executable permissions.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;chmod&lt;&#x2F;span&gt;&lt;span&gt; +x rargs
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Introduction</title>
+        <published>2023-09-22T08:20:00+00:00</published>
+        <updated>2023-09-22T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/getting-started/introduction/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/getting-started/introduction/</id>
+        
+        <content type="html">&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+&lt;p&gt;Learn how to install &lt;code&gt;rargs&lt;&#x2F;code&gt; on your operating system. &lt;a href=&quot;..&#x2F;installation&#x2F;&quot;&gt;Installation →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;&#x2F;h2&gt;
+&lt;p&gt;One page summary of how to create your first &lt;code&gt;rargs&lt;&#x2F;code&gt; script. &lt;a href=&quot;..&#x2F;quick-start&#x2F;&quot;&gt;Quick Start →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;go-further&quot;&gt;Go further&lt;&#x2F;h2&gt;
+&lt;p&gt;Contributing and Help.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;contributing&quot;&gt;Contributing&lt;&#x2F;h2&gt;
+&lt;p&gt;Find out how to contribute to &lt;code&gt;rargs&lt;&#x2F;code&gt;. &lt;a href=&quot;..&#x2F;..&#x2F;contributing&#x2F;how-to-contribute&#x2F;&quot;&gt;Contributing →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;help&quot;&gt;Help&lt;&#x2F;h2&gt;
+&lt;p&gt;Get help on &lt;code&gt;rargs&lt;&#x2F;code&gt;. &lt;a href=&quot;..&#x2F;..&#x2F;help&#x2F;faq&#x2F;&quot;&gt;Help →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Quick Start</title>
+        <published>2023-09-22T08:20:00+00:00</published>
+        <updated>2023-09-22T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/getting-started/quick-start/</id>
+        
+        <content type="html">&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#requirements&quot;&gt;Requirements&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#your-first-script&quot;&gt;Your First Script&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#something-more-complex&quot;&gt;Something More Complex&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#rules&quot;&gt;Rules&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#conclusion&quot;&gt;Conclusion&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;requirements&quot;&gt;Requirements &lt;a name=&quot;requirements&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;The only requirements to run &lt;code&gt;rargs&lt;&#x2F;code&gt; are &lt;code&gt;bash&lt;&#x2F;code&gt; version 4 and the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary. You may try to run
+the resulting scripts on a lower version of &lt;code&gt;bash&lt;&#x2F;code&gt;, but there&#x27;s no guarantee that they will work.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;your-first-script&quot;&gt;Your First Script &lt;a name=&quot;your-first-script&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;code&gt;rargs&lt;&#x2F;code&gt; is heavily inspired by two other &lt;code&gt;bash&lt;&#x2F;code&gt; frameworks: &lt;code&gt;bashly&lt;&#x2F;code&gt;, and &lt;code&gt;argc&lt;&#x2F;code&gt;. The latter uses
+comments with a &lt;code&gt;JsDoc&lt;&#x2F;code&gt; inspired syntax to add functionality to the scripts at runtime. This syntax,
+known as a &lt;code&gt;comment decorator&lt;&#x2F;code&gt;, is a normal bash comment followed by an &lt;code&gt; @&lt;&#x2F;code&gt; sign and a
+tag. It&#x27;s how the &lt;code&gt;rargs&lt;&#x2F;code&gt; parser identifies configuration.&lt;&#x2F;p&gt;
+&lt;p&gt;To utilize this, you need to run the &lt;code&gt;argc&lt;&#x2F;code&gt; command and pass the output to an &lt;code&gt;eval&lt;&#x2F;code&gt; call somewhere
+in your script. &lt;code&gt;rargs&lt;&#x2F;code&gt; uses the same comment decorators, and adds a few of its own, but instead of
+requiring you to invoke it at runtime, you use the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary to build your script. &lt;code&gt;rargs&lt;&#x2F;code&gt;
+takes every decorator and transforms it into &lt;code&gt;bash&lt;&#x2F;code&gt;, while rearranging your functions along the way.
+The result is a new &lt;code&gt;bash&lt;&#x2F;code&gt; script with all your logic, plus additional functionality like argument
+and option parsing, &lt;code&gt;--help&lt;&#x2F;code&gt; documentation, and more.&lt;&#x2F;p&gt;
+&lt;p&gt;The easiest script you can make is one that only outputs its &lt;code&gt;help&lt;&#x2F;code&gt; message:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name empty
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Empty script
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can use any &lt;code&gt;shebang&lt;&#x2F;code&gt; you want.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Assume our current directory looks like this, with empty.sh residing in the src directory:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;📂 .
+&lt;&#x2F;span&gt;&lt;span&gt;├── 📂 bin
+&lt;&#x2F;span&gt;&lt;span&gt;└── 📂 src
+&lt;&#x2F;span&gt;&lt;span&gt;    └── empty.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Compile this script with rargs and execute it.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Compile the file to .&#x2F;bin&#x2F;empty.sh
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs&lt;&#x2F;span&gt;&lt;span&gt; build&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -d&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;bin src&#x2F;empty.sh
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Execute it
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;bin&#x2F;empty -h
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;On Unix-based systems, rargs tries to set the build file as executable.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;If you try to run it, you&#x27;ll get an error asking you to configure a &lt;code&gt;root&lt;&#x2F;code&gt; command or a sub-command
+function. You can use &lt;code&gt;root&lt;&#x2F;code&gt; commands if you don&#x27;t wan to support multiple sub-commands. For
+example, we can extend our previous script like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name emtpy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Empty script
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;root&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, World!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;After compiling and running it we&#x27;ll get &lt;code&gt;Hello, World!&lt;&#x2F;code&gt; printed to &lt;code&gt;stdout&lt;&#x2F;code&gt; as expected. And if we
+run it with the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; or &lt;code&gt;-v|--version&lt;&#x2F;code&gt; option we&#x27;ll get this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ .&#x2F;empty.sh --help
+&lt;&#x2F;span&gt;&lt;span&gt;Empty script
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Usage:
+&lt;&#x2F;span&gt;&lt;span&gt;  emtpy [OPTIONS]
+&lt;&#x2F;span&gt;&lt;span&gt;  emtpy -h|--help
+&lt;&#x2F;span&gt;&lt;span&gt;  emtpy -v|--version
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Options:
+&lt;&#x2F;span&gt;&lt;span&gt;  -h --help
+&lt;&#x2F;span&gt;&lt;span&gt;    Print help
+&lt;&#x2F;span&gt;&lt;span&gt;  -v --version
+&lt;&#x2F;span&gt;&lt;span&gt;    Print version
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;$ .&#x2F;empty.sh --version
+&lt;&#x2F;span&gt;&lt;span&gt;0.0.1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can see how &lt;code&gt;rargs&lt;&#x2F;code&gt; decorated our simple function with additional functionalities.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you want to see exactly which commands &lt;code&gt;rargs&lt;&#x2F;code&gt; added on your script, you can check the built
+script, or run it with the &lt;code&gt;DEBUG&lt;&#x2F;code&gt; environment variable set to &lt;code&gt;true&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ DEBUG=true .&#x2F;empty.sh
+&lt;&#x2F;span&gt;&lt;span&gt;+ set -e
+&lt;&#x2F;span&gt;&lt;span&gt;+ run
+&lt;&#x2F;span&gt;&lt;span&gt;+ deps=()
+&lt;&#x2F;span&gt;&lt;span&gt;+ declare -A deps
+&lt;&#x2F;span&gt;&lt;span&gt;+ input=()
+&lt;&#x2F;span&gt;&lt;span&gt;+ declare -a input
+&lt;&#x2F;span&gt;&lt;span&gt;+ normalize_input
+&lt;&#x2F;span&gt;&lt;span&gt;+ local arg flags
+&lt;&#x2F;span&gt;&lt;span&gt;+ [[ 0 -gt 0 ]]
+&lt;&#x2F;span&gt;&lt;span&gt;+ parse_arguments
+&lt;&#x2F;span&gt;&lt;span&gt;+ [[ 0 -gt 0 ]]
+&lt;&#x2F;span&gt;&lt;span&gt;+ action=
+&lt;&#x2F;span&gt;&lt;span&gt;+ case $action in
+&lt;&#x2F;span&gt;&lt;span&gt;+ action=root
+&lt;&#x2F;span&gt;&lt;span&gt;+ root
+&lt;&#x2F;span&gt;&lt;span&gt;+ parse_root
+&lt;&#x2F;span&gt;&lt;span&gt;+ [[ 0 -gt 0 ]]
+&lt;&#x2F;span&gt;&lt;span&gt;+ echo &amp;#39;Hello, World!&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;Hello, World!
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;something-more-complex&quot;&gt;Something More Complex &lt;a name=&quot;something-more-complex&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;Let&#x27;s do something more complex. We&#x27;ll use most of the features supported by &lt;code&gt;rargs&lt;&#x2F;code&gt; on the
+following example. We won&#x27;t get too deep on how they work on this section. You can check their
+specific parts of the documentation for more information.&lt;&#x2F;p&gt;
+&lt;p&gt;We want to make a script that interacts with the HuggingFace API. So let&#x27;s start by creating a new
+script called &lt;code&gt;huggingface.sh&lt;&#x2F;code&gt; and add our initial &lt;code&gt;metadata&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Call the Huggingface API through curl
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Our script is going to require &lt;code&gt;curl&lt;&#x2F;code&gt; as a tight dependency and it will require us to configure the
+&lt;code&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;code&gt; environment variable with our account secret. &lt;code&gt;rargs&lt;&#x2F;code&gt; can make sure that we
+have both of these values before running the script by setting the &lt;code&gt;@dep&lt;&#x2F;code&gt; and &lt;code&gt;@env&lt;&#x2F;code&gt; decorators.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Decorators can be set at the &lt;code&gt;root&lt;&#x2F;code&gt; scope or per sub-command. Sub-commands will inherit &lt;code&gt;root&lt;&#x2F;code&gt;
+configuration by default.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Let&#x27;s add these decorators to our script.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Call the Huggingface API through curl
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can decorate your help message with colors.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;&#x2F;strong&gt; You can use &lt;code&gt;$()&lt;&#x2F;code&gt; or inverted quotes &amp;quot;`&amp;quot; inside the description and that code will be
+invoked.&lt;&#x2F;p&gt;
+&lt;p&gt;With these changes the &lt;code&gt;script&lt;&#x2F;code&gt; won&#x27;t execute unless &lt;code&gt;curl&lt;&#x2F;code&gt; is installed in the system and the
+Huggingface API is set.&lt;&#x2F;p&gt;
+&lt;p&gt;Now, let&#x27;s add our first sub-command. Given that there are multiple uses for LLM, we wan&#x27;t to able
+to navigate to the right usage with our API. For example, let&#x27;s say we wanted to use the
+&lt;code&gt;bert-base-uncased&lt;&#x2F;code&gt; model to find a word to fill a match. Is typically used to showcase the behavior
+of these models and it&#x27;s fun to use.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;ll start by creating a function called &lt;code&gt;fill-mask&lt;&#x2F;code&gt; and decorate it with additional options and
+arguments that we&#x27;ll provide at runtime to override its behavior.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Fill Mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @help Tries to fill a hole with a missing word (token to be precise).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -m --model=bert-base-uncased Model to use.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -u --url=&amp;quot;https:&#x2F;&#x2F;api-inference.huggingface.co&#x2F;models&amp;quot; Hugging Face API base URL.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg text! Text with mask to fill
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @example Replace the value of [MASK] with the most likely word $ &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fill-mask&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;curl -sL &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_model&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Content-Type: application&#x2F;json&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Authorization: Bearer &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -d &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;inputs&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_text&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;After compiling it, run it like this and get your output:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ .&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;[
+&lt;&#x2F;span&gt;&lt;span&gt;  {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.7153865694999695,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token&amp;quot;: 1012,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token_str&amp;quot;: &amp;quot;.&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;sequence&amp;quot;: &amp;quot;the capital of france is.&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  },
+&lt;&#x2F;span&gt;&lt;span&gt;  {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.2526995837688446,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token&amp;quot;: 1025,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token_str&amp;quot;: &amp;quot;;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;sequence&amp;quot;: &amp;quot;the capital of france is ;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  },
+&lt;&#x2F;span&gt;&lt;span&gt;  {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.028098540380597115,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token&amp;quot;: 1064,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token_str&amp;quot;: &amp;quot;|&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;sequence&amp;quot;: &amp;quot;the capital of france is |&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  },
+&lt;&#x2F;span&gt;&lt;span&gt;  {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.0020544484723359346,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token&amp;quot;: 999,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token_str&amp;quot;: &amp;quot;!&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;sequence&amp;quot;: &amp;quot;the capital of france is!&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  },
+&lt;&#x2F;span&gt;&lt;span&gt;  {
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.001290082116611302,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token&amp;quot;: 1029,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;token_str&amp;quot;: &amp;quot;?&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;sequence&amp;quot;: &amp;quot;the capital of france is?&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To get the output in pretty-printed JSON pipe it to &lt;code&gt;jq&lt;&#x2F;code&gt; with &lt;code&gt;| jq&lt;&#x2F;code&gt;, so it&#x27;s not necessary to add
+this to the sub-command.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;We also can get a nice &lt;code&gt;help&lt;&#x2F;code&gt; message using the &lt;code&gt;--help&lt;&#x2F;code&gt; flag.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;Fill Mask
+&lt;&#x2F;span&gt;&lt;span&gt;Tries to fill a hole with a missing word (token to be precise).
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Usage:
+&lt;&#x2F;span&gt;&lt;span&gt;  fill-mask [OPTIONS] TEXT
+&lt;&#x2F;span&gt;&lt;span&gt;  fill-mask -h|--help
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Examples:
+&lt;&#x2F;span&gt;&lt;span&gt;  fill-mask &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    Replace the value of [MASK] with the most likely word
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Arguments:
+&lt;&#x2F;span&gt;&lt;span&gt;  TEXT
+&lt;&#x2F;span&gt;&lt;span&gt;    Text with mask to fill
+&lt;&#x2F;span&gt;&lt;span&gt;    [@required]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Options:
+&lt;&#x2F;span&gt;&lt;span&gt;  -m --model [&amp;lt;MODEL&amp;gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;    Model to use.
+&lt;&#x2F;span&gt;&lt;span&gt;    [@default bert-base-uncased]
+&lt;&#x2F;span&gt;&lt;span&gt;  -u --url [&amp;lt;URL&amp;gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;    Hugging Face API base URL.
+&lt;&#x2F;span&gt;&lt;span&gt;    [@default https:&#x2F;&#x2F;api-inference.huggingface.co&#x2F;models]
+&lt;&#x2F;span&gt;&lt;span&gt;  -h --help
+&lt;&#x2F;span&gt;&lt;span&gt;    Print help
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;There are some additional options that this task can consume so let&#x27;s add them. Also, to help us
+craft the required &lt;code&gt;JSON&lt;&#x2F;code&gt; object we&#x27;ll use a tool called &lt;code&gt;jo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We&#x27;ll also add &lt;code&gt;jo&lt;&#x2F;code&gt; as a local dependency required when calling the &lt;code&gt;fill-mask&lt;&#x2F;code&gt; command.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Fill Mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @help Tries to fill a hole with a missing word (token to be precise).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -m --model=bert-base-uncased Model to use.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -u --url=&amp;quot;https:&#x2F;&#x2F;api-inference.huggingface.co&#x2F;models&amp;quot; Hugging Face API base URL.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @flag --no-use-cache Do not use the cache layer on the interface API to speedup requests.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg text! Text with mask to fill
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @example Replace the value of [MASK] with the most likely word $ &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep jo Please install \e[32mjo\e[0m with \e[32mbrew install jo\e[0m or \e[32mapt install jo\e[0m
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fill-mask&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; inputs=&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_text&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_no_use_cache&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]]&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo -f &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) use_cache=false)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_wait_for_model&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]]&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo -f &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) wait_for_model=true)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;curl -sL &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_model&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Content-Type: application&#x2F;json&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Authorization: Bearer &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -d &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Since the default value of the &lt;code&gt;use_cache&lt;&#x2F;code&gt; option is set to &lt;code&gt;true&lt;&#x2F;code&gt; we use the &lt;code&gt;no-&lt;&#x2F;code&gt; prefix
+convention to indicate that we are actually setting its value to &lt;code&gt;false&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;If we want to see the body we are passing &lt;code&gt;curl&lt;&#x2F;code&gt; we can execute the command in &lt;code&gt;DEBUG&lt;&#x2F;code&gt; mode.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;DEBUG&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;huggingface.sh&lt;&#x2F;span&gt;&lt;span&gt; fill-mask fill-mask &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;The capital of France is [MASK]&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --no-use-cache --wait-for-model
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;rules&quot;&gt;Rules&lt;&#x2F;h3&gt;
+&lt;p&gt;Now that our script is getting more complex, it&#x27;s normal for us to forget all the options available
+for it, so calling for &lt;code&gt;help&lt;&#x2F;code&gt; is very common. By default, &lt;code&gt;rargs&lt;&#x2F;code&gt; will only allow you to call for
+the &lt;code&gt;help&lt;&#x2F;code&gt; output if you pass the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; option as the first argument of the script.&lt;&#x2F;p&gt;
+&lt;p&gt;For example, if we pass the &lt;code&gt;--help&lt;&#x2F;code&gt; option in any other place other than the first position we&#x27;ll
+get an error.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
+&lt;&#x2F;span&gt;&lt;span&gt;Invalid option: --help
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can change this behavior by setting the &lt;code&gt;no-first-option-help&lt;&#x2F;code&gt; rule.&lt;&#x2F;p&gt;
+&lt;p&gt;Just as with other features, we set rules at the &lt;code&gt;global&lt;&#x2F;code&gt; or &lt;code&gt;command&lt;&#x2F;code&gt; scope by appending the right
+comment decorator. In this case we need to use the &lt;code&gt;@rule&lt;&#x2F;code&gt; decorator plus the name of the rule we
+want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Call the Huggingface API through curl
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @rule no-first-option-help
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If we run the command once again we&#x27;ll get the expected behavior.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
+&lt;&#x2F;span&gt;&lt;span&gt;Fill Mask
+&lt;&#x2F;span&gt;&lt;span&gt;Tries to fill a hole with a missing word (token to be precise).
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion &lt;a name=&quot;conclusion&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Here&#x27;s the complete script:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Call the Huggingface API through curl
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew\e[0m or \e[32mapt-get\e[0m
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @env HUGGING_FACE_API_TOKEN! Please set your Hugging Face API token
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @rule no-first-option-help
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Fill Mask
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @help Tries to fill a hole with a missing word (token to be precise).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -m --model=bert-base-uncased Model to use.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -u --url=&amp;quot;https:&#x2F;&#x2F;api-inference.huggingface.co&#x2F;models&amp;quot; Hugging Face API base URL.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @flag --no-use-cache Do not use the cache layer on the interface API to speedup requests.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg text! Text with mask to fill
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @example Replace the value of [MASK] with the most likely word $ &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep jo Please install \e[32mjo\e[0m with your OS package manager
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fill-mask&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; inputs=&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_text&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_no_use_cache&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]]&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo -f &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) use_cache=false)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_wait_for_model&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]]&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;jo -f &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) wait_for_model=true)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;curl -sL &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_url&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_model&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Content-Type: application&#x2F;json&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -H &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Authorization: Bearer &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; \
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -d &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The previous examples showcases almost all of the most important &lt;code&gt;rargs&lt;&#x2F;code&gt; features. You can use it as
+a starting point to create your own scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;You can find more information about each of these features on their corresponding page in the docs.&lt;&#x2F;p&gt;
+&lt;p&gt;Happy scripting!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>FAQ</title>
+        <published>2021-05-01T19:30:00+00:00</published>
+        <updated>2021-05-01T19:30:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/help/faq/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/help/faq/</id>
+        
+        <content type="html">&lt;h2 id=&quot;what-is-the-rargs&quot;&gt;What is the Rargs?&lt;&#x2F;h2&gt;
+&lt;p&gt;Rargs is a Bash framework based on other tools like &lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.co&#x2F;&quot;&gt;Bashly&lt;&#x2F;a&gt; and
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;Argc&lt;&#x2F;a&gt; that aims to simplify the process of creating bash scripts
+that include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Good help messages.&lt;&#x2F;li&gt;
+&lt;li&gt;Good argument, flag, and option parsing.&lt;&#x2F;li&gt;
+&lt;li&gt;Good handling of environment variables.&lt;&#x2F;li&gt;
+&lt;li&gt;Good handling of script dependencies.&lt;&#x2F;li&gt;
+&lt;li&gt;Good suport for script sub-commands.&lt;&#x2F;li&gt;
+&lt;li&gt;Inline documentation.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;All &lt;code&gt;rargs&lt;&#x2F;code&gt; configuration is done in the script itself, as &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. Meaning, normal
+bash comments using &lt;code&gt;#&lt;&#x2F;code&gt; plus an &lt;code&gt; @&lt;&#x2F;code&gt; followed by a &lt;code&gt;tag&lt;&#x2F;code&gt;. For example, the &lt;code&gt;# @option&lt;&#x2F;code&gt; decorator
+will let you configure an option argument to be passed to the script of a sub-command.&lt;&#x2F;p&gt;
+&lt;p&gt;The idea is for the script documentation to live alongside the script itself, this making it easier
+to keep the documentation up. It&#x27;s very common for developers to forget to document scripts, that
+then become key parts of their infrastructure, but others are afraid to touch them or use them
+properly since it&#x27;s not evident to understand how it works.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;contact-the-creator&quot;&gt;Contact the creator?&lt;&#x2F;h2&gt;
+&lt;p&gt;Send &lt;em&gt;CloudBridgeUY&lt;&#x2F;em&gt; an E-mail:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;mailto:admin@cloudbridge.com.uy&quot;&gt;admin@cloudbridge.com.uy&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Code of Conduct</title>
+        <published>2021-05-01T18:20:00+00:00</published>
+        <updated>2021-05-01T18:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/contributing/code-of-conduct/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/contributing/code-of-conduct/</id>
+        
+        <content type="html">&lt;h2 id=&quot;our-pledge&quot;&gt;Our Pledge&lt;&#x2F;h2&gt;
+&lt;p&gt;We as members, contributors, and leaders pledge to make participation in our
+community a harassment-free experience for everyone, regardless of age, body
+size, visible or invisible disability, ethnicity, sex characteristics, gender
+identity and expression, level of experience, education, socio-economic status,
+nationality, personal appearance, race, caste, color, religion, or sexual identity
+and orientation.&lt;&#x2F;p&gt;
+&lt;p&gt;We pledge to act and interact in ways that contribute to an open, welcoming,
+diverse, inclusive, and healthy community.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;our-standards&quot;&gt;Our Standards&lt;&#x2F;h2&gt;
+&lt;p&gt;Examples of behavior that contributes to a positive environment for our
+community include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Demonstrating empathy and kindness toward other people&lt;&#x2F;li&gt;
+&lt;li&gt;Being respectful of differing opinions, viewpoints, and experiences&lt;&#x2F;li&gt;
+&lt;li&gt;Giving and gracefully accepting constructive feedback&lt;&#x2F;li&gt;
+&lt;li&gt;Accepting responsibility and apologizing to those affected by our mistakes,
+and learning from the experience&lt;&#x2F;li&gt;
+&lt;li&gt;Focusing on what is best not just for us as individuals, but for the
+overall community&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Examples of unacceptable behavior include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The use of sexualized language or imagery, and sexual attention or
+advances of any kind&lt;&#x2F;li&gt;
+&lt;li&gt;Trolling, insulting or derogatory comments, and personal or political attacks&lt;&#x2F;li&gt;
+&lt;li&gt;Public or private harassment&lt;&#x2F;li&gt;
+&lt;li&gt;Publishing others&#x27; private information, such as a physical or email
+address, without their explicit permission&lt;&#x2F;li&gt;
+&lt;li&gt;Other conduct which could reasonably be considered inappropriate in a
+professional setting&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;enforcement-responsibilities&quot;&gt;Enforcement Responsibilities&lt;&#x2F;h2&gt;
+&lt;p&gt;Community leaders are responsible for clarifying and enforcing our standards of
+acceptable behavior and will take appropriate and fair corrective action in
+response to any behavior that they deem inappropriate, threatening, offensive,
+or harmful.&lt;&#x2F;p&gt;
+&lt;p&gt;Community leaders have the right and responsibility to remove, edit, or reject
+comments, commits, code, wiki edits, issues, and other contributions that are
+not aligned to this Code of Conduct, and will communicate reasons for moderation
+decisions when appropriate.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;scope&quot;&gt;Scope&lt;&#x2F;h2&gt;
+&lt;p&gt;This Code of Conduct applies within all community spaces, and also applies when
+an individual is officially representing the community in public spaces.
+Examples of representing our community include using an official e-mail address,
+posting via an official social media account, or acting as an appointed
+representative at an online or offline event.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;enforcement&quot;&gt;Enforcement&lt;&#x2F;h2&gt;
+&lt;p&gt;Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported to the community leaders responsible for enforcement at
+&lt;a href=&quot;mailto:aaranxu@outlook.com&quot;&gt;aaranxu@outlook.com&lt;&#x2F;a&gt;.
+All complaints will be reviewed and investigated promptly and fairly.&lt;&#x2F;p&gt;
+&lt;p&gt;All community leaders are obligated to respect the privacy and security of the
+reporter of any incident.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;enforcement-guidelines&quot;&gt;Enforcement Guidelines&lt;&#x2F;h2&gt;
+&lt;p&gt;Community leaders will follow these Community Impact Guidelines in determining
+the consequences for any action they deem in violation of this Code of Conduct:&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-correction&quot;&gt;1. Correction&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Use of inappropriate language or other behavior deemed
+unprofessional or unwelcome in the community.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A private, written warning from community leaders, providing
+clarity around the nature of the violation and an explanation of why the
+behavior was inappropriate. A public apology may be requested.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-warning&quot;&gt;2. Warning&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A violation through a single incident or series
+of actions.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A warning with consequences for continued behavior. No
+interaction with the people involved, including unsolicited interaction with
+those enforcing the Code of Conduct, for a specified period of time. This
+includes avoiding interactions in community spaces as well as external channels
+like social media. Violating these terms may lead to a temporary or
+permanent ban.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;3-temporary-ban&quot;&gt;3. Temporary Ban&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A serious violation of community standards, including
+sustained inappropriate behavior.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A temporary ban from any sort of interaction or public
+communication with the community for a specified period of time. No public or
+private interaction with the people involved, including unsolicited interaction
+with those enforcing the Code of Conduct, is allowed during this period.
+Violating these terms may lead to a permanent ban.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;4-permanent-ban&quot;&gt;4. Permanent Ban&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Demonstrating a pattern of violation of community
+standards, including sustained inappropriate behavior,  harassment of an
+individual, or aggression toward or disparagement of classes of individuals.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A permanent ban from any sort of public interaction within
+the community.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;attribution&quot;&gt;Attribution&lt;&#x2F;h2&gt;
+&lt;p&gt;This Code of Conduct is adapted from the &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&quot;&gt;Contributor Covenant&lt;&#x2F;a&gt;,
+version 2.0, available at
+&lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Community Impact Guidelines were inspired by 
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;mozilla&#x2F;diversity&quot;&gt;Mozilla&#x27;s code of conduct enforcement ladder&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;For answers to common questions about this code of conduct, see the FAQ at
+&lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&lt;&#x2F;a&gt;. Translations are available 
+at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How to Contribute</title>
+        <published>2021-05-01T18:10:00+00:00</published>
+        <updated>2021-05-01T18:10:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/contributing/how-to-contribute/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/contributing/how-to-contribute/</id>
+        
+        <content type="html">&lt;p&gt;👉 Make sure to read the &lt;a href=&quot;..&#x2F;code-of-conduct&#x2F;&quot;&gt;Code of Conduct&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;contribute-to-doks&quot;&gt;Contribute to Doks&lt;&#x2F;h2&gt;
+&lt;p&gt;👉 The Rargs code lives in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;code&gt;rargs&lt;&#x2F;code&gt; repository&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;guides.github.com&#x2F;introduction&#x2F;flow&#x2F;&quot;&gt;GitHub flow&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;www.conventionalcommits.org&#x2F;en&#x2F;v1.0.0&#x2F;&quot;&gt;Conventional Commits Specification&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;create-an-issue&quot;&gt;Create an issue&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;issues&#x2F;new?template=bug-report---.md&quot;&gt;Bug report&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;issues&#x2F;new?template=feature-request---.md&quot;&gt;Feature request&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;improve-documentation&quot;&gt;Improve documentation&lt;&#x2F;h2&gt;
+&lt;p&gt;👉 The documentation lives in &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;tree&#x2F;master&#x2F;content&#x2F;docs&quot;&gt;&lt;code&gt;.&#x2F;content&#x2F;docs&#x2F;&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;
+of the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;code&gt;rargs&lt;&#x2F;code&gt; repository&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;guides.github.com&#x2F;introduction&#x2F;flow&#x2F;&quot;&gt;GitHub flow&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;www.conventionalcommits.org&#x2F;en&#x2F;v1.0.0&#x2F;&quot;&gt;Conventional Commits Specification&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Guzmán Monné</title>
+        <published>2021-04-01T08:50:45+00:00</published>
+        <updated>2021-04-01T08:50:45+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/authors/guzmonne/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/authors/guzmonne/</id>
+        
+        <content type="html">&lt;p&gt;Creator of &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;guzmonne&quot;&gt;@guzmonne&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

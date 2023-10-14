@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" as="font" href="https://rargs.cloudbridge.uy/fonts/vendor/jost/jost-v4-latin-regular.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="https://rargs.cloudbridge.uy/fonts/vendor/jost/jost-v4-latin-700.woff2"  type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://rargs.cloudbridge.uy/main.css">
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+  
+  
+  
+    
+  
+  
+  
+  
+    
+  
+  
+  
+
+
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+
+	
+
+
+	
+
+<title>Quick Start | Rargs</title>
+<meta name="description" content="One page summary of how to create your first `rargs` script.">
+<link rel="canonical" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  
+    <meta name="twitter:image" content="https://rargs.cloudbridge.uy/doks.png">
+  
+  <meta name="twitter:title" content="Quick Start">
+  <meta name="twitter:description" content="One page summary of how to create your first `rargs` script.">
+  <meta name="twitter:site" content="@cloudbridgeuy">
+  <meta name="twitter:creator" content="@cloudbridgeuy">
+  
+  <meta property="og:title" content="Quick Start">
+  <meta property="og:description" content="One page summary of how to create your first `rargs` script.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/">
+
+  
+    <meta property="og:image" content="https://rargs.cloudbridge.uy/doks.png">
+  
+
+  <meta property="og:updated_time" content="2023-09-22T08:20:00+00:00">
+  <meta property="og:site_name" content="Quick Start">
+
+  
+
+  
+
+  
+  <meta property="article:publisher" content="https://www.facebook.com/cloudbridgeuy">
+  <meta property="article:author" content="https://www.facebook.com/cloudbridgeuy">
+  <meta property="og:locale" content="en_US">
+
+
+
+
+
+  
+
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+          {
+            "@type": "ListItem",
+            "position":  1 ,
+            "name": "Home",
+            "item": "https://rargs.cloudbridge.uy/"
+          },
+          
+          
+          {
+            "@type": "ListItem",
+            "position":  2 ,
+            "name": "Docs",
+            "item": "https://rargs.cloudbridge.uy/docs/"
+          },
+        
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+          
+          {
+            "@type": "ListItem",
+            "position":  3 ,
+            "name": "Getting Started",
+            "item": "https://rargs.cloudbridge.uy/docs/getting-started/"
+          },
+        
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+          
+          {
+            "@type": "ListItem",
+            "position":  4 ,
+            "name": "Quick Start",
+            "item": "https://rargs.cloudbridge.uy/docs/getting-started/quick-start/"
+          },
+        
+      
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="theme-color" content="#fff">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://rargs.cloudbridge.uy/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://rargs.cloudbridge.uy/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://rargs.cloudbridge.uy/favicon-16x16.png">
+  
+    <link rel="manifest" href="https://rargs.cloudbridge.uy/site.webmanifest" crossorigin>
+  
+
+
+  
+
+</head>
+
+  
+
+<body class="docs single">
+  
+  
+  
+  
+<div class="header-bar fixed-top"></div>
+<header class="navbar fixed-top navbar-expand-md navbar-light">
+	<div class="container">
+		<input class="menu-btn order-0" type="checkbox" id="menu-btn">
+		<label class="menu-icon d-md-none" for="menu-btn"><span class="navicon"></span></label>
+		<a class="navbar-brand order-1 order-md-0 me-auto" href="https://rargs.cloudbridge.uy">Rargs</a>
+		<button id="mode" class="btn btn-link order-2 order-md-4" type="button" aria-label="Toggle mode">
+			<span class="toggle-dark"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+			<span class="toggle-light"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
+		</button>
+		<ul class="navbar-nav fork-me order-3 order-md-5">
+			
+				
+					<li class="nav-item">
+						<a class="nav-link" href="https://twitter.com/cloudbridgeuy"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg><span class="ms-2 visually-hidden">Twitter</span></a>
+					</li>
+				
+					<li class="nav-item">
+						<a class="nav-link" href="https://github.com/cloudbridgeuy/adidoks"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg><span class="ms-2 visually-hidden">GitHub</span></a>
+					</li>
+				
+			
+		</ul>
+		<div class="collapse navbar-collapse order-4 order-md-1">
+			<ul class="navbar-nav main-nav me-auto order-5 order-md-2">
+				
+					
+				
+				
+				
+					
+						<li class="nav-item docs active">
+							<a class="nav-link" href="https://rargs.cloudbridge.uy/docs/getting-started/introduction/">Docs</a>
+						</li>
+					
+						<li class="nav-item">
+							<a class="nav-link" href="https://rargs.cloudbridge.uy/blog/">Blog</a>
+						</li>
+					
+				
+			</ul>
+			<div class="break order-6 d-md-none"></div>
+			
+				<form class="navbar-form flex-grow-1 order-7 order-md-3">
+					<input id="userinput" class="form-control is-search" type="search" placeholder="Search docs..."
+						aria-label="Search docs..." autocomplete="off">
+					<div id="suggestions" class="shadow bg-white rounded"></div>
+				</form>
+			
+		</div>
+	</div>
+</header>
+
+
+
+  
+<div class="wrap container" role="document">
+  <div class="content">
+    <div class="row flex-xl-nowrap">
+	  
+<div class="col-lg-5 col-xl-4 docs-sidebar">
+	<nav class="docs-links" aria-label="Main navigation">
+			
+			
+			
+			
+					
+					
+					
+							<h3>Getting Started</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/getting-started/introduction/">Introduction</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/getting-started/installation/">Installation</a></li>
+							                           
+									<li><a class="docs-link active" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/">Quick Start</a></li>
+							
+					</ul>
+					
+					
+					
+					
+							<h3>Contributing</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/contributing/how-to-contribute/">How to Contribute</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/contributing/code-of-conduct/">Code of Conduct</a></li>
+							
+					</ul>
+					
+					
+					
+					
+							<h3>Help</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/help/faq/">FAQ</a></li>
+							
+					</ul>
+					
+					
+			
+	</nav>
+</div>
+
+	  
+  
+  <nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+  	<div class="page-links">
+  			<h3>On this page</h3>
+  			<nav id="TableOfContents">
+  					<ul>
+  							
+  							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#table-of-contents">Table of Contents</a></li>
+  							
+  							
+  							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#requirements">Requirements </a></li>
+  							
+  							
+  							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#your-first-script">Your First Script </a></li>
+  							
+  									<ul>
+  											
+  											<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#something-more-complex">Something More Complex </a></li>
+  											
+  											<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#rules">Rules</a></li>
+  											
+  									</ul>
+  							
+  							
+  							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#conclusion">Conclusion </a></li>
+  							
+  							
+  					</ul>
+  			</nav>
+  	</div>
+  </nav>
+  
+
+      <main class="docs-content col-lg-11 col-xl-9">
+        <h1>Quick Start</h1>
+        <p class="lead">One page summary of how to start your first `rargs` script.</p>
+        <h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#requirements">Requirements</a></li>
+<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#your-first-script">Your First Script</a></li>
+<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#something-more-complex">Something More Complex</a></li>
+<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#rules">Rules</a></li>
+<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#conclusion">Conclusion</a></li>
+</ol>
+<h2 id="requirements">Requirements <a name="requirements"></a></h2>
+<p>The only requirements to run <code>rargs</code> are <code>bash</code> version 4 and the <code>rargs</code> binary. You may try to run
+the resulting scripts on a lower version of <code>bash</code>, but there's no guarantee that they will work.</p>
+<h2 id="your-first-script">Your First Script <a name="your-first-script"></a></h2>
+<p><code>rargs</code> is heavily inspired by two other <code>bash</code> frameworks: <code>bashly</code>, and <code>argc</code>. The latter uses
+comments with a <code>JsDoc</code> inspired syntax to add functionality to the scripts at runtime. This syntax,
+known as a <code>comment decorator</code>, is a normal bash comment followed by an <code> @</code> sign and a
+tag. It's how the <code>rargs</code> parser identifies configuration.</p>
+<p>To utilize this, you need to run the <code>argc</code> command and pass the output to an <code>eval</code> call somewhere
+in your script. <code>rargs</code> uses the same comment decorators, and adds a few of its own, but instead of
+requiring you to invoke it at runtime, you use the <code>rargs</code> binary to build your script. <code>rargs</code>
+takes every decorator and transforms it into <code>bash</code>, while rearranging your functions along the way.
+The result is a new <code>bash</code> script with all your logic, plus additional functionality like argument
+and option parsing, <code>--help</code> documentation, and more.</p>
+<p>The easiest script you can make is one that only outputs its <code>help</code> message:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name empty
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Empty script
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span></code></pre>
+<blockquote>
+<p>You can use any <code>shebang</code> you want.</p>
+</blockquote>
+<p>Assume our current directory looks like this, with empty.sh residing in the src directory:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>📂 .
+</span><span>├── 📂 bin
+</span><span>└── 📂 src
+</span><span>    └── empty.sh
+</span></code></pre>
+<p>Compile this script with rargs and execute it.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># Compile the file to ./bin/empty.sh
+</span><span style="color:#bf616a;">rargs</span><span> build</span><span style="color:#bf616a;"> -d</span><span> ./bin src/empty.sh
+</span><span>
+</span><span style="color:#65737e;"># Execute it
+</span><span style="color:#bf616a;">./bin/empty -h
+</span></code></pre>
+<blockquote>
+<p>On Unix-based systems, rargs tries to set the build file as executable.</p>
+</blockquote>
+<p>If you try to run it, you'll get an error asking you to configure a <code>root</code> command or a sub-command
+function. You can use <code>root</code> commands if you don't wan to support multiple sub-commands. For
+example, we can extend our previous script like this:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name emtpy
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Empty script
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span><span>
+</span><span style="color:#8fa1b3;">root</span><span>() {
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Hello, World!</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>After compiling and running it we'll get <code>Hello, World!</code> printed to <code>stdout</code> as expected. And if we
+run it with the <code>-h|--help</code> or <code>-v|--version</code> option we'll get this:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ ./empty.sh --help
+</span><span>Empty script
+</span><span>
+</span><span>Usage:
+</span><span>  emtpy [OPTIONS]
+</span><span>  emtpy -h|--help
+</span><span>  emtpy -v|--version
+</span><span>
+</span><span>Options:
+</span><span>  -h --help
+</span><span>    Print help
+</span><span>  -v --version
+</span><span>    Print version
+</span><span>
+</span><span>$ ./empty.sh --version
+</span><span>0.0.1
+</span></code></pre>
+<p>We can see how <code>rargs</code> decorated our simple function with additional functionalities.</p>
+<blockquote>
+<p>If you want to see exactly which commands <code>rargs</code> added on your script, you can check the built
+script, or run it with the <code>DEBUG</code> environment variable set to <code>true</code>.</p>
+</blockquote>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ DEBUG=true ./empty.sh
+</span><span>+ set -e
+</span><span>+ run
+</span><span>+ deps=()
+</span><span>+ declare -A deps
+</span><span>+ input=()
+</span><span>+ declare -a input
+</span><span>+ normalize_input
+</span><span>+ local arg flags
+</span><span>+ [[ 0 -gt 0 ]]
+</span><span>+ parse_arguments
+</span><span>+ [[ 0 -gt 0 ]]
+</span><span>+ action=
+</span><span>+ case $action in
+</span><span>+ action=root
+</span><span>+ root
+</span><span>+ parse_root
+</span><span>+ [[ 0 -gt 0 ]]
+</span><span>+ echo &#39;Hello, World!&#39;
+</span><span>Hello, World!
+</span></code></pre>
+<h3 id="something-more-complex">Something More Complex <a name="something-more-complex"></a></h3>
+<p>Let's do something more complex. We'll use most of the features supported by <code>rargs</code> on the
+following example. We won't get too deep on how they work on this section. You can check their
+specific parts of the documentation for more information.</p>
+<p>We want to make a script that interacts with the HuggingFace API. So let's start by creating a new
+script called <code>huggingface.sh</code> and add our initial <code>metadata</code>.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name huggingface
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Call the Huggingface API through curl
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span></code></pre>
+<p>Our script is going to require <code>curl</code> as a tight dependency and it will require us to configure the
+<code>HUGGING_FACE_API_TOKEN</code> environment variable with our account secret. <code>rargs</code> can make sure that we
+have both of these values before running the script by setting the <code>@dep</code> and <code>@env</code> decorators.</p>
+<blockquote>
+<p>Decorators can be set at the <code>root</code> scope or per sub-command. Sub-commands will inherit <code>root</code>
+configuration by default.</p>
+</blockquote>
+<p>Let's add these decorators to our script.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name huggingface
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Call the Huggingface API through curl
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span><span style="color:#65737e;"># @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+</span><span style="color:#65737e;"># @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
+</span></code></pre>
+<blockquote>
+<p>You can decorate your help message with colors.</p>
+</blockquote>
+<p><strong>Note:</strong> You can use <code>$()</code> or inverted quotes &quot;`&quot; inside the description and that code will be
+invoked.</p>
+<p>With these changes the <code>script</code> won't execute unless <code>curl</code> is installed in the system and the
+Huggingface API is set.</p>
+<p>Now, let's add our first sub-command. Given that there are multiple uses for LLM, we wan't to able
+to navigate to the right usage with our API. For example, let's say we wanted to use the
+<code>bert-base-uncased</code> model to find a word to fill a match. Is typically used to showcase the behavior
+of these models and it's fun to use.</p>
+<p>We'll start by creating a function called <code>fill-mask</code> and decorate it with additional options and
+arguments that we'll provide at runtime to override its behavior.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># @cmd Fill Mask
+</span><span style="color:#65737e;"># @help Tries to fill a hole with a missing word (token to be precise).
+</span><span style="color:#65737e;"># @option -m --model=bert-base-uncased Model to use.
+</span><span style="color:#65737e;"># @option -u --url=&quot;https://api-inference.huggingface.co/models&quot; Hugging Face API base URL.
+</span><span style="color:#65737e;"># @arg text! Text with mask to fill
+</span><span style="color:#65737e;"># @example Replace the value of [MASK] with the most likely word $ &quot;The capital of France is [MASK]&quot;
+</span><span style="color:#8fa1b3;">fill-mask</span><span>() {
+</span><span>  </span><span style="color:#bf616a;">curl -sL </span><span>&quot;$</span><span style="color:#bf616a;">rargs_url</span><span style="color:#a3be8c;">/</span><span>$</span><span style="color:#bf616a;">rargs_model</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Content-Type: application/json</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Authorization: Bearer </span><span>$</span><span style="color:#bf616a;">HUGGING_FACE_API_TOKEN</span><span>&quot; \
+</span><span style="color:#bf616a;">    -d </span><span>&quot;</span><span style="color:#a3be8c;">{</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">inputs</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">: </span><span style="color:#96b5b4;">\&quot;</span><span>$</span><span style="color:#bf616a;">rargs_text</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>After compiling it, run it like this and get your output:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ ./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot;
+</span><span>[
+</span><span>  {
+</span><span>    &quot;score&quot;: 0.7153865694999695,
+</span><span>    &quot;token&quot;: 1012,
+</span><span>    &quot;token_str&quot;: &quot;.&quot;,
+</span><span>    &quot;sequence&quot;: &quot;the capital of france is.&quot;
+</span><span>  },
+</span><span>  {
+</span><span>    &quot;score&quot;: 0.2526995837688446,
+</span><span>    &quot;token&quot;: 1025,
+</span><span>    &quot;token_str&quot;: &quot;;&quot;,
+</span><span>    &quot;sequence&quot;: &quot;the capital of france is ;&quot;
+</span><span>  },
+</span><span>  {
+</span><span>    &quot;score&quot;: 0.028098540380597115,
+</span><span>    &quot;token&quot;: 1064,
+</span><span>    &quot;token_str&quot;: &quot;|&quot;,
+</span><span>    &quot;sequence&quot;: &quot;the capital of france is |&quot;
+</span><span>  },
+</span><span>  {
+</span><span>    &quot;score&quot;: 0.0020544484723359346,
+</span><span>    &quot;token&quot;: 999,
+</span><span>    &quot;token_str&quot;: &quot;!&quot;,
+</span><span>    &quot;sequence&quot;: &quot;the capital of france is!&quot;
+</span><span>  },
+</span><span>  {
+</span><span>    &quot;score&quot;: 0.001290082116611302,
+</span><span>    &quot;token&quot;: 1029,
+</span><span>    &quot;token_str&quot;: &quot;?&quot;,
+</span><span>    &quot;sequence&quot;: &quot;the capital of france is?&quot;
+</span><span>  }
+</span><span>]
+</span></code></pre>
+<blockquote>
+<p>To get the output in pretty-printed JSON pipe it to <code>jq</code> with <code>| jq</code>, so it's not necessary to add
+this to the sub-command.</p>
+</blockquote>
+<p>We also can get a nice <code>help</code> message using the <code>--help</code> flag.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Fill Mask
+</span><span>Tries to fill a hole with a missing word (token to be precise).
+</span><span>
+</span><span>Usage:
+</span><span>  fill-mask [OPTIONS] TEXT
+</span><span>  fill-mask -h|--help
+</span><span>
+</span><span>Examples:
+</span><span>  fill-mask &quot;The capital of France is [MASK]&quot;
+</span><span>    Replace the value of [MASK] with the most likely word
+</span><span>
+</span><span>Arguments:
+</span><span>  TEXT
+</span><span>    Text with mask to fill
+</span><span>    [@required]
+</span><span>
+</span><span>Options:
+</span><span>  -m --model [&lt;MODEL&gt;]
+</span><span>    Model to use.
+</span><span>    [@default bert-base-uncased]
+</span><span>  -u --url [&lt;URL&gt;]
+</span><span>    Hugging Face API base URL.
+</span><span>    [@default https://api-inference.huggingface.co/models]
+</span><span>  -h --help
+</span><span>    Print help
+</span></code></pre>
+<p>There are some additional options that this task can consume so let's add them. Also, to help us
+craft the required <code>JSON</code> object we'll use a tool called <code>jo</code>.</p>
+<blockquote>
+<p>We'll also add <code>jo</code> as a local dependency required when calling the <code>fill-mask</code> command.</p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># @cmd Fill Mask
+</span><span style="color:#65737e;"># @help Tries to fill a hole with a missing word (token to be precise).
+</span><span style="color:#65737e;"># @option -m --model=bert-base-uncased Model to use.
+</span><span style="color:#65737e;"># @option -u --url=&quot;https://api-inference.huggingface.co/models&quot; Hugging Face API base URL.
+</span><span style="color:#65737e;"># @flag --no-use-cache Do not use the cache layer on the interface API to speedup requests.
+</span><span style="color:#65737e;"># @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
+</span><span style="color:#65737e;"># @arg text! Text with mask to fill
+</span><span style="color:#65737e;"># @example Replace the value of [MASK] with the most likely word $ &quot;The capital of France is [MASK]&quot;
+</span><span style="color:#65737e;"># @dep jo Please install \e[32mjo\e[0m with \e[32mbrew install jo\e[0m or \e[32mapt install jo\e[0m
+</span><span style="color:#8fa1b3;">fill-mask</span><span>() {
+</span><span>  </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo</span><span style="color:#a3be8c;"> inputs=</span><span>&quot;$</span><span style="color:#bf616a;">rargs_text</span><span>&quot;</span><span style="color:#a3be8c;">)</span><span>&quot;
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">[[ </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">rargs_no_use_cache</span><span>&quot; </span><span style="color:#96b5b4;">]]</span><span>; </span><span style="color:#b48ead;">then
+</span><span>    </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo -f </span><span>&lt;</span><span style="color:#a3be8c;">(</span><span style="color:#96b5b4;">echo </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;</span><span style="color:#a3be8c;">) use_cache=false)</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">fi
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">[[ </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">rargs_wait_for_model</span><span>&quot; </span><span style="color:#96b5b4;">]]</span><span>; </span><span style="color:#b48ead;">then
+</span><span>    </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo -f </span><span>&lt;</span><span style="color:#a3be8c;">(</span><span style="color:#96b5b4;">echo </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;</span><span style="color:#a3be8c;">) wait_for_model=true)</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">fi
+</span><span>
+</span><span>  </span><span style="color:#bf616a;">curl -sL </span><span>&quot;$</span><span style="color:#bf616a;">rargs_url</span><span style="color:#a3be8c;">/</span><span>$</span><span style="color:#bf616a;">rargs_model</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Content-Type: application/json</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Authorization: Bearer </span><span>$</span><span style="color:#bf616a;">HUGGING_FACE_API_TOKEN</span><span>&quot; \
+</span><span style="color:#bf616a;">    -d </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<blockquote>
+<p>Since the default value of the <code>use_cache</code> option is set to <code>true</code> we use the <code>no-</code> prefix
+convention to indicate that we are actually setting its value to <code>false</code>.</p>
+</blockquote>
+<p>If we want to see the body we are passing <code>curl</code> we can execute the command in <code>DEBUG</code> mode.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">DEBUG</span><span>=</span><span style="color:#a3be8c;">1 </span><span style="color:#bf616a;">./huggingface.sh</span><span> fill-mask fill-mask &quot;</span><span style="color:#a3be8c;">The capital of France is [MASK]</span><span>&quot;</span><span style="color:#bf616a;"> --no-use-cache --wait-for-model
+</span></code></pre>
+<h3 id="rules">Rules</h3>
+<p>Now that our script is getting more complex, it's normal for us to forget all the options available
+for it, so calling for <code>help</code> is very common. By default, <code>rargs</code> will only allow you to call for
+the <code>help</code> output if you pass the <code>-h|--help</code> option as the first argument of the script.</p>
+<p>For example, if we pass the <code>--help</code> option in any other place other than the first position we'll
+get an error.</p>
+<pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
+</span><span>Invalid option: --help
+</span></code></pre>
+<p>We can change this behavior by setting the <code>no-first-option-help</code> rule.</p>
+<p>Just as with other features, we set rules at the <code>global</code> or <code>command</code> scope by appending the right
+comment decorator. In this case we need to use the <code>@rule</code> decorator plus the name of the rule we
+want to activate. Let's add it at the root scope.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name huggingface
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Call the Huggingface API through curl
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span><span style="color:#65737e;"># @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+</span><span style="color:#65737e;"># @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
+</span><span style="color:#65737e;"># @rule no-first-option-help
+</span></code></pre>
+<p>If we run the command once again we'll get the expected behavior.</p>
+<pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
+</span><span>Fill Mask
+</span><span>Tries to fill a hole with a missing word (token to be precise).
+</span><span>
+</span><span>...
+</span></code></pre>
+<h2 id="conclusion">Conclusion <a name="conclusion"></a></h2>
+<p>Here's the complete script:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
+</span><span style="color:#65737e;"># @name huggingface
+</span><span style="color:#65737e;"># @version 0.0.1
+</span><span style="color:#65737e;"># @description Call the Huggingface API through curl
+</span><span style="color:#65737e;"># @author @cloudbridgeuy
+</span><span style="color:#65737e;"># @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew\e[0m or \e[32mapt-get\e[0m
+</span><span style="color:#65737e;"># @env HUGGING_FACE_API_TOKEN! Please set your Hugging Face API token
+</span><span style="color:#65737e;"># @rule no-first-option-help
+</span><span>
+</span><span style="color:#65737e;"># @cmd Fill Mask
+</span><span style="color:#65737e;"># @help Tries to fill a hole with a missing word (token to be precise).
+</span><span style="color:#65737e;"># @option -m --model=bert-base-uncased Model to use.
+</span><span style="color:#65737e;"># @option -u --url=&quot;https://api-inference.huggingface.co/models&quot; Hugging Face API base URL.
+</span><span style="color:#65737e;"># @flag --no-use-cache Do not use the cache layer on the interface API to speedup requests.
+</span><span style="color:#65737e;"># @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
+</span><span style="color:#65737e;"># @arg text! Text with mask to fill
+</span><span style="color:#65737e;"># @example Replace the value of [MASK] with the most likely word $ &quot;The capital of France is [MASK]&quot;
+</span><span style="color:#65737e;"># @dep jo Please install \e[32mjo\e[0m with your OS package manager
+</span><span style="color:#8fa1b3;">fill-mask</span><span>() {
+</span><span>  </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo</span><span style="color:#a3be8c;"> inputs=</span><span>&quot;$</span><span style="color:#bf616a;">rargs_text</span><span>&quot;</span><span style="color:#a3be8c;">)</span><span>&quot;
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">[[ </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">rargs_no_use_cache</span><span>&quot; </span><span style="color:#96b5b4;">]]</span><span>; </span><span style="color:#b48ead;">then
+</span><span>    </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo -f </span><span>&lt;</span><span style="color:#a3be8c;">(</span><span style="color:#96b5b4;">echo </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;</span><span style="color:#a3be8c;">) use_cache=false)</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">fi
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">[[ </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">rargs_wait_for_model</span><span>&quot; </span><span style="color:#96b5b4;">]]</span><span>; </span><span style="color:#b48ead;">then
+</span><span>    </span><span style="color:#bf616a;">body</span><span>=&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">jo -f </span><span>&lt;</span><span style="color:#a3be8c;">(</span><span style="color:#96b5b4;">echo </span><span style="color:#bf616a;">-n </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;</span><span style="color:#a3be8c;">) wait_for_model=true)</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">fi
+</span><span>
+</span><span>  </span><span style="color:#bf616a;">curl -sL </span><span>&quot;$</span><span style="color:#bf616a;">rargs_url</span><span style="color:#a3be8c;">/</span><span>$</span><span style="color:#bf616a;">rargs_model</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Content-Type: application/json</span><span>&quot; \
+</span><span style="color:#bf616a;">    -H </span><span>&quot;</span><span style="color:#a3be8c;">Authorization: Bearer </span><span>$</span><span style="color:#bf616a;">HUGGING_FACE_API_TOKEN</span><span>&quot; \
+</span><span style="color:#bf616a;">    -d </span><span>&quot;$</span><span style="color:#bf616a;">body</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>The previous examples showcases almost all of the most important <code>rargs</code> features. You can use it as
+a starting point to create your own scripts.</p>
+<p>You can find more information about each of these features on their corresponding page in the docs.</p>
+<p>Happy scripting!</p>
+
+        
+        
+<div class="docs-navigation d-flex justify-content-between">
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+      
+      
+        
+          
+          
+          <a class="ms-auto" href="https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;contributing&#x2F;how-to-contribute&#x2F;">
+            <div class="card my-1">
+              <div class="card-body py-2">
+                How to Contribute &rarr;
+              </div>
+            </div>
+          </a>
+          
+          
+          
+        
+      
+    
+      
+      
+        
+      
+    
+  
+</div>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+
+  
+    
+<footer class="footer text-muted">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 order-last order-lg-first">
+				<ul class="list-inline">
+					
+						<li class="list-inline-item">Powered by <a href="https://www.getzola.org/">Zola</a>, and <a href="https://github.com/aaranxu/adidoks">AdiDoks</a></li>
+					
+				</ul>
+			</div>
+			<div class="col-lg-8 order-first order-lg-last text-lg-end">
+				<ul class="list-inline">
+					
+						
+							<li class="list-inline-item"><a href="https://rargs.cloudbridge.uy/privacy-policy/">Privacy</a></li>
+						
+							<li class="list-inline-item"><a href="https://rargs.cloudbridge.uy/docs/contributing/code-of-conduct/">Code of Conduct</a></li>
+						
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+
+  
+
+  
+<script type="text/javascript" src="https://rargs.cloudbridge.uy/js/main.js" defer></script>
+
+  <script type="text/javascript" src="https://rargs.cloudbridge.uy/plugins/elasticlunr.min.js" defer></script>
+  <script type="text/javascript" src="https://rargs.cloudbridge.uy/search_index.en.js" defer></script>
+  <script type="text/javascript" src="https://rargs.cloudbridge.uy/js/search.js" defer></script>
+
+  
+</body>
+</html>
