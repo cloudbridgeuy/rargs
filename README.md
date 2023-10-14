@@ -54,26 +54,32 @@ chmod +x rargs
 Here is a quick example:
 
 ```bash
-# Include rargs library
-source rargs.sh
-
-# Code usage example
+rargc -- build -d ./bin ./src/script.sh
 ```
 
 ### Command Line Arguments
 
-```bash
-# Use --help to list all options
-your_script.sh --help
+```txt
+A bash framework for managing your bash scripts
+
+Usage: rargs [COMMAND]
+
+Commands:
+  tree   Output a tree of all the commands available based on the script root
+  build  Build the script
+  help   Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
 ```
 
 ## Examples :bulb:
 
-Example use-cases can be found under the `/examples` directory.
+Example use-cases can be found under the `/crates/rargs/examples` directory.
 
 ## API Reference :book:
 
-Documentation can be found [here](your-documentation-link).
+Documentation can be found [here](rargs.cloudbridge.uy).
 
 ## Contributing :heart:
 
