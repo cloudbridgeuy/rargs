@@ -113,7 +113,7 @@ and option parsing, &lt;code&gt;--help&lt;&#x2F;code&gt; documentation, and more
 &lt;p&gt;You can use any &lt;code&gt;shebang&lt;&#x2F;code&gt; you want.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Assume our current directory looks like this, with empty.sh residing in the src directory:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;📂 .
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;📂 .
 &lt;&#x2F;span&gt;&lt;span&gt;├── 📂 bin
 &lt;&#x2F;span&gt;&lt;span&gt;└── 📂 src
 &lt;&#x2F;span&gt;&lt;span&gt;    └── empty.sh
@@ -143,7 +143,7 @@ example, we can extend our previous script like this:&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;After compiling and running it we&#x27;ll get &lt;code&gt;Hello, World!&lt;&#x2F;code&gt; printed to &lt;code&gt;stdout&lt;&#x2F;code&gt; as expected. And if we
 run it with the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; or &lt;code&gt;-v|--version&lt;&#x2F;code&gt; option we&#x27;ll get this:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ .&#x2F;empty.sh --help
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;$ .&#x2F;empty.sh --help
 &lt;&#x2F;span&gt;&lt;span&gt;Empty script
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;Usage:
@@ -165,7 +165,7 @@ run it with the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; or &lt;code&gt;-v|--vers
 &lt;p&gt;If you want to see exactly which commands &lt;code&gt;rargs&lt;&#x2F;code&gt; added on your script, you can check the built
 script, or run it with the &lt;code&gt;DEBUG&lt;&#x2F;code&gt; environment variable set to &lt;code&gt;true&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ DEBUG=true .&#x2F;empty.sh
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;$ DEBUG=true .&#x2F;empty.sh
 &lt;&#x2F;span&gt;&lt;span&gt;+ set -e
 &lt;&#x2F;span&gt;&lt;span&gt;+ run
 &lt;&#x2F;span&gt;&lt;span&gt;+ deps=()
@@ -241,7 +241,7 @@ arguments that we&#x27;ll provide at runtime to override its behavior.&lt;&#x2F;
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;After compiling it, run it like this and get your output:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ .&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;$ .&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;[
 &lt;&#x2F;span&gt;&lt;span&gt;  {
 &lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;score&amp;quot;: 0.7153865694999695,
@@ -280,7 +280,7 @@ arguments that we&#x27;ll provide at runtime to override its behavior.&lt;&#x2F;
 this to the sub-command.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;We also can get a nice &lt;code&gt;help&lt;&#x2F;code&gt; message using the &lt;code&gt;--help&lt;&#x2F;code&gt; flag.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;Fill Mask
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;Fill Mask
 &lt;&#x2F;span&gt;&lt;span&gt;Tries to fill a hole with a missing word (token to be precise).
 &lt;&#x2F;span&gt;&lt;span&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;Usage:
@@ -350,7 +350,7 @@ for it, so calling for &lt;code&gt;help&lt;&#x2F;code&gt; is very common. By def
 the &lt;code&gt;help&lt;&#x2F;code&gt; output if you pass the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; option as the first argument of the script.&lt;&#x2F;p&gt;
 &lt;p&gt;For example, if we pass the &lt;code&gt;--help&lt;&#x2F;code&gt; option in any other place other than the first position we&#x27;ll
 get an error.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
 &lt;&#x2F;span&gt;&lt;span&gt;Invalid option: --help
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;We can change this behavior by setting the &lt;code&gt;no-first-option-help&lt;&#x2F;code&gt; rule.&lt;&#x2F;p&gt;
@@ -367,7 +367,7 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @rule no-first-option-help
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;If we run the command once again we&#x27;ll get the expected behavior.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
 &lt;&#x2F;span&gt;&lt;span&gt;Fill Mask
 &lt;&#x2F;span&gt;&lt;span&gt;Tries to fill a hole with a missing word (token to be precise).
 &lt;&#x2F;span&gt;&lt;span&gt;

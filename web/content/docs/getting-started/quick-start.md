@@ -55,7 +55,7 @@ The easiest script you can make is one that only outputs its `help` message:
 
 Assume our current directory looks like this, with empty.sh residing in the src directory:
 
-```txt
+```
 📂 .
 ├── 📂 bin
 └── 📂 src
@@ -93,7 +93,7 @@ root() {
 After compiling and running it we'll get `Hello, World!` printed to `stdout` as expected. And if we
 run it with the `-h|--help` or `-v|--version` option we'll get this:
 
-```txt
+```
 $ ./empty.sh --help
 Empty script
 
@@ -117,7 +117,7 @@ We can see how `rargs` decorated our simple function with additional functionali
 > If you want to see exactly which commands `rargs` added on your script, you can check the built
 > script, or run it with the `DEBUG` environment variable set to `true`.
 
-```txt
+```
 $ DEBUG=true ./empty.sh
 + set -e
 + run
@@ -209,7 +209,7 @@ fill-mask() {
 
 After compiling it, run it like this and get your output:
 
-```txt
+```
 $ ./huggingface.sh fill-mask "The capital of France is [MASK]"
 [
   {
@@ -250,7 +250,7 @@ $ ./huggingface.sh fill-mask "The capital of France is [MASK]"
 
 We also can get a nice `help` message using the `--help` flag.
 
-```txt
+```
 Fill Mask
 Tries to fill a hole with a missing word (token to be precise).
 
@@ -329,7 +329,7 @@ the `help` output if you pass the `-h|--help` option as the first argument of th
 For example, if we pass the `--help` option in any other place other than the first position we'll
 get an error.
 
-```text
+```
 ./huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model --help
 Invalid option: --help
 ```
@@ -353,7 +353,7 @@ want to activate. Let's add it at the root scope.
 
 If we run the command once again we'll get the expected behavior.
 
-```text
+```
 ./huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model --help
 Fill Mask
 Tries to fill a hole with a missing word (token to be precise).

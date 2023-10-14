@@ -370,7 +370,7 @@ and option parsing, <code>--help</code> documentation, and more.</p>
 <p>You can use any <code>shebang</code> you want.</p>
 </blockquote>
 <p>Assume our current directory looks like this, with empty.sh residing in the src directory:</p>
-<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>📂 .
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>📂 .
 </span><span>├── 📂 bin
 </span><span>└── 📂 src
 </span><span>    └── empty.sh
@@ -400,7 +400,7 @@ example, we can extend our previous script like this:</p>
 </span></code></pre>
 <p>After compiling and running it we'll get <code>Hello, World!</code> printed to <code>stdout</code> as expected. And if we
 run it with the <code>-h|--help</code> or <code>-v|--version</code> option we'll get this:</p>
-<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ ./empty.sh --help
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>$ ./empty.sh --help
 </span><span>Empty script
 </span><span>
 </span><span>Usage:
@@ -422,7 +422,7 @@ run it with the <code>-h|--help</code> or <code>-v|--version</code> option we'll
 <p>If you want to see exactly which commands <code>rargs</code> added on your script, you can check the built
 script, or run it with the <code>DEBUG</code> environment variable set to <code>true</code>.</p>
 </blockquote>
-<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ DEBUG=true ./empty.sh
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>$ DEBUG=true ./empty.sh
 </span><span>+ set -e
 </span><span>+ run
 </span><span>+ deps=()
@@ -498,7 +498,7 @@ arguments that we'll provide at runtime to override its behavior.</p>
 </span><span>}
 </span></code></pre>
 <p>After compiling it, run it like this and get your output:</p>
-<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ ./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot;
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>$ ./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot;
 </span><span>[
 </span><span>  {
 </span><span>    &quot;score&quot;: 0.7153865694999695,
@@ -537,7 +537,7 @@ arguments that we'll provide at runtime to override its behavior.</p>
 this to the sub-command.</p>
 </blockquote>
 <p>We also can get a nice <code>help</code> message using the <code>--help</code> flag.</p>
-<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Fill Mask
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Fill Mask
 </span><span>Tries to fill a hole with a missing word (token to be precise).
 </span><span>
 </span><span>Usage:
@@ -607,7 +607,7 @@ for it, so calling for <code>help</code> is very common. By default, <code>rargs
 the <code>help</code> output if you pass the <code>-h|--help</code> option as the first argument of the script.</p>
 <p>For example, if we pass the <code>--help</code> option in any other place other than the first position we'll
 get an error.</p>
-<pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
 </span><span>Invalid option: --help
 </span></code></pre>
 <p>We can change this behavior by setting the <code>no-first-option-help</code> rule.</p>
@@ -624,7 +624,7 @@ want to activate. Let's add it at the root scope.</p>
 </span><span style="color:#65737e;"># @rule no-first-option-help
 </span></code></pre>
 <p>If we run the command once again we'll get the expected behavior.</p>
-<pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
 </span><span>Fill Mask
 </span><span>Tries to fill a hole with a missing word (token to be precise).
 </span><span>
