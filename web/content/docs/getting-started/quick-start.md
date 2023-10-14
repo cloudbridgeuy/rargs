@@ -128,7 +128,7 @@ $ DEBUG=true ./empty.sh
 Hello, World!
 ```
 
-### Something more
+### Something more complex
 
 Let's do something more complex. We'll use most of the features supported by `rargs` on the
 following example. We won't get too deep on how they work on this section. You can check their
@@ -160,11 +160,14 @@ Let's add these decorators to our script.
 # @version 0.0.1
 # @description Call the Huggingface API through curl
 # @author @cloudbridgeuy
-# @dep carl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
+# @dep curl Please install \e[32mcurl\e[0m with \e[32mbrew install curl\e[0m or \e[32mapt install curl\e[0m
 # @env DEHUGGING_FACE_API_TOKEN Please set your Hugging Face API token
 ```
 
 > You can decorate your help message with colors.
+
+**Note:** You can use `$()` or inverted quotes "`" inside the description and that code will be
+invoked.
 
 With these changes the `script` won't execute unless `curl` is installed in the system and the
 Huggingface API is set.
@@ -230,7 +233,8 @@ $ ./huggingface.sh fill-mask "The capital of France is [MASK]"
 ]
 ```
 
-> To get the output in pretty-printed JSON pipe it to `jq` with `| jq`.
+> To get the output in pretty-printed JSON pipe it to `jq` with `| jq`, so it's not necessary to add
+> this to the sub-command.
 
 We also can get a nice `help` message using the `--help` flag.
 
@@ -265,6 +269,8 @@ Options:
 There are some additional options that this task can consume so let's add them. Also, to help us
 craft the required `JSON` object we'll use a tool called `jo`.
 
+> We'll also add `jo` as a local dependency required when calling the `fill-mask` command.
+
 ```bash
 # @cmd Fill Mask
 # @help Tries to fill a hole with a missing word (token to be precise).
@@ -274,6 +280,7 @@ craft the required `JSON` object we'll use a tool called `jo`.
 # @flag --wait-for-model If the model is not ready, wait for it instead of receiving a 503 error.
 # @arg text! Text with mask to fill
 # @example Replace the value of [MASK] with the most likely word $ "The capital of France is [MASK]"
+# @dep jo Please install \e[32mjo\e[0m with \e[32mbrew install jo\e[0m or \e[32mapt install jo\e[0m
 fill-mask() {
   body="$(jo inputs="$rargs_text")"
 
@@ -298,5 +305,25 @@ fill-mask() {
 If we want to see the body we are passing `curl` we can execute the command in `DEBUG` mode.
 
 ```bash
-DEBUG=1 ./crates/rargs/examples/output/huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model
+DEBUG=1 ./huggingface.sh fill-mask fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model
 ```
+
+### Rules
+
+Now that our script is getting more complex, it's normal for us to forget all the options available
+for it, so calling for `help` is very common. By default, `rargs` will only allow you to call for
+the `help` output if you pass the `-h|--help` option as the first argument of the script.
+
+For example, if we pass the `--help` option in any other place other than the first position we'll
+get an error.
+
+```text
+./huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model --help
+Invalid option: --help
+```
+
+We can change this behavior by setting the `no-first-option-help` rule.
+
+Just as with other features, we set rules at the `global` or `command` scope by appending the right
+comment decorator. In this case we need to use the `@rule` decorator plus the name of the rule we
+want to activate. Let's add it at the root scope.

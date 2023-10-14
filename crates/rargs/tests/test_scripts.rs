@@ -365,6 +365,69 @@ fn test_scripts() {
                 stderr: vec![
                 ],
             },
+        ), (
+            "first-option-help.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "--help",
+                    "download -h",
+                    "download --help",
+                    "upload -h",
+                    "upload --help",
+                ],
+                stderr: vec![
+                    "-v -h",
+                    "-v --help",
+                    "download source -h",
+                    "download source --help",
+                    "upload source -h",
+                    "upload source --help",
+                ],
+            }
+        ), (
+            "no-first-option-help-global.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "--help",
+                    "download -h",
+                    "download --help",
+                    "upload -h",
+                    "upload --help",
+                    "-v -h",
+                    "-v --help",
+                    "download source -h",
+                    "download source --help",
+                    "upload source -h",
+                    "upload source --help",
+                ],
+                stderr: vec![
+                ],
+            }
+        ), (
+            "no-first-option-help-local.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "--help",
+                    "download -h",
+                    "download --help",
+                    "upload -h",
+                    "upload --help",
+                    "download source -h",
+                    "download source --help",
+                ],
+                stderr: vec![
+                    "-v -h",
+                    "-v --help",
+                    "upload source -h",
+                    "upload source --help",
+                ],
+            }
         ),
     ];
 
