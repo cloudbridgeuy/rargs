@@ -2,6 +2,8 @@
 
 Introducing Rargs, a Bash framework incorporating elements from [Bashly](https://bashly.dannyb.co/) and [Argc](https://github.com/sigoden/argc) for high-efficiency script deployment.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a6d76961-f1a5-4258-9211-56e5ff7da0a5/deploy-status)](https://app.netlify.com/sites/rargs/deploys)
+
 ---
 
 ## Table of Contents
