@@ -14,26 +14,30 @@ toc = true
 top = false
 +++
 
-## What is the AdiDoks?
+## What is the Rargs?
 
-AdiDoks is a Zola theme for Documentation's sites, ported by the Hugo Theme
-[Doks](https://getdoks.org), which is a pretty nice theme. Thanks a lot to 
-[*h-enk*](https://github.com/h-enk), the creator of the [Doks](https://getdoks.org).
+Rargs is a Bash framework based on other tools like [Bashly](https://bashly.dannyb.co/) and
+[Argc](https://github.com/sigoden/argc) that aims to simplify the process of creating bash scripts
+that include:
 
-## Keyboard shortcuts for search?
+- Good help messages.
+- Good argument, flag, and option parsing.
+- Good handling of environment variables.
+- Good handling of script dependencies.
+- Good suport for script sub-commands.
+- Inline documentation.
 
-- focus: `/`
-- select: `↓` and `↑`
-- open: `Enter`
-- close: `Esc`
+All `rargs` configuration is done in the script itself, as `comment decorators`. Meaning, normal
+bash comments using `#` plus an ` @` followed by a `tag`. For example, the `# @option` decorator
+will let you configure an option argument to be passed to the script of a sub-command.
 
-## Other documentation?
-
-- [Netlify](https://docs.netlify.com/)
-- [Zola](https://www.getzola.org/documentation/getting-started/overview/)
+The idea is for the script documentation to live alongside the script itself, this making it easier
+to keep the documentation up. It's very common for developers to forget to document scripts, that
+then become key parts of their infrastructure, but others are afraid to touch them or use them
+properly since it's not evident to understand how it works.
 
 ## Contact the creator?
 
-Send *Aaran Xu* an E-mail:
+Send *CloudBridgeUY* an E-mail:
 
-- <aaranxu@outlook.com>
+- <admin@cloudbridge.com.uy>
