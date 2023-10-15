@@ -79,7 +79,7 @@ Example use-cases can be found under the `/crates/rargs/examples` directory.
 
 ## API Reference :book:
 
-Documentation can be found [here](rargs.cloudbridge.uy).
+Documentation can be found [here](https://rargs.cloudbridge.uy).
 
 ## Contributing :heart:
 
