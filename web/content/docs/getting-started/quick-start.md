@@ -24,21 +24,22 @@ top = false
 
 ## Requirements <a name="requirements"></a>
 
-The only requirements to run `rargs` are `bash` version 4 and the `rargs` binary. You may try to run
-the resulting scripts on a lower version of `bash`, but there's no guarantee that they will work.
+The only requirements to run `rargs` are Bash version 4 and the `rargs` binary. You may try to run
+the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.
 
 ## Your First Script <a name="your-first-script"></a>
 
-`rargs` is heavily inspired by two other `bash` frameworks: `bashly`, and `argc`. The latter uses
+The `rargs` framework is heavily inspired by two other Bash frameworks:
+[`bashly`](https://bashly.dannyb.com), and [`argc`](https://github.com/sigoden/argc). The latter uses
 comments with a `JsDoc` inspired syntax to add functionality to the scripts at runtime. This syntax,
-known as a `comment decorator`, is a normal bash comment followed by an ` @` sign and a
+known as a `comment decorator`, is a normal Bash comment followed by an ` @` sign and a
 tag. It's how the `rargs` parser identifies configuration.
 
 To utilize this, you need to run the `argc` command and pass the output to an `eval` call somewhere
 in your script. `rargs` uses the same comment decorators, and adds a few of its own, but instead of
 requiring you to invoke it at runtime, you use the `rargs` binary to build your script. `rargs`
-takes every decorator and transforms it into `bash`, while rearranging your functions along the way.
-The result is a new `bash` script with all your logic, plus additional functionality like argument
+takes every decorator and transforms it into Bash, while rearranging your functions along the way.
+The result is a new Bash script with all your logic, plus additional functionality like argument
 and option parsing, `--help` documentation, and more.
 
 The easiest script you can make is one that only outputs its `help` message:

@@ -346,18 +346,19 @@
 <li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#conclusion">Conclusion</a></li>
 </ol>
 <h2 id="requirements">Requirements <a name="requirements"></a></h2>
-<p>The only requirements to run <code>rargs</code> are <code>bash</code> version 4 and the <code>rargs</code> binary. You may try to run
-the resulting scripts on a lower version of <code>bash</code>, but there's no guarantee that they will work.</p>
+<p>The only requirements to run <code>rargs</code> are Bash version 4 and the <code>rargs</code> binary. You may try to run
+the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.</p>
 <h2 id="your-first-script">Your First Script <a name="your-first-script"></a></h2>
-<p><code>rargs</code> is heavily inspired by two other <code>bash</code> frameworks: <code>bashly</code>, and <code>argc</code>. The latter uses
+<p>The <code>rargs</code> framework is heavily inspired by two other Bash frameworks:
+<a href="https://bashly.dannyb.com"><code>bashly</code></a>, and <a href="https://github.com/sigoden/argc"><code>argc</code></a>. The latter uses
 comments with a <code>JsDoc</code> inspired syntax to add functionality to the scripts at runtime. This syntax,
-known as a <code>comment decorator</code>, is a normal bash comment followed by an <code> @</code> sign and a
+known as a <code>comment decorator</code>, is a normal Bash comment followed by an <code> @</code> sign and a
 tag. It's how the <code>rargs</code> parser identifies configuration.</p>
 <p>To utilize this, you need to run the <code>argc</code> command and pass the output to an <code>eval</code> call somewhere
 in your script. <code>rargs</code> uses the same comment decorators, and adds a few of its own, but instead of
 requiring you to invoke it at runtime, you use the <code>rargs</code> binary to build your script. <code>rargs</code>
-takes every decorator and transforms it into <code>bash</code>, while rearranging your functions along the way.
-The result is a new <code>bash</code> script with all your logic, plus additional functionality like argument
+takes every decorator and transforms it into Bash, while rearranging your functions along the way.
+The result is a new Bash script with all your logic, plus additional functionality like argument
 and option parsing, <code>--help</code> documentation, and more.</p>
 <p>The easiest script you can make is one that only outputs its <code>help</code> message:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
