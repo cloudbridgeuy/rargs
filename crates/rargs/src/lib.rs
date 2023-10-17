@@ -25,18 +25,28 @@ pub struct BuildOptions {
     pub destination: String,
 }
 
+#[derive(Debug, Parser)]
+pub struct RunOptions {
+    /// The path to the script
+    pub script_root: String,
+    /// An optional list of arguments to pass to the command
+    #[arg(num_args(0..))]
+    pub arguments: Option<Vec<String>>,
+}
+
 #[derive(Debug, Subcommand)]
 pub enum SubCommands {
-    /// Output a tree of all the commands available based on the script root
-    Tree(TreeOptions),
+    /// Runs a rargs script
+    Run(RunOptions),
     /// Build the script
     Build(BuildOptions),
 }
 
-impl From<TreeOptions> for commands::tree::Options {
-    fn from(options: TreeOptions) -> Self {
+impl From<RunOptions> for commands::run::Options {
+    fn from(options: RunOptions) -> Self {
         Self {
             script_root: options.script_root,
+            arguments: options.arguments,
         }
     }
 }
