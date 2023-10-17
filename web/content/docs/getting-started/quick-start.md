@@ -364,7 +364,12 @@ Tries to fill a hole with a missing word (token to be precise).
 
 ## Conclusion <a name="conclusion"></a>
 
-Here's the complete script:
+The previous examples showcases almost all of the most important `rargs` features. You can use it as
+a starting point to create your own scripts.
+
+You can find more information about each of these features on their corresponding page in the docs.
+
+Here's the complete version of our script:
 
 ```bash
 #!/usr/bin/env bash
@@ -402,10 +407,5 @@ fill-mask() {
     -d "$body"
 }
 ```
-
-The previous examples showcases almost all of the most important `rargs` features. You can use it as
-a starting point to create your own scripts.
-
-You can find more information about each of these features on their corresponding page in the docs.
 
 Happy scripting!
