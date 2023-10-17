@@ -11,3 +11,5 @@ Cargo.lock
 
 # Don't store archived files
 /archive/
+
+.DS_Store

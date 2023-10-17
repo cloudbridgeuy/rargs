@@ -18,6 +18,7 @@ impl From<&cli::DeployDocsArgs> for cli::BuildDocsArgs {
     }
 }
 
+/// Build the documentation site
 pub fn build_docs(args: &cli::BuildDocsArgs) -> Result<()> {
     let previous_dir = std::env::current_dir()?;
     println!("Change into the documentation directory");
@@ -39,6 +40,55 @@ pub fn build_docs(args: &cli::BuildDocsArgs) -> Result<()> {
     Ok(())
 }
 
+/// Create the release binaries for all the supported architectures.
+pub fn release(args: &cli::ReleaseArgs) -> Result<()> {
+    println!("Building release binaries");
+    if !args.no_apple_x86_64 {
+        println!("Building for x86_64");
+        cmd!(
+            "cargo",
+            "build",
+            "--bin",
+            &args.binary,
+            "--target",
+            "x86_64-apple-darwin",
+            "--release"
+        )
+        .run()?;
+    }
+
+    if !args.no_apple_silicon {
+        println!("Building for Apple Silicon");
+        cmd!(
+            "cargo",
+            "build",
+            "--bin",
+            &args.binary,
+            "--target",
+            "aarch64-apple-darwin",
+            "--release"
+        )
+        .run()?;
+    }
+
+    if !args.no_linux_aarch64 {
+        // println!("Building for x86_64 Linux");
+        // cmd!(
+        //     "cargo",
+        //     "build",
+        //     "--bin",
+        //     &args.binary,
+        //     "--target",
+        //     "aarch64-unknown-linux-gnu"
+        // )
+        // .run()?;
+        println!("[WIP] Building for AAarch64 Linux");
+    }
+
+    Ok(())
+}
+
+/// Deploy the latest documentation
 pub fn deploy_docs(args: &cli::DeployDocsArgs) -> Result<()> {
     println!("Building docs");
     build_docs(&args.into())?;
