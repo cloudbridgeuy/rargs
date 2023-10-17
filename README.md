@@ -65,7 +65,7 @@ A bash framework for managing your bash scripts
 Usage: rargs [COMMAND]
 
 Commands:
-  tree   Output a tree of all the commands available based on the script root
+  run    Runs a rargs script
   build  Build the script
   help   Print this message or the help of the given subcommand(s)
 
