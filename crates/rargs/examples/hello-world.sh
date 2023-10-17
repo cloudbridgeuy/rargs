@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# @name emtpy
+# @name hello-world
 # @version 0.0.1
-# @description Empty script
+# @description Hello World script
 # @author @cloudbridgeuy
 
 root() {

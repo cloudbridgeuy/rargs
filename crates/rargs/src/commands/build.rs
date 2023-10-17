@@ -1,6 +1,6 @@
 use std::fs;
 
-use color_eyre::eyre::{Result};
+use color_eyre::eyre::Result;
 
 pub struct Command {
     options: Options,
