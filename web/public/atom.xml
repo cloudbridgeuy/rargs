@@ -375,7 +375,10 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion &lt;a name=&quot;conclusion&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;Here&#x27;s the complete script:&lt;&#x2F;p&gt;
+&lt;p&gt;The previous examples showcases almost all of the most important &lt;code&gt;rargs&lt;&#x2F;code&gt; features. You can use it as
+a starting point to create your own scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;You can find more information about each of these features on their corresponding page in the docs.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s the complete version of our script:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
@@ -411,9 +414,6 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;    -d &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;The previous examples showcases almost all of the most important &lt;code&gt;rargs&lt;&#x2F;code&gt; features. You can use it as
-a starting point to create your own scripts.&lt;&#x2F;p&gt;
-&lt;p&gt;You can find more information about each of these features on their corresponding page in the docs.&lt;&#x2F;p&gt;
 &lt;p&gt;Happy scripting!&lt;&#x2F;p&gt;
 </content>
         
