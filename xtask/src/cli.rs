@@ -14,6 +14,24 @@ pub enum Commands {
     DeployDocs(DeployDocsArgs),
     /// Build the documentation site
     BuildDocs(BuildDocsArgs),
+    /// Build the release binary
+    Release(ReleaseArgs),
+}
+
+#[derive(Args, Debug)]
+pub struct ReleaseArgs {
+    /// Binary to build
+    #[arg(short, long, default_value = "rargs")]
+    pub binary: String,
+    /// Don't build for Apple Silicon
+    #[arg(long)]
+    pub no_apple_silicon: bool,
+    /// Don't build for Apple x86_64
+    #[arg(long)]
+    pub no_apple_x86_64: bool,
+    /// Don't build for linux AAarch64
+    #[arg(long)]
+    pub no_linux_aarch64: bool,
 }
 
 #[derive(Args, Debug)]

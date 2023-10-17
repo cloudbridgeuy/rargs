@@ -19,6 +19,7 @@ fn main() -> Result<()> {
         Some(command) => match command {
             cli::Commands::DeployDocs(args) => scripts::deploy_docs(args),
             cli::Commands::BuildDocs(args) => scripts::build_docs(args),
+            cli::Commands::Release(args) => scripts::release(args),
         },
         None => {
             println!("No command specified.");
