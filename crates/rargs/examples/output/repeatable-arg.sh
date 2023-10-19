@@ -28,10 +28,10 @@ parse_root() {
         ;;
       *)
         if [[ -z "$rargs_files" ]]; then
-          rargs_files+=($key)
+          rargs_files+=("$key")
           shift
         else
-          rargs_files+=($key)
+          rargs_files+=("$key")
           shift
         fi
         ;;
@@ -242,10 +242,10 @@ parse_formats_arguments() {
         ;;
       *)
         if [[ -z "$rargs_formats" ]]; then
-          rargs_formats+=($key)
+          rargs_formats+=("$key")
           shift
         else
-          rargs_formats+=($key)
+          rargs_formats+=("$key")
           shift
         fi
         ;;
@@ -255,7 +255,7 @@ parse_formats_arguments() {
 # Formats
 formats() {
   declare -a rargs_action
-  declare -a rargs_repeatable_arg
+  declare -a rargs_formats
   # Parse command arguments
   parse_formats_arguments "$@"
 

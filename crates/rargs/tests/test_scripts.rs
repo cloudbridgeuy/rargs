@@ -157,7 +157,6 @@ fn test_scripts() {
             "catch-all-global.sh",
             Commands {
                 stdout: vec![
-                    "",
                     "other",
                     "something, something, the dark side",
                     "-h",
@@ -174,6 +173,7 @@ fn test_scripts() {
                     "other something with --additional args and --debug -- with something else",
                 ],
                 stderr: vec![
+                    "",
                     "multiple",
                     "no-multiple",
                 ],
