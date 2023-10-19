@@ -428,6 +428,20 @@ fn test_scripts() {
                     "upload source --help",
                 ],
             }
+        ), (
+            "json.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "--help",
+                ],
+                stderr: vec![
+                    "",
+                    "-h",
+                    "--help",
+                ],
+            }
         ),
     ];
 
