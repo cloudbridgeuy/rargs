@@ -185,10 +185,10 @@ parse_multiple_arguments() {
         ;;
       *)
         if [[ -z "$rargs_message" ]]; then
-          rargs_message+=($key)
+          rargs_message+=("$key")
           shift
         else
-          rargs_message+=($key)
+          rargs_message+=("$key")
           shift
         fi
         ;;
@@ -197,7 +197,7 @@ parse_multiple_arguments() {
 }
 # With a multiple required argument
 multiple() {
-  declare -a rargs_catch_all
+  declare -a rargs_message
   # Parse command arguments
   parse_multiple_arguments "$@"
 

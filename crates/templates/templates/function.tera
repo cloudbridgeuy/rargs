@@ -130,7 +130,7 @@
 {%- if args %}
   {%- for arg in args %}
     {%- if arg["multiple"] %}
-  declare -a rargs_{{ name | replace(from="-", to="_") }}
+  declare -a rargs_{{ arg.name | replace(from="-", to="_") }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}

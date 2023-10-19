@@ -25,10 +25,10 @@ parse_foo_arguments() {
         ;;
       *)
         if [[ -z "$rargs_foo" ]]; then
-          rargs_foo+=($key)
+          rargs_foo+=("$key")
           shift
         else
-          rargs_foo+=($key)
+          rargs_foo+=("$key")
           shift
         fi
         ;;

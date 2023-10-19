@@ -1,19 +1,20 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] catch-all-global.sh no-multiple"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stderr] catch-all-global.sh multiple"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing required additional argument[0m
+[31mMissing required option: [33mmessage[31m[0m
 
-Command with a simple optional argument
+With a multiple required argument
 
 [4mUsage:[0m
-  no-multiple [OPTIONS] [MESSAGE] ...
-  no-multiple -h|--help
+  multiple [OPTIONS] MESSAGE... ...
+  multiple -h|--help
 
 [4mArguments:[0m
   MESSAGE
     Message
+    [@required, @multiple]
   GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS
     Required additional arguments
 

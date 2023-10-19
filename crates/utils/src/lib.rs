@@ -34,8 +34,13 @@ macro_rules! test_script {
         let dst = format!("./examples/output/{script_name}");
 
         log::info!("{}", description);
-        let output = Command::new(&dst)
-            .args(options.split(" ").collect::<Vec<&str>>())
+        let mut command = Command::new(&dst);
+
+        if options != "" {
+            command.args(options.split(" ").collect::<Vec<&str>>());
+        }
+
+        let output = command
             .output()
             .unwrap_or_else(|e| panic!("failed to execute the '{dst}' script with error: {e}"));
         insta::with_settings!({

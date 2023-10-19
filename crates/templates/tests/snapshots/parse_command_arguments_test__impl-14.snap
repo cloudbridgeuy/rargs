@@ -31,10 +31,10 @@ parse_bar_arguments() {
           rargs_bar=$key
           shift
         elif [[ -z "$rargs_baz" ]]; then
-          rargs_baz+=($key)
+          rargs_baz+=("$key")
           shift
         else
-          rargs_baz+=($key)
+          rargs_baz+=("$key")
           shift
         fi
         ;;
