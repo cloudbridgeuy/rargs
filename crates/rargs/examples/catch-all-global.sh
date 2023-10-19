@@ -37,7 +37,6 @@ other() {
   inspect_args
 }
 
-# Root command
 root() {
   if [[ -n "$rargs_debug" ]]; then
     set -x

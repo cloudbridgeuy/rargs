@@ -127,7 +127,6 @@ inspect_args() {
     done
   fi
 }
-# Root level lines
 read_stdin() {
   # Read from stdin
   content=$(cat -)

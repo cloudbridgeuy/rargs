@@ -94,7 +94,6 @@ inspect_args() {
     done
   fi
 }
-# Root level lines
 EOF
 }
 version() {

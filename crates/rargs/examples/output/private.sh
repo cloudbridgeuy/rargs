@@ -64,7 +64,6 @@ inspect_args() {
     done
   fi
 }
-# Root level lines
 # shellcheck disable=SC2154
 version() {
   echo "0.0.1"
