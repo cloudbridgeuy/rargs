@@ -37,7 +37,9 @@ root() {
   # Parse command arguments
   parse_root "$@"
 
-    echo "Hello, World!"
+  cat <<-EOF | jq
+{
+  "something": "awesome"
 }
 
 
@@ -92,15 +94,18 @@ inspect_args() {
     done
   fi
 }
+# Root level lines
+EOF
+}
 version() {
   echo "0.0.1"
 }
 usage() {
-  printf "Hello World script\n"
+  printf "Script that tests if rargs can handle JSON serialized strings in multi-line mode.\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  hello-world [OPTIONS]\n"
-  printf "  hello-world -h|--help\n"
-  printf "  hello-world -v|--version\n"
+  printf "  json [OPTIONS]\n"
+  printf "  json -h|--help\n"
+  printf "  json -v|--version\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"

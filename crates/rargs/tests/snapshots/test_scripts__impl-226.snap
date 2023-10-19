@@ -101,11 +101,11 @@ version() {
   echo "0.0.1"
 }
 usage() {
-  printf "Empty script\n"
+  printf "Hello World script\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  emtpy [OPTIONS]\n"
-  printf "  emtpy -h|--help\n"
-  printf "  emtpy -v|--version\n"
+  printf "  hello-world [OPTIONS]\n"
+  printf "  hello-world -h|--help\n"
+  printf "  hello-world -v|--version\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -h --help\n"
