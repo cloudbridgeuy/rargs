@@ -106,8 +106,6 @@ inspect_args() {
     done
   fi
 }
-# Root level lines
-# Root command
 version() {
   echo "0.0.1"
 }

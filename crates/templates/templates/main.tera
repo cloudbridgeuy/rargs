@@ -15,7 +15,6 @@ parse_root() {
 {%- endif %}
 {% include "raw.tera" %}
 {%- if lines and lines | length > 0 %}
-# Root level lines
   {%- for line in lines %}
 {{ line }}
   {%- endfor %}
