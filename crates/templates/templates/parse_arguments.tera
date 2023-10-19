@@ -133,14 +133,14 @@ parse_arguments() {
       {%- if loop.first and loop.last %}
         if [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
               {%- else %}
           rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
           shift
         {%- else %}
           {%- if _any %}
@@ -155,7 +155,7 @@ parse_arguments() {
       {%- elif loop.first %}
         if [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
               {%- else %}
           rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
@@ -163,14 +163,14 @@ parse_arguments() {
       {%- elif loop.last %}
         elif [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
               {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
               {%- else %}
           rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
               {%- endif %}
           shift
         else
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
           shift
         {%- else %}
           {%- if _any %}
@@ -185,7 +185,7 @@ parse_arguments() {
       {%- else %}
         elif [[ -z "$rargs_{{ arg["name"] | replace(from="-", to="_") }}" ]]; then
         {%- if arg["multiple"] %}
-          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=($key)
+          rargs_{{ arg["name"] | replace(from="-", to="_") }}+=("$key")
         {%- else %}
           rargs_{{ arg["name"] | replace(from="-", to="_") }}=$key
         {%- endif %}
