@@ -130,6 +130,7 @@ inspect_args() {
     done
   fi
 }
+
 version() {
   echo "0.0.1"
 }

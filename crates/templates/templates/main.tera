@@ -14,11 +14,16 @@ parse_root() {
 {% include "root.tera" %}
 {%- endif %}
 {% include "raw.tera" %}
+{% if comments and comments | length > 0 %}
+  {%- for comment in comments %}
+{{ comment }}
+  {%- endfor %}
+{%- endif %}
 {%- if lines and lines | length > 0 %}
   {%- for line in lines %}
 {{ line }}
   {%- endfor %}
-{%- endif %}
+{% endif %}
 {% include "version.tera" %}
 {% include "usage.tera" %}
 {% include "parse_arguments.tera" %}

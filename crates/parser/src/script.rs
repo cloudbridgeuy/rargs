@@ -14,6 +14,7 @@ pub struct Command {
     pub examples: Option<Vec<param::Example>>,
     pub flags: HashMap<String, param::Flag>,
     pub help: Option<String>,
+    pub comments: Option<Vec<String>>,
     pub lines: Option<Vec<String>>,
     pub name: Option<String>,
     pub options: HashMap<String, param::Option>,
@@ -44,6 +45,7 @@ pub struct Script {
     pub examples: Option<Vec<param::Example>>,
     pub flags: HashMap<String, param::Flag>,
     pub help: Option<String>,
+    pub comments: Option<Vec<String>>,
     pub lines: Option<Vec<String>>,
     pub name: Option<String>,
     pub options: HashMap<String, param::Option>,
@@ -404,6 +406,21 @@ impl Script {
                         break;
                     }
                 }
+                parser::Data::Comment(value) => {
+                    if is_root_scope {
+                        script.comments.get_or_insert_with(Vec::new).push(value);
+                    } else if let Some(command) = &mut maybe_command {
+                        command.comments.get_or_insert_with(Vec::new).push(value);
+                    } else {
+                        err = Some(ScriptError::NoCommandInScope(format!(
+                            "No command in scope in when parsing comment `{}` in line {}. Did you forget the @cmd directive?",
+                            value,
+                            event.position
+                        )));
+                        break;
+                    }
+                }
+
                 parser::Data::Line(value) => {
                     if is_root_scope {
                         script.lines.get_or_insert_with(Vec::new).push(value);

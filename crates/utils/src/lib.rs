@@ -63,7 +63,7 @@ macro_rules! build_script {
         let src = format!("./examples/{script_name}");
         let dst = format!("./examples/output/{script_name}");
 
-        log::info!("Build ./examples/output/minimal.rs");
+        log::info!("Build ./examples/output/{script_name}");
         let output = Command::new("cargo")
             .args([
                 "run",
