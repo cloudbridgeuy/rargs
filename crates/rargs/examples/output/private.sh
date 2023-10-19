@@ -64,7 +64,7 @@ inspect_args() {
     done
   fi
 }
-# shellcheck disable=SC2154
+
 version() {
   echo "0.0.1"
 }

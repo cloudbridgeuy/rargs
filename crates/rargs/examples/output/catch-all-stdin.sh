@@ -127,6 +127,7 @@ inspect_args() {
     done
   fi
 }
+
 read_stdin() {
   # Read from stdin
   content=$(cat -)
@@ -139,6 +140,7 @@ read_files() {
     content+=$'\n'
   done
 }
+
 version() {
   echo "0.0.1"
 }

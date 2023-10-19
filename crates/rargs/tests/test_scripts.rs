@@ -428,6 +428,17 @@ fn test_scripts() {
                     "upload source --help",
                 ],
             }
+        ), (
+            "minimal-with-comments.sh",
+            Commands {
+                stdout: vec![
+                    "-h",
+                    "--help",
+                ],
+                stderr: vec![
+                    "",
+                ],
+            }
         // ), (
         //     "json.sh",
         //     Commands {

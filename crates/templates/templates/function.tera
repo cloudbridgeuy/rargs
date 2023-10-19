@@ -118,6 +118,11 @@
 {% if command["help"] -%}
 # {{ command["help"] }}
 {% endif -%}
+{% if command["comments"] and command["comments"] | length > 0 -%}
+  {%- for comment in command["comments"] -%}
+{{ comment }}
+  {%- endfor %}
+{% endif -%}
 {{ command["name"] }}() {
 {%- if opts %}
   {%- for name, option in opts %}

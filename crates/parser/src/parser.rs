@@ -17,6 +17,7 @@ pub enum Data {
     Any(param::Any),
     Author(Vec<String>),
     Cmd(String),
+    Comment(String),
     Default(String),
     Dep(param::Dep),
     Description(String),
@@ -60,7 +61,10 @@ pub fn parse_source(source: &str) -> Result<Vec<Token>> {
 /// Parse a line into a token.
 pub fn parse_line(line: &str) -> Result<Option<Data>> {
     let maybe = nom::branch::alt((
-        nom::combinator::map(nom::branch::alt((parse_tag, parse_fn, parse_shebang)), Some),
+        nom::combinator::map(
+            nom::branch::alt((parse_tag, parse_fn, parse_shebang, parse_comment)),
+            Some,
+        ),
         nom::combinator::success(None),
     ))(line);
 
@@ -72,7 +76,7 @@ pub fn parse_line(line: &str) -> Result<Option<Data>> {
                 } else {
                     Ok(Some(Data::Unknown(line.to_string())))
                 }
-            } else if !_rest_of_line.is_empty() {
+            } else if !_rest_of_line.is_empty() && !_rest_of_line.starts_with('#') {
                 Ok(Some(Data::Line(_rest_of_line.to_string())))
             } else {
                 Ok(None)
@@ -98,6 +102,21 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
         ),
         |text| Some(Data::SheBang(format!("#!{}", text))),
     )(input)
+}
+
+/// Parses an input as if it was a comment line.
+fn parse_comment(intput: &str) -> nom::IResult<&str, Option<Data>> {
+    nom::combinator::map(
+        nom::sequence::preceded(
+            nom::sequence::tuple((
+                nom::character::complete::char('#'),
+                nom::character::complete::char('#'),
+                nom::character::complete::space0,
+            )),
+            parse_tail,
+        ),
+        |text| Some(Data::Comment(format!("# {}", text))),
+    )(intput)
 }
 
 /// Parse an input as if it was an any definition.
@@ -1464,6 +1483,10 @@ mod tests {
         assert_token!(
             "# @rule no-first-option-help",
             Data::Rule("no-first-option-help".to_string())
+        );
+        assert_token!(
+            "## Comment that should not be ignored",
+            Data::Comment("# Comment that should not be ignored".to_string())
         );
     }
 }
