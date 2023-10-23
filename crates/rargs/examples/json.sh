@@ -8,7 +8,7 @@ root() {
   cat <<-EOF | jq
 {
   "something": "awesome"
-}
+ }
 EOF
 }
 

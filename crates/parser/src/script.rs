@@ -103,7 +103,7 @@ impl Script {
 
         let mut err: Option<ScriptError> = None;
         for event in events {
-            match event.data {
+            match event.data.clone() {
                 parser::Data::Name(value) => {
                     script.name = Some(value);
                 }
