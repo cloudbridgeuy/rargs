@@ -439,20 +439,17 @@ fn test_scripts() {
                     "",
                 ],
             }
-        // ), (
-        //     "json.sh",
-        //     Commands {
-        //         stdout: vec![
-        //             "",
-        //             "-h",
-        //             "--help",
-        //         ],
-        //         stderr: vec![
-        //             "",
-        //             "-h",
-        //             "--help",
-        //         ],
-        //     }
+        ), (
+            "json.sh",
+            Commands {
+                stdout: vec![
+                    "",
+                    "-h",
+                    "--help",
+                ],
+                stderr: vec![
+                ],
+            }
         ),
     ];
 
