@@ -16,6 +16,19 @@ pub enum Commands {
     BuildDocs(BuildDocsArgs),
     /// Build the release binary
     Release(ReleaseArgs),
+    /// Builds a binary and installs it at the given path
+    Install(InstallArgs),
+}
+
+#[derive(Args, Debug)]
+pub struct InstallArgs {
+    /// Name of the binary to run.
+    #[arg(short, long)]
+    pub name: String,
+
+    /// Path to install the binary to.
+    #[arg(short, long)]
+    pub path: String,
 }
 
 #[derive(Args, Debug)]

@@ -11,6 +11,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     let result = match cli.command {
+        Some(SubCommands::New(options)) => commands::new::Command::new(options.into()).run(),
         Some(SubCommands::Run(options)) => commands::run::Command::new(options.into()).run(),
         Some(SubCommands::Build(options)) => commands::build::Command::new(options.into()).run(),
         None => Err(eyre::format_err!("No subcommand provided")),
