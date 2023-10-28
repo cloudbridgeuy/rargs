@@ -161,8 +161,14 @@ lazy_static! {
     };
 }
 
-/// Render the main.sh template
+/// Render the main.tera template
 pub fn render<T: Serialize>(context: &T) -> Result<String> {
     let output = TEMPLATES.render("main.tera", &Context::from_serialize(context)?)?;
+    Ok(output)
+}
+
+/// Render the minimal.tera template
+pub fn minimal<T: Serialize>(context: &T) -> Result<String> {
+    let output = TEMPLATES.render("minimal.tera", &Context::from_serialize(context)?)?;
     Ok(output)
 }

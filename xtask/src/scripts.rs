@@ -88,6 +88,22 @@ pub fn release(args: &cli::ReleaseArgs) -> Result<()> {
     Ok(())
 }
 
+pub fn install(args: &cli::InstallArgs) -> Result<()> {
+    release(&cli::ReleaseArgs {
+        binary: args.name.clone(),
+        no_apple_x86_64: true,
+        no_apple_silicon: false,
+        no_linux_aarch64: true,
+    })?;
+
+    let target_path = "target/release/".to_string() + &args.name;
+
+    cmd!("cp", &target_path, &args.path).run()?;
+    cmd!("chmod", "+x", &args.path).run()?;
+
+    Ok(())
+}
+
 /// Deploy the latest documentation
 pub fn deploy_docs(args: &cli::DeployDocsArgs) -> Result<()> {
     println!("Building docs");

@@ -34,12 +34,42 @@ pub struct RunOptions {
     pub arguments: Option<Vec<String>>,
 }
 
+#[derive(Debug, Parser)]
+pub struct NewOptions {
+    /// The name of the script
+    #[arg(short, long)]
+    pub name: String,
+    /// An optional vesion number as a string
+    #[arg(short, long)]
+    pub version: Option<String>,
+    /// An optional description of the script
+    #[arg(short, long)]
+    pub description: Option<String>,
+    /// An optional author of the script
+    #[arg(short, long)]
+    pub author: Option<String>,
+}
+
 #[derive(Debug, Subcommand)]
 pub enum SubCommands {
+    /// Creates a new rargs minimal script
+    New(NewOptions),
     /// Runs a rargs script
     Run(RunOptions),
     /// Build the script
     Build(BuildOptions),
+}
+
+impl From<NewOptions> for commands::new::Options {
+    fn from(options: NewOptions) -> Self {
+        Self {
+            destination: String::from("."),
+            name: options.name,
+            version: options.version,
+            description: options.description,
+            author: options.author,
+        }
+    }
 }
 
 impl From<RunOptions> for commands::run::Options {
