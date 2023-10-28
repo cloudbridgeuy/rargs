@@ -37,7 +37,6 @@ pub struct RunOptions {
 #[derive(Debug, Parser)]
 pub struct NewOptions {
     /// The name of the script
-    #[arg(short, long)]
     pub name: String,
     /// An optional vesion number as a string
     #[arg(short, long)]
@@ -49,7 +48,7 @@ pub struct NewOptions {
     #[arg(short, long)]
     pub author: Option<String>,
     /// Script destination directory
-    #[arg(short, long)]
+    #[arg(long)]
     pub destination: String,
 }
 

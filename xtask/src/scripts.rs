@@ -96,7 +96,7 @@ pub fn install(args: &cli::InstallArgs) -> Result<()> {
         no_linux_aarch64: true,
     })?;
 
-    let target_path = "target/release/".to_string() + &args.name;
+    let target_path = "target/aarch64-apple-darwin/release/".to_string() + &args.name;
 
     cmd!("cp", &target_path, &args.path).run()?;
     cmd!("chmod", "+x", &args.path).run()?;
