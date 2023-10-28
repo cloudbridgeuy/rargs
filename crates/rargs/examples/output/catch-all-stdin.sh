@@ -40,6 +40,7 @@ parse_root() {
 }
 
 root() {
+  local rargs_format
   # Parse command arguments
   parse_root "$@"
 

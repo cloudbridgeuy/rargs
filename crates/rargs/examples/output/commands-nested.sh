@@ -168,6 +168,7 @@ parse_dir_arguments() {
 }
 # Directory commands
 dir() {
+  local rargs_verbose
   # Parse command arguments
   parse_dir_arguments "$@"
 

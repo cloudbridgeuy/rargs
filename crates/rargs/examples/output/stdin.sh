@@ -175,6 +175,7 @@ parse_arg_arguments() {
 }
 # Read from stdin or from a file using an argument
 arg() {
+  local rargs_path
   # Parse command arguments
   parse_arg_arguments "$@"
 
@@ -238,6 +239,7 @@ parse_option_arguments() {
 }
 # Read from stdin or from a file using an option
 option() {
+  local rargs_path
   # Parse command arguments
   parse_option_arguments "$@"
 

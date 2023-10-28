@@ -29,10 +29,17 @@
 {%- endif -%}
 
 root() {
+{%- if fls %}
+  {%- for name, option in fls %}
+  local rargs_{{ name | replace(from="-", to="_") }}
+  {%- endfor %}
+{%- endif %}
 {%- if options %}
   {%- for name, option in options %}
     {%- if option["multiple"] %}
   declare -a rargs_{{ name | replace(from="-", to="_") }}
+    {%- else %}
+  local rargs_{{ name | replace(from="-", to="_") }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}
@@ -41,6 +48,8 @@ root() {
   {%- for arg in positional_arguments %}
     {%- if arg["multiple"] %}
   declare -a rargs_{{ name | replace(from="-", to="_") }}
+    {%- else %}
+  local rargs_{{ arg["name"] | replace(from="-", to="_") }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}

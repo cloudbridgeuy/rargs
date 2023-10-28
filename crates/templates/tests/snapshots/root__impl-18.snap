@@ -4,6 +4,7 @@ description: Function with a local option with choices
 expression: output
 ---
 root() {
+  local rargs_choices
   # Parse command arguments
   parse_root "$@"
 

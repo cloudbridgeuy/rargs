@@ -11,9 +11,9 @@
 # @arg host! Hostname to connect to
 connect() {
   if [[ "$rargs_protocol" == "ftp" ]]; then
-    connect-ftp --username ftp_user
+    connect-ftp --username ftp_user "$rargs_host"
   else
-    connect-ssh --username ssh_ser
+    connect-ssh --username ssh_ser "$rargs_host"
   fi
 }
 
