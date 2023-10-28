@@ -48,6 +48,9 @@ pub struct NewOptions {
     /// An optional author of the script
     #[arg(short, long)]
     pub author: Option<String>,
+    /// Script destination directory
+    #[arg(short, long)]
+    pub destination: String,
 }
 
 #[derive(Debug, Subcommand)]
@@ -63,7 +66,7 @@ pub enum SubCommands {
 impl From<NewOptions> for commands::new::Options {
     fn from(options: NewOptions) -> Self {
         Self {
-            destination: String::from("."),
+            destination: options.destination,
             name: options.name,
             version: options.version,
             description: options.description,
