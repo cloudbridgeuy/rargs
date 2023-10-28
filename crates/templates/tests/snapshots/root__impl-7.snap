@@ -4,6 +4,7 @@ description: Function with a local and global required options with the same nam
 expression: output
 ---
 root() {
+  local rargs_require
   # Parse command arguments
   parse_root "$@"
 

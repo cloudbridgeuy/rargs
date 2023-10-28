@@ -239,6 +239,10 @@ parse_download_arguments() {
 }
 # Download a file
 download() {
+  local rargs_force
+  local rargs_verbose
+  local rargs_source
+  local rargs_target
   # Parse command arguments
   parse_download_arguments "$@"
 
@@ -325,6 +329,10 @@ parse_upload_arguments() {
 }
 # Upload a file
 upload() {
+  local rargs_verbose
+  local rargs_password
+  local rargs_user
+  local rargs_source
   # Parse command arguments
   parse_upload_arguments "$@"
 

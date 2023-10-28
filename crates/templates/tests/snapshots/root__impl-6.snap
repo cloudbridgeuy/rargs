@@ -4,6 +4,7 @@ description: Function with local required option
 expression: output
 ---
 root() {
+  local rargs_require
   # Parse command arguments
   parse_root "$@"
 

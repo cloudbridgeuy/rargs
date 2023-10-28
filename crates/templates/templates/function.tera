@@ -124,18 +124,26 @@
   {%- endfor %}
 {% endif -%}
 {{ command["name"] }}() {
+{%- if fls %}
+  {%- for name, option in fls %}
+  local rargs_{{ name | replace(from="-", to="_") }}
+  {%- endfor %}
+{%- endif %}
 {%- if opts %}
   {%- for name, option in opts %}
     {%- if option["multiple"] %}
   declare -a rargs_{{ name | replace(from="-", to="_") }}
+    {%- else %}
+  local rargs_{{ name | replace(from="-", to="_") }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}
-
 {%- if args %}
   {%- for arg in args %}
     {%- if arg["multiple"] %}
   declare -a rargs_{{ arg.name | replace(from="-", to="_") }}
+    {%- else %}
+  local rargs_{{ arg["name"] | replace(from="-", to="_") }}
     {%- endif %}
   {%- endfor %}
 {%- endif %}

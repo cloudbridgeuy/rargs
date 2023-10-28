@@ -192,6 +192,9 @@ parse_connect_arguments() {
 }
 # Connect to the metaverse
 connect() {
+  local rargs_verbose
+  local rargs_protocol
+  local rargs_host
   # Parse command arguments
   parse_connect_arguments "$@"
 
@@ -215,9 +218,9 @@ connect() {
     exit 1
   fi
   if [[ "$rargs_protocol" == "ftp" ]]; then
-    connect-ftp --username ftp_user
+    connect-ftp --username ftp_user "$rargs_host"
   else
-    connect-ssh --username ssh_ser
+    connect-ssh --username ssh_ser "$rargs_host"
   fi
 }
 connect-ftp_usage() {
@@ -275,6 +278,8 @@ parse_connect-ftp_arguments() {
 }
 # Connect using FTP
 connect-ftp() {
+  local rargs_username
+  local rargs_host
   # Parse command arguments
   parse_connect-ftp_arguments "$@"
 
@@ -342,6 +347,8 @@ parse_connect-ssh_arguments() {
 }
 # Connect using SSH
 connect-ssh() {
+  local rargs_username
+  local rargs_host
   # Parse command arguments
   parse_connect-ssh_arguments "$@"
 

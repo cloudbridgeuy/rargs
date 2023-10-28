@@ -47,6 +47,10 @@ parse_root() {
 }
 
 root() {
+  local rargs_protocol
+  local rargs_user
+  local rargs_region
+  local rargs_environment
   # Parse command arguments
   parse_root "$@"
 

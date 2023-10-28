@@ -43,6 +43,8 @@ parse_root() {
 }
 
 root() {
+  local rargs_source
+  local rargs_target
   # Parse command arguments
   parse_root "$@"
 
@@ -249,6 +251,9 @@ parse_download_arguments() {
 # Download a file
 # This comment will be placed on top of the function definition.
 download() {
+  local rargs_force
+  local rargs_source
+  local rargs_target
   # Parse command arguments
   parse_download_arguments "$@"
 

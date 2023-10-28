@@ -202,6 +202,11 @@ parse_fill-mask_arguments() {
 # Fill Mask
 # Tries to fill a hole with a missing word (token to be precise).
 fill-mask() {
+  local rargs_no_use_cache
+  local rargs_wait_for_model
+  local rargs_model
+  local rargs_url
+  local rargs_text
   # Parse environment variables
   
   if [[ -z "${HUGGING_FACE_API_TOKEN:-}" ]]; then

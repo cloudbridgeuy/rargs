@@ -5,6 +5,8 @@ expression: output
 ---
 # Function with a local default option
 foo() {
+  local rargs_default
+  local rargs_foo
   # Parse command arguments
   parse_foo_arguments "$@"
 
