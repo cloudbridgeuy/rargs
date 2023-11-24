@@ -10,7 +10,7 @@ pub struct Command {
 #[derive(Debug)]
 pub struct Options {
     pub script_root: String,
-    pub arguments: Option<Vec<String>>,
+    pub arguments: Vec<String>,
 }
 
 impl Command {
@@ -45,11 +45,12 @@ impl Command {
         // Run the root_script, redirecting `stdout` and `stderr` to the current process.
         // Regardless of the status code of the root_script, we want to continue running the
         // process and clean up the temporary directory.
-        let mut args: Vec<&str> = vec![];
-
-        if let Some(arguments) = &self.options.arguments {
-            args = arguments.iter().map(AsRef::as_ref).collect();
-        }
+        let args = self
+            .options
+            .arguments
+            .iter()
+            .map(|s| s.as_str())
+            .collect::<Vec<&str>>();
 
         let output = ProcessCommand::new(format!(
             "{}/{}",

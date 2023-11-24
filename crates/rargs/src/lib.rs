@@ -26,12 +26,13 @@ pub struct BuildOptions {
 }
 
 #[derive(Debug, Parser)]
+#[clap(trailing_var_arg = true)]
 pub struct RunOptions {
     /// The path to the script
     pub script_root: String,
     /// An optional list of arguments to pass to the command
-    #[arg(num_args(0..))]
-    pub arguments: Option<Vec<String>>,
+    #[arg(allow_hyphen_values = true)]
+    pub arguments: Vec<String>,
 }
 
 #[derive(Debug, Parser)]
