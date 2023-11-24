@@ -6,19 +6,17 @@
 # @cmd Read from stdin or from a file using an argument
 # @arg path="-" Path to file (reads from stdin if empty)
 arg() {
-  inspect_args
+	inspect_args
 
-  # Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
-  cat "${args["path"]}"
+	# Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
+	cat "$rargs_path"
 }
-
 
 # @cmd Read from stdin or from a file using an option
 # @option -p --path="-" Path to file (reads from stdin if empty)
 option() {
-  inspect_args
+	inspect_args
 
-  # Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
-  cat "${args["path"]}"
+	# Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
+	cat "$rargs_path"
 }
-

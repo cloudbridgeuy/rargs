@@ -1,34 +1,28 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] commands-aliases.sh d"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stderr] commands.sh u --user Foo"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 [31mMissing required option: [33msource[31m[0m
 
-Download a file
+Upload a file
 
-[4mAlias:[0m d, down
+[4mAlias:[0m u
 
 [4mUsage:[0m
-  download [OPTIONS] SOURCE [TARGET]
-  download -h|--help
-
-[4mExamples:[0m
-  download download example.com
-    Download a file from the internet
-  download down example.com
-    Download a file and use a different alias
+  upload [OPTIONS] SOURCE
+  upload -h|--help
 
 [4mArguments:[0m
   SOURCE
     URL to download from
     [@required]
-  TARGET
-    Target filename (default: same as source)
 
 [4mOptions:[0m
-  -f --force
-    Overwrite existing files
+  -p --password [<PASSWORD>]
+    Password to use for logging in
+  -u --user [<USER>]
+    Username to use for logging in
   -h --help
     Print help
 

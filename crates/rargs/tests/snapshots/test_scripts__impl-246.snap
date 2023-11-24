@@ -1,24 +1,24 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] first-option-help.sh -h"
+description: "[stdout] repeatable-flag.sh -d 1 -d 2 -d 3"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Script to test if the 'first-option-help' rule is working.
+Data elements:
+1
+2
+3
 
-[4mUsage:[0m
-  First option help [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  First option help -h|--help
-  First option help --version
+Verbosity level: 
 
-[4mCommands:[0m
-  download .... Download a file
-  upload ...... Upload a file
 
-[4mOptions:[0m
-  -v --verbose
-    Verbose mode
-  -h --help
-    Print help
-  --version
-    Print version
+args:
+- rargs_data = ([0] = "1"
+- [1] = "2"
+- [2] = "3")
+- rargs_input = ([0] = "-d"
+- [1] = "1"
+- [2] = "-d"
+- [3] = "2"
+- [4] = "-d"
+- [5] = "3")
 

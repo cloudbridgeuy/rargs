@@ -1,8 +1,8 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] extensible-delegate.sh log --pretty"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stderr] first-option-help.sh -v --help"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Here you would call the following command
-  git log --pretty
+[31mInvalid option: [33m--help[31m[0m
+
 

@@ -1,21 +1,20 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stderr] minimal-with-comments.sh "
-expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stdout] no-first-option-help-local.sh download source -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing required option: [33msource[31m[0m
+Download a file
 
-Sample minimal application without commands
+[4mAlias:[0m d, down
 
 [4mUsage:[0m
-  minimal [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  minimal -h|--help
-  minimal -v|--version
+  download [OPTIONS] SOURCE [TARGET]
+  download -h|--help
 
 [4mExamples:[0m
-  minimal example.com
+  download download example.com
     Download a file from the internet
-  minimal example.com ./output -f
+  download download example.com ./output -f
     Download a file from the internet and force save it to ./output
 
 [4mArguments:[0m
@@ -25,14 +24,11 @@ Sample minimal application without commands
   TARGET
     Target filename (default: same as source)
 
-[4mCommands:[0m
-  download .... Download a file
-
 [4mOptions:[0m
   -f --force
     Overwrite existing files
+  -v --verbose
+    Verbose mode
   -h --help
     Print help
-  -v --version
-    Print version
 

@@ -6,7 +6,7 @@
 # @option -u --user![user|admin] <USER> User name
 # @option -p --protocol[=ssh|ftp|http] <PROTOCOL> Protocol to connect with
 # @arg region![eu|us] <REGION> Region to connect to
-# @arg environment[=development|stagin|production] <ENVIRONMENT> Environment to connect to
+# @arg environment[=development|staging|production] <ENVIRONMENT> Environment to connect to
 root() {
-  inspect_args
+	inspect_args
 }

@@ -1,22 +1,10 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-default-force.sh upload -h"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] catch-all-global.sh multiple something"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Upload a file
 
-[4mAlias:[0m u
-
-[4mUsage:[0m
-  upload [OPTIONS] SOURCE
-  upload -h|--help
-
-[4mArguments:[0m
-  SOURCE
-    URL to download from
-    [@required]
-
-[4mOptions:[0m
-  -h --help
-    Print help
+args:
+- rargs_input = ([0] = "something")
+- rargs_message = ([0] = "something")
 

@@ -1,11 +1,7 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands.sh download example.com -f ./output"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] empty.sh --version"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-args:
-- rargs_force = 1
-- rargs_source = example.com
-- rargs_target = ./output
+0.0.1
 

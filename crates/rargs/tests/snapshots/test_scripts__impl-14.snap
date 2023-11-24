@@ -1,28 +1,34 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] minus-v.sh --help"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stderr] commands-aliases.sh download"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Example that replaces the default behavior of -v and -h
+[31mMissing required option: [33msource[31m[0m
+
+Download a file
+
+[4mAlias:[0m d, down
 
 [4mUsage:[0m
-  minus-v [OPTIONS]
-  minus-v --help
-  minus-v --version
+  download [OPTIONS] SOURCE [TARGET]
+  download -h|--help
 
 [4mExamples:[0m
-  minus-v -h|--host localhost
-    Set host
-  minus-v -v|--verbose
-    Set verbose mode on
+  download download example.com
+    Download a file from the internet
+  download down example.com
+    Download a file and use a different alias
+
+[4mArguments:[0m
+  SOURCE
+    URL to download from
+    [@required]
+  TARGET
+    Target filename (default: same as source)
 
 [4mOptions:[0m
-  -h --host [<HOST>]
-    Show verbose output
-  -v --verbose
-    Show verbose output
-  --help
+  -f --force
+    Overwrite existing files
+  -h --help
     Print help
-  --version
-    Print version
 

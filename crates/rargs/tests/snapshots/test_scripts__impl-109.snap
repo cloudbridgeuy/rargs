@@ -1,23 +1,6 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] catch-all.sh required"
-expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands-default-force.sh upload source -f"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing required additional argument[0m
-
-Required additional arguments
-
-[4mUsage:[0m
-  required [OPTIONS] [MESSAGE]
-  required -h|--help
-
-[4mArguments:[0m
-  MESSAGE
-    Message
-
-[4mOptions:[0m
-  -d --debug
-    Debug mode
-  -h --help
-    Print help
 

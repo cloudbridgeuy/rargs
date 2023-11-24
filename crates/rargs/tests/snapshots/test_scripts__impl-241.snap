@@ -1,8 +1,25 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stderr] first-option-help.sh download source -h"
+description: "[stderr] repeatable-arg.sh formats jpg tiff --action upcase png --action downcase gif"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mInvalid option: [33m-h[31m[0m
+[31mInvalid option for [33mformats[31m: [33mtiff[31m[0m
 
+Formats
+
+[4mUsage:[0m
+  formats [OPTIONS] FORMATS...
+  formats -h|--help
+
+[4mArguments:[0m
+  FORMATS
+    One or more formats to process
+    [@required, @multiple, @default jpg, @choices jpg, png, gif]
+
+[4mOptions:[0m
+  -a --action [<ACTION>]
+    Action to perform
+    [@multiple, @choices upcase, downcase]
+  -h --help
+    Print help
 

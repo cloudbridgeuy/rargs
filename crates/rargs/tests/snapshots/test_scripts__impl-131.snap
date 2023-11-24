@@ -1,24 +1,30 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] catch-all-global.sh multiple -h"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] catch-all.sh other something with --additional args and --debug -- with something else"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-With a multiple required argument
 
-[4mUsage:[0m
-  multiple [OPTIONS] MESSAGE... ...
-  multiple -h|--help
+args:
+- rargs_debug = 1
+- rargs_input = ([0] = "something"
+- [1] = "with"
+- [2] = "--additional"
+- [3] = "args"
+- [4] = "and"
+- [5] = "--debug"
+- [6] = "--"
+- [7] = "with"
+- [8] = "something"
+- [9] = "else")
 
-[4mArguments:[0m
-  MESSAGE
-    Message
-    [@required, @multiple]
-  GLOBAL_REQUIRED_ADDITIONAL_ARGUMENTS
-    Required additional arguments
-
-[4mOptions:[0m
-  -d --debug
-    Debug mode
-  -h --help
-    Print help
+other_args:
+- ${other_args[*]} = something with --additional args and with something else
+- ${other_args[0]} = something
+- ${other_args[1]} = with
+- ${other_args[2]} = --additional
+- ${other_args[3]} = args
+- ${other_args[4]} = and
+- ${other_args[5]} = with
+- ${other_args[6]} = something
+- ${other_args[7]} = else
 

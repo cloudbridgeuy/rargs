@@ -1,24 +1,20 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] catch-all.sh -h"
+description: "[stdout] commands-nested.sh file --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Catch All example
+File commands
 
 [4mUsage:[0m
-  catch-all [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  catch-all -h|--help
-  catch-all -v|--version
+  file [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  file -h|--help
+  file -v|--version
 
 [4mCommands:[0m
-  multiple ....... With a multiple required argument
-  no-multiple .... Command with a simple optional argument
-  other .......... Any arguments without description
-  required ....... Required additional arguments
+  remove .... Edit the file
+  show ...... Show file contents
 
 [4mOptions:[0m
-  -d --debug
-    Debug mode
   -h --help
     Print help
   -v --version

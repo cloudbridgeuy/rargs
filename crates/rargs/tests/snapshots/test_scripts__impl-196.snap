@@ -1,19 +1,18 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] repeatable-flag.sh -d 1 -d 2 -d 3 -v -v -v"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] json.sh --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Data elements:
-1
-2
-3
+Script that tests if rargs can handle JSON serialized strings in multi-line mode.
 
-Verbosity level: 3
+[4mUsage:[0m
+  json [OPTIONS]
+  json -h|--help
+  json -v|--version
 
-
-args:
-- rargs_data = ([0] = "1"
-- [1] = "2"
-- [2] = "3")
-- rargs_verbose = 3
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
 

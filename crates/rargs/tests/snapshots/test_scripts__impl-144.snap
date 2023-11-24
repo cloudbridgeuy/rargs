@@ -1,35 +1,13 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] catch-all-stdin.sh -h"
+description: "[stdout] commands.sh upload source --password Bar"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Catch All with stdin input
 
-[4mUsage:[0m
-  catch-all-stdin [OPTIONS] ...[FILE]
-  catch-all-stdin -h|--help
-  catch-all-stdin -v|--version
-
-[4mExamples:[0m
-  catch-all-stdin file1 file2 --format csv
-    Read two csv files
-  catch-all-stdin --format json file1 file2
-    Read two json files
-  catch-all-stdin -f csv < file1
-    Read a file from stdin
-  catch-all-stdin -f csv - < file1
-    Read a file from stdin using -
-
-[4mArguments:[0m
-  FILE
-    Path to one or more files. Reads from stdin if empty or -
-
-[4mOptions:[0m
-  -f --format [<FORMAT>]
-    Specify the file format
-    [@default json, @choices json, csv]
-  -h --help
-    Print help
-  -v --version
-    Print version
+args:
+- rargs_input = ([0] = "source"
+- [1] = "--password"
+- [2] = "Bar")
+- rargs_password = Bar
+- rargs_source = source
 

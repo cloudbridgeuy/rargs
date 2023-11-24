@@ -1,7 +1,14 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] minus-v.sh --version"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] catch-all-stdin.sh <<<foo"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-0.0.1
+
+args:
+- rargs_format = json
+- rargs_input = ([0] = "<<<foo")
+
+other_args:
+- ${other_args[*]} = <<<foo
+- ${other_args[0]} = <<<foo
 

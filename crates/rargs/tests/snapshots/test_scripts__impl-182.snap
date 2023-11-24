@@ -1,25 +1,7 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] repeatable-arg.sh file file2 file3 --action downcase --action upcase"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] hello-world.sh "
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-files:
-  path: file
-    downcase file
-    upcase FILE
-  path: file2
-    downcase file2
-    upcase FILE2
-  path: file3
-    downcase file3
-    upcase FILE3
-
-
-args:
-- rargs_action = ([0] = "downcase"
-- [1] = "upcase")
-- rargs_files = ([0] = "file"
-- [1] = "file2"
-- [2] = "file3")
+Hello, World!
 

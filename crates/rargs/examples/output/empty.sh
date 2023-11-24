@@ -13,24 +13,24 @@ fi
 set -e
 
 
-normalize_input() {
+normalize_rargs_input() {
   local arg flags
 
   while [[ $# -gt 0 ]]; do
     arg="$1"
     if [[ $arg =~ ^(--[a-zA-Z0-9_\-]+)=(.+)$ ]]; then
-      input+=("${BASH_REMATCH[1]}")
-      input+=("${BASH_REMATCH[2]}")
+      rargs_input+=("${BASH_REMATCH[1]}")
+      rargs_input+=("${BASH_REMATCH[2]}")
     elif [[ $arg =~ ^(-[a-zA-Z0-9])=(.+)$ ]]; then
-      input+=("${BASH_REMATCH[1]}")
-      input+=("${BASH_REMATCH[2]}")
+      rargs_input+=("${BASH_REMATCH[1]}")
+      rargs_input+=("${BASH_REMATCH[2]}")
     elif [[ $arg =~ ^-([a-zA-Z0-9][a-zA-Z0-9]+)$ ]]; then
       flags="${BASH_REMATCH[1]}"
       for ((i = 0; i < ${#flags}; i++)); do
-        input+=("-${flags:i:1}")
+        rargs_input+=("-${flags:i:1}")
       done
     else
-      input+=("$arg")
+      rargs_input+=("$arg")
     fi
 
     shift
@@ -39,7 +39,7 @@ normalize_input() {
 
 inspect_args() {
   prefix="rargs_"
-  args="$(set | grep ^$prefix || true)"
+  args="$(set | grep ^$prefix | grep -v rargs_run || true)"
   if [[ -n "$args" ]]; then
     echo
     echo args:
@@ -116,14 +116,14 @@ parse_arguments() {
   done
 }
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
   printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add " "commands or a root command" >&2
   usage >&2
   exit 1
 }
 
-run "$@"
+rargs_run "$@"

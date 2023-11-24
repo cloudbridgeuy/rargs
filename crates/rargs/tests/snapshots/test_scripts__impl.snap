@@ -1,6 +1,6 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: minimal.sh
+description: catch-all-stdin.sh
 expression: dst
 ---
 #!/usr/bin/env bash
@@ -23,64 +23,83 @@ parse_root() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-      -f | --force)
-        rargs_force=1
+      -f | --format)
+        rargs_format="$2"
+        shift 2
+        ;;
+      --)
         shift
+        other_args+=("$@")
+        break
         ;;
       -?*)
-        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
-        exit 1
+        other_args+=("$1")
+        shift
         ;;
       *)
-        if [[ -z "$rargs_source" ]]; then
-          rargs_source=$key
-          shift
-        elif [[ -z "$rargs_target" ]]; then
-          rargs_target=$key
-          shift
-        else
-          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
-          exit 1
-        fi
+        other_args+=("$1")
+        shift
         ;;
     esac
   done
 }
 
 root() {
-  local rargs_source
-  local rargs_target
+  local rargs_format
   # Parse command arguments
   parse_root "$@"
 
   
-  if [[ -z "$rargs_source" ]]; then
-    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "source" >&2
-    usage >&2
-    exit 1
+  if [[ -z "$rargs_format" ]]; then
+    rargs_format="json"
+  fi
+  
+  if [[ -n "$rargs_format" ]]; then
+    if [[ ! "(json csv)" =~ $rargs_format ]]; then
+      printf "\e[31m%s\e[33m%s\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option for " "format" ": " "$rargs_format" >&2
+      usage >&2
+      exit 1
+    fi
   fi
   inspect_args
+  # If other_args[0] is "-" or empty, read from stdin
+  if [[ "${other_args[0]}" == "-" || -z "${other_args[0]}" ]]; then
+    read_stdin
+  else
+    read_files
+  fi
+  printf "\nCollected file content:\n%s\n" "$content"
+  # Read contents of the provided file(s)
+  content=""
+  for file in "${other_args[@]}"; do
+    content+=$(cat "$file")
+    content+=$'\n'
+  done
+  # Read from stdin if no file is provided
+  if [[ -z "$content" ]]; then
+    content=$(cat -)
+  fi
 }
 
 
-normalize_input() {
+normalize_rargs_input() {
   local arg flags
 
   while [[ $# -gt 0 ]]; do
     arg="$1"
     if [[ $arg =~ ^(--[a-zA-Z0-9_\-]+)=(.+)$ ]]; then
-      input+=("${BASH_REMATCH[1]}")
-      input+=("${BASH_REMATCH[2]}")
+      rargs_input+=("${BASH_REMATCH[1]}")
+      rargs_input+=("${BASH_REMATCH[2]}")
     elif [[ $arg =~ ^(-[a-zA-Z0-9])=(.+)$ ]]; then
-      input+=("${BASH_REMATCH[1]}")
-      input+=("${BASH_REMATCH[2]}")
+      rargs_input+=("${BASH_REMATCH[1]}")
+      rargs_input+=("${BASH_REMATCH[2]}")
     elif [[ $arg =~ ^-([a-zA-Z0-9][a-zA-Z0-9]+)$ ]]; then
       flags="${BASH_REMATCH[1]}"
       for ((i = 0; i < ${#flags}; i++)); do
-        input+=("-${flags:i:1}")
+        rargs_input+=("-${flags:i:1}")
       done
     else
-      input+=("$arg")
+      rargs_input+=("$arg")
     fi
 
     shift
@@ -89,7 +108,7 @@ normalize_input() {
 
 inspect_args() {
   prefix="rargs_"
-  args="$(set | grep ^$prefix || true)"
+  args="$(set | grep ^$prefix | grep -v rargs_run || true)"
   if [[ -n "$args" ]]; then
     echo
     echo args:
@@ -115,30 +134,45 @@ inspect_args() {
   fi
 }
 
+read_stdin() {
+  # Read from stdin
+  content=$(cat -)
+}
+read_files() {
+  # Read contents of the provided file(s)
+  content=""
+  for file in "${other_args[@]}"; do
+    content+=$(cat "$file")
+    content+=$'\n'
+  done
+}
+
 version() {
   echo "0.0.1"
 }
 usage() {
-  printf "Sample minimal application without commands\n"
+  printf "Catch All with stdin input\n"
   printf "\n\033[4m%s\033[0m\n" "Usage:"
-  printf "  minimal [OPTIONS] SOURCE [TARGET] \n"
-  printf "  minimal -h|--help\n"
-  printf "  minimal -v|--version\n"
+  printf "  catch-all-stdin [OPTIONS] ...[FILE]\n"
+  printf "  catch-all-stdin -h|--help\n"
+  printf "  catch-all-stdin -v|--version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
-  printf "  minimal example.com\n"
-  printf "    Download a file from the internet\n"
-  printf "  minimal example.com ./output -f\n"
-  printf "    Download a file from the internet and force save it to ./output\n"
+  printf "  catch-all-stdin file1 file2 --format csv\n"
+  printf "    Read two csv files\n"
+  printf "  catch-all-stdin --format json file1 file2\n"
+  printf "    Read two json files\n"
+  printf "  catch-all-stdin -f csv < file1\n"
+  printf "    Read a file from stdin\n"
+  printf "  catch-all-stdin -f csv - < file1\n"
+  printf "    Read a file from stdin using -\n"
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
-  printf "  SOURCE\n"
-  printf "    URL to download from\n"
-  printf "    [@required]\n"
-  printf "  TARGET\n"
-  printf "    Target filename (default: same as source)\n"
+  printf "  FILE\n"
+  printf "    Path to one or more files. Reads from stdin if empty or "-"\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -f --force\n"
-  printf "    Overwrite existing files\n"
+  printf "  -f --format [<FORMAT>]\n"
+  printf "    Specify the file format\n"
+  printf "    [@default json, @choices json, csv]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  -v --version\n"
@@ -177,13 +211,14 @@ parse_arguments() {
   esac
 }
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
-  root "${input[@]}"
+  declare -a other_args=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  root "${rargs_input[@]}"
 }
 
-run "$@"
+rargs_run "$@"
 

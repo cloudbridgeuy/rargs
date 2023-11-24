@@ -1,23 +1,12 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] repeatable-arg.sh formats -h"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] json.sh "
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Formats
-
-[4mUsage:[0m
-  formats [OPTIONS] FORMATS...
-  formats -h|--help
-
-[4mArguments:[0m
-  FORMATS
-    One or more formats to process
-    [@required, @multiple, @default jpg, @choices jpg, png, gif]
-
-[4mOptions:[0m
-  -a --action [<ACTION>]
-    Action to perform
-    [@multiple, @choices upcase, downcase]
-  -h --help
-    Print help
+{
+  "something": "awesome"
+}
+{
+  "something": "awesome"
+}
 

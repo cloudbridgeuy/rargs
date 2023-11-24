@@ -1,15 +1,21 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-default-force.sh upload --help"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands-aliases.sh upload --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 Upload a file
 
-[4mAlias:[0m u
+[4mAlias:[0m u, push
 
 [4mUsage:[0m
   upload [OPTIONS] SOURCE
   upload -h|--help
+
+[4mExamples:[0m
+  upload upload example.com
+    Upload a file to the internet
+  upload push example.com
+    Upload a file and use a different alias
 
 [4mArguments:[0m
   SOURCE
@@ -17,6 +23,10 @@ Upload a file
     [@required]
 
 [4mOptions:[0m
+  -p --password [<PASSWORD>]
+    Password to use for logging in
+  -u --user [<USER>]
+    Username to use for logging in
   -h --help
     Print help
 

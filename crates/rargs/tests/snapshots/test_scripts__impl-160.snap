@@ -1,30 +1,7 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] extensible-delegate.sh -h"
+description: "[stdout] huggingface.sh --version"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Extensible delegate command example using git
-
-[4mUsage:[0m
-  extensible [OPTIONS] [COMMAND] [COMMAND_OPTIONS] [...EXTERNAL_COMMAND]
-  extensible -h|--help
-  extensible -v|--version
-
-[4mExamples:[0m
-  extensible log [GIT_OPTIONS]
-    Delegate a command that will be called with all the arguments
-
-[4mArguments:[0m
-  EXTERNAL_COMMAND
-    External command to run
-
-[4mCommands:[0m
-  download .... Download a file
-  upload ...... Upload a file
-
-[4mOptions:[0m
-  -h --help
-    Print help
-  -v --version
-    Print version
+0.0.1
 
