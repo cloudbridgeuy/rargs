@@ -1,10 +1,35 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands.sh upload source --user Foo"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands-default.sh --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+Sample application that uses the default command option
 
-args:
-- rargs_source = source
-- rargs_user = Foo
+[4mUsage:[0m
+  commands [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  commands -h|--help
+  commands -v|--version
+
+[4mExamples:[0m
+  commands 
+    Run the default command
+  commands --help
+    Print the global help
+  commands download something
+    Download something
+  commands upload something
+    Upload something
+  commands something
+    Upload something using the default command
+
+[4mCommands:[0m
+  download .... Download a file
+  upload ...... Upload a file
+  [@default upload]
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
 

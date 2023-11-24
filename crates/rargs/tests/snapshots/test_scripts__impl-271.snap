@@ -1,7 +1,15 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] no-first-option-help-local.sh "
+description: "[stdout] private.sh connect --protocol ssh localhost"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Hello, World!
+SSH!!!
+
+args:
+- rargs_host = localhost
+- rargs_input = ([0] = "--protocol"
+- [1] = "ssh"
+- [2] = "localhost")
+- rargs_protocol = ssh
+- rargs_username = ssh_ser
 

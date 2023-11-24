@@ -4,11 +4,11 @@ description: Run function with multiple commands and a default value
 expression: output
 ---
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
   #                              Handling the case where no action was selected.
@@ -19,15 +19,15 @@ run() {
   # Call the right command action
   case "$action" in
     "bar")
-      bar "${input[@]}"
+      bar "${rargs_input[@]}"
       exit
       ;;
     "baz")
-      baz "${input[@]}"
+      baz "${rargs_input[@]}"
       exit
       ;;
     "foo")
-      foo "${input[@]}"
+      foo "${rargs_input[@]}"
       exit
       ;;
     "")

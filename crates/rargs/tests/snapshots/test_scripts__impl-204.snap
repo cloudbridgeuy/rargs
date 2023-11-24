@@ -1,17 +1,14 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] private.sh -h"
+description: "[stdout] hello-world.sh -h"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Sample application with private commands
+Hello World script
 
 [4mUsage:[0m
-  private [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  private -h|--help
-  private -v|--version
-
-[4mCommands:[0m
-  connect .... Connect to the metaverse
+  hello-world [OPTIONS]
+  hello-world -h|--help
+  hello-world -v|--version
 
 [4mOptions:[0m
   -h --help

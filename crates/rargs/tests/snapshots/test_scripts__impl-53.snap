@@ -1,10 +1,18 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands.sh u source --user Foo"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] empty.sh -h"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+Empty script
 
-args:
-- rargs_source = source
-- rargs_user = Foo
+[4mUsage:[0m
+  emtpy [OPTIONS]
+  emtpy -h|--help
+  emtpy -v|--version
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
 

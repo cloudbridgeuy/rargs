@@ -1,20 +1,32 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] catch-all.sh no-multiple something with --additional args and --debug -- with something else"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands.sh download --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+Download a file
 
-args:
-- rargs_debug = 1
-- rargs_message = something
+[4mAlias:[0m d, down
 
-other_args:
-- ${other_args[*]} = with --additional args and with something else
-- ${other_args[0]} = with
-- ${other_args[1]} = --additional
-- ${other_args[2]} = args
-- ${other_args[3]} = and
-- ${other_args[4]} = with
-- ${other_args[5]} = something
-- ${other_args[6]} = else
+[4mUsage:[0m
+  download [OPTIONS] SOURCE [TARGET]
+  download -h|--help
+
+[4mExamples:[0m
+  download download example.com
+    Download a file from the internet
+  download download example.com ./output -f
+    Download a file from the internet and force save it to ./output
+
+[4mArguments:[0m
+  SOURCE
+    URL to download from
+    [@required]
+  TARGET
+    Target filename (default: same as source)
+
+[4mOptions:[0m
+  -f --force
+    Overwrite existing files
+  -h --help
+    Print help
 

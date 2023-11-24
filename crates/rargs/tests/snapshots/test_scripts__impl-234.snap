@@ -1,7 +1,37 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] huggingface.sh -v"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stderr] repeatable-arg.sh file file2 file3 --action downcase --action --upcase"
+expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-0.0.1
+[31mInvalid option for [33maction[31m: [33m--upcase[31m[0m
+
+Sample application to demonstrate the use of repeatable arguments
+
+[4mUsage:[0m
+  repeatable-arg [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  repeatable-arg -h|--help
+  repeatable-arg -v|--version
+
+[4mExamples:[0m
+  repeatable-arg README.md LICENSE
+    Multiple files
+  repeatable-arg *.md
+    Use a glob
+
+[4mArguments:[0m
+  FILES
+    One or more files to process
+    [@required, @multiple]
+
+[4mCommands:[0m
+  formats .... Formats
+
+[4mOptions:[0m
+  -a --action [<ACTION>]
+    Action to perform
+    [@multiple, @choices upcase, downcase]
+  -h --help
+    Print help
+  -v --version
+    Print version
 

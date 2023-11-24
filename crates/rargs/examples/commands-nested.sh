@@ -13,17 +13,16 @@
 # @sub ./commands-nested/dir.sh
 # @option -v --verbose Verbose mode
 dir() {
-  # shellcheck disable=SC2068
-  # shellcheck disable=SC2154
-  "$sub" ${input[@]}
+	# shellcheck disable=SC2068
+	# shellcheck disable=SC2154
+	"$sub" ${rargs_input[@]}
 }
 
 # @cmd File commands
 # @alias f
 # @sub ./commands-nested/file.sh
 file() {
-  # shellcheck disable=SC2068
-  # shellcheck disable=SC2154
-  "$sub" ${input[@]}
+	# shellcheck disable=SC2068
+	# shellcheck disable=SC2154
+	"$sub" ${rargs_input[@]}
 }
-

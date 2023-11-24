@@ -1,0 +1,28 @@
+---
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] repeatable-flag.sh -d 1 -d 2 -d 3 -vv -v"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Data elements:
+1
+2
+3
+
+Verbosity level: 3
+
+
+args:
+- rargs_data = ([0] = "1"
+- [1] = "2"
+- [2] = "3")
+- rargs_input = ([0] = "-d"
+- [1] = "1"
+- [2] = "-d"
+- [3] = "2"
+- [4] = "-d"
+- [5] = "3"
+- [6] = "-v"
+- [7] = "-v"
+- [8] = "-v")
+- rargs_verbose = 3
+

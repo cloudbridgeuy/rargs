@@ -4,11 +4,11 @@ description: Run function with a root command
 expression: output
 ---
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
-  root "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  root "${rargs_input[@]}"
 }
 

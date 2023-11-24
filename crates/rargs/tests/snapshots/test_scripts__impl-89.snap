@@ -1,34 +1,6 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stderr] commands-aliases.sh "
-expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+description: "[stdout] catch-all.sh no-multiple something"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing command. Select one of [33mdownload, upload[31m[0m
-
-Sample application
-
-[4mUsage:[0m
-  command-aliases [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  command-aliases -h|--help
-  command-aliases -v|--version
-
-[4mExamples:[0m
-  command-aliases download -h
-    Download command help
-  command-aliases download [OPTIONS] SOURCE [TARGET]
-    Download command example
-  command-aliases upload -h
-    Upload command help
-  command-aliases upload [OPTIONS] SOURCE
-    Upload command example
-
-[4mCommands:[0m
-  download .... Download a file
-  upload ...... Upload a file
-
-[4mOptions:[0m
-  -h --help
-    Print help
-  -v --version
-    Print version
 

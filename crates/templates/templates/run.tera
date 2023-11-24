@@ -9,14 +9,14 @@
     {%- endif %}
   {%- endfor %}
 {%- endif %}
-run() {
+rargs_run() {
   declare -A deps=()
 {%- if _any %}
   declare -a other_args=()
 {%- endif %}
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
   {%- if rules and rules is containing("no-first-option-help") %}
   # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
   #                              is provided anywhere on the command, not just as the first option.
@@ -48,13 +48,13 @@ run() {
   case "$action" in
   {%- for key, command in commands %}
     "{{ key }}")
-      {{ key }} "${input[@]}"
+      {{ key }} "${rargs_input[@]}"
       exit
       ;;
   {%- endfor %}
   {%- if root %}
     root)
-      root "${input[@]}"
+      root "${rargs_input[@]}"
       exit
       ;;
   {%- endif %}
@@ -70,7 +70,7 @@ run() {
       ;;
     {% else %}
       {%- if not rules or rules is not containing("no-force-default") %}
-      root "${input[@]}"
+      root "${rargs_input[@]}"
       ;;
       {%- else %}
       exit
@@ -80,7 +80,7 @@ run() {
   esac
 {%- else %}
   {%- if root %}
-  root "${input[@]}"
+  root "${rargs_input[@]}"
   {%- else %}
   printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Nothing to do. Please add " "commands or a root command" >&2
   usage >&2

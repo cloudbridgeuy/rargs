@@ -1,24 +1,32 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
-description: "[stdout] no-first-option-help-local.sh --help"
+description: "[stdout] repeatable-arg.sh file file2 file3 --action downcase --action upcase"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Script to test if the 'first-option-help' rule is working.
 
-[4mUsage:[0m
-  First option help [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
-  First option help -h|--help
-  First option help --version
+files:
+  path: file
+    downcase file
+    upcase FILE
+  path: file2
+    downcase file2
+    upcase FILE2
+  path: file3
+    downcase file3
+    upcase FILE3
 
-[4mCommands:[0m
-  download .... Download a file
-  upload ...... Upload a file
 
-[4mOptions:[0m
-  -v --verbose
-    Verbose mode
-  -h --help
-    Print help
-  --version
-    Print version
+args:
+- rargs_action = ([0] = "downcase"
+- [1] = "upcase")
+- rargs_files = ([0] = "file"
+- [1] = "file2"
+- [2] = "file3")
+- rargs_input = ([0] = "file"
+- [1] = "file2"
+- [2] = "file3"
+- [3] = "--action"
+- [4] = "downcase"
+- [5] = "--action"
+- [6] = "upcase")
 

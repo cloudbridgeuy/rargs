@@ -24,7 +24,7 @@ parse_arguments() {
   case $action in
     bar|baz|foo)
       action="foo"
-      input=("${input[@]:1}")
+      rargs_input=("${rargs_input[@]:1}")
       ;;
     -h|--help)
       usage

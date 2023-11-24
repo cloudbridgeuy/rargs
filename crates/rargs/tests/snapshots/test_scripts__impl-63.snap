@@ -1,10 +1,34 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] commands-default.sh source -f"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands-nested.sh -h"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+Sample application with nested commands
 
-args:
-- rargs_force = 1
-- rargs_source = source
+[4mUsage:[0m
+  commands-nested [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  commands-nested -h|--help
+  commands-nested -v|--version
+
+[4mExamples:[0m
+  commands-nested dir
+    Directory command
+  commands-nested dir -h
+    Directory help command
+  commands-nested file -h
+    Directory file command
+  commands-nested dir list
+    List directory sub-command
+  commands-nested dir list -h
+    List directory sub-command help
+
+[4mCommands:[0m
+  dir ..... Directory commands
+  file .... File commands
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
 

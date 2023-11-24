@@ -4,23 +4,23 @@ description: Run function with multiple commands and a default value
 expression: output
 ---
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
   # Call the right command action
   case "$action" in
     "bar")
-      bar "${input[@]}"
+      bar "${rargs_input[@]}"
       exit
       ;;
     "baz")
-      baz "${input[@]}"
+      baz "${rargs_input[@]}"
       exit
       ;;
     "foo")
-      foo "${input[@]}"
+      foo "${rargs_input[@]}"
       exit
       ;;
     "")

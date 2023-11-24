@@ -1,24 +1,28 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] extensible-delegate.sh download -h"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] minus-v.sh --help"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-Download a file
-
-[4mAlias:[0m d
+Example that replaces the default behavior of -v and -h
 
 [4mUsage:[0m
-  download [OPTIONS] SOURCE ...[]
-  download -h|--help
+  minus-v [OPTIONS]
+  minus-v --help
+  minus-v --version
 
-[4mArguments:[0m
-  SOURCE
-    File to download
-    [@required]
-  EXTERNAL_COMMAND
-    External command to run
+[4mExamples:[0m
+  minus-v -h|--host localhost
+    Set host
+  minus-v -v|--verbose
+    Set verbose mode on
 
 [4mOptions:[0m
-  -h --help
+  -h --host [<HOST>]
+    Show verbose output
+  -v --verbose
+    Show verbose output
+  --help
     Print help
+  --version
+    Print version
 

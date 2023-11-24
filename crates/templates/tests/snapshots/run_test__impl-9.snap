@@ -4,11 +4,11 @@ description: Run function with multiple global dependencies and a message
 expression: output
 ---
 
-run() {
+rargs_run() {
   declare -A deps=()
-  declare -a input=()
-  normalize_input "$@"
-  parse_arguments "${input[@]}"
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
   # Check global dependencies
   
   for dependency in git curl wget; do

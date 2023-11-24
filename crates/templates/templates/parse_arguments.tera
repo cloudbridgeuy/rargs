@@ -55,7 +55,7 @@ parse_arguments() {
     {%- for key, command in commands %}
     {% if command["aliases"] %}{{ command["aliases"] | join(sep="|") }}|{% endif %}{{ key }})
       action="{{ key }}"
-      input=("${input[@]:1}")
+      rargs_input=("${rargs_input[@]:1}")
       ;;
     {%- endfor %}
   {%- endif %}

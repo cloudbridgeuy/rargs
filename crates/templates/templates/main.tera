@@ -34,4 +34,4 @@ parse_root() {
   {%- include "function.tera" %}
 {%- endfor -%}
 {%- include "run.tera" %}
-run "$@"
+rargs_run "$@"

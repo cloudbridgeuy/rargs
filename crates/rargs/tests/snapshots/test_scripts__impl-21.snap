@@ -1,34 +1,8 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stderr] commands.sh d"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stderr] dependencies.sh upload"
 expression: "String::from_utf8(match \"stderr\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-[31mMissing required option: [33msource[31m[0m
+[31mMissing dependency: [33mfoo[31m[0m
 
-Download a file
-
-[4mAlias:[0m d, down
-
-[4mUsage:[0m
-  download [OPTIONS] SOURCE [TARGET]
-  download -h|--help
-
-[4mExamples:[0m
-  download download example.com
-    Download a file from the internet
-  download download example.com ./output -f
-    Download a file from the internet and force save it to ./output
-
-[4mArguments:[0m
-  SOURCE
-    URL to download from
-    [@required]
-  TARGET
-    Target filename (default: same as source)
-
-[4mOptions:[0m
-  -f --force
-    Overwrite existing files
-  -h --help
-    Print help
 

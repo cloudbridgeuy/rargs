@@ -1,9 +1,22 @@
 ---
-source: crates/rargc/tests/test_scripts.rs
-description: "[stdout] catch-all.sh multiple something"
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] commands-nested.sh file -h"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
+File commands
 
-args:
-- rargs_message = ([0] = "something")
+[4mUsage:[0m
+  file [OPTIONS] [COMMAND] [COMMAND_OPTIONS]
+  file -h|--help
+  file -v|--version
+
+[4mCommands:[0m
+  remove .... Edit the file
+  show ...... Show file contents
+
+[4mOptions:[0m
+  -h --help
+    Print help
+  -v --version
+    Print version
 
