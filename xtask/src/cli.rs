@@ -14,6 +14,8 @@ pub enum Commands {
     DeployDocs(DeployDocsArgs),
     /// Build the documentation site
     BuildDocs(BuildDocsArgs),
+    /// Runs the Zola development server
+    DevDocs,
     /// Build the release binary
     Release(ReleaseArgs),
     /// Builds a binary and installs it at the given path

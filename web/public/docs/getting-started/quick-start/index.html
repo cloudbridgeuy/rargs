@@ -262,6 +262,16 @@
 					
 					
 					
+							<h3>Welcome</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/welcome/welcome/">Why Choose Rargs?</a></li>
+							
+					</ul>
+					
+					
+					
+					
 							<h3>Getting Started</h3>
 							<ul class="list-unstyled">
 							                           
@@ -270,6 +280,20 @@
 									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/getting-started/installation/">Installation</a></li>
 							                           
 									<li><a class="docs-link active" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/">Quick Start</a></li>
+							
+					</ul>
+					
+					
+					
+					
+							<h3>Usage</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/">Basic Usage</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/arguments/">Arguments</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/options/">Options</a></li>
 							
 					</ul>
 					
@@ -308,9 +332,6 @@
   			<nav id="TableOfContents">
   					<ul>
   							
-  							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#table-of-contents">Table of Contents</a></li>
-  							
-  							
   							<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#requirements">Requirements </a></li>
   							
   							
@@ -337,29 +358,11 @@
       <main class="docs-content col-lg-11 col-xl-9">
         <h1>Quick Start</h1>
         <p class="lead">One page summary of how to start your first `rargs` script.</p>
-        <h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#requirements">Requirements</a></li>
-<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#your-first-script">Your First Script</a></li>
-<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#something-more-complex">Something More Complex</a></li>
-<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#rules">Rules</a></li>
-<li><a href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/#conclusion">Conclusion</a></li>
-</ol>
-<h2 id="requirements">Requirements <a name="requirements"></a></h2>
-<p>The only requirements to run <code>rargs</code> are Bash version 4 and the <code>rargs</code> binary. You may try to run
-the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.</p>
+        <h2 id="requirements">Requirements <a name="requirements"></a></h2>
+<p>The only requirements to run <code>rargs</code> are Bash version 4 and the <code>rargs</code> binary. You may try to run the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.</p>
 <h2 id="your-first-script">Your First Script <a name="your-first-script"></a></h2>
-<p>The <code>rargs</code> framework is heavily inspired by two other Bash frameworks:
-<a href="https://bashly.dannyb.com"><code>bashly</code></a>, and <a href="https://github.com/sigoden/argc"><code>argc</code></a>. The latter uses
-comments with a <code>JsDoc</code> inspired syntax to add functionality to the scripts at runtime. This syntax,
-known as a <code>comment decorator</code>, is a normal Bash comment followed by an <code> @</code> sign and a
-tag. It's how the <code>rargs</code> parser identifies configuration.</p>
-<p>To utilize this, you need to run the <code>argc</code> command and pass the output to an <code>eval</code> call somewhere
-in your script. <code>rargs</code> uses the same comment decorators, and adds a few of its own, but instead of
-requiring you to invoke it at runtime, you use the <code>rargs</code> binary to build your script. <code>rargs</code>
-takes every decorator and transforms it into Bash, while rearranging your functions along the way.
-The result is a new Bash script with all your logic, plus additional functionality like argument
-and option parsing, <code>--help</code> documentation, and more.</p>
+<p>The <code>rargs</code> framework is heavily inspired by two other Bash frameworks: <a href="https://bashly.dannyb.com"><code>bashly</code></a>, and <a href="https://github.com/sigoden/argc"><code>argc</code></a>. The latter uses comments with a <code>JsDoc</code> inspired syntax to add functionality to the scripts at runtime. This syntax, known as a <code>comment decorator</code>, is a normal Bash comment followed by an <code> @</code> sign and a tag. It's how the <code>rargs</code> parser identifies configuration.</p>
+<p>To utilize this, you need to run the <code>argc</code> command and pass the output to an <code>eval</code> call somewhere in your script. <code>rargs</code> uses the same comment decorators, and adds a few of its own, but instead of requiring you to invoke it at runtime, you use the <code>rargs</code> binary to build your script. <code>rargs</code> takes every decorator and transforms it into Bash, while rearranging your functions along the way. The result is a new Bash script with all your logic, plus additional functionality like argument and option parsing, <code>--help</code> documentation, and more.</p>
 <p>The easiest script you can make is one that only outputs its <code>help</code> message:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># @name empty
@@ -386,9 +389,7 @@ and option parsing, <code>--help</code> documentation, and more.</p>
 <blockquote>
 <p>On Unix-based systems, rargs tries to set the build file as executable.</p>
 </blockquote>
-<p>If you try to run it, you'll get an error asking you to configure a <code>root</code> command or a sub-command
-function. You can use <code>root</code> commands if you don't wan to support multiple sub-commands. For
-example, we can extend our previous script like this:</p>
+<p>If you try to run it, you'll get an error asking you to configure a <code>root</code> command or a sub-command function. You can use <code>root</code> commands if you don't wan to support multiple sub-commands. For example, we can extend our previous script like this:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># @name emtpy
 </span><span style="color:#65737e;"># @version 0.0.1
@@ -445,20 +446,15 @@ script, or run it with the <code>DEBUG</code> environment variable set to <code>
 </span><span>Hello, World!
 </span></code></pre>
 <h3 id="something-more-complex">Something More Complex <a name="something-more-complex"></a></h3>
-<p>Let's do something more complex. We'll use most of the features supported by <code>rargs</code> on the
-following example. We won't get too deep on how they work on this section. You can check their
-specific parts of the documentation for more information.</p>
-<p>We want to make a script that interacts with the HuggingFace API. So let's start by creating a new
-script called <code>huggingface.sh</code> and add our initial <code>metadata</code>.</p>
+<p>Let's do something more complex. We'll use most of the features supported by <code>rargs</code> on the following example. We won't get too deep on how they work on this section. You can check their specific parts of the documentation for more information.</p>
+<p>We want to make a script that interacts with the HuggingFace API. So let's start by creating a new script called <code>huggingface.sh</code> and add our initial <code>metadata</code>.</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># @name huggingface
 </span><span style="color:#65737e;"># @version 0.0.1
 </span><span style="color:#65737e;"># @description Call the Huggingface API through curl
 </span><span style="color:#65737e;"># @author @cloudbridgeuy
 </span></code></pre>
-<p>Our script is going to require <code>curl</code> as a tight dependency and it will require us to configure the
-<code>HUGGING_FACE_API_TOKEN</code> environment variable with our account secret. <code>rargs</code> can make sure that we
-have both of these values before running the script by setting the <code>@dep</code> and <code>@env</code> decorators.</p>
+<p>Our script is going to require <code>curl</code> as a tight dependency and it will require us to configure the <code>HUGGING_FACE_API_TOKEN</code> environment variable with our account secret. <code>rargs</code> can make sure that we have both of these values before running the script by setting the <code>@dep</code> and <code>@env</code> decorators.</p>
 <blockquote>
 <p>Decorators can be set at the <code>root</code> scope or per sub-command. Sub-commands will inherit <code>root</code>
 configuration by default.</p>
@@ -475,16 +471,11 @@ configuration by default.</p>
 <blockquote>
 <p>You can decorate your help message with colors.</p>
 </blockquote>
-<p><strong>Note:</strong> You can use <code>$()</code> or inverted quotes &quot;`&quot; inside the description and that code will be
-invoked.</p>
-<p>With these changes the <code>script</code> won't execute unless <code>curl</code> is installed in the system and the
-Huggingface API is set.</p>
-<p>Now, let's add our first sub-command. Given that there are multiple uses for LLM, we wan't to able
-to navigate to the right usage with our API. For example, let's say we wanted to use the
-<code>bert-base-uncased</code> model to find a word to fill a match. Is typically used to showcase the behavior
+<p><strong>Note:</strong> You can use <code>$()</code> or inverted quotes &quot;`&quot; inside the description and that code will be invoked.</p>
+<p>With these changes the <code>script</code> won't execute unless <code>curl</code> is installed in the system and the Huggingface API is set.</p>
+<p>Now, let's add our first sub-command. Given that there are multiple uses for LLM, we wan't to able to navigate to the right usage with our API. For example, let's say we wanted to use the <code>bert-base-uncased</code> model to find a word to fill a match. Is typically used to showcase the behavior
 of these models and it's fun to use.</p>
-<p>We'll start by creating a function called <code>fill-mask</code> and decorate it with additional options and
-arguments that we'll provide at runtime to override its behavior.</p>
+<p>We'll start by creating a function called <code>fill-mask</code> and decorate it with additional options and arguments that we'll provide at runtime to override its behavior.</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># @cmd Fill Mask
 </span><span style="color:#65737e;"># @help Tries to fill a hole with a missing word (token to be precise).
 </span><span style="color:#65737e;"># @option -m --model=bert-base-uncased Model to use.
@@ -564,8 +555,7 @@ this to the sub-command.</p>
 </span><span>  -h --help
 </span><span>    Print help
 </span></code></pre>
-<p>There are some additional options that this task can consume so let's add them. Also, to help us
-craft the required <code>JSON</code> object we'll use a tool called <code>jo</code>.</p>
+<p>There are some additional options that this task can consume so let's add them. Also, to help us craft the required <code>JSON</code> object we'll use a tool called <code>jo</code>.</p>
 <blockquote>
 <p>We'll also add <code>jo</code> as a local dependency required when calling the <code>fill-mask</code> command.</p>
 </blockquote>
@@ -603,17 +593,13 @@ convention to indicate that we are actually setting its value to <code>false</co
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">DEBUG</span><span>=</span><span style="color:#a3be8c;">1 </span><span style="color:#bf616a;">./huggingface.sh</span><span> fill-mask fill-mask &quot;</span><span style="color:#a3be8c;">The capital of France is [MASK]</span><span>&quot;</span><span style="color:#bf616a;"> --no-use-cache --wait-for-model
 </span></code></pre>
 <h3 id="rules">Rules</h3>
-<p>Now that our script is getting more complex, it's normal for us to forget all the options available
-for it, so calling for <code>help</code> is very common. By default, <code>rargs</code> will only allow you to call for
-the <code>help</code> output if you pass the <code>-h|--help</code> option as the first argument of the script.</p>
-<p>For example, if we pass the <code>--help</code> option in any other place other than the first position we'll
-get an error.</p>
+<p>Now that our script is getting more complex, it's normal for us to forget all the options available for it, so calling for <code>help</code> is very common. By default, <code>rargs</code> will only allow you to call for the <code>help</code> output if you pass the <code>-h|--help</code> option as the first argument of the script.</p>
+<p>For example, if we pass the <code>--help</code> option in any other place other than the first position we'll get an error.</p>
 <pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>./huggingface.sh fill-mask &quot;The capital of France is [MASK]&quot; --no-use-cache --wait-for-model --help
 </span><span>Invalid option: --help
 </span></code></pre>
 <p>We can change this behavior by setting the <code>no-first-option-help</code> rule.</p>
-<p>Just as with other features, we set rules at the <code>global</code> or <code>command</code> scope by appending the right
-comment decorator. In this case we need to use the <code>@rule</code> decorator plus the name of the rule we
+<p>Just as with other features, we set rules at the <code>global</code> or <code>command</code> scope by appending the right comment decorator. In this case we need to use the <code>@rule</code> decorator plus the name of the rule we
 want to activate. Let's add it at the root scope.</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># @name huggingface
@@ -632,8 +618,7 @@ want to activate. Let's add it at the root scope.</p>
 </span><span>...
 </span></code></pre>
 <h2 id="conclusion">Conclusion <a name="conclusion"></a></h2>
-<p>The previous examples showcases almost all of the most important <code>rargs</code> features. You can use it as
-a starting point to create your own scripts.</p>
+<p>The previous examples showcases almost all of the most important <code>rargs</code> features. You can use it as a starting point to create your own scripts.</p>
 <p>You can find more information about each of these features on their corresponding page in the docs.</p>
 <p>Here's the complete version of our script:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
@@ -672,6 +657,9 @@ a starting point to create your own scripts.</p>
 </span><span>}
 </span></code></pre>
 <p>Happy scripting!</p>
+<hr />
+<p>Want to learn more about <strong>Rargs</strong>? Continue to the next sections with more information about the framework.</p>
+<p><a href="../../usage/basic-usage/">Show me what I can do with Rargs →</a></p>
 
         
         
@@ -686,6 +674,44 @@ a starting point to create your own scripts.</p>
     
     
       
+        
+        
+          
+        
+      
+        
+        
+          
+        
+      
+        
+        
+          
+        
+      
+        
+        
+          
+        
+      
+        
+        
+          
+            
+              
+              <a href="https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;welcome&#x2F;welcome&#x2F;">
+                <div class="card my-1">
+                  <div class="card-body py-2">
+                    &larr; Why Choose Rargs?
+                  </div>
+                </div>
+              </a>
+            
+            
+            
+          
+        
+      
     
   
 
@@ -705,18 +731,28 @@ a starting point to create your own scripts.</p>
       
       
         
+      
+    
+      
+      
+        
           
           
-          <a class="ms-auto" href="https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;contributing&#x2F;how-to-contribute&#x2F;">
+          <a class="ms-auto" href="https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;usage&#x2F;basic-usage&#x2F;">
             <div class="card my-1">
               <div class="card-body py-2">
-                How to Contribute &rarr;
+                Basic Usage &rarr;
               </div>
             </div>
           </a>
           
           
           
+        
+      
+    
+      
+      
         
       
     

@@ -256,6 +256,16 @@
 					
 					
 					
+							<h3>Welcome</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/welcome/welcome/">Why Choose Rargs?</a></li>
+							
+					</ul>
+					
+					
+					
+					
 							<h3>Getting Started</h3>
 							<ul class="list-unstyled">
 							                           
@@ -264,6 +274,20 @@
 									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/getting-started/installation/">Installation</a></li>
 							                           
 									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/">Quick Start</a></li>
+							
+					</ul>
+					
+					
+					
+					
+							<h3>Usage</h3>
+							<ul class="list-unstyled">
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/">Basic Usage</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/arguments/">Arguments</a></li>
+							                           
+									<li><a class="docs-link" href="https://rargs.cloudbridge.uy/docs/usage/options/">Options</a></li>
 							
 					</ul>
 					
@@ -302,10 +326,10 @@
   			<nav id="TableOfContents">
   					<ul>
   							
-  							<li><a href="https://rargs.cloudbridge.uy/docs/help/faq/#what-is-the-rargs">What is the Rargs?</a></li>
+  							<li><a href="https://rargs.cloudbridge.uy/docs/help/faq/#why-does-it-fail-when-i-use-a-inside-a-multiline-string">Why does it fail when I use a } inside a multiline string?</a></li>
   							
   							
-  							<li><a href="https://rargs.cloudbridge.uy/docs/help/faq/#contact-the-creator">Contact the creator?</a></li>
+  							<li><a href="https://rargs.cloudbridge.uy/docs/help/faq/#how-do-i-contact-the-creator">How do I contact the creator?</a></li>
   							
   							
   					</ul>
@@ -317,30 +341,26 @@
       <main class="docs-content col-lg-11 col-xl-9">
         <h1>FAQ</h1>
         <p class="lead">Answers to frequently asked questions.</p>
-        <h2 id="what-is-the-rargs">What is the Rargs?</h2>
-<p>Rargs is a Bash framework based on other tools like <a href="https://bashly.dannyb.co/">Bashly</a> and
-<a href="https://github.com/sigoden/argc">Argc</a> that aims to simplify the process of creating bash scripts
-that include:</p>
-<ul>
-<li>Good help messages.</li>
-<li>Good argument, flag, and option parsing.</li>
-<li>Good handling of environment variables.</li>
-<li>Good handling of script dependencies.</li>
-<li>Good suport for script sub-commands.</li>
-<li>Inline documentation.</li>
-</ul>
-<p>All <code>rargs</code> configuration is done in the script itself, as <code>comment decorators</code>. Meaning, normal
-bash comments using <code>#</code> plus an <code> @</code> followed by a <code>tag</code>. For example, the <code># @option</code> decorator
-will let you configure an option argument to be passed to the script of a sub-command.</p>
-<p>The idea is for the script documentation to live alongside the script itself, this making it easier
-to keep the documentation up. It's very common for developers to forget to document scripts, that
-then become key parts of their infrastructure, but others are afraid to touch them or use them
-properly since it's not evident to understand how it works.</p>
-<h2 id="contact-the-creator">Contact the creator?</h2>
+        <h2 id="why-does-it-fail-when-i-use-a-inside-a-multiline-string">Why does it fail when I use a <code>}</code> inside a multiline string?</h2>
+<p>There's a known bug in <strong>Rargs</strong> that I haven't been able to fix revolving
+the usage of <code>}</code> symbols without any leading whitespace. The current parser looks for the <code>}</code> symbol to close the current function body. Nonetheless, it's not uncommon in Bash to do somethong like this:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#8fa1b3;">print_json</span><span>() {
+</span><span>  </span><span style="color:#bf616a;">cat </span><span>&lt;&lt;-</span><span style="color:#b48ead;">EOF </span><span>| </span><span style="color:#bf616a;">tee</span><span> /tmp/example.json
+</span><span style="color:#a3be8c;">{
+</span><span style="color:#a3be8c;">  &quot;something&quot;: &quot;awesome&quot;
+</span><span style="color:#a3be8c;">}
+</span><span style="color:#b48ead;">EOF
+</span><span>}
+</span></code></pre>
+<p>This perfectly balanced Bash code will produce an erroneous built script, since it will consider the <code>}</code> used in the JSON object as the end of the function, thus creating a slew of issues.</p>
+<p>There is a workaround, if you add a <code>space</code> or any other whitespace character (other than a new line) before the <code>}</code> then nothing will break. You could also try building your JSON object with some other tool, like <a href="https://github.com/jpmens/jo"><code>jo</code></a>.</p>
+<h2 id="how-do-i-contact-the-creator">How do I contact the creator?</h2>
 <p>Send <em>CloudBridgeUY</em> an E-mail:</p>
 <ul>
 <li><a href="mailto:admin@cloudbridge.com.uy">admin@cloudbridge.com.uy</a></li>
 </ul>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>
+</span></code></pre>
 
         
         
@@ -383,6 +403,16 @@ properly since it's not evident to understand how it works.</p>
           
         
       
+        
+        
+          
+        
+      
+        
+        
+          
+        
+      
     
   
 
@@ -393,6 +423,16 @@ properly since it's not evident to understand how it works.</p>
   
     
     
+    
+      
+      
+        
+      
+    
+      
+      
+        
+      
     
       
       

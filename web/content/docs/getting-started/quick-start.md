@@ -4,7 +4,7 @@ description = "One page summary of how to create your first `rargs` script."
 date = 2023-09-22T08:20:00+00:00
 updated = 2023-09-22T08:20:00+00:00
 draft = false
-weight = 20
+weight = 30
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -14,33 +14,15 @@ toc = true
 top = false
 +++
 
-## Table of Contents
-
-1. [Requirements](#requirements)
-2. [Your First Script](#your-first-script)
-3. [Something More Complex](#something-more-complex)
-4. [Rules](#rules)
-5. [Conclusion](#conclusion)
-
 ## Requirements <a name="requirements"></a>
 
-The only requirements to run `rargs` are Bash version 4 and the `rargs` binary. You may try to run
-the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.
+The only requirements to run `rargs` are Bash version 4 and the `rargs` binary. You may try to run the resulting scripts on a lower version of Bash, but there's no guarantee that they will work.
 
 ## Your First Script <a name="your-first-script"></a>
 
-The `rargs` framework is heavily inspired by two other Bash frameworks:
-[`bashly`](https://bashly.dannyb.com), and [`argc`](https://github.com/sigoden/argc). The latter uses
-comments with a `JsDoc` inspired syntax to add functionality to the scripts at runtime. This syntax,
-known as a `comment decorator`, is a normal Bash comment followed by an ` @` sign and a
-tag. It's how the `rargs` parser identifies configuration.
+The `rargs` framework is heavily inspired by two other Bash frameworks: [`bashly`](https://bashly.dannyb.com), and [`argc`](https://github.com/sigoden/argc). The latter uses comments with a `JsDoc` inspired syntax to add functionality to the scripts at runtime. This syntax, known as a `comment decorator`, is a normal Bash comment followed by an ` @` sign and a tag. It's how the `rargs` parser identifies configuration.
 
-To utilize this, you need to run the `argc` command and pass the output to an `eval` call somewhere
-in your script. `rargs` uses the same comment decorators, and adds a few of its own, but instead of
-requiring you to invoke it at runtime, you use the `rargs` binary to build your script. `rargs`
-takes every decorator and transforms it into Bash, while rearranging your functions along the way.
-The result is a new Bash script with all your logic, plus additional functionality like argument
-and option parsing, `--help` documentation, and more.
+To utilize this, you need to run the `argc` command and pass the output to an `eval` call somewhere in your script. `rargs` uses the same comment decorators, and adds a few of its own, but instead of requiring you to invoke it at runtime, you use the `rargs` binary to build your script. `rargs` takes every decorator and transforms it into Bash, while rearranging your functions along the way. The result is a new Bash script with all your logic, plus additional functionality like argument and option parsing, `--help` documentation, and more.
 
 The easiest script you can make is one that only outputs its `help` message:
 
@@ -75,9 +57,7 @@ rargs build -d ./bin src/empty.sh
 
 > On Unix-based systems, rargs tries to set the build file as executable.
 
-If you try to run it, you'll get an error asking you to configure a `root` command or a sub-command
-function. You can use `root` commands if you don't wan to support multiple sub-commands. For
-example, we can extend our previous script like this:
+If you try to run it, you'll get an error asking you to configure a `root` command or a sub-command function. You can use `root` commands if you don't wan to support multiple sub-commands. For example, we can extend our previous script like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -143,12 +123,9 @@ Hello, World!
 
 ### Something More Complex <a name="something-more-complex"></a>
 
-Let's do something more complex. We'll use most of the features supported by `rargs` on the
-following example. We won't get too deep on how they work on this section. You can check their
-specific parts of the documentation for more information.
+Let's do something more complex. We'll use most of the features supported by `rargs` on the following example. We won't get too deep on how they work on this section. You can check their specific parts of the documentation for more information.
 
-We want to make a script that interacts with the HuggingFace API. So let's start by creating a new
-script called `huggingface.sh` and add our initial `metadata`.
+We want to make a script that interacts with the HuggingFace API. So let's start by creating a new script called `huggingface.sh` and add our initial `metadata`.
 
 ```bash
 #!/usr/bin/env bash
@@ -158,9 +135,7 @@ script called `huggingface.sh` and add our initial `metadata`.
 # @author @cloudbridgeuy
 ```
 
-Our script is going to require `curl` as a tight dependency and it will require us to configure the
-`HUGGING_FACE_API_TOKEN` environment variable with our account secret. `rargs` can make sure that we
-have both of these values before running the script by setting the `@dep` and `@env` decorators.
+Our script is going to require `curl` as a tight dependency and it will require us to configure the `HUGGING_FACE_API_TOKEN` environment variable with our account secret. `rargs` can make sure that we have both of these values before running the script by setting the `@dep` and `@env` decorators.
 
 > Decorators can be set at the `root` scope or per sub-command. Sub-commands will inherit `root`
 > configuration by default.
@@ -179,19 +154,14 @@ Let's add these decorators to our script.
 
 > You can decorate your help message with colors.
 
-**Note:** You can use `$()` or inverted quotes "`" inside the description and that code will be
-invoked.
+**Note:** You can use `$()` or inverted quotes "`" inside the description and that code will be invoked.
 
-With these changes the `script` won't execute unless `curl` is installed in the system and the
-Huggingface API is set.
+With these changes the `script` won't execute unless `curl` is installed in the system and the Huggingface API is set.
 
-Now, let's add our first sub-command. Given that there are multiple uses for LLM, we wan't to able
-to navigate to the right usage with our API. For example, let's say we wanted to use the
-`bert-base-uncased` model to find a word to fill a match. Is typically used to showcase the behavior
+Now, let's add our first sub-command. Given that there are multiple uses for LLM, we wan't to able to navigate to the right usage with our API. For example, let's say we wanted to use the `bert-base-uncased` model to find a word to fill a match. Is typically used to showcase the behavior
 of these models and it's fun to use.
 
-We'll start by creating a function called `fill-mask` and decorate it with additional options and
-arguments that we'll provide at runtime to override its behavior.
+We'll start by creating a function called `fill-mask` and decorate it with additional options and arguments that we'll provide at runtime to override its behavior.
 
 ```bash
 # @cmd Fill Mask
@@ -279,8 +249,7 @@ Options:
     Print help
 ```
 
-There are some additional options that this task can consume so let's add them. Also, to help us
-craft the required `JSON` object we'll use a tool called `jo`.
+There are some additional options that this task can consume so let's add them. Also, to help us craft the required `JSON` object we'll use a tool called `jo`.
 
 > We'll also add `jo` as a local dependency required when calling the `fill-mask` command.
 
@@ -323,12 +292,9 @@ DEBUG=1 ./huggingface.sh fill-mask fill-mask "The capital of France is [MASK]" -
 
 ### Rules
 
-Now that our script is getting more complex, it's normal for us to forget all the options available
-for it, so calling for `help` is very common. By default, `rargs` will only allow you to call for
-the `help` output if you pass the `-h|--help` option as the first argument of the script.
+Now that our script is getting more complex, it's normal for us to forget all the options available for it, so calling for `help` is very common. By default, `rargs` will only allow you to call for the `help` output if you pass the `-h|--help` option as the first argument of the script.
 
-For example, if we pass the `--help` option in any other place other than the first position we'll
-get an error.
+For example, if we pass the `--help` option in any other place other than the first position we'll get an error.
 
 ```
 ./huggingface.sh fill-mask "The capital of France is [MASK]" --no-use-cache --wait-for-model --help
@@ -337,8 +303,7 @@ Invalid option: --help
 
 We can change this behavior by setting the `no-first-option-help` rule.
 
-Just as with other features, we set rules at the `global` or `command` scope by appending the right
-comment decorator. In this case we need to use the `@rule` decorator plus the name of the rule we
+Just as with other features, we set rules at the `global` or `command` scope by appending the right comment decorator. In this case we need to use the `@rule` decorator plus the name of the rule we
 want to activate. Let's add it at the root scope.
 
 ```bash
@@ -364,8 +329,7 @@ Tries to fill a hole with a missing word (token to be precise).
 
 ## Conclusion <a name="conclusion"></a>
 
-The previous examples showcases almost all of the most important `rargs` features. You can use it as
-a starting point to create your own scripts.
+The previous examples showcases almost all of the most important `rargs` features. You can use it as a starting point to create your own scripts.
 
 You can find more information about each of these features on their corresponding page in the docs.
 
@@ -409,3 +373,9 @@ fill-mask() {
 ```
 
 Happy scripting!
+
+---
+
+Want to learn more about **Rargs**? Continue to the next sections with more information about the framework.
+
+[Show me what I can do with Rargs →](../../usage/basic-usage/)

@@ -4,7 +4,7 @@ description = "Answers to frequently asked questions."
 date = 2021-05-01T19:30:00+00:00
 updated = 2021-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 10
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -14,30 +14,31 @@ toc = true
 top = false
 +++
 
-## What is the Rargs?
+## Why does it fail when I use a `}` inside a multiline string?
 
-Rargs is a Bash framework based on other tools like [Bashly](https://bashly.dannyb.co/) and
-[Argc](https://github.com/sigoden/argc) that aims to simplify the process of creating bash scripts
-that include:
+There's a known bug in **Rargs** that I haven't been able to fix revolving
+the usage of `}` symbols without any leading whitespace. The current parser looks for the `}` symbol to close the current function body. Nonetheless, it's not uncommon in Bash to do somethong like this:
 
-- Good help messages.
-- Good argument, flag, and option parsing.
-- Good handling of environment variables.
-- Good handling of script dependencies.
-- Good suport for script sub-commands.
-- Inline documentation.
+```bash
+print_json() {
+  cat <<-EOF | tee /tmp/example.json
+{
+  "something": "awesome"
+}
+EOF
+}
+```
 
-All `rargs` configuration is done in the script itself, as `comment decorators`. Meaning, normal
-bash comments using `#` plus an ` @` followed by a `tag`. For example, the `# @option` decorator
-will let you configure an option argument to be passed to the script of a sub-command.
+This perfectly balanced Bash code will produce an erroneous built script, since it will consider the `}` used in the JSON object as the end of the function, thus creating a slew of issues.
 
-The idea is for the script documentation to live alongside the script itself, this making it easier
-to keep the documentation up. It's very common for developers to forget to document scripts, that
-then become key parts of their infrastructure, but others are afraid to touch them or use them
-properly since it's not evident to understand how it works.
+There is a workaround, if you add a `space` or any other whitespace character (other than a new line) before the `}` then nothing will break. You could also try building your JSON object with some other tool, like [`jo`](https://github.com/jpmens/jo).
 
-## Contact the creator?
+## How do I contact the creator?
 
-Send *CloudBridgeUY* an E-mail:
+Send _CloudBridgeUY_ an E-mail:
 
 - <admin@cloudbridge.com.uy>
+
+```
+
+```

@@ -5,8 +5,35 @@
     <link href="https://rargs.cloudbridge.uy/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://rargs.cloudbridge.uy"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-10-14T07:00:00+00:00</updated>
+    <updated>2023-11-24T08:20:00+00:00</updated>
     <id>https://rargs.cloudbridge.uy/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Why Choose Rargs?</title>
+        <published>2023-11-24T08:20:00+00:00</published>
+        <updated>2023-11-24T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/welcome/welcome/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/welcome/welcome/</id>
+        
+        <content type="html">&lt;p&gt;My journey with &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; began when my interest in Rust met my need for improved Bash scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ve always wanted scripts that explain themselves and show users how they work. Too often, I&#x27;ve seen scripts with scant or missing documentation. And when there is documentation, it&#x27;s hard to know if it&#x27;s up-to-date without diving into the code. So, I searched for a tool that could streamline my workflow and avoid these issues.&lt;&#x2F;p&gt;
+&lt;p&gt;Two tools truly stood out: &lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.co&#x2F;&quot;&gt;Bashly&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;Argc&lt;&#x2F;a&gt;. &lt;code&gt;Argc&lt;&#x2F;code&gt; appealed to me with its use of &lt;code&gt;jsdoc&lt;&#x2F;code&gt;-like comments to define functions&#x27; arguments, options, and flags. And, I liked the idea of creating an app with multiple sub-commands from one script.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Disclaimer:&lt;&#x2F;strong&gt; This is not a knock on these tools. They&#x27;re great and solve specific problems well. They just weren&#x27;t quite what I was seeking.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Argc&lt;&#x2F;code&gt; didn&#x27;t sit right with me because it needs to be on your &lt;code&gt;$PATH&lt;&#x2F;code&gt; and requires a special &lt;code&gt;eval&lt;&#x2F;code&gt; at the end of your script.&lt;&#x2F;p&gt;
+&lt;p&gt;As for &lt;code&gt;Bashly&lt;&#x2F;code&gt;, it&#x27;s a build tool that takes a YAML config and scripts, combining them into one. It&#x27;s good, but I didn&#x27;t like:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;The need for a YAML config file.&lt;&#x2F;li&gt;
+&lt;li&gt;Defining commands in separate scripts merged at build time.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;So, I envisioned a solution that took the best parts from both. Enter &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;: a tool that uses script annotations to generate a compiled script with all defined functionalities. This results in a single script—or multiple—one that documents its behavior in the source and acts as a standard script when built.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ve been using &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; for some time, and it&#x27;s made my scripts more comprehensible, maintainable, and user-friendly. I hope it can do the same for you.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Say hello to Rargs 👋</title>
         <published>2023-10-14T07:00:00+00:00</published>
@@ -18,6 +45,189 @@
         <id>https://rargs.cloudbridge.uy/blog/say-hello-to-rargs/</id>
         
         <content type="html"></content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Arguments</title>
+        <published>2023-09-27T08:20:00+00:00</published>
+        <updated>2023-09-27T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/usage/arguments/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/usage/arguments/</id>
+        
+        <content type="html">&lt;p&gt;Arguments are the most basic way to pass information to your script. They are positional, which means that the order in which you pass them matters. With &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; you can simplify the process of parsing these arguments, as well as be able to define &lt;em&gt;required&lt;&#x2F;em&gt;, &lt;em&gt;multiple&lt;&#x2F;em&gt;, and &lt;em&gt;pre-defined&lt;&#x2F;em&gt; values for your arguments.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;basic-usage&quot;&gt;Basic Usage&lt;&#x2F;h2&gt;
+&lt;p&gt;You define arguments using the &lt;code&gt;@arg&lt;&#x2F;code&gt; tag. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name arguments
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Sample application with arguments
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg name The name of the person to greet
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;greet&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This script defines a single argument called &lt;code&gt;name&lt;&#x2F;code&gt;. You can access the value of this argument using the &lt;code&gt;$rargs_name&lt;&#x2F;code&gt; variable.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All &lt;code&gt;arguments&lt;&#x2F;code&gt;, &lt;code&gt;options&lt;&#x2F;code&gt;, &lt;code&gt;flags&lt;&#x2F;code&gt;, and other &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; related runtime resources are prefixed with &lt;code&gt;rargs_&lt;&#x2F;code&gt; in order to avoid collisions with your script.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;By default, all arguments are optional. You can mark an argument as
+&lt;em&gt;required&lt;&#x2F;em&gt;, by appending a &lt;code&gt;!&lt;&#x2F;code&gt; to its name. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg name! The name of the person to greet
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;greet&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If the script doesn&#x27;t provide an argument when calling the script, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will throw an error.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s a list of all the available &lt;code&gt;comment decorators&lt;&#x2F;code&gt; for arguments:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;! &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;=foo &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;=&amp;quot;foo bar&amp;quot; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value that contains spaces.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;[foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that supports only a list of pre-defined values.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;[=foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that supports only a list of pre-defined values with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;* &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional multiple argument&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;+ &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required multiple argument&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional positional argument that supports predefined values, multiple values, has a default, and its optional&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required positional argument that supports predefined values, multiple values, has a default, and its optional&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt; &amp;lt;VALUE_NOTATION&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a custom value notation.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;Some important notes:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;The description of the argument can include spaces and ANSI escape sequences.&lt;&#x2F;li&gt;
+&lt;li&gt;Default values with spaces must be set using double quotes.&lt;&#x2F;li&gt;
+&lt;li&gt;When defining a list of pre-defined values, you must escape the &lt;code&gt;|&lt;&#x2F;code&gt; character.&lt;&#x2F;li&gt;
+&lt;li&gt;The default value on an argument that only supports a list of pre-defined values must be the first value in the list.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Current implementation of &lt;code&gt;multiple&lt;&#x2F;code&gt; arguments forces all positional arguments to be &lt;em&gt;required&lt;&#x2F;em&gt;. This is a known issue that will be fixed in future versions.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Here&#x27;s an example of a script that uses all the available &lt;code&gt;comment decorators&lt;&#x2F;code&gt; for arguments:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# shellcheck disable=SC2154
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name example
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.1.0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description A rargs script template
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Subcommand example
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg optional-argument Optional argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg required-argument! Required argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg default-argument=foo Default argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg default-argument-with-spaces=&amp;quot;foo bar&amp;quot; Default argument with spaces
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg with-options[foo|bar|baz] Argument with options
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg with-options-and-default[=foo|bar|baz] Argument with options and default
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg with-different-value-notation &amp;lt;VALUE_NOTATION&amp;gt; Argument with different value notation
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg with-multiple-optional* Multiple argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;## Next lines are commented because `rargs` does not support handling more than one multiple argument.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-required+ Multiple argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-optional-and-options*[foo|bar|baz] Multiple argument with options.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple argument with options and default.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;subcommand&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;optional-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_optional_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;required-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_required_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;default-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_default_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;default-argument-with-spaces: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_default_argument_with_spaces&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_default&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-different-value-notation: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_different_value_notation&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional-and-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional_and_options[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional_options_and_default[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required-and-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required_and_options[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required_options_and_default[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Next, we&#x27;ll learn how to define options in your &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how options work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Options</title>
+        <published>2023-09-27T08:20:00+00:00</published>
+        <updated>2023-09-27T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/usage/options/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/usage/options/</id>
+        
+        <content type="html">&lt;h2 id=&quot;creating-a-new-script&quot;&gt;Creating a New Script&lt;&#x2F;h2&gt;
+&lt;p&gt;You can start writing a new &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script in any directory on your machine. All Bash scripts are valid &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; sources. You can begin with an existing script or create a new one. If you prefer not to start with an empty script, you can run &lt;code&gt;rargs new&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs&lt;&#x2F;span&gt;&lt;span&gt; new&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --destination&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;src minimal
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command will generate a minimal template for you to start with.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;scopes&quot;&gt;Scopes&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts are configured using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. These tags define every feature supported by the framework. At build time, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will use the information inside the &lt;code&gt;comment decorators&lt;&#x2F;code&gt; to configure the build script.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; ignores and removes all comments at build time. To make a comment persist, add an extra &lt;code&gt;#&lt;&#x2F;code&gt; at the beginning of the line.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Each &lt;code&gt;comment tag&lt;&#x2F;code&gt; is assigned to either the script or one of its commands. Tags assigned to the script are part of the &lt;code&gt;root&lt;&#x2F;code&gt; scope, while those assigned to a command belong to that &lt;code&gt;function&lt;&#x2F;code&gt; scope.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Double &lt;code&gt;##&lt;&#x2F;code&gt; comments in the &lt;code&gt;root&lt;&#x2F;code&gt; scope are hoisted to the beginning of the script. Similarly, double &lt;code&gt;##&lt;&#x2F;code&gt; comments in each &lt;code&gt;function&lt;&#x2F;code&gt; scope are hoisted to the start of the function.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;script-metadata&quot;&gt;Script Metadata&lt;&#x2F;h2&gt;
+&lt;p&gt;You can add metadata to your script at the root level using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Sample minimal application without commands
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;These tags set the &lt;code&gt;name&lt;&#x2F;code&gt;, &lt;code&gt;version&lt;&#x2F;code&gt;, and description of the app. This information appears in the &lt;code&gt;--help&lt;&#x2F;code&gt; and &lt;code&gt;--version&lt;&#x2F;code&gt; commands.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;--version&lt;&#x2F;code&gt; option is automatically generated when you add the &lt;code&gt;@version&lt;&#x2F;code&gt; tag.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The full list of available metadata &lt;code&gt;comment decorators&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@name&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The name of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@version&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The version of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@description&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;A description of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@author&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The author of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@license&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The license of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@default&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The default command to run.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;h2 id=&quot;commands&quot;&gt;Commands&lt;&#x2F;h2&gt;
+&lt;p&gt;A &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script consists of one or more commands. A command is a Bash function that you can call from the command line. It can have arguments, flags, options, dependencies, rules, and more. Not all Bash functions are exposed as commands, and some can be set as private.&lt;&#x2F;p&gt;
+&lt;p&gt;To define a Bash function as a command, add the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag to it. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greet the world
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;hello&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello World!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This exposes the &lt;code&gt;hello&lt;&#x2F;code&gt; command from the script.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag requires a brief description of the command&#x27;s purpose. This description is used in the help message.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Every &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script must have at least one command. If commands don&#x27;t fit your script, create it with a single special function called &lt;code&gt;root&lt;&#x2F;code&gt;. This function is invoked when you call the script without any commands. You can assign the same behavior to a &lt;code&gt;root&lt;&#x2F;code&gt; function as to any other command function.&lt;&#x2F;p&gt;
+&lt;p&gt;Each &lt;code&gt;command decorator&lt;&#x2F;code&gt; under the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag configures the command. The full list of available &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@option&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an option for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@flag&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a flag for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an argument for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@env&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an environment variable for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@rule&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a rule for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@dep&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a dependency for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@private&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Set the command as private.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@example&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Add an example of how to use this command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;After the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and any additional configuration, add the Bash function that executes when the command is called. The command&#x27;s scope ends when &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; detects the end of the function declaration.&lt;&#x2F;p&gt;
+&lt;p&gt;All &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags at the &lt;code&gt;root&lt;&#x2F;code&gt; scope are declared regardless of the line. However, all &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags for a function must be defined between the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and the function declaration.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;In the following sections, we&#x27;ll dive deeper into each &lt;code&gt;command decorator&lt;&#x2F;code&gt; tag and how to use them.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how options work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
         
     </entry>
     <entry xml:lang="en">
@@ -44,6 +254,9 @@ into a directory on your path, or add the &lt;code&gt;release&lt;&#x2F;code&gt; 
 binary executable permissions.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;chmod&lt;&#x2F;span&gt;&lt;span&gt; +x rargs
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Next, you&#x27;ll see how you can use &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; to create your first script.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;quick-start&#x2F;&quot;&gt;Continue to Quick Start →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 </content>
         
     </entry>
@@ -57,7 +270,18 @@ binary executable permissions.&lt;&#x2F;p&gt;
         <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/getting-started/introduction/" type="text/html"/>
         <id>https://rargs.cloudbridge.uy/docs/getting-started/introduction/</id>
         
-        <content type="html">&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
+        <content type="html">&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; is a Bash framework inspired by &lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.co&#x2F;&quot;&gt;Bashly&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;Argc&lt;&#x2F;a&gt;. It&#x27;s designed to make it easier to create feature-rich command-line tools with Bash.&lt;&#x2F;p&gt;
+&lt;p&gt;With &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;, you get help with:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Writing helpful messages.&lt;&#x2F;li&gt;
+&lt;li&gt;Parsing arguments, flags, and options.&lt;&#x2F;li&gt;
+&lt;li&gt;Managing environment variables.&lt;&#x2F;li&gt;
+&lt;li&gt;Checking script dependencies.&lt;&#x2F;li&gt;
+&lt;li&gt;Using sub-commands.&lt;&#x2F;li&gt;
+&lt;li&gt;Creating built-in documentation.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;It&#x27;s not the only tool out there, but it&#x27;s unique because it lets you do everything in one file without runtime dependencies. Your script functions stay separate and easy to manage, all while enjoying &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;&#x27; features.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;&#x2F;h2&gt;
 &lt;p&gt;Learn how to install &lt;code&gt;rargs&lt;&#x2F;code&gt; on your operating system. &lt;a href=&quot;..&#x2F;installation&#x2F;&quot;&gt;Installation →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;&#x2F;h2&gt;
 &lt;p&gt;One page summary of how to create your first &lt;code&gt;rargs&lt;&#x2F;code&gt; script. &lt;a href=&quot;..&#x2F;quick-start&#x2F;&quot;&gt;Quick Start →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
@@ -80,29 +304,11 @@ binary executable permissions.&lt;&#x2F;p&gt;
         <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/getting-started/quick-start/" type="text/html"/>
         <id>https://rargs.cloudbridge.uy/docs/getting-started/quick-start/</id>
         
-        <content type="html">&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;&#x2F;h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#requirements&quot;&gt;Requirements&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#your-first-script&quot;&gt;Your First Script&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#something-more-complex&quot;&gt;Something More Complex&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#rules&quot;&gt;Rules&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rargs.cloudbridge.uy&#x2F;docs&#x2F;getting-started&#x2F;quick-start&#x2F;#conclusion&quot;&gt;Conclusion&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;&#x2F;ol&gt;
-&lt;h2 id=&quot;requirements&quot;&gt;Requirements &lt;a name=&quot;requirements&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;The only requirements to run &lt;code&gt;rargs&lt;&#x2F;code&gt; are Bash version 4 and the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary. You may try to run
-the resulting scripts on a lower version of Bash, but there&#x27;s no guarantee that they will work.&lt;&#x2F;p&gt;
+        <content type="html">&lt;h2 id=&quot;requirements&quot;&gt;Requirements &lt;a name=&quot;requirements&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;The only requirements to run &lt;code&gt;rargs&lt;&#x2F;code&gt; are Bash version 4 and the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary. You may try to run the resulting scripts on a lower version of Bash, but there&#x27;s no guarantee that they will work.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;your-first-script&quot;&gt;Your First Script &lt;a name=&quot;your-first-script&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;The &lt;code&gt;rargs&lt;&#x2F;code&gt; framework is heavily inspired by two other Bash frameworks:
-&lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.com&quot;&gt;&lt;code&gt;bashly&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;&lt;code&gt;argc&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;. The latter uses
-comments with a &lt;code&gt;JsDoc&lt;&#x2F;code&gt; inspired syntax to add functionality to the scripts at runtime. This syntax,
-known as a &lt;code&gt;comment decorator&lt;&#x2F;code&gt;, is a normal Bash comment followed by an &lt;code&gt; @&lt;&#x2F;code&gt; sign and a
-tag. It&#x27;s how the &lt;code&gt;rargs&lt;&#x2F;code&gt; parser identifies configuration.&lt;&#x2F;p&gt;
-&lt;p&gt;To utilize this, you need to run the &lt;code&gt;argc&lt;&#x2F;code&gt; command and pass the output to an &lt;code&gt;eval&lt;&#x2F;code&gt; call somewhere
-in your script. &lt;code&gt;rargs&lt;&#x2F;code&gt; uses the same comment decorators, and adds a few of its own, but instead of
-requiring you to invoke it at runtime, you use the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary to build your script. &lt;code&gt;rargs&lt;&#x2F;code&gt;
-takes every decorator and transforms it into Bash, while rearranging your functions along the way.
-The result is a new Bash script with all your logic, plus additional functionality like argument
-and option parsing, &lt;code&gt;--help&lt;&#x2F;code&gt; documentation, and more.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;rargs&lt;&#x2F;code&gt; framework is heavily inspired by two other Bash frameworks: &lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.com&quot;&gt;&lt;code&gt;bashly&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, and &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;&lt;code&gt;argc&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;. The latter uses comments with a &lt;code&gt;JsDoc&lt;&#x2F;code&gt; inspired syntax to add functionality to the scripts at runtime. This syntax, known as a &lt;code&gt;comment decorator&lt;&#x2F;code&gt;, is a normal Bash comment followed by an &lt;code&gt; @&lt;&#x2F;code&gt; sign and a tag. It&#x27;s how the &lt;code&gt;rargs&lt;&#x2F;code&gt; parser identifies configuration.&lt;&#x2F;p&gt;
+&lt;p&gt;To utilize this, you need to run the &lt;code&gt;argc&lt;&#x2F;code&gt; command and pass the output to an &lt;code&gt;eval&lt;&#x2F;code&gt; call somewhere in your script. &lt;code&gt;rargs&lt;&#x2F;code&gt; uses the same comment decorators, and adds a few of its own, but instead of requiring you to invoke it at runtime, you use the &lt;code&gt;rargs&lt;&#x2F;code&gt; binary to build your script. &lt;code&gt;rargs&lt;&#x2F;code&gt; takes every decorator and transforms it into Bash, while rearranging your functions along the way. The result is a new Bash script with all your logic, plus additional functionality like argument and option parsing, &lt;code&gt;--help&lt;&#x2F;code&gt; documentation, and more.&lt;&#x2F;p&gt;
 &lt;p&gt;The easiest script you can make is one that only outputs its &lt;code&gt;help&lt;&#x2F;code&gt; message:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name empty
@@ -129,9 +335,7 @@ and option parsing, &lt;code&gt;--help&lt;&#x2F;code&gt; documentation, and more
 &lt;blockquote&gt;
 &lt;p&gt;On Unix-based systems, rargs tries to set the build file as executable.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;If you try to run it, you&#x27;ll get an error asking you to configure a &lt;code&gt;root&lt;&#x2F;code&gt; command or a sub-command
-function. You can use &lt;code&gt;root&lt;&#x2F;code&gt; commands if you don&#x27;t wan to support multiple sub-commands. For
-example, we can extend our previous script like this:&lt;&#x2F;p&gt;
+&lt;p&gt;If you try to run it, you&#x27;ll get an error asking you to configure a &lt;code&gt;root&lt;&#x2F;code&gt; command or a sub-command function. You can use &lt;code&gt;root&lt;&#x2F;code&gt; commands if you don&#x27;t wan to support multiple sub-commands. For example, we can extend our previous script like this:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name emtpy
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
@@ -188,20 +392,15 @@ script, or run it with the &lt;code&gt;DEBUG&lt;&#x2F;code&gt; environment varia
 &lt;&#x2F;span&gt;&lt;span&gt;Hello, World!
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;something-more-complex&quot;&gt;Something More Complex &lt;a name=&quot;something-more-complex&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
-&lt;p&gt;Let&#x27;s do something more complex. We&#x27;ll use most of the features supported by &lt;code&gt;rargs&lt;&#x2F;code&gt; on the
-following example. We won&#x27;t get too deep on how they work on this section. You can check their
-specific parts of the documentation for more information.&lt;&#x2F;p&gt;
-&lt;p&gt;We want to make a script that interacts with the HuggingFace API. So let&#x27;s start by creating a new
-script called &lt;code&gt;huggingface.sh&lt;&#x2F;code&gt; and add our initial &lt;code&gt;metadata&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s do something more complex. We&#x27;ll use most of the features supported by &lt;code&gt;rargs&lt;&#x2F;code&gt; on the following example. We won&#x27;t get too deep on how they work on this section. You can check their specific parts of the documentation for more information.&lt;&#x2F;p&gt;
+&lt;p&gt;We want to make a script that interacts with the HuggingFace API. So let&#x27;s start by creating a new script called &lt;code&gt;huggingface.sh&lt;&#x2F;code&gt; and add our initial &lt;code&gt;metadata&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Call the Huggingface API through curl
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @author @cloudbridgeuy
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Our script is going to require &lt;code&gt;curl&lt;&#x2F;code&gt; as a tight dependency and it will require us to configure the
-&lt;code&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;code&gt; environment variable with our account secret. &lt;code&gt;rargs&lt;&#x2F;code&gt; can make sure that we
-have both of these values before running the script by setting the &lt;code&gt;@dep&lt;&#x2F;code&gt; and &lt;code&gt;@env&lt;&#x2F;code&gt; decorators.&lt;&#x2F;p&gt;
+&lt;p&gt;Our script is going to require &lt;code&gt;curl&lt;&#x2F;code&gt; as a tight dependency and it will require us to configure the &lt;code&gt;HUGGING_FACE_API_TOKEN&lt;&#x2F;code&gt; environment variable with our account secret. &lt;code&gt;rargs&lt;&#x2F;code&gt; can make sure that we have both of these values before running the script by setting the &lt;code&gt;@dep&lt;&#x2F;code&gt; and &lt;code&gt;@env&lt;&#x2F;code&gt; decorators.&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Decorators can be set at the &lt;code&gt;root&lt;&#x2F;code&gt; scope or per sub-command. Sub-commands will inherit &lt;code&gt;root&lt;&#x2F;code&gt;
 configuration by default.&lt;&#x2F;p&gt;
@@ -218,16 +417,11 @@ configuration by default.&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;You can decorate your help message with colors.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;&#x2F;strong&gt; You can use &lt;code&gt;$()&lt;&#x2F;code&gt; or inverted quotes &amp;quot;`&amp;quot; inside the description and that code will be
-invoked.&lt;&#x2F;p&gt;
-&lt;p&gt;With these changes the &lt;code&gt;script&lt;&#x2F;code&gt; won&#x27;t execute unless &lt;code&gt;curl&lt;&#x2F;code&gt; is installed in the system and the
-Huggingface API is set.&lt;&#x2F;p&gt;
-&lt;p&gt;Now, let&#x27;s add our first sub-command. Given that there are multiple uses for LLM, we wan&#x27;t to able
-to navigate to the right usage with our API. For example, let&#x27;s say we wanted to use the
-&lt;code&gt;bert-base-uncased&lt;&#x2F;code&gt; model to find a word to fill a match. Is typically used to showcase the behavior
+&lt;p&gt;&lt;strong&gt;Note:&lt;&#x2F;strong&gt; You can use &lt;code&gt;$()&lt;&#x2F;code&gt; or inverted quotes &amp;quot;`&amp;quot; inside the description and that code will be invoked.&lt;&#x2F;p&gt;
+&lt;p&gt;With these changes the &lt;code&gt;script&lt;&#x2F;code&gt; won&#x27;t execute unless &lt;code&gt;curl&lt;&#x2F;code&gt; is installed in the system and the Huggingface API is set.&lt;&#x2F;p&gt;
+&lt;p&gt;Now, let&#x27;s add our first sub-command. Given that there are multiple uses for LLM, we wan&#x27;t to able to navigate to the right usage with our API. For example, let&#x27;s say we wanted to use the &lt;code&gt;bert-base-uncased&lt;&#x2F;code&gt; model to find a word to fill a match. Is typically used to showcase the behavior
 of these models and it&#x27;s fun to use.&lt;&#x2F;p&gt;
-&lt;p&gt;We&#x27;ll start by creating a function called &lt;code&gt;fill-mask&lt;&#x2F;code&gt; and decorate it with additional options and
-arguments that we&#x27;ll provide at runtime to override its behavior.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;ll start by creating a function called &lt;code&gt;fill-mask&lt;&#x2F;code&gt; and decorate it with additional options and arguments that we&#x27;ll provide at runtime to override its behavior.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Fill Mask
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @help Tries to fill a hole with a missing word (token to be precise).
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -m --model=bert-base-uncased Model to use.
@@ -307,8 +501,7 @@ this to the sub-command.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;  -h --help
 &lt;&#x2F;span&gt;&lt;span&gt;    Print help
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;There are some additional options that this task can consume so let&#x27;s add them. Also, to help us
-craft the required &lt;code&gt;JSON&lt;&#x2F;code&gt; object we&#x27;ll use a tool called &lt;code&gt;jo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;There are some additional options that this task can consume so let&#x27;s add them. Also, to help us craft the required &lt;code&gt;JSON&lt;&#x2F;code&gt; object we&#x27;ll use a tool called &lt;code&gt;jo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;We&#x27;ll also add &lt;code&gt;jo&lt;&#x2F;code&gt; as a local dependency required when calling the &lt;code&gt;fill-mask&lt;&#x2F;code&gt; command.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
@@ -346,17 +539,13 @@ convention to indicate that we are actually setting its value to &lt;code&gt;fal
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;DEBUG&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;huggingface.sh&lt;&#x2F;span&gt;&lt;span&gt; fill-mask fill-mask &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;The capital of France is [MASK]&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --no-use-cache --wait-for-model
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;rules&quot;&gt;Rules&lt;&#x2F;h3&gt;
-&lt;p&gt;Now that our script is getting more complex, it&#x27;s normal for us to forget all the options available
-for it, so calling for &lt;code&gt;help&lt;&#x2F;code&gt; is very common. By default, &lt;code&gt;rargs&lt;&#x2F;code&gt; will only allow you to call for
-the &lt;code&gt;help&lt;&#x2F;code&gt; output if you pass the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; option as the first argument of the script.&lt;&#x2F;p&gt;
-&lt;p&gt;For example, if we pass the &lt;code&gt;--help&lt;&#x2F;code&gt; option in any other place other than the first position we&#x27;ll
-get an error.&lt;&#x2F;p&gt;
+&lt;p&gt;Now that our script is getting more complex, it&#x27;s normal for us to forget all the options available for it, so calling for &lt;code&gt;help&lt;&#x2F;code&gt; is very common. By default, &lt;code&gt;rargs&lt;&#x2F;code&gt; will only allow you to call for the &lt;code&gt;help&lt;&#x2F;code&gt; output if you pass the &lt;code&gt;-h|--help&lt;&#x2F;code&gt; option as the first argument of the script.&lt;&#x2F;p&gt;
+&lt;p&gt;For example, if we pass the &lt;code&gt;--help&lt;&#x2F;code&gt; option in any other place other than the first position we&#x27;ll get an error.&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;.&#x2F;huggingface.sh fill-mask &amp;quot;The capital of France is [MASK]&amp;quot; --no-use-cache --wait-for-model --help
 &lt;&#x2F;span&gt;&lt;span&gt;Invalid option: --help
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;We can change this behavior by setting the &lt;code&gt;no-first-option-help&lt;&#x2F;code&gt; rule.&lt;&#x2F;p&gt;
-&lt;p&gt;Just as with other features, we set rules at the &lt;code&gt;global&lt;&#x2F;code&gt; or &lt;code&gt;command&lt;&#x2F;code&gt; scope by appending the right
-comment decorator. In this case we need to use the &lt;code&gt;@rule&lt;&#x2F;code&gt; decorator plus the name of the rule we
+&lt;p&gt;Just as with other features, we set rules at the &lt;code&gt;global&lt;&#x2F;code&gt; or &lt;code&gt;command&lt;&#x2F;code&gt; scope by appending the right comment decorator. In this case we need to use the &lt;code&gt;@rule&lt;&#x2F;code&gt; decorator plus the name of the rule we
 want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name huggingface
@@ -375,8 +564,7 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion &lt;a name=&quot;conclusion&quot;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;The previous examples showcases almost all of the most important &lt;code&gt;rargs&lt;&#x2F;code&gt; features. You can use it as
-a starting point to create your own scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;The previous examples showcases almost all of the most important &lt;code&gt;rargs&lt;&#x2F;code&gt; features. You can use it as a starting point to create your own scripts.&lt;&#x2F;p&gt;
 &lt;p&gt;You can find more information about each of these features on their corresponding page in the docs.&lt;&#x2F;p&gt;
 &lt;p&gt;Here&#x27;s the complete version of our script:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
@@ -415,6 +603,88 @@ a starting point to create your own scripts.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Happy scripting!&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Want to learn more about &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;? Continue to the next sections with more information about the framework.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;basic-usage&#x2F;&quot;&gt;Show me what I can do with Rargs →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Basic Usage</title>
+        <published>2023-09-22T08:20:00+00:00</published>
+        <updated>2023-09-22T08:20:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/" type="text/html"/>
+        <id>https://rargs.cloudbridge.uy/docs/usage/basic-usage/</id>
+        
+        <content type="html">&lt;h2 id=&quot;creating-a-new-script&quot;&gt;Creating a New Script&lt;&#x2F;h2&gt;
+&lt;p&gt;You can start writing a new &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script in any directory on your machine. All Bash scripts are valid &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; sources. You can begin with an existing script or create a new one. If you prefer not to start with an empty script, you can run &lt;code&gt;rargs new&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs&lt;&#x2F;span&gt;&lt;span&gt; new&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --destination&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;src minimal
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command will generate a minimal template for you to start with.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;scopes&quot;&gt;Scopes&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts are configured using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. These tags define every feature supported by the framework. At build time, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will use the information inside the &lt;code&gt;comment decorators&lt;&#x2F;code&gt; to configure the build script.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; ignores and removes all comments at build time. To make a comment persist, add an extra &lt;code&gt;#&lt;&#x2F;code&gt; at the beginning of the line.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Each &lt;code&gt;comment tag&lt;&#x2F;code&gt; is assigned to either the script or one of its commands. Tags assigned to the script are part of the &lt;code&gt;root&lt;&#x2F;code&gt; scope, while those assigned to a command belong to that &lt;code&gt;function&lt;&#x2F;code&gt; scope.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Double &lt;code&gt;##&lt;&#x2F;code&gt; comments in the &lt;code&gt;root&lt;&#x2F;code&gt; scope are hoisted to the beginning of the script. Similarly, double &lt;code&gt;##&lt;&#x2F;code&gt; comments in each &lt;code&gt;function&lt;&#x2F;code&gt; scope are hoisted to the start of the function.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;script-metadata&quot;&gt;Script Metadata&lt;&#x2F;h2&gt;
+&lt;p&gt;You can add metadata to your script at the root level using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Sample minimal application without commands
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;These tags set the &lt;code&gt;name&lt;&#x2F;code&gt;, &lt;code&gt;version&lt;&#x2F;code&gt;, and description of the app. This information appears in the &lt;code&gt;--help&lt;&#x2F;code&gt; and &lt;code&gt;--version&lt;&#x2F;code&gt; commands.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;--version&lt;&#x2F;code&gt; option is automatically generated when you add the &lt;code&gt;@version&lt;&#x2F;code&gt; tag.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The full list of available metadata &lt;code&gt;comment decorators&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@name&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The name of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@version&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The version of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@description&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;A description of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@author&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The author of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@license&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The license of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@default&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The default command to run.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;h2 id=&quot;commands&quot;&gt;Commands&lt;&#x2F;h2&gt;
+&lt;p&gt;A &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script consists of one or more commands. A command is a Bash function that you can call from the command line. It can have arguments, flags, options, dependencies, rules, and more. Not all Bash functions are exposed as commands, and some can be set as private.&lt;&#x2F;p&gt;
+&lt;p&gt;To define a Bash function as a command, add the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag to it. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greet the world
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;hello&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello World!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This exposes the &lt;code&gt;hello&lt;&#x2F;code&gt; command from the script.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag requires a brief description of the command&#x27;s purpose. This description is used in the help message.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Every &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script must have at least one command. If commands don&#x27;t fit your script, create it with a single special function called &lt;code&gt;root&lt;&#x2F;code&gt;. This function is invoked when you call the script without any commands. You can assign the same behavior to a &lt;code&gt;root&lt;&#x2F;code&gt; function as to any other command function.&lt;&#x2F;p&gt;
+&lt;p&gt;Each &lt;code&gt;command decorator&lt;&#x2F;code&gt; under the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag configures the command. The full list of available &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@option&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an option for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@flag&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a flag for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an argument for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@env&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an environment variable for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@rule&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a rule for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@dep&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a dependency for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@private&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Set the command as private.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;@example&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Add an example of how to use this command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;After the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and any additional configuration, add the Bash function that executes when the command is called. The command&#x27;s scope ends when &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; detects the end of the function declaration.&lt;&#x2F;p&gt;
+&lt;p&gt;All &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags at the &lt;code&gt;root&lt;&#x2F;code&gt; scope are declared regardless of the line. However, all &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags for a function must be defined between the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and the function declaration.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;In the following sections, we&#x27;ll dive deeper into each &lt;code&gt;command decorator&lt;&#x2F;code&gt; tag and how to use them.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how arguments work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 </content>
         
     </entry>
@@ -428,30 +698,26 @@ a starting point to create your own scripts.&lt;&#x2F;p&gt;
         <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/help/faq/" type="text/html"/>
         <id>https://rargs.cloudbridge.uy/docs/help/faq/</id>
         
-        <content type="html">&lt;h2 id=&quot;what-is-the-rargs&quot;&gt;What is the Rargs?&lt;&#x2F;h2&gt;
-&lt;p&gt;Rargs is a Bash framework based on other tools like &lt;a href=&quot;https:&#x2F;&#x2F;bashly.dannyb.co&#x2F;&quot;&gt;Bashly&lt;&#x2F;a&gt; and
-&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;sigoden&#x2F;argc&quot;&gt;Argc&lt;&#x2F;a&gt; that aims to simplify the process of creating bash scripts
-that include:&lt;&#x2F;p&gt;
-&lt;ul&gt;
-&lt;li&gt;Good help messages.&lt;&#x2F;li&gt;
-&lt;li&gt;Good argument, flag, and option parsing.&lt;&#x2F;li&gt;
-&lt;li&gt;Good handling of environment variables.&lt;&#x2F;li&gt;
-&lt;li&gt;Good handling of script dependencies.&lt;&#x2F;li&gt;
-&lt;li&gt;Good suport for script sub-commands.&lt;&#x2F;li&gt;
-&lt;li&gt;Inline documentation.&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;p&gt;All &lt;code&gt;rargs&lt;&#x2F;code&gt; configuration is done in the script itself, as &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. Meaning, normal
-bash comments using &lt;code&gt;#&lt;&#x2F;code&gt; plus an &lt;code&gt; @&lt;&#x2F;code&gt; followed by a &lt;code&gt;tag&lt;&#x2F;code&gt;. For example, the &lt;code&gt;# @option&lt;&#x2F;code&gt; decorator
-will let you configure an option argument to be passed to the script of a sub-command.&lt;&#x2F;p&gt;
-&lt;p&gt;The idea is for the script documentation to live alongside the script itself, this making it easier
-to keep the documentation up. It&#x27;s very common for developers to forget to document scripts, that
-then become key parts of their infrastructure, but others are afraid to touch them or use them
-properly since it&#x27;s not evident to understand how it works.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;contact-the-creator&quot;&gt;Contact the creator?&lt;&#x2F;h2&gt;
+        <content type="html">&lt;h2 id=&quot;why-does-it-fail-when-i-use-a-inside-a-multiline-string&quot;&gt;Why does it fail when I use a &lt;code&gt;}&lt;&#x2F;code&gt; inside a multiline string?&lt;&#x2F;h2&gt;
+&lt;p&gt;There&#x27;s a known bug in &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; that I haven&#x27;t been able to fix revolving
+the usage of &lt;code&gt;}&lt;&#x2F;code&gt; symbols without any leading whitespace. The current parser looks for the &lt;code&gt;}&lt;&#x2F;code&gt; symbol to close the current function body. Nonetheless, it&#x27;s not uncommon in Bash to do somethong like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;print_json&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cat &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EOF &lt;&#x2F;span&gt;&lt;span&gt;| &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tee&lt;&#x2F;span&gt;&lt;span&gt; &#x2F;tmp&#x2F;example.json
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;  &amp;quot;something&amp;quot;: &amp;quot;awesome&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EOF
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This perfectly balanced Bash code will produce an erroneous built script, since it will consider the &lt;code&gt;}&lt;&#x2F;code&gt; used in the JSON object as the end of the function, thus creating a slew of issues.&lt;&#x2F;p&gt;
+&lt;p&gt;There is a workaround, if you add a &lt;code&gt;space&lt;&#x2F;code&gt; or any other whitespace character (other than a new line) before the &lt;code&gt;}&lt;&#x2F;code&gt; then nothing will break. You could also try building your JSON object with some other tool, like &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;jpmens&#x2F;jo&quot;&gt;&lt;code&gt;jo&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-do-i-contact-the-creator&quot;&gt;How do I contact the creator?&lt;&#x2F;h2&gt;
 &lt;p&gt;Send &lt;em&gt;CloudBridgeUY&lt;&#x2F;em&gt; an E-mail:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;mailto:admin@cloudbridge.com.uy&quot;&gt;admin@cloudbridge.com.uy&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 </content>
         
     </entry>
@@ -466,100 +732,51 @@ properly since it&#x27;s not evident to understand how it works.&lt;&#x2F;p&gt;
         <id>https://rargs.cloudbridge.uy/docs/contributing/code-of-conduct/</id>
         
         <content type="html">&lt;h2 id=&quot;our-pledge&quot;&gt;Our Pledge&lt;&#x2F;h2&gt;
-&lt;p&gt;We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, caste, color, religion, or sexual identity
-and orientation.&lt;&#x2F;p&gt;
-&lt;p&gt;We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.&lt;&#x2F;p&gt;
+&lt;p&gt;We, as members, contributors, and leaders, pledge to make participation in our community a harassment-free experience for everyone. This is regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, color, religion, or sexual identity and orientation.&lt;&#x2F;p&gt;
+&lt;p&gt;We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;our-standards&quot;&gt;Our Standards&lt;&#x2F;h2&gt;
-&lt;p&gt;Examples of behavior that contributes to a positive environment for our
-community include:&lt;&#x2F;p&gt;
+&lt;p&gt;Examples of behavior that contributes to creating a positive environment for our community include:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;Demonstrating empathy and kindness toward other people&lt;&#x2F;li&gt;
 &lt;li&gt;Being respectful of differing opinions, viewpoints, and experiences&lt;&#x2F;li&gt;
 &lt;li&gt;Giving and gracefully accepting constructive feedback&lt;&#x2F;li&gt;
-&lt;li&gt;Accepting responsibility and apologizing to those affected by our mistakes,
-and learning from the experience&lt;&#x2F;li&gt;
-&lt;li&gt;Focusing on what is best not just for us as individuals, but for the
-overall community&lt;&#x2F;li&gt;
+&lt;li&gt;Accepting responsibility and apologizing to those affected by our mistakes, and learning from the experience&lt;&#x2F;li&gt;
+&lt;li&gt;Focusing on what is best not just for us as individuals, but for the overall community&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Examples of unacceptable behavior include:&lt;&#x2F;p&gt;
 &lt;ul&gt;
-&lt;li&gt;The use of sexualized language or imagery, and sexual attention or
-advances of any kind&lt;&#x2F;li&gt;
+&lt;li&gt;The use of sexualized language or imagery, and sexual attention or advances of any kind&lt;&#x2F;li&gt;
 &lt;li&gt;Trolling, insulting or derogatory comments, and personal or political attacks&lt;&#x2F;li&gt;
 &lt;li&gt;Public or private harassment&lt;&#x2F;li&gt;
-&lt;li&gt;Publishing others&#x27; private information, such as a physical or email
-address, without their explicit permission&lt;&#x2F;li&gt;
-&lt;li&gt;Other conduct which could reasonably be considered inappropriate in a
-professional setting&lt;&#x2F;li&gt;
+&lt;li&gt;Publishing others&#x27; private information, such as a physical or email address, without their explicit permission&lt;&#x2F;li&gt;
+&lt;li&gt;Other conduct which could reasonably be considered inappropriate in a professional setting&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;enforcement-responsibilities&quot;&gt;Enforcement Responsibilities&lt;&#x2F;h2&gt;
-&lt;p&gt;Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.&lt;&#x2F;p&gt;
-&lt;p&gt;Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.&lt;&#x2F;p&gt;
+&lt;p&gt;Community leaders are responsible for clarifying and enforcing our standards of acceptable behavior. They will take appropriate and fair corrective action in response to any behavior they deem inappropriate, threatening, offensive, or harmful.&lt;&#x2F;p&gt;
+&lt;p&gt;Community leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this Code of Conduct. They will communicate reasons for moderation decisions when appropriate.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;scope&quot;&gt;Scope&lt;&#x2F;h2&gt;
-&lt;p&gt;This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.&lt;&#x2F;p&gt;
+&lt;p&gt;This Code of Conduct applies within all community spaces and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include using an official email address, posting via an official social media account, or acting as an appointed representative at an online or offline event.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;enforcement&quot;&gt;Enforcement&lt;&#x2F;h2&gt;
-&lt;p&gt;Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-&lt;a href=&quot;mailto:aaranxu@outlook.com&quot;&gt;aaranxu@outlook.com&lt;&#x2F;a&gt;.
-All complaints will be reviewed and investigated promptly and fairly.&lt;&#x2F;p&gt;
-&lt;p&gt;All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.&lt;&#x2F;p&gt;
+&lt;p&gt;Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at &lt;a href=&quot;mailto:admin@cloudbridge.com.uy&quot;&gt;admin@cloudbridge.com.uy&lt;&#x2F;a&gt;. All complaints will be reviewed and investigated promptly and fairly.&lt;&#x2F;p&gt;
+&lt;p&gt;All community leaders are obligated to respect the privacy and security of the reporter of any incident.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;enforcement-guidelines&quot;&gt;Enforcement Guidelines&lt;&#x2F;h2&gt;
-&lt;p&gt;Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:&lt;&#x2F;p&gt;
+&lt;p&gt;Community leaders will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;1-correction&quot;&gt;1. Correction&lt;&#x2F;h3&gt;
-&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;2-warning&quot;&gt;2. Warning&lt;&#x2F;h3&gt;
-&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A violation through a single incident or series
-of actions.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or
-permanent ban.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A violation through a single incident or series of actions.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes avoiding interactions in community spaces as well as external channels like social media. Violating these terms may lead to a temporary or permanent ban.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;3-temporary-ban&quot;&gt;3. Temporary Ban&lt;&#x2F;h3&gt;
-&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A serious violation of community standards, including
-sustained inappropriate behavior.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: A serious violation of community standards, including sustained inappropriate behavior.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A temporary ban from any sort of interaction or public communication with the community for a specified period of time. No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period. Violating these terms may lead to a permanent ban.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;4-permanent-ban&quot;&gt;4. Permanent Ban&lt;&#x2F;h3&gt;
-&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior,  harassment of an
-individual, or aggression toward or disparagement of classes of individuals.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A permanent ban from any sort of public interaction within
-the community.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Community Impact&lt;&#x2F;strong&gt;: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Consequence&lt;&#x2F;strong&gt;: A permanent ban from any sort of public interaction within the community.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;attribution&quot;&gt;Attribution&lt;&#x2F;h2&gt;
-&lt;p&gt;This Code of Conduct is adapted from the &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&quot;&gt;Contributor Covenant&lt;&#x2F;a&gt;,
-version 2.0, available at
-&lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
-&lt;p&gt;Community Impact Guidelines were inspired by 
-&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;mozilla&#x2F;diversity&quot;&gt;Mozilla&#x27;s code of conduct enforcement ladder&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
-&lt;p&gt;For answers to common questions about this code of conduct, see the FAQ at
-&lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&lt;&#x2F;a&gt;. Translations are available 
-at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;This Code of Conduct is adapted from the &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&quot;&gt;Contributor Covenant&lt;&#x2F;a&gt;, version 2.0, available at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;version&#x2F;2&#x2F;0&#x2F;code_of_conduct.html&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Community Impact Guidelines were inspired by &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;mozilla&#x2F;diversity&quot;&gt;Mozilla&#x27;s code of conduct enforcement ladder&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;For answers to common questions about this code of conduct, see the FAQ at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;faq&lt;&#x2F;a&gt;. Translations are available at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&quot;&gt;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translations&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 </content>
         
     </entry>
@@ -574,8 +791,8 @@ at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translat
         <id>https://rargs.cloudbridge.uy/docs/contributing/how-to-contribute/</id>
         
         <content type="html">&lt;p&gt;👉 Make sure to read the &lt;a href=&quot;..&#x2F;code-of-conduct&#x2F;&quot;&gt;Code of Conduct&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;contribute-to-doks&quot;&gt;Contribute to Doks&lt;&#x2F;h2&gt;
-&lt;p&gt;👉 The Rargs code lives in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;code&gt;rargs&lt;&#x2F;code&gt; repository&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;contribute-to-rargs&quot;&gt;Contribute to Rargs&lt;&#x2F;h2&gt;
+&lt;p&gt;👉 The Rargs code lives in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; repository&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;guides.github.com&#x2F;introduction&#x2F;flow&#x2F;&quot;&gt;GitHub flow&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
 &lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;www.conventionalcommits.org&#x2F;en&#x2F;v1.0.0&#x2F;&quot;&gt;Conventional Commits Specification&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
@@ -586,7 +803,7 @@ at &lt;a href=&quot;https:&#x2F;&#x2F;www.contributor-covenant.org&#x2F;translat
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;issues&#x2F;new?template=feature-request---.md&quot;&gt;Feature request&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;improve-documentation&quot;&gt;Improve documentation&lt;&#x2F;h2&gt;
-&lt;p&gt;👉 The documentation lives in &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;tree&#x2F;master&#x2F;content&#x2F;docs&quot;&gt;&lt;code&gt;.&#x2F;content&#x2F;docs&#x2F;&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;
+&lt;p&gt;👉 The documentation lives in &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&#x2F;tree&#x2F;master&#x2F;content&#x2F;docs&quot;&gt;&lt;code&gt;web&#x2F;content&#x2F;docs&#x2F;&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;
 of the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cloudbridgeuy&#x2F;rargs&quot;&gt;&lt;code&gt;rargs&lt;&#x2F;code&gt; repository&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;Follow the &lt;a href=&quot;https:&#x2F;&#x2F;guides.github.com&#x2F;introduction&#x2F;flow&#x2F;&quot;&gt;GitHub flow&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
