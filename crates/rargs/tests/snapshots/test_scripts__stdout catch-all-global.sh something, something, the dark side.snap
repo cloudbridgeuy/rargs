@@ -10,12 +10,17 @@ args:
 - [2] = "the"
 - [3] = "dark"
 - [4] = "side")
+- rargs_other_args = ([0] = "something,"
+- [1] = "something,"
+- [2] = "the"
+- [3] = "dark"
+- [4] = "side")
 
-other_args:
-- ${other_args[*]} = something, something, the dark side
-- ${other_args[0]} = something,
-- ${other_args[1]} = something,
-- ${other_args[2]} = the
-- ${other_args[3]} = dark
-- ${other_args[4]} = side
+rargs_other_args:
+- ${rargs_other_args[*]} = something, something, the dark side
+- ${rargs_other_args[0]} = something,
+- ${rargs_other_args[1]} = something,
+- ${rargs_other_args[2]} = the
+- ${rargs_other_args[3]} = dark
+- ${rargs_other_args[4]} = side
 

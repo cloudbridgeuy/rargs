@@ -117,7 +117,7 @@ root() {
   {%- endfor %}
 {%- endif %}
 {%- if any and any["required"] %}
-  if [[ "{%- raw %}${{%- endraw %}#other_args[@]}" == 0 ]]; then
+  if [[ "{%- raw %}${{%- endraw %}#rargs_other_args[@]}" == 0 ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
     usage >&2
     exit 1

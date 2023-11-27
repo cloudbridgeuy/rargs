@@ -7,5 +7,6 @@ Upload
 
 args:
 - rargs_input = ([0] = "SOURCE")
+- rargs_other_args = ()
 - rargs_source = SOURCE
 

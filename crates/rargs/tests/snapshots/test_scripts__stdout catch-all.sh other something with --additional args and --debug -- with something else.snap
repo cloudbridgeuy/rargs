@@ -16,15 +16,23 @@ args:
 - [7] = "with"
 - [8] = "something"
 - [9] = "else")
+- rargs_other_args = ([0] = "something"
+- [1] = "with"
+- [2] = "--additional"
+- [3] = "args"
+- [4] = "and"
+- [5] = "with"
+- [6] = "something"
+- [7] = "else")
 
-other_args:
-- ${other_args[*]} = something with --additional args and with something else
-- ${other_args[0]} = something
-- ${other_args[1]} = with
-- ${other_args[2]} = --additional
-- ${other_args[3]} = args
-- ${other_args[4]} = and
-- ${other_args[5]} = with
-- ${other_args[6]} = something
-- ${other_args[7]} = else
+rargs_other_args:
+- ${rargs_other_args[*]} = something with --additional args and with something else
+- ${rargs_other_args[0]} = something
+- ${rargs_other_args[1]} = with
+- ${rargs_other_args[2]} = --additional
+- ${rargs_other_args[3]} = args
+- ${rargs_other_args[4]} = and
+- ${rargs_other_args[5]} = with
+- ${rargs_other_args[6]} = something
+- ${rargs_other_args[7]} = else
 

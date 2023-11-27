@@ -144,7 +144,7 @@ parse_arguments() {
           shift
         {%- else %}
           {%- if _any %}
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
           {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
@@ -174,7 +174,7 @@ parse_arguments() {
           shift
         {%- else %}
           {%- if _any %}
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
           {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
@@ -194,7 +194,7 @@ parse_arguments() {
     {%- endfor %}
   {%- else %}
     {%- if _any %}
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
     {%- else %}
         if [[ "$key" == "" ]]; then

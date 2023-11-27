@@ -104,11 +104,11 @@
       {%- if _any %}
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
       {%- else %}
@@ -120,11 +120,11 @@
     {%- elif _any %}
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
     {%- endif %}
@@ -145,7 +145,7 @@
           shift
               {%- else %}
                 {%- if _any %}
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
                 {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
@@ -175,7 +175,7 @@
           shift
               {%- else %}
                 {%- if _any %}
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
                 {%- else %}
           printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
@@ -196,7 +196,7 @@
       {%- else %}
         {%- if not command["subcommand"] %}
           {%- if _any %}
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
           {%- else %}
         if [[ "$key" == "" ]]; then
@@ -207,7 +207,7 @@
           {%- endif %}
         {%- else %}
           {%- if _any %}
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
           {%- else %}
         break

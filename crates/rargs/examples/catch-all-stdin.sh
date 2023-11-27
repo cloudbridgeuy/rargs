@@ -10,40 +10,40 @@
 # @example Read a file from stdin $ -f csv < file1
 # @example Read a file from stdin using - $ -f csv - < file1
 root() {
-  inspect_args
+	inspect_args
 
-  # If other_args[0] is "-" or empty, read from stdin
-  if [[ "${other_args[0]}" == "-" || -z "${other_args[0]}" ]]; then
-    read_stdin
-  else
-    read_files
-  fi
+	# If rargs_other_args[0] is "-" or empty, read from stdin
+	if [[ "${rargs_other_args[0]}" == "-" || -z "${rargs_other_args[0]}" ]]; then
+		read_stdin
+	else
+		read_files
+	fi
 
-  printf "\nCollected file content:\n%s\n" "$content"
+	printf "\nCollected file content:\n%s\n" "$content"
 
-  # Read contents of the provided file(s)
-  content=""
-  for file in "${other_args[@]}"; do
-    content+=$(cat "$file")
-    content+=$'\n'
-  done
+	# Read contents of the provided file(s)
+	content=""
+	for file in "${rargs_other_args[@]}"; do
+		content+=$(cat "$file")
+		content+=$'\n'
+	done
 
-  # Read from stdin if no file is provided
-  if [[ -z "$content" ]]; then
-    content=$(cat -)
-  fi
+	# Read from stdin if no file is provided
+	if [[ -z "$content" ]]; then
+		content=$(cat -)
+	fi
 }
 
 read_stdin() {
-  # Read from stdin
-  content=$(cat -)
+	# Read from stdin
+	content=$(cat -)
 }
 
 read_files() {
-  # Read contents of the provided file(s)
-  content=""
-  for file in "${other_args[@]}"; do
-    content+=$(cat "$file")
-    content+=$'\n'
-  done
+	# Read contents of the provided file(s)
+	content=""
+	for file in "${rargs_other_args[@]}"; do
+		content+=$(cat "$file")
+		content+=$'\n'
+	done
 }

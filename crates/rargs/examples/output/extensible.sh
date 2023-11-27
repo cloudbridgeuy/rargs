@@ -20,15 +20,15 @@ parse_root() {
     case "$key" in
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
       *)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
     esac
@@ -39,8 +39,8 @@ root() {
   # Parse command arguments
   parse_root "$@"
 
-  echo "Here you would call the following command"
-  echo "  external-${other_args[0]}" "${other_args[@]:1}"
+	echo "Here you would call the following command"
+	echo "  external-${rargs_other_args[0]}" "${rargs_other_args[@]:1}"
 }
 
 
@@ -86,12 +86,12 @@ inspect_args() {
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
 
-  if ((${#other_args[@]})); then
+  if ((${#rargs_other_args[@]})); then
     echo
-    echo other_args:
-    echo "- \${other_args[*]} = ${other_args[*]}"
-    for i in "${!other_args[@]}"; do
-      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    echo rargs_other_args:
+    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
+    for i in "${!rargs_other_args[@]}"; do
+      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
     done
   fi
 }
@@ -199,11 +199,11 @@ parse_download_arguments() {
     case "$key" in
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
       *)
@@ -211,7 +211,7 @@ parse_download_arguments() {
           rargs_source=$key
           shift
         else
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
         fi
         ;;
@@ -230,8 +230,8 @@ download() {
     download_usage >&2
     exit 1
   fi
-  echo "Download"
-  inspect_args
+	echo "Download"
+	inspect_args
 }
 upload_usage() {
   printf "Upload a file\n"
@@ -269,11 +269,11 @@ parse_upload_arguments() {
     case "$key" in
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
       *)
@@ -281,7 +281,7 @@ parse_upload_arguments() {
           rargs_source=$key
           shift
         else
-          other_args+=("$1")
+          rargs_other_args+=("$1")
           shift
         fi
         ;;
@@ -300,13 +300,13 @@ upload() {
     upload_usage >&2
     exit 1
   fi
-  echo "Upload"
-  inspect_args
+	echo "Upload"
+	inspect_args
 }
 
 rargs_run() {
   declare -A deps=()
-  declare -a other_args=()
+  declare -a rargs_other_args=()
   declare -a rargs_input=()
   normalize_rargs_input "$@"
   parse_arguments "${rargs_input[@]}"

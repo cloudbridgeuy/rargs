@@ -205,7 +205,7 @@
   {%- endfor %}
 {%- endif %}
 {%- if _any and _any["required"] %}
-  if [[ "{%- raw %}${{%- endraw %}#other_args[@]}" == "0" ]]; then
+  if [[ "{%- raw %}${{%- endraw %}#rargs_other_args[@]}" == "0" ]]; then
     printf "\e[31m%s\e[0m\n\n" "Missing required additional argument" >&2
     {{ command["name"] }}_usage >&2
     {%- raw %}
