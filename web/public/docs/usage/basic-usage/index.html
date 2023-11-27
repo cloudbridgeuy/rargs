@@ -340,6 +340,14 @@
   							
   							<li><a href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/#commands">Commands</a></li>
   							
+  									<ul>
+  											
+  											<li><a href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/#available-decorators">Available Decorators</a></li>
+  											
+  											<li><a href="https://rargs.cloudbridge.uy/docs/usage/basic-usage/#example">Example</a></li>
+  											
+  									</ul>
+  							
   							
   					</ul>
   			</nav>
@@ -400,7 +408,7 @@
 <p>The <code>@cmd</code> tag requires a brief description of the command's purpose. This description is used in the help message.</p>
 </blockquote>
 <p>Every <strong>Rargs</strong> script must have at least one command. If commands don't fit your script, create it with a single special function called <code>root</code>. This function is invoked when you call the script without any commands. You can assign the same behavior to a <code>root</code> function as to any other command function.</p>
-<p>Each <code>command decorator</code> under the <code>@cmd</code> tag configures the command. The full list of available <code>command decorator</code> tags is:</p>
+<h3 id="available-decorators">Available Decorators</h3>
 <table><thead><tr><th>Tag</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>@option</code></td><td>Define an option for the command.</td></tr>
 <tr><td><code>@flag</code></td><td>Define a flag for the command.</td></tr>
@@ -413,9 +421,24 @@
 </tbody></table>
 <p>After the <code>@cmd</code> tag and any additional configuration, add the Bash function that executes when the command is called. The command's scope ends when <strong>Rargs</strong> detects the end of the function declaration.</p>
 <p>All <code>command decorator</code> tags at the <code>root</code> scope are declared regardless of the line. However, all <code>command decorator</code> tags for a function must be defined between the <code>@cmd</code> tag and the function declaration.</p>
+<h3 id="example">Example</h3>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># @cmd A command with all the possible tags.
+</span><span style="color:#65737e;"># @option -s --long Optional short and long option.
+</span><span style="color:#65737e;"># @flag --flag Flag option.
+</span><span style="color:#65737e;"># @arg optional-argument Optional argument
+</span><span style="color:#65737e;"># @env OPTION:long Environment variable to be loaded as the &#39;long&#39; option
+</span><span style="color:#65737e;"># @rule no-first-option-help
+</span><span style="color:#65737e;"># @dep curl Install with brew: &#39;brew install curl&#39;
+</span><span style="color:#65737e;"># @private
+</span><span style="color:#65737e;"># @example Call with all available options $ --long --flag argument
+</span><span style="color:#8fa1b3;">command</span><span>() {
+</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Hello world!</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>Bare in mind that most all these <code>command decorator</code> tags support multiple entries except <code>@cmd</code>.</p>
 <hr />
-<p>In the following sections, we'll dive deeper into each <code>command decorator</code> tag and how to use them.</p>
-<p><a href="../../usage/options">Show me how arguments work →</a></p>
+<p>In the following sections, we'll dive deeper into each <code>command decorator</code> tag and how to use them. Starting with <code>arguments</code>.</p>
+<p><a href="../../usage/arguments">Show me how arguments work →</a></p>
 
         
         

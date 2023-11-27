@@ -67,24 +67,24 @@ greet() {
 }
 ```
 
-Below is a list of all available `comment decorators` for options:
+## Configuration
 
-| Tag                                                     | Description                                                                       |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `@option <short> <long> <description>`                  | Defines an optional option.                                                       |
-| `@option <short> <long>! <description>`                 | Defines a required option.                                                        |
-| `@option <short> <long>=foo <description>`              | Defines an option with a default value.                                           |
-| `@option <short> <long>="foo bar" <description>`        | Defines an option with a default value that includes spaces.                      |
-| `@option <short> <long>[foo\|bar\|baz] <description>`   | Defines an option that accepts only a list of pre-defined values.                 |
-| `@option <short> <long>[=foo\|bar\|baz] <description>`  | Defines an option that accepts a list of pre-defined values with a default value. |
-| `@option <short> <long>* <description>`                 | Defines an optional multiple option.                                              |
-| `@option <short> <long>+ <description>`                 | Defines a required multiple option.                                               |
-| `@option <short> <long> <VALUE_NOTATION> <description>` | Defines an option with a custom value notation.                                   |
-| `@option --option*=a <description>`                     | Defines an optional option that accepts multiple values and has a default.        |
-| `@option --option+=a <description>`                     | Defines a required option that accepts multiple values and has a default.         |
-| `@option --option*[a\|b\|c] <description>`              | Defines an optional option that accepts multiple values and has a default.        |
-| `@option --option+[a\|b\|c] <description>`              | Defines a required option that accepts multiple values and has a default.         |
-| `@option --option*[=a\|b\|c] <description>`             | Defines an optional option that accepts multiple values and has a default.        |
+| Tag                                     | Description                                                                       |
+| --------------------------------------- | --------------------------------------------------------------------------------- |
+| `<short> <long> <description>`          | Defines an optional option with a short and long option.                          |
+| `<name>! <description>`                 | Defines a required option.                                                        |
+| `<name>=foo <description>`              | Defines an option with a default value.                                           |
+| `<name>="foo bar" <description>`        | Defines an option with a default value that includes spaces.                      |
+| `<name>[foo\|bar\|baz] <description>`   | Defines an option that accepts only a list of pre-defined values.                 |
+| `<name>[=foo\|bar\|baz] <description>`  | Defines an option that accepts a list of pre-defined values with a default value. |
+| `<name>* <description>`                 | Defines an optional multiple option.                                              |
+| `<name>+ <description>`                 | Defines a required multiple option.                                               |
+| `<name> <VALUE_NOTATION> <description>` | Defines an option with a custom value notation.                                   |
+| `<name>*=a <description>`               | Defines an optional option that accepts multiple values and has a default.        |
+| `<name>+=a <description>`               | Defines a required option that accepts multiple values and has a default.         |
+| `<name>*[a\|b\|c] <description>`        | Defines an optional option that accepts multiple values and has a default.        |
+| `<name>+[a\|b\|c] <description>`        | Defines a required option that accepts multiple values and has a default.         |
+| `<name>*[=a\|b\|c] <description>`       | Defines an optional option that accepts multiple values and has a default.        |
 
 Some important notes:
 
@@ -93,7 +93,7 @@ Some important notes:
 - The values for _multiple_ options are stored in an array.
 - The default value for an option that only supports a list of pre-defined values should be the first value in the list.
 
-Here's an example of a script that uses multiple options:
+## Example
 
 ```bash
 # @cmd A command with all the valid option configurations.

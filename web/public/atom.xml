@@ -74,6 +74,10 @@
 &lt;blockquote&gt;
 &lt;p&gt;All &lt;code&gt;arguments&lt;&#x2F;code&gt;, &lt;code&gt;options&lt;&#x2F;code&gt;, &lt;code&gt;flags&lt;&#x2F;code&gt;, and other &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; related runtime resources are prefixed with &lt;code&gt;rargs_&lt;&#x2F;code&gt; to prevent collisions with your script.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
+&lt;p&gt;After building this script you should be able to call the &lt;code&gt;greet&lt;&#x2F;code&gt; command like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;arguments greet &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;John Doe&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, John Doe!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;By default, arguments are optional. To mark an argument as &lt;em&gt;required&lt;&#x2F;em&gt;, append a &lt;code&gt;!&lt;&#x2F;code&gt; to its name. Here&#x27;s an example:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg name! The name of the person to greet
@@ -82,38 +86,38 @@
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;If you don&#x27;t provide a required argument when calling the script, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will throw an error.&lt;&#x2F;p&gt;
-&lt;p&gt;Below is a list of all available &lt;code&gt;comment decorators&lt;&#x2F;code&gt; for arguments:&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;&#x2F;h2&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;! &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;=foo &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;=&amp;quot;foo bar&amp;quot; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value that includes spaces.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;[foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that accepts only a list of pre-defined values.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;[=foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that accepts a list of pre-defined values with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;* &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional multiple argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;+ &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required multiple argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg &amp;lt;name&amp;gt; &amp;lt;VALUE_NOTATION&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a custom value notation.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;! &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;=foo &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;=&amp;quot;foo bar&amp;quot; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a default value that includes spaces.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;[foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that accepts only a list of pre-defined values.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;[=foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument that accepts a list of pre-defined values with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;* &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional multiple argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;+ &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required multiple argument.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt; &amp;lt;VALUE_NOTATION&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an argument with a custom value notation.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
 &lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
 &lt;p&gt;Some important notes:&lt;&#x2F;p&gt;
-&lt;ol&gt;
+&lt;ul&gt;
 &lt;li&gt;Argument descriptions can include spaces and ANSI escape sequences.&lt;&#x2F;li&gt;
 &lt;li&gt;Use double quotes to set default values that contain spaces.&lt;&#x2F;li&gt;
-&lt;li&gt;Escape the &lt;code&gt;|&lt;&#x2F;code&gt; character when defining a list of pre-defined values.&lt;&#x2F;li&gt;
 &lt;li&gt;The default value for an argument that only supports a list of pre-defined values should be the first value in the list.&lt;&#x2F;li&gt;
-&lt;&#x2F;ol&gt;
+&lt;li&gt;The values for &lt;em&gt;multiple&lt;&#x2F;em&gt; arguments are stored inside a bash array.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The current implementation of &lt;code&gt;multiple&lt;&#x2F;code&gt; arguments requires all positional arguments to be &lt;em&gt;required&lt;&#x2F;em&gt;. This is a known issue that will be addressed in future versions.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;Here&#x27;s an example of a script using all the available &lt;code&gt;comment decorators&lt;&#x2F;code&gt; for arguments:&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;&#x2F;h2&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# shellcheck disable=SC2154
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name example
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.1.0
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description A rargs script template
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Subcommand example
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd A command with all the valid argument configurations.
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg optional-argument Optional argument
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg required-argument! Required argument
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg default-argument=foo Default argument
@@ -128,24 +132,12 @@
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple optional argument with options and default
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;subcommand&lt;&#x2F;span&gt;&lt;span&gt;() {
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;optional-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_optional_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;required-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_required_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;default-argument: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_default_argument&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;default-argument-with-spaces: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_default_argument_with_spaces&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_default&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-different-value-notation: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_different_value_notation&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional-and-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional_and_options[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-optional-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_optional_options_and_default[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required-and-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required_and_options[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-multiple-required-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_multiple_required_options_and_default[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;arguments&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;inspect_args
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;hr &#x2F;&gt;
-&lt;p&gt;Next, we&#x27;ll learn how to define options in your &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;Next, we&#x27;ll learn how to define &lt;code&gt;options&lt;&#x2F;code&gt; in your &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how options work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 </content>
         
@@ -160,71 +152,99 @@
         <link rel="alternate" href="https://rargs.cloudbridge.uy/docs/usage/options/" type="text/html"/>
         <id>https://rargs.cloudbridge.uy/docs/usage/options/</id>
         
-        <content type="html">&lt;h2 id=&quot;creating-a-new-script&quot;&gt;Creating a New Script&lt;&#x2F;h2&gt;
-&lt;p&gt;You can start writing a new &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script in any directory on your machine. All Bash scripts are valid &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; sources. You can begin with an existing script or create a new one. If you prefer not to start with an empty script, you can run &lt;code&gt;rargs new&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs&lt;&#x2F;span&gt;&lt;span&gt; new&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --destination&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;src minimal
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;This command will generate a minimal template for you to start with.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;scopes&quot;&gt;Scopes&lt;&#x2F;h2&gt;
-&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts are configured using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. These tags define every feature supported by the framework. At build time, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will use the information inside the &lt;code&gt;comment decorators&lt;&#x2F;code&gt; to configure the build script.&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Rargs&lt;&#x2F;strong&gt; ignores and removes all comments at build time. To make a comment persist, add an extra &lt;code&gt;#&lt;&#x2F;code&gt; at the beginning of the line.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;p&gt;Each &lt;code&gt;comment tag&lt;&#x2F;code&gt; is assigned to either the script or one of its commands. Tags assigned to the script are part of the &lt;code&gt;root&lt;&#x2F;code&gt; scope, while those assigned to a command belong to that &lt;code&gt;function&lt;&#x2F;code&gt; scope.&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Double &lt;code&gt;##&lt;&#x2F;code&gt; comments in the &lt;code&gt;root&lt;&#x2F;code&gt; scope are hoisted to the beginning of the script. Similarly, double &lt;code&gt;##&lt;&#x2F;code&gt; comments in each &lt;code&gt;function&lt;&#x2F;code&gt; scope are hoisted to the start of the function.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;h2 id=&quot;script-metadata&quot;&gt;Script Metadata&lt;&#x2F;h2&gt;
-&lt;p&gt;You can add metadata to your script at the root level using &lt;code&gt;comment decorators&lt;&#x2F;code&gt;. Here&#x27;s an example:&lt;&#x2F;p&gt;
+        <content type="html">&lt;p&gt;Options are a more advanced way to pass information to your script. They are not positional, meaning the order in which you pass them doesn&#x27;t matter. With &lt;strong&gt;Rargs&lt;&#x2F;strong&gt;, you can streamline the process of parsing these options and define &lt;em&gt;required&lt;&#x2F;em&gt;, &lt;em&gt;multiple&lt;&#x2F;em&gt;, and &lt;em&gt;pre-defined&lt;&#x2F;em&gt; values for your options.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;basic-usage&quot;&gt;Basic Usage&lt;&#x2F;h2&gt;
+&lt;p&gt;To define options, use the &lt;code&gt;@option&lt;&#x2F;code&gt; tag. Here&#x27;s an example:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @version 0.0.1
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Sample minimal application without commands
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;These tags set the &lt;code&gt;name&lt;&#x2F;code&gt;, &lt;code&gt;version&lt;&#x2F;code&gt;, and description of the app. This information appears in the &lt;code&gt;--help&lt;&#x2F;code&gt; and &lt;code&gt;--version&lt;&#x2F;code&gt; commands.&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The &lt;code&gt;--version&lt;&#x2F;code&gt; option is automatically generated when you add the &lt;code&gt;@version&lt;&#x2F;code&gt; tag.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;p&gt;The full list of available metadata &lt;code&gt;comment decorators&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
-&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@name&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The name of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@version&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The version of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@description&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;A description of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@author&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The author of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@license&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The license of the application.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@default&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;The default command to run.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
-&lt;h2 id=&quot;commands&quot;&gt;Commands&lt;&#x2F;h2&gt;
-&lt;p&gt;A &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script consists of one or more commands. A command is a Bash function that you can call from the command line. It can have arguments, flags, options, dependencies, rules, and more. Not all Bash functions are exposed as commands, and some can be set as private.&lt;&#x2F;p&gt;
-&lt;p&gt;To define a Bash function as a command, add the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag to it. Here&#x27;s an example:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#!&#x2F;usr&#x2F;bin&#x2F;env bash
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name minimal
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @name options
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @description Sample application with options
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greet the world
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;hello&lt;&#x2F;span&gt;&lt;span&gt;() {
-&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello World!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -n --name The name of the person to greet
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;greet&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
 &lt;&#x2F;span&gt;&lt;span&gt;}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;This exposes the &lt;code&gt;hello&lt;&#x2F;code&gt; command from the script.&lt;&#x2F;p&gt;
+&lt;p&gt;This script defines a single option called &lt;code&gt;name&lt;&#x2F;code&gt;. You can access the value of this option with the &lt;code&gt;$rargs_name&lt;&#x2F;code&gt; variable.&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;The &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag requires a brief description of the command&#x27;s purpose. This description is used in the help message.&lt;&#x2F;p&gt;
+&lt;p&gt;All &lt;code&gt;arguments&lt;&#x2F;code&gt;, &lt;code&gt;options&lt;&#x2F;code&gt;, &lt;code&gt;flags&lt;&#x2F;code&gt;, and other &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; related runtime resources are prefixed with &lt;code&gt;rargs_&lt;&#x2F;code&gt; to prevent collisions with your script.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;Every &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script must have at least one command. If commands don&#x27;t fit your script, create it with a single special function called &lt;code&gt;root&lt;&#x2F;code&gt;. This function is invoked when you call the script without any commands. You can assign the same behavior to a &lt;code&gt;root&lt;&#x2F;code&gt; function as to any other command function.&lt;&#x2F;p&gt;
-&lt;p&gt;Each &lt;code&gt;command decorator&lt;&#x2F;code&gt; under the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag configures the command. The full list of available &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;p&gt;After building this script, you should be able to call the &lt;code&gt;greet&lt;&#x2F;code&gt; command like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;options greet&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --name &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;John Doe&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Hello,&lt;&#x2F;span&gt;&lt;span&gt; John Doe!
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;options greet&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -n &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Jane Doe&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Hello,&lt;&#x2F;span&gt;&lt;span&gt; Jane Doe!
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;By default, options are optional. To mark an option as &lt;em&gt;required&lt;&#x2F;em&gt;, append a &lt;code&gt;!&lt;&#x2F;code&gt; to its name. Here&#x27;s an example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -n --name! The name of the person to greet
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;greet&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If you don&#x27;t provide a required option when calling the script, &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; will throw an error.&lt;&#x2F;p&gt;
+&lt;p&gt;You can also opt out of defining a short option by omitting the &lt;code&gt;-&lt;&#x2F;code&gt; prefix, but you always need to provide the long name of the option.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd Greeting function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --name! The name of the person to greet
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;greet&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;&#x2F;h2&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@option&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an option for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@flag&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a flag for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@arg&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an argument for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@env&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an environment variable for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@rule&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a rule for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@dep&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a dependency for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@private&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Set the command as private.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;code&gt;@example&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Add an example of how to use this command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;short&amp;gt; &amp;lt;long&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional option with a short and long option.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;! &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required option.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;=foo &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an option with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;=&amp;quot;foo bar&amp;quot; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an option with a default value that includes spaces.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;[foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an option that accepts only a list of pre-defined values.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;[=foo\|bar\|baz] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an option that accepts a list of pre-defined values with a default value.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;* &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional multiple option.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;+ &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required multiple option.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt; &amp;lt;VALUE_NOTATION&amp;gt; &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an option with a custom value notation.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;*=a &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional option that accepts multiple values and has a default.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;+=a &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required option that accepts multiple values and has a default.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;*[a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional option that accepts multiple values and has a default.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;+[a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines a required option that accepts multiple values and has a default.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;code&gt;&amp;lt;name&amp;gt;*[=a\|b\|c] &amp;lt;description&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Defines an optional option that accepts multiple values and has a default.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
 &lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
-&lt;p&gt;After the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and any additional configuration, add the Bash function that executes when the command is called. The command&#x27;s scope ends when &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; detects the end of the function declaration.&lt;&#x2F;p&gt;
-&lt;p&gt;All &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags at the &lt;code&gt;root&lt;&#x2F;code&gt; scope are declared regardless of the line. However, all &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags for a function must be defined between the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and the function declaration.&lt;&#x2F;p&gt;
+&lt;p&gt;Some important notes:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Argument descriptions can include spaces and ANSI escape sequences.&lt;&#x2F;li&gt;
+&lt;li&gt;Multiple options expect the option to be provided before each value. For example: &lt;code&gt;-m foo -m bar -m baz&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;The values for &lt;em&gt;multiple&lt;&#x2F;em&gt; options are stored in an array.&lt;&#x2F;li&gt;
+&lt;li&gt;The default value for an option that only supports a list of pre-defined values should be the first value in the list.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd A command with all the valid option configurations.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -s --long Optional short and long option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --required! Required option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --default=foo Default option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --multiple* Optional multiple option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --multiple-required+ Required multiple option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --value-notation &amp;lt;VALUE_NOTATION&amp;gt; Option with a different value notation.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --with-options[foo|bar|baz] Option with options.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --with-options-and-default[=foo|bar|baz] Option with options and a default.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --with-options-and-required![foo|bar|baz] Required option with options.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --with-options-and-multiple*[foo|bar|baz] Option with options and multiple.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option --with-options-and-multiple-required+[foo|bar|baz] Required option with options and multiple.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;options&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;optional: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_long&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_required&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_default&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# **Important**: Remember that multiple options are stored in an array!
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;multiple: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_multiple[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;multiple-required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_multiple_required[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;value-notation: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_value_notation&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-default: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_default&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_required&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-multiple: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_multiple[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;with-options-and-multiple-required: &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rargs_with_options_and_multiple_required[*]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;hr &#x2F;&gt;
-&lt;p&gt;In the following sections, we&#x27;ll dive deeper into each &lt;code&gt;command decorator&lt;&#x2F;code&gt; tag and how to use them.&lt;&#x2F;p&gt;
+&lt;p&gt;Next, we&#x27;ll learn how to define &lt;code&gt;flags&lt;&#x2F;code&gt; in your &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; scripts.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how options work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 </content>
         
@@ -668,7 +688,7 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;p&gt;The &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag requires a brief description of the command&#x27;s purpose. This description is used in the help message.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Every &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; script must have at least one command. If commands don&#x27;t fit your script, create it with a single special function called &lt;code&gt;root&lt;&#x2F;code&gt;. This function is invoked when you call the script without any commands. You can assign the same behavior to a &lt;code&gt;root&lt;&#x2F;code&gt; function as to any other command function.&lt;&#x2F;p&gt;
-&lt;p&gt;Each &lt;code&gt;command decorator&lt;&#x2F;code&gt; under the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag configures the command. The full list of available &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags is:&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;available-decorators&quot;&gt;Available Decorators&lt;&#x2F;h3&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Tag&lt;&#x2F;th&gt;&lt;th&gt;Description&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
 &lt;tr&gt;&lt;td&gt;&lt;code&gt;@option&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define an option for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
 &lt;tr&gt;&lt;td&gt;&lt;code&gt;@flag&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td&gt;Define a flag for the command.&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
@@ -681,9 +701,24 @@ want to activate. Let&#x27;s add it at the root scope.&lt;&#x2F;p&gt;
 &lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
 &lt;p&gt;After the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and any additional configuration, add the Bash function that executes when the command is called. The command&#x27;s scope ends when &lt;strong&gt;Rargs&lt;&#x2F;strong&gt; detects the end of the function declaration.&lt;&#x2F;p&gt;
 &lt;p&gt;All &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags at the &lt;code&gt;root&lt;&#x2F;code&gt; scope are declared regardless of the line. However, all &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags for a function must be defined between the &lt;code&gt;@cmd&lt;&#x2F;code&gt; tag and the function declaration.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @cmd A command with all the possible tags.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @option -s --long Optional short and long option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @flag --flag Flag option.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @arg optional-argument Optional argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @env OPTION:long Environment variable to be loaded as the &amp;#39;long&amp;#39; option
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @rule no-first-option-help
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @dep curl Install with brew: &amp;#39;brew install curl&amp;#39;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @private
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# @example Call with all available options $ --long --flag argument
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;command&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;	&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;echo &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello world!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Bare in mind that most all these &lt;code&gt;command decorator&lt;&#x2F;code&gt; tags support multiple entries except &lt;code&gt;@cmd&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;hr &#x2F;&gt;
-&lt;p&gt;In the following sections, we&#x27;ll dive deeper into each &lt;code&gt;command decorator&lt;&#x2F;code&gt; tag and how to use them.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;options&quot;&gt;Show me how arguments work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In the following sections, we&#x27;ll dive deeper into each &lt;code&gt;command decorator&lt;&#x2F;code&gt; tag and how to use them. Starting with &lt;code&gt;arguments&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;..&#x2F;usage&#x2F;arguments&quot;&gt;Show me how arguments work →&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 </content>
         
     </entry>
