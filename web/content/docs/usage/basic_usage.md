@@ -82,7 +82,7 @@ This exposes the `hello` command from the script.
 
 Every **Rargs** script must have at least one command. If commands don't fit your script, create it with a single special function called `root`. This function is invoked when you call the script without any commands. You can assign the same behavior to a `root` function as to any other command function.
 
-Each `command decorator` under the `@cmd` tag configures the command. The full list of available `command decorator` tags is:
+### Available Decorators
 
 | Tag        | Description                                     |
 | ---------- | ----------------------------------------------- |
@@ -99,8 +99,27 @@ After the `@cmd` tag and any additional configuration, add the Bash function tha
 
 All `command decorator` tags at the `root` scope are declared regardless of the line. However, all `command decorator` tags for a function must be defined between the `@cmd` tag and the function declaration.
 
+### Example
+
+```bash
+# @cmd A command with all the possible tags.
+# @option -s --long Optional short and long option.
+# @flag --flag Flag option.
+# @arg optional-argument Optional argument
+# @env OPTION:long Environment variable to be loaded as the 'long' option
+# @rule no-first-option-help
+# @dep curl Install with brew: 'brew install curl'
+# @private
+# @example Call with all available options $ --long --flag argument
+command() {
+	echo "Hello world!"
+}
+```
+
+Bare in mind that most all these `command decorator` tags support multiple entries except `@cmd`.
+
 ---
 
 In the following sections, we'll dive deeper into each `command decorator` tag and how to use them. Starting with `arguments`.
 
-[Show me how arguments work →](../../usage/options)
+[Show me how arguments work →](../../usage/arguments)

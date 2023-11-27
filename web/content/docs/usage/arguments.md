@@ -54,21 +54,21 @@ greet() {
 
 If you don't provide a required argument when calling the script, **Rargs** will throw an error.
 
-Below is a list of all available `comment decorators` for arguments:
+## Configuration
 
-| Tag                                          | Description                                                                                                           |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `@arg <name> <description>`                  | Defines an optional argument.                                                                                         |
-| `@arg <name>! <description>`                 | Defines a required argument.                                                                                          |
-| `@arg <name>=foo <description>`              | Defines an argument with a default value.                                                                             |
-| `@arg <name>="foo bar" <description>`        | Defines an argument with a default value that includes spaces.                                                        |
-| `@arg <name>[foo\|bar\|baz] <description>`   | Defines an argument that accepts only a list of pre-defined values.                                                   |
-| `@arg <name>[=foo\|bar\|baz] <description>`  | Defines an argument that accepts a list of pre-defined values with a default value.                                   |
-| `@arg <name>* <description>`                 | Defines an optional multiple argument.                                                                                |
-| `@arg <name>+ <description>`                 | Defines a required multiple argument.                                                                                 |
-| `@arg <name>*[=a\|b\|c] <description>`       | Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional. |
-| `@arg <name>*[=a\|b\|c] <description>`       | Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.  |
-| `@arg <name> <VALUE_NOTATION> <description>` | Defines an argument with a custom value notation.                                                                     |
+| Tag                                     | Description                                                                                                           |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `<name> <description>`                  | Defines an optional argument.                                                                                         |
+| `<name>! <description>`                 | Defines a required argument.                                                                                          |
+| `<name>=foo <description>`              | Defines an argument with a default value.                                                                             |
+| `<name>="foo bar" <description>`        | Defines an argument with a default value that includes spaces.                                                        |
+| `<name>[foo\|bar\|baz] <description>`   | Defines an argument that accepts only a list of pre-defined values.                                                   |
+| `<name>[=foo\|bar\|baz] <description>`  | Defines an argument that accepts a list of pre-defined values with a default value.                                   |
+| `<name>* <description>`                 | Defines an optional multiple argument.                                                                                |
+| `<name>+ <description>`                 | Defines a required multiple argument.                                                                                 |
+| `<name>*[=a\|b\|c] <description>`       | Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional. |
+| `<name>*[=a\|b\|c] <description>`       | Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.  |
+| `<name> <VALUE_NOTATION> <description>` | Defines an argument with a custom value notation.                                                                     |
 
 Some important notes:
 
@@ -79,7 +79,7 @@ Some important notes:
 
 > The current implementation of `multiple` arguments requires all positional arguments to be _required_. This is a known issue that will be addressed in future versions.
 
-Here's an example of a script using all the available `comment decorators` for arguments:
+## Example
 
 ```bash
 #!/usr/bin/env bash
@@ -88,7 +88,7 @@ Here's an example of a script using all the available `comment decorators` for a
 # @version 0.1.0
 # @description A rargs script template
 
-# @cmd Subcommand example
+# @cmd A command with all the valid argument configurations.
 # @arg optional-argument Optional argument
 # @arg required-argument! Required argument
 # @arg default-argument=foo Default argument
