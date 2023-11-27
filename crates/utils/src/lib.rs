@@ -46,7 +46,7 @@ macro_rules! test_script {
         insta::with_settings!({
             description => description,
         }, {
-            insta::assert_snapshot!(String::from_utf8(match $stream {
+            insta::assert_snapshot!(format!("{} {} {}", $stream, script_name, options), String::from_utf8(match $stream {
                 "stdout" => output.stdout,
                 "stderr" => output.stderr,
                 _ => panic!("invalid stream"),
@@ -89,10 +89,6 @@ macro_rules! build_script {
         let dst = std::fs::read_to_string(&dst)
             .unwrap_or_else(|e| panic!("failed to read the '{dst}' script with error: {e}"));
 
-        insta::with_settings!({
-            description => script_name,
-        }, {
-            insta::assert_snapshot!(dst)
-        });
+        insta::assert_snapshot!(script_name, dst)
     };
 }

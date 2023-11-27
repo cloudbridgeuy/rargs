@@ -338,9 +338,9 @@
       <main class="docs-content col-lg-11 col-xl-9">
         <h1>Arguments</h1>
         
-        <p>Arguments are the most basic way to pass information to your script. They are positional, which means that the order in which you pass them matters. With <strong>Rargs</strong> you can simplify the process of parsing these arguments, as well as be able to define <em>required</em>, <em>multiple</em>, and <em>pre-defined</em> values for your arguments.</p>
+        <p>Arguments are the simplest way to pass information to your script. They are positional, meaning the order you pass them in is important. With <strong>Rargs</strong>, you can streamline the process of parsing these arguments and define <em>required</em>, <em>multiple</em>, and <em>pre-defined</em> values for your arguments.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<p>You define arguments using the <code>@arg</code> tag. Here's an example:</p>
+<p>To define arguments, use the <code>@arg</code> tag. Here's an example:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># @name arguments
 </span><span style="color:#65737e;"># @description Sample application with arguments
@@ -351,44 +351,43 @@
 </span><span>  </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Hello, </span><span>$</span><span style="color:#bf616a;">rargs_name</span><span style="color:#a3be8c;">!</span><span>&quot;
 </span><span>}
 </span></code></pre>
-<p>This script defines a single argument called <code>name</code>. You can access the value of this argument using the <code>$rargs_name</code> variable.</p>
+<p>This script defines a single argument called <code>name</code>. Access the value of this argument with the <code>$rargs_name</code> variable.</p>
 <blockquote>
-<p>All <code>arguments</code>, <code>options</code>, <code>flags</code>, and other <strong>Rargs</strong> related runtime resources are prefixed with <code>rargs_</code> in order to avoid collisions with your script.</p>
+<p>All <code>arguments</code>, <code>options</code>, <code>flags</code>, and other <strong>Rargs</strong> related runtime resources are prefixed with <code>rargs_</code> to prevent collisions with your script.</p>
 </blockquote>
-<p>By default, all arguments are optional. You can mark an argument as
-<em>required</em>, by appending a <code>!</code> to its name. Here's an example:</p>
+<p>By default, arguments are optional. To mark an argument as <em>required</em>, append a <code>!</code> to its name. Here's an example:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># @cmd Greeting function
 </span><span style="color:#65737e;"># @arg name! The name of the person to greet
 </span><span style="color:#8fa1b3;">greet</span><span>() {
 </span><span>  </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">Hello, </span><span>$</span><span style="color:#bf616a;">rargs_name</span><span style="color:#a3be8c;">!</span><span>&quot;
 </span><span>}
 </span></code></pre>
-<p>If the script doesn't provide an argument when calling the script, <strong>Rargs</strong> will throw an error.</p>
-<p>Here's a list of all the available <code>comment decorators</code> for arguments:</p>
+<p>If you don't provide a required argument when calling the script, <strong>Rargs</strong> will throw an error.</p>
+<p>Below is a list of all available <code>comment decorators</code> for arguments:</p>
 <table><thead><tr><th>Tag</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>@arg &lt;name&gt; &lt;description&gt;</code></td><td>Defines an optional argument.</td></tr>
 <tr><td><code>@arg &lt;name&gt;! &lt;description&gt;</code></td><td>Defines a required argument.</td></tr>
 <tr><td><code>@arg &lt;name&gt;=foo &lt;description&gt;</code></td><td>Defines an argument with a default value.</td></tr>
-<tr><td><code>@arg &lt;name&gt;=&quot;foo bar&quot; &lt;description&gt;</code></td><td>Defines an argument with a default value that contains spaces.</td></tr>
-<tr><td><code>@arg &lt;name&gt;[foo\|bar\|baz] &lt;description&gt;</code></td><td>Defines an argument that supports only a list of pre-defined values.</td></tr>
-<tr><td><code>@arg &lt;name&gt;[=foo\|bar\|baz] &lt;description&gt;</code></td><td>Defines an argument that supports only a list of pre-defined values with a default value.</td></tr>
-<tr><td><code>@arg &lt;name&gt;* &lt;description&gt;</code></td><td>Defines an optional multiple argument</td></tr>
-<tr><td><code>@arg &lt;name&gt;+ &lt;description&gt;</code></td><td>Defines a required multiple argument</td></tr>
-<tr><td><code>@arg &lt;name&gt;*[=a\|b\|c] &lt;description&gt;</code></td><td>Defines an optional positional argument that supports predefined values, multiple values, has a default, and its optional</td></tr>
-<tr><td><code>@arg &lt;name&gt;*[=a\|b\|c] &lt;description&gt;</code></td><td>Defines a required positional argument that supports predefined values, multiple values, has a default, and its optional</td></tr>
+<tr><td><code>@arg &lt;name&gt;=&quot;foo bar&quot; &lt;description&gt;</code></td><td>Defines an argument with a default value that includes spaces.</td></tr>
+<tr><td><code>@arg &lt;name&gt;[foo\|bar\|baz] &lt;description&gt;</code></td><td>Defines an argument that accepts only a list of pre-defined values.</td></tr>
+<tr><td><code>@arg &lt;name&gt;[=foo\|bar\|baz] &lt;description&gt;</code></td><td>Defines an argument that accepts a list of pre-defined values with a default value.</td></tr>
+<tr><td><code>@arg &lt;name&gt;* &lt;description&gt;</code></td><td>Defines an optional multiple argument.</td></tr>
+<tr><td><code>@arg &lt;name&gt;+ &lt;description&gt;</code></td><td>Defines a required multiple argument.</td></tr>
+<tr><td><code>@arg &lt;name&gt;*[=a\|b\|c] &lt;description&gt;</code></td><td>Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional.</td></tr>
+<tr><td><code>@arg &lt;name&gt;*[=a\|b\|c] &lt;description&gt;</code></td><td>Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.</td></tr>
 <tr><td><code>@arg &lt;name&gt; &lt;VALUE_NOTATION&gt; &lt;description&gt;</code></td><td>Defines an argument with a custom value notation.</td></tr>
 </tbody></table>
 <p>Some important notes:</p>
 <ol>
-<li>The description of the argument can include spaces and ANSI escape sequences.</li>
-<li>Default values with spaces must be set using double quotes.</li>
-<li>When defining a list of pre-defined values, you must escape the <code>|</code> character.</li>
-<li>The default value on an argument that only supports a list of pre-defined values must be the first value in the list.</li>
+<li>Argument descriptions can include spaces and ANSI escape sequences.</li>
+<li>Use double quotes to set default values that contain spaces.</li>
+<li>Escape the <code>|</code> character when defining a list of pre-defined values.</li>
+<li>The default value for an argument that only supports a list of pre-defined values should be the first value in the list.</li>
 </ol>
 <blockquote>
-<p>Current implementation of <code>multiple</code> arguments forces all positional arguments to be <em>required</em>. This is a known issue that will be fixed in future versions.</p>
+<p>The current implementation of <code>multiple</code> arguments requires all positional arguments to be <em>required</em>. This is a known issue that will be addressed in future versions.</p>
 </blockquote>
-<p>Here's an example of a script that uses all the available <code>comment decorators</code> for arguments:</p>
+<p>Here's an example of a script using all the available <code>comment decorators</code> for arguments:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;">#!/usr/bin/env bash
 </span><span style="color:#65737e;"># shellcheck disable=SC2154
 </span><span style="color:#65737e;"># @name example
@@ -402,28 +401,28 @@
 </span><span style="color:#65737e;"># @arg default-argument-with-spaces=&quot;foo bar&quot; Default argument with spaces
 </span><span style="color:#65737e;"># @arg with-options[foo|bar|baz] Argument with options
 </span><span style="color:#65737e;"># @arg with-options-and-default[=foo|bar|baz] Argument with options and default
-</span><span style="color:#65737e;"># @arg with-different-value-notation &lt;VALUE_NOTATION&gt; Argument with different value notation
-</span><span style="color:#65737e;"># @arg with-multiple-optional* Multiple argument
-</span><span style="color:#65737e;">## Next lines are commented because `rargs` does not support handling more than one multiple argument.
-</span><span style="color:#65737e;">###arg with-multiple-required+ Multiple argument
-</span><span style="color:#65737e;">###arg with-multiple-optional-and-options*[foo|bar|baz] Multiple argument with options.
-</span><span style="color:#65737e;">###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple argument with options and default.
-</span><span style="color:#65737e;">###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options.
-</span><span style="color:#65737e;">###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default.
+</span><span style="color:#65737e;"># @arg with-different-value-notation &lt;VALUE_NOTATION&gt; Argument with a different value notation
+</span><span style="color:#65737e;"># @arg with-multiple-optional* Multiple optional argument
+</span><span style="color:#65737e;">## The next lines are commented out because `rargs` does not support handling more than one multiple argument.
+</span><span style="color:#65737e;">###arg with-multiple-required+ Multiple required argument
+</span><span style="color:#65737e;">###arg with-multiple-optional-and-options*[foo|bar|baz] Multiple optional argument with options
+</span><span style="color:#65737e;">###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple optional argument with options and default
+</span><span style="color:#65737e;">###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options
+</span><span style="color:#65737e;">###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default
 </span><span style="color:#8fa1b3;">subcommand</span><span>() {
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">optional-argument: </span><span>$</span><span style="color:#bf616a;">rargs_optional_argument</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">required-argument: </span><span>$</span><span style="color:#bf616a;">rargs_required_argument</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">default-argument: </span><span>$</span><span style="color:#bf616a;">rargs_default_argument</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">default-argument-with-spaces: </span><span>$</span><span style="color:#bf616a;">rargs_default_argument_with_spaces</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-options: </span><span>$</span><span style="color:#bf616a;">rargs_with_options</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-options-and-default: </span><span>$</span><span style="color:#bf616a;">rargs_with_options_and_default</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-different-value-notation: </span><span>$</span><span style="color:#bf616a;">rargs_with_different_value_notation</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional-and-options: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional_and_options[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional-options-and-default: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional_options_and_default[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required-and-options: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required_and_options[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
-</span><span>	</span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required-options-and-default: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required_options_and_default[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">optional-argument: </span><span>$</span><span style="color:#bf616a;">rargs_optional_argument</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">required-argument: </span><span>$</span><span style="color:#bf616a;">rargs_required_argument</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">default-argument: </span><span>$</span><span style="color:#bf616a;">rargs_default_argument</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">default-argument-with-spaces: </span><span>$</span><span style="color:#bf616a;">rargs_default_argument_with_spaces</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-options: </span><span>$</span><span style="color:#bf616a;">rargs_with_options</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-options-and-default: </span><span>$</span><span style="color:#bf616a;">rargs_with_options_and_default</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-different-value-notation: </span><span>$</span><span style="color:#bf616a;">rargs_with_different_value_notation</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional-and-options: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional_and_options[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-optional-options-and-default: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_optional_options_and_default[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required-and-options: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required_and_options[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">echo </span><span>&quot;</span><span style="color:#a3be8c;">with-multiple-required-options-and-default: </span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">rargs_with_multiple_required_options_and_default[*]</span><span style="color:#a3be8c;">}</span><span>&quot;
 </span><span>}
 </span></code></pre>
 <hr />
