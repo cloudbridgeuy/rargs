@@ -4,7 +4,7 @@ description = "Contribute to Rargs, improve documentation, or submit to showcase
 date = 2021-05-01T18:10:00+00:00
 updated = 2021-05-01T18:10:00+00:00
 draft = false
-weight = 410
+weight = 10
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -16,9 +16,9 @@ top = false
 
 👉 Make sure to read the [Code of Conduct](../code-of-conduct/).
 
-## Contribute to Doks
+## Contribute to Rargs
 
-👉 The Rargs code lives in the [`rargs` repository](https://github.com/cloudbridgeuy/rargs)
+👉 The Rargs code lives in the [**Rargs** repository](https://github.com/cloudbridgeuy/rargs)
 
 - Follow the [GitHub flow](https://guides.github.com/introduction/flow/).
 - Follow the [Conventional Commits Specification](https://www.conventionalcommits.org/en/v1.0.0/)
@@ -30,7 +30,7 @@ top = false
 
 ## Improve documentation
 
-👉 The documentation lives in [`./content/docs/`](https://github.com/cloudbridgeuy/rargs/tree/master/content/docs)
+👉 The documentation lives in [`web/content/docs/`](https://github.com/cloudbridgeuy/rargs/tree/master/content/docs)
 of the [`rargs` repository](https://github.com/cloudbridgeuy/rargs).
 
 - Follow the [GitHub flow](https://guides.github.com/introduction/flow/).

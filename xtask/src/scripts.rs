@@ -40,6 +40,13 @@ pub fn build_docs(args: &cli::BuildDocsArgs) -> Result<()> {
     Ok(())
 }
 
+/// Runs the zola development server
+pub fn doc_dev() -> Result<()> {
+    println!("Running the zola development server");
+    cmd!("zola", "serve").dir("./web").run()?;
+    Ok(())
+}
+
 /// Create the release binaries for all the supported architectures.
 pub fn release(args: &cli::ReleaseArgs) -> Result<()> {
     println!("Building release binaries");

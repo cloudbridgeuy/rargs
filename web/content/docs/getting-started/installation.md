@@ -34,3 +34,9 @@ binary executable permissions.
 ```bash
 chmod +x rargs
 ```
+
+---
+
+Next, you'll see how you can use **Rargs** to create your first script.
+
+[Continue to Quick Start →](../quick-start/)

@@ -21,6 +21,7 @@ fn main() -> Result<()> {
             cli::Commands::Install(args) => scripts::install(args),
             cli::Commands::BuildDocs(args) => scripts::build_docs(args),
             cli::Commands::Release(args) => scripts::release(args),
+            cli::Commands::DevDocs => scripts::doc_dev(),
         },
         None => {
             println!("No command specified.");
