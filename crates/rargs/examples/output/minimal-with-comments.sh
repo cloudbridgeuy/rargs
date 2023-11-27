@@ -250,7 +250,6 @@ parse_download_arguments() {
 }
 # Download a file
 # This comment will be placed on top of the function definition.
-
 download() {
   local rargs_force
   local rargs_source
