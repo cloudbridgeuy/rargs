@@ -12,8 +12,9 @@ args:
 - rargs_message = ([0] = "something"
 - [1] = "with"
 - [2] = "args")
+- rargs_other_args = ([0] = "--additional")
 
-other_args:
-- ${other_args[*]} = --additional
-- ${other_args[0]} = --additional
+rargs_other_args:
+- ${rargs_other_args[*]} = --additional
+- ${rargs_other_args[0]} = --additional
 

@@ -16,8 +16,9 @@ args:
 - [1] = "with"
 - [2] = "args"
 - [3] = "and")
+- rargs_other_args = ([0] = "--additional")
 
-other_args:
-- ${other_args[*]} = --additional
-- ${other_args[0]} = --additional
+rargs_other_args:
+- ${rargs_other_args[*]} = --additional
+- ${rargs_other_args[0]} = --additional
 

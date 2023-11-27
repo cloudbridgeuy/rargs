@@ -6,22 +6,22 @@
 
 # @any <EXTERNAL_COMMAND> External command to run
 root() {
-  echo "Here you would call the following command"
-  echo "  external-${other_args[0]}" "${other_args[@]:1}"
+	echo "Here you would call the following command"
+	echo "  external-${rargs_other_args[0]}" "${rargs_other_args[@]:1}"
 }
 
 # @cmd Download a file
 # @alias d
 # @arg source! <SOURCE> File to download
 download() {
-  echo "Download"
-  inspect_args
+	echo "Download"
+	inspect_args
 }
 
 # @cmd Upload a file
 # @alias u
 # @arg source! <SOURCE> File to upload
 upload() {
-  echo "Upload"
-  inspect_args
+	echo "Upload"
+	inspect_args
 }

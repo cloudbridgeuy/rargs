@@ -24,15 +24,15 @@ parse_root() {
         ;;
       --)
         shift
-        other_args+=("$@")
+        rargs_other_args+=("$@")
         break
         ;;
       -?*)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
       *)
-        other_args+=("$1")
+        rargs_other_args+=("$1")
         shift
         ;;
     esac
@@ -56,24 +56,24 @@ root() {
       exit 1
     fi
   fi
-  inspect_args
-  # If other_args[0] is "-" or empty, read from stdin
-  if [[ "${other_args[0]}" == "-" || -z "${other_args[0]}" ]]; then
-    read_stdin
-  else
-    read_files
-  fi
-  printf "\nCollected file content:\n%s\n" "$content"
-  # Read contents of the provided file(s)
-  content=""
-  for file in "${other_args[@]}"; do
-    content+=$(cat "$file")
-    content+=$'\n'
-  done
-  # Read from stdin if no file is provided
-  if [[ -z "$content" ]]; then
-    content=$(cat -)
-  fi
+	inspect_args
+	# If rargs_other_args[0] is "-" or empty, read from stdin
+	if [[ "${rargs_other_args[0]}" == "-" || -z "${rargs_other_args[0]}" ]]; then
+		read_stdin
+	else
+		read_files
+	fi
+	printf "\nCollected file content:\n%s\n" "$content"
+	# Read contents of the provided file(s)
+	content=""
+	for file in "${rargs_other_args[@]}"; do
+		content+=$(cat "$file")
+		content+=$'\n'
+	done
+	# Read from stdin if no file is provided
+	if [[ -z "$content" ]]; then
+		content=$(cat -)
+	fi
 }
 
 
@@ -119,27 +119,27 @@ inspect_args() {
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
 
-  if ((${#other_args[@]})); then
+  if ((${#rargs_other_args[@]})); then
     echo
-    echo other_args:
-    echo "- \${other_args[*]} = ${other_args[*]}"
-    for i in "${!other_args[@]}"; do
-      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    echo rargs_other_args:
+    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
+    for i in "${!rargs_other_args[@]}"; do
+      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
     done
   fi
 }
 
 read_stdin() {
-  # Read from stdin
-  content=$(cat -)
+	# Read from stdin
+	content=$(cat -)
 }
 read_files() {
-  # Read contents of the provided file(s)
-  content=""
-  for file in "${other_args[@]}"; do
-    content+=$(cat "$file")
-    content+=$'\n'
-  done
+	# Read contents of the provided file(s)
+	content=""
+	for file in "${rargs_other_args[@]}"; do
+		content+=$(cat "$file")
+		content+=$'\n'
+	done
 }
 
 version() {
@@ -208,7 +208,7 @@ parse_arguments() {
 
 rargs_run() {
   declare -A deps=()
-  declare -a other_args=()
+  declare -a rargs_other_args=()
   declare -a rargs_input=()
   normalize_rargs_input "$@"
   parse_arguments "${rargs_input[@]}"

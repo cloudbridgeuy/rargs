@@ -92,12 +92,12 @@ inspect_args() {
     for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
   fi
 
-  if ((${#other_args[@]})); then
+  if ((${#rargs_other_args[@]})); then
     echo
-    echo other_args:
-    echo "- \${other_args[*]} = ${other_args[*]}"
-    for i in "${!other_args[@]}"; do
-      echo "- \${other_args[$i]} = ${other_args[$i]}"
+    echo rargs_other_args:
+    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
+    for i in "${!rargs_other_args[@]}"; do
+      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
     done
   fi
 }
