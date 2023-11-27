@@ -101,6 +101,6 @@ All `command decorator` tags at the `root` scope are declared regardless of the 
 
 ---
 
-In the following sections, we'll dive deeper into each `command decorator` tag and how to use them.
+In the following sections, we'll dive deeper into each `command decorator` tag and how to use them. Starting with `arguments`.
 
 [Show me how arguments work →](../../usage/options)

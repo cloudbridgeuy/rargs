@@ -13,93 +13,119 @@ toc = true
 top = false
 +++
 
-## Creating a New Script
+Options are a more advanced way to pass information to your script. They are not positional, meaning the order in which you pass them doesn't matter. With **Rargs**, you can streamline the process of parsing these options and define _required_, _multiple_, and _pre-defined_ values for your options.
 
-You can start writing a new **Rargs** script in any directory on your machine. All Bash scripts are valid **Rargs** sources. You can begin with an existing script or create a new one. If you prefer not to start with an empty script, you can run `rargs new`.
+## Basic Usage
 
-```bash
-rargs new --destination ./src minimal
-```
-
-This command will generate a minimal template for you to start with.
-
-## Scopes
-
-**Rargs** scripts are configured using `comment decorators`. These tags define every feature supported by the framework. At build time, **Rargs** will use the information inside the `comment decorators` to configure the build script.
-
-> **Rargs** ignores and removes all comments at build time. To make a comment persist, add an extra `#` at the beginning of the line.
-
-Each `comment tag` is assigned to either the script or one of its commands. Tags assigned to the script are part of the `root` scope, while those assigned to a command belong to that `function` scope.
-
-> Double `##` comments in the `root` scope are hoisted to the beginning of the script. Similarly, double `##` comments in each `function` scope are hoisted to the start of the function.
-
-## Script Metadata
-
-You can add metadata to your script at the root level using `comment decorators`. Here's an example:
+To define options, use the `@option` tag. Here's an example:
 
 ```bash
 #!/usr/bin/env bash
-# @name minimal
-# @version 0.0.1
-# @description Sample minimal application without commands
-```
+# @name options
+# @description Sample application with options
 
-These tags set the `name`, `version`, and description of the app. This information appears in the `--help` and `--version` commands.
-
-> The `--version` option is automatically generated when you add the `@version` tag.
-
-The full list of available metadata `comment decorators` tags is:
-
-| Tag            | Description                       |
-| -------------- | --------------------------------- |
-| `@name`        | The name of the application.      |
-| `@version`     | The version of the application.   |
-| `@description` | A description of the application. |
-| `@author`      | The author of the application.    |
-| `@license`     | The license of the application.   |
-| `@default`     | The default command to run.       |
-
-## Commands
-
-A **Rargs** script consists of one or more commands. A command is a Bash function that you can call from the command line. It can have arguments, flags, options, dependencies, rules, and more. Not all Bash functions are exposed as commands, and some can be set as private.
-
-To define a Bash function as a command, add the `@cmd` tag to it. Here's an example:
-
-```bash
-#!/usr/bin/env bash
-# @name minimal
-
-# @cmd Greet the world
-hello() {
-  echo "Hello World!"
+# @cmd Greeting function
+# @option -n --name The name of the person to greet
+greet() {
+  echo "Hello, $rargs_name!"
 }
 ```
 
-This exposes the `hello` command from the script.
+This script defines a single option called `name`. You can access the value of this option with the `$rargs_name` variable.
 
-> The `@cmd` tag requires a brief description of the command's purpose. This description is used in the help message.
+> All `arguments`, `options`, `flags`, and other **Rargs** related runtime resources are prefixed with `rargs_` to prevent collisions with your script.
 
-Every **Rargs** script must have at least one command. If commands don't fit your script, create it with a single special function called `root`. This function is invoked when you call the script without any commands. You can assign the same behavior to a `root` function as to any other command function.
+After building this script, you should be able to call the `greet` command like this:
 
-Each `command decorator` under the `@cmd` tag configures the command. The full list of available `command decorator` tags is:
+```bash
+$ ./options greet --name "John Doe"
+Hello, John Doe!
 
-| Tag        | Description                                     |
-| ---------- | ----------------------------------------------- |
-| `@option`  | Define an option for the command.               |
-| `@flag`    | Define a flag for the command.                  |
-| `@arg`     | Define an argument for the command.             |
-| `@env`     | Define an environment variable for the command. |
-| `@rule`    | Define a rule for the command.                  |
-| `@dep`     | Define a dependency for the command.            |
-| `@private` | Set the command as private.                     |
-| `@example` | Add an example of how to use this command.      |
+$ ./options greet -n "Jane Doe"
+Hello, Jane Doe!
+```
 
-After the `@cmd` tag and any additional configuration, add the Bash function that executes when the command is called. The command's scope ends when **Rargs** detects the end of the function declaration.
+By default, options are optional. To mark an option as _required_, append a `!` to its name. Here's an example:
 
-All `command decorator` tags at the `root` scope are declared regardless of the line. However, all `command decorator` tags for a function must be defined between the `@cmd` tag and the function declaration.
+```bash
+# @cmd Greeting function
+# @option -n --name! The name of the person to greet
+greet() {
+  echo "Hello, $rargs_name!"
+}
+```
+
+If you don't provide a required option when calling the script, **Rargs** will throw an error.
+
+You can also opt out of defining a short option by omitting the `-` prefix, but you always need to provide the long name of the option.
+
+```bash
+# @cmd Greeting function
+# @option --name! The name of the person to greet
+greet() {
+  echo "Hello, $rargs_name!"
+}
+```
+
+Below is a list of all available `comment decorators` for options:
+
+| Tag                                                     | Description                                                                       |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `@option <short> <long> <description>`                  | Defines an optional option.                                                       |
+| `@option <short> <long>! <description>`                 | Defines a required option.                                                        |
+| `@option <short> <long>=foo <description>`              | Defines an option with a default value.                                           |
+| `@option <short> <long>="foo bar" <description>`        | Defines an option with a default value that includes spaces.                      |
+| `@option <short> <long>[foo\|bar\|baz] <description>`   | Defines an option that accepts only a list of pre-defined values.                 |
+| `@option <short> <long>[=foo\|bar\|baz] <description>`  | Defines an option that accepts a list of pre-defined values with a default value. |
+| `@option <short> <long>* <description>`                 | Defines an optional multiple option.                                              |
+| `@option <short> <long>+ <description>`                 | Defines a required multiple option.                                               |
+| `@option <short> <long> <VALUE_NOTATION> <description>` | Defines an option with a custom value notation.                                   |
+| `@option --option*=a <description>`                     | Defines an optional option that accepts multiple values and has a default.        |
+| `@option --option+=a <description>`                     | Defines a required option that accepts multiple values and has a default.         |
+| `@option --option*[a\|b\|c] <description>`              | Defines an optional option that accepts multiple values and has a default.        |
+| `@option --option+[a\|b\|c] <description>`              | Defines a required option that accepts multiple values and has a default.         |
+| `@option --option*[=a\|b\|c] <description>`             | Defines an optional option that accepts multiple values and has a default.        |
+
+Some important notes:
+
+- Argument descriptions can include spaces and ANSI escape sequences.
+- Multiple options expect the option to be provided before each value. For example: `-m foo -m bar -m baz`.
+- The values for _multiple_ options are stored in an array.
+- The default value for an option that only supports a list of pre-defined values should be the first value in the list.
+
+Here's an example of a script that uses multiple options:
+
+```bash
+# @cmd A command with all the valid option configurations.
+# @option -s --long Optional short and long option.
+# @option --required! Required option.
+# @option --default=foo Default option.
+# @option --multiple* Optional multiple option.
+# @option --multiple-required+ Required multiple option.
+# @option --value-notation <VALUE_NOTATION> Option with a different value notation.
+# @option --with-options[foo|bar|baz] Option with options.
+# @option --with-options-and-default[=foo|bar|baz] Option with options and a default.
+# @option --with-options-and-required![foo|bar|baz] Required option with options.
+# @option --with-options-and-multiple*[foo|bar|baz] Option with options and multiple.
+# @option --with-options-and-multiple-required+[foo|bar|baz] Required option with options and multiple.
+options() {
+        echo "optional: $rargs_long"
+        echo "required: $rargs_required"
+        echo "default: $rargs_default"
+  # **Important**: Remember that multiple options are stored in an array!
+        echo "multiple: ${rargs_multiple[*]}"
+        echo "multiple-required: ${rargs_multiple_required[*]}"
+        echo "value-notation: $rargs_value_notation"
+        echo "with-options: $rargs_with_options"
+        echo "with-options-and-default: $rargs_with_options_and_default"
+        echo "with-options-and-required: $rargs_with_options_and_required"
+        echo "with-options-and-multiple: ${rargs_with_options_and_multiple[*]}"
+        echo "with-options-and-multiple-required: ${rargs_with_options_and_multiple_required[*]}"
+}
+```
 
 ---
 
-In the following sections, we'll dive deeper into each `command decorator` tag and how to use them.
+Next, we'll learn how to define `flags` in your **Rargs** scripts.
 
 [Show me how options work →](../../usage/options)

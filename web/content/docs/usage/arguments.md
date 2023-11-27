@@ -35,6 +35,13 @@ This script defines a single argument called `name`. Access the value of this ar
 
 > All `arguments`, `options`, `flags`, and other **Rargs** related runtime resources are prefixed with `rargs_` to prevent collisions with your script.
 
+After building this script you should be able to call the `greet` command like this:
+
+```bash
+$ ./arguments greet "John Doe"
+"Hello, John Doe!"
+```
+
 By default, arguments are optional. To mark an argument as _required_, append a `!` to its name. Here's an example:
 
 ```bash
@@ -65,10 +72,10 @@ Below is a list of all available `comment decorators` for arguments:
 
 Some important notes:
 
-1. Argument descriptions can include spaces and ANSI escape sequences.
-2. Use double quotes to set default values that contain spaces.
-3. Escape the `|` character when defining a list of pre-defined values.
-4. The default value for an argument that only supports a list of pre-defined values should be the first value in the list.
+- Argument descriptions can include spaces and ANSI escape sequences.
+- Use double quotes to set default values that contain spaces.
+- The default value for an argument that only supports a list of pre-defined values should be the first value in the list.
+- The values for _multiple_ arguments are stored inside a bash array.
 
 > The current implementation of `multiple` arguments requires all positional arguments to be _required_. This is a known issue that will be addressed in future versions.
 
@@ -96,25 +103,13 @@ Here's an example of a script using all the available `comment decorators` for a
 ###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple optional argument with options and default
 ###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options
 ###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default
-subcommand() {
-        echo "optional-argument: $rargs_optional_argument"
-        echo "required-argument: $rargs_required_argument"
-        echo "default-argument: $rargs_default_argument"
-        echo "default-argument-with-spaces: $rargs_default_argument_with_spaces"
-        echo "with-options: $rargs_with_options"
-        echo "with-options-and-default: $rargs_with_options_and_default"
-        echo "with-different-value-notation: $rargs_with_different_value_notation"
-        echo "with-multiple-optional: ${rargs_with_multiple_optional[*]}"
-        echo "with-multiple-required: ${rargs_with_multiple_required[*]}"
-        echo "with-multiple-optional-and-options: ${rargs_with_multiple_optional_and_options[*]}"
-        echo "with-multiple-optional-options-and-default: ${rargs_with_multiple_optional_options_and_default[*]}"
-        echo "with-multiple-required-and-options: ${rargs_with_multiple_required_and_options[*]}"
-        echo "with-multiple-required-options-and-default: ${rargs_with_multiple_required_options_and_default[*]}"
+arguments() {
+  inspect_args
 }
 ```
 
 ---
 
-Next, we'll learn how to define options in your **Rargs** scripts.
+Next, we'll learn how to define `options` in your **Rargs** scripts.
 
 [Show me how options work →](../../usage/options)
