@@ -494,4 +494,46 @@ fn test_render() {
             }
         })
     );
+
+    test_template!(
+        "usage.tera",
+        "Usage with option with all flags and value notations",
+        serde_json::json!({
+            "name": "usage",
+            "description": "Test simple usage",
+            "default": "foo",
+            "flags": {
+                "verbose": {
+                    "description": "Test verbose flag"
+                }
+            },
+            "commands": {
+                "foo": {
+                    "description": "Test foo command",
+                    "help": "Some additional help message"
+                }
+            },
+            "positional_arguments": [{
+                "name": "some",
+                "description": "Test argument with all attributes",
+                "choices": ["foo", "bar", "baz"],
+                "multiple": "true",
+                "required": "true",
+                "default": "foo",
+                "value_notation": "ELSE"
+            }],
+            "options": {
+                "all": {
+                    "short": "a",
+                    "name": "all",
+                    "description": "Test option with all attributes",
+                    "choices": ["foo", "bar", "baz"],
+                    "multiple": "true",
+                    "required": "true",
+                    "default": "foo",
+                    "value_notation": "ELSE"
+                }
+            }
+        })
+    );
 }

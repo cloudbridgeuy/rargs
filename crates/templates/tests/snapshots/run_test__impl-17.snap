@@ -11,7 +11,7 @@ rargs_run() {
   parse_arguments "${rargs_input[@]}"
   # Check global environment variables
   
-  if [[ -n "$rargs_foo" ]]; then
+  if [[ -z "$rargs_foo" ]]; then
     rargs_foo="${FOO:-}"
   fi
 

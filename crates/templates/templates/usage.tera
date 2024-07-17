@@ -39,7 +39,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Usage:"
 
   {%- if commands %}
-  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]{%- if any %} {% if not any["required"] %}[{% endif %}...{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{% if not any["required"] %}]{% endif %}{%- endif %}\n"
+  printf "  {{ name }} {% for option in required %}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{% if option["value_notation"] %}{{ option["value_notation"] | upper }}{% else %}{{ option["name"] | upper }}{% endif %}> {% endfor %}[OPTIONS] [COMMAND] [COMMAND_OPTIONS]{%- if any %} {% if not any["required"] %}[{% endif %}...{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{% if not any["required"] %}]{% endif %}{%- endif %}\n"
   {%- else %}
     {%- if positional_arguments %}
   printf "  {{ name }} {% for option in required -%}{% if option["short"] %}-{{ option["short"]}}|{% endif %}--{{ option["name"] }} <{{ option["name"] | upper }}> {% endfor %}[OPTIONS] {% for arg in positional_arguments %}{% if arg["required"] %}{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}{% else %}[{% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}{% if arg["multiple"] %}...{% endif %}]{% endif %} {% endfor %}{%- if any %} ...{% if not any["required"] %}[{% endif %}{%- if any["value_notation"] %}{{ any["value_notation"] }}{%- endif %}{% if not any["required"] %}]{% endif %}{%- endif %}\n"
@@ -106,7 +106,7 @@ EOF
   {%- if options or flags %}
   {%- if options %}
   {%- for key, option in options %}
-  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{{ key | upper }}>{% else %}[<{{ key | upper }}>]{% endif %}\n"
+  printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{% if option["value_notation"] %}{{ option["value_notation"] }}{% else %}{{ key | upper }}{% endif %}>{% else %}[<{% if option["value_notation"] %}{{ option["value_notation"] }}{% else %}{{ key | upper }}{% endif %}>]{% endif %}\n"
   printf "    {{ option["description"] }}\n"
   {%- if option["multiple"] or option["default"] or option["choices"] %}
   printf "    [
