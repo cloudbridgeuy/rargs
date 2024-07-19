@@ -11,7 +11,7 @@ foo_usage() {
   printf "  foo -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -dm --default [<DEFAULT>]\n"
+  printf "  -dm --default [<DEFAULT-MULTIPLE>]\n"
   printf "    Test default and multiple option\n"
   printf "    [@multiple, @default foo]\n"
   printf "  -h --help\n"

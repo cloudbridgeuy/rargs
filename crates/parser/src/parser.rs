@@ -1488,5 +1488,49 @@ mod tests {
             "## Comment that should not be ignored",
             Data::Comment("# Comment that should not be ignored".to_string())
         );
+        assert_token!(
+            "# @option -r --recommended! <KUBERNETES_VERSION> Update to the recommended version for the given K8s version (this or '--version' must be set.)",
+            Data::Option(param::Option {
+                name: "recommended".to_string(),
+                short: Some('r'),
+                required: true,
+                value_notation: Some("KUBERNETES_VERSION".to_string()),
+                description: "Update to the recommended version for the given K8s version (this or '--version' must be set.)".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option -r --recommended <KUBERNETES_VERSION> Update to the recommended version for the given K8s version (this or '--version' must be set.)",
+            Data::Option(param::Option {
+                name: "recommended".to_string(),
+                short: Some('r'),
+                required: false,
+                value_notation: Some("KUBERNETES_VERSION".to_string()),
+                description: "Update to the recommended version for the given K8s version (this or '--version' must be set.)".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option -r --recommended!<KUBERNETES_VERSION> Update to the recommended version for the given K8s version (this or '--version' must be set.)",
+            Data::Option(param::Option {
+                name: "recommended".to_string(),
+                short: Some('r'),
+                required: true,
+                value_notation: Some("KUBERNETES_VERSION".to_string()),
+                description: "Update to the recommended version for the given K8s version (this or '--version' must be set.)".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option -r --recommended<KUBERNETES_VERSION> Update to the recommended version for the given K8s version (this or '--version' must be set.)",
+            Data::Option(param::Option {
+                name: "recommended".to_string(),
+                short: Some('r'),
+                required: false,
+                value_notation: Some("KUBERNETES_VERSION".to_string()),
+                description: "Update to the recommended version for the given K8s version (this or '--version' must be set.)".to_string(),
+                ..Default::default()
+            })
+        );
     }
 }

@@ -11,7 +11,7 @@ foo_usage() {
   printf "  foo -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -cm --choices [<CHOICES>]\n"
+  printf "  -cm --choices [<CHOICES-MULTIPLE>]\n"
   printf "    Test option with choices and multiple\n"
   printf "    [@multiple, @choices foo, bar, baz]\n"
   printf "  -s --short\n"

@@ -11,7 +11,7 @@ foo_usage() {
   printf "  foo -h|--help\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
-  printf "  -rm --required <REQUIRED>\n"
+  printf "  -rm --required <REQUIRED-MULTIPLE>\n"
   printf "    Test required and multiple option\n"
   printf "    [@multiple]\n"
   printf "  -h --help\n"
