@@ -12,7 +12,7 @@
 # @arg target Target filename (default: same as source)
 # @flag -f --force Overwrite existing files
 download() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Upload a file
@@ -24,11 +24,11 @@ download() {
 # @option -u --user Username to use for logging in
 # @option -p --password Password to use for logging in
 upload() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @dep fail This is meant to fail
 # @dep again Also this
 root() {
-  echo "Fallback to root command"
+	echo "Fallback to root command"
 }

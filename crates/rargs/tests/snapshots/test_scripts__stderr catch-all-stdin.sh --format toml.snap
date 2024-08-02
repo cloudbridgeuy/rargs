@@ -29,9 +29,8 @@ Catch All with stdin input
 [4mOptions:[0m
   -f --format [<FORMAT>]
     Specify the file format
-    [@default json, @choices json, csv]
+    [@default json, @choices json|csv]
   -h --help
     Print help
   -v --version
     Print version
-

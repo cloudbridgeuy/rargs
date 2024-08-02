@@ -3,24 +3,4 @@ source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] catch-all-global.sh something, something, the dark side"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-args:
-- rargs_input = ([0] = "something,"
-- [1] = "something,"
-- [2] = "the"
-- [3] = "dark"
-- [4] = "side")
-- rargs_other_args = ([0] = "something,"
-- [1] = "something,"
-- [2] = "the"
-- [3] = "dark"
-- [4] = "side")
-
-rargs_other_args:
-- ${rargs_other_args[*]} = something, something, the dark side
-- ${rargs_other_args[0]} = something,
-- ${rargs_other_args[1]} = something,
-- ${rargs_other_args[2]} = the
-- ${rargs_other_args[3]} = dark
-- ${rargs_other_args[4]} = side
-
+something, something, the dark side

@@ -1,0 +1,23 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with mulitple dependencies and a message
+expression: output
+---
+# Function with a local option with choices
+foo() {
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  # Check dependencies
+  for dependency in foo bar; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "Installing dependencies\n" >&2
+      exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
+    fi
+  done
+
+  echo "No implementation body found for function foo"
+}

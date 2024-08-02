@@ -8,7 +8,7 @@ pub struct Command {
 
 #[derive(Debug)]
 pub struct Options {
-    pub script_root: String,
+    pub script: String,
     pub destination: String,
 }
 
@@ -21,7 +21,7 @@ impl Command {
     /// Run the command
     pub fn run(&self) -> Result<()> {
         let scripts =
-            super::script::create_script(&self.options.script_root, &self.options.destination)?;
+            super::script::create_script(&self.options.script, &self.options.destination)?;
 
         for (name, script) in scripts {
             let output = templates::render(&script)?;

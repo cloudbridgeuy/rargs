@@ -6,12 +6,12 @@
 # @cmd Show files in the directory
 # @arg path! Directory path
 list() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Remove directory
 # @arg path! Directory path
 # @flag -f --force Remove even if not empty
 remove() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }

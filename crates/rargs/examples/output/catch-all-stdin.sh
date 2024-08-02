@@ -56,7 +56,7 @@ root() {
       exit 1
     fi
   fi
-	inspect_args
+	echo "${rargs_input[*]}"
 	# If rargs_other_args[0] is "-" or empty, read from stdin
 	if [[ "${rargs_other_args[0]}" == "-" || -z "${rargs_other_args[0]}" ]]; then
 		read_stdin
@@ -101,34 +101,6 @@ normalize_rargs_input() {
   done
 }
 
-inspect_args() {
-  prefix="rargs_"
-  args="$(set | grep ^$prefix | grep -v rargs_run || true)"
-  if [[ -n "$args" ]]; then
-    echo
-    echo args:
-    for var in $args; do
-      echo "- $var" | sed 's/=/ = /g'
-    done
-  fi
-
-  if ((${#deps[@]})); then
-    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
-    echo
-    echo deps:
-    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
-  fi
-
-  if ((${#rargs_other_args[@]})); then
-    echo
-    echo rargs_other_args:
-    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
-    for i in "${!rargs_other_args[@]}"; do
-      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
-    done
-  fi
-}
-
 read_stdin() {
 	# Read from stdin
 	content=$(cat -)
@@ -143,7 +115,7 @@ read_files() {
 }
 
 version() {
-  echo "0.0.1"
+  echo -n "0.0.1"
 }
 usage() {
   printf "Catch All with stdin input\n"
@@ -167,7 +139,7 @@ usage() {
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -f --format [<FORMAT>]\n"
   printf "    Specify the file format\n"
-  printf "    [@default json, @choices json, csv]\n"
+  printf "    [@default json, @choices json|csv]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  -v --version\n"

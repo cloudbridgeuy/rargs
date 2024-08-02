@@ -37,36 +37,8 @@ normalize_rargs_input() {
   done
 }
 
-inspect_args() {
-  prefix="rargs_"
-  args="$(set | grep ^$prefix | grep -v rargs_run || true)"
-  if [[ -n "$args" ]]; then
-    echo
-    echo args:
-    for var in $args; do
-      echo "- $var" | sed 's/=/ = /g'
-    done
-  fi
-
-  if ((${#deps[@]})); then
-    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
-    echo
-    echo deps:
-    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
-  fi
-
-  if ((${#rargs_other_args[@]})); then
-    echo
-    echo rargs_other_args:
-    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
-    for i in "${!rargs_other_args[@]}"; do
-      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
-    done
-  fi
-}
-
 version() {
-  echo "0.0.1"
+  echo -n "0.0.1"
 }
 usage() {
   printf "STDIN Example\n"
@@ -185,7 +157,7 @@ arg() {
     rargs_path="-"
   fi
     
-	inspect_args
+	echo "${rargs_input[*]}"
 	# Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
 	cat "$rargs_path"
 }
@@ -249,7 +221,7 @@ option() {
     rargs_path="-"
   fi
     
-	inspect_args
+	echo "${rargs_input[*]}"
 	# Since cat knows how to handle "-" as a value, it will work with boht a file path and "-".
 	cat "$rargs_path"
 }

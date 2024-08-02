@@ -1,0 +1,36 @@
+---
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse command with a command option that uses h as short
+expression: output
+---
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h|--help)
+        usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+  action="${1:-}"
+
+  case $action in
+    foo)
+      action="foo"
+      rargs_input=("${rargs_input[@]:1}")
+      ;;
+    -h|--help)
+      usage
+      exit
+      ;;
+    "")
+      ;;
+    *)
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid command: " "$action" >&2
+      exit 1
+      ;;
+  esac
+}

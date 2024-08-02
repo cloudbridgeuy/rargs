@@ -18,17 +18,18 @@ name = "rargs"
 path = "src/lib.rs"
 
 [dependencies]
-serde = { version = "1.0.186", features = ["derive"] }
-clap = { version = "4.3.10", features = ["derive", "string"] }
-color-eyre = "0.6.2"
-env_logger = "0.10.0"
-log = "0.4.19"
+serde = { version = "1.0.204", features = ["derive"] }
+clap = { version = "4.5.13", features = ["derive", "string"] }
+color-eyre = "0.6.3"
+env_logger = "0.11.5"
+log = "0.4.22"
 parser = { path = "../parser", version = "0.0.0" }
-tempfile = "3.8.0"
+tempfile = "3.10.1"
 templates = { path = "../templates", version = "0.0.0" }
+clap-stdin = { version = "0.5.1", features = ["clap"] }
 
 [dev-dependencies]
 utils = { path = "../utils", version = "0.0.0" }
-insta = { version = "1.31.0", features = ["yaml"] }
-test-log = "0.2.12"
-tera = "1"
+insta = { version = "1.39.0", features = ["yaml"] }
+test-log = "0.2.16"
+tera = "1.20.0"

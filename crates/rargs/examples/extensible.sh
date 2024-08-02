@@ -15,7 +15,7 @@ root() {
 # @arg source! <SOURCE> File to download
 download() {
 	echo "Download"
-	inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Upload a file
@@ -23,5 +23,5 @@ download() {
 # @arg source! <SOURCE> File to upload
 upload() {
 	echo "Upload"
-	inspect_args
+	echo "${rargs_input[*]}"
 }

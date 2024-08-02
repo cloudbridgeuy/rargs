@@ -1,0 +1,35 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with multiple multiple global dependencies and a message
+expression: output
+---
+rargs_run() {
+  declare -A deps=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  # Check global dependencies
+  
+  for dependency in git curl wget; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "Please install with apt-get\n" >&2
+      exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
+    fi
+  done
+  for dependency in foo bar baz; do
+    if ! command -v $dependency >/dev/null 2>&1; then
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
+      printf "Please install with apt-get\n" >&2
+      exit 1
+    else
+      deps["$dependency"]="$(command -v $dependency | head -n1)"
+    fi
+  done
+
+  printf "\e[31m%s\e[33m%s\e[31m%s\e[0m\n\n" "Nothing to do. Please add " "commands" " or a root command" >&2
+  usage >&2
+  exit 1
+}

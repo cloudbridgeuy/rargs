@@ -8,5 +8,5 @@
 # @example Set verbose mode on $ -v|--verbose
 
 root() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }

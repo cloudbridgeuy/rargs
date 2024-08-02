@@ -1,0 +1,20 @@
+---
+source: crates/templates/tests/usage_test.rs
+description: Usage with positional arguments
+expression: output
+---
+usage() {
+  printf "Test usage with positional arguments\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage [OPTIONS] [FOO] [BAR] \n"
+  printf "  usage -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  FOO\n"
+  printf "    Test foo command\n"
+  printf "  BAR\n"
+  printf "    Test bar command\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}

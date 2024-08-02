@@ -8,10 +8,10 @@
 # @option -s --secret! Your secret key
 # @env SECRET:secret Your secret key
 verify() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @env ENVIRONMENT! Your environment
 root() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }

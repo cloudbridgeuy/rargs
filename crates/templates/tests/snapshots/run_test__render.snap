@@ -1,0 +1,32 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with multiple commands
+expression: output
+---
+rargs_run() {
+  declare -A deps=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  # Call the right command action
+  case "$action" in
+    "bar")
+      bar "${rargs_input[@]}"
+      exit
+      ;;
+    "baz")
+      baz "${rargs_input[@]}"
+      exit
+      ;;
+    "foo")
+      foo "${rargs_input[@]}"
+      exit
+      ;;
+    "")
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "bar, baz, foo" >&2
+      usage >&2
+      exit 1
+      ;;
+    
+  esac
+}

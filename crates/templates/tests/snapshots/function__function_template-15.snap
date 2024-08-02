@@ -1,0 +1,25 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with default and required positional argument
+expression: output
+---
+# Function with a default positional argument
+foo() {
+  local rargs_default
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  
+    
+  if [[ -z "$rargs_default" ]]; then
+    rargs_default="true"
+  fi
+    
+  
+  if [[ -z "$rargs_default" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required option: " "default" >&2
+    foo_usage >&2
+    exit 1
+  fi
+  echo "No implementation body found for function foo"
+}

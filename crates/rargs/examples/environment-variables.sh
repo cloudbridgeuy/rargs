@@ -11,13 +11,13 @@
 # @env SECRET:secret Your secret key
 # @env MULTIPLE:multiple Multiple values are also supported
 verify() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @env ENVIRONMENT Your environment
 root() {
-  inspect_args
-  echo "DEBUG: ${DEBUG:-}"
-  echo "ENVIRONMENT: ${ENVIRONMENT:-}"
-  echo "SECRET: ${SECRET:-}"
+	echo "${rargs_input[*]}"
+	echo "DEBUG: ${DEBUG:-}"
+	echo "ENVIRONMENT: ${ENVIRONMENT:-}"
+	echo "SECRET: ${SECRET:-}"
 }

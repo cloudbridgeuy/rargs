@@ -1,0 +1,39 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with multiple commands and a default value
+expression: output
+---
+rargs_run() {
+  declare -A deps=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  # Rule `no-first-option-help`: Render the global or command usage if the `-h|--help` option is
+  #                              is provided anywhere on the command, not just as the first option.
+  #                              Handling the case where no action was selected.
+  if [[ -n "$rargs_help" ]] && [[ -z "$action" ]]; then
+    usage
+    exit 0
+  fi
+  # Call the right command action
+  case "$action" in
+    "bar")
+      bar "${rargs_input[@]}"
+      exit
+      ;;
+    "baz")
+      baz "${rargs_input[@]}"
+      exit
+      ;;
+    "foo")
+      foo "${rargs_input[@]}"
+      exit
+      ;;
+    "")
+      printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing command. Select one of " "bar, baz, foo" >&2
+      usage >&2
+      exit 1
+      ;;
+    
+  esac
+}

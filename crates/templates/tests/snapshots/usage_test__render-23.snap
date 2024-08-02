@@ -1,0 +1,17 @@
+---
+source: crates/templates/tests/usage_test.rs
+description: Usage with a global flag that uses -h as short
+expression: output
+---
+usage() {
+  printf "Test usage with a global option that uses -h as short\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage [OPTIONS]\n"
+  printf "  usage --help\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --host\n"
+  printf "    Test host option\n"
+  printf "  --help\n"
+  printf "    Print help\n"
+}

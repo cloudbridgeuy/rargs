@@ -1,0 +1,20 @@
+---
+source: crates/templates/tests/command_usage_test.rs
+description: Command usage with positional arguments with default value
+expression: output
+---
+foo_usage() {
+  printf "Test simple usage\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  foo [OPTIONS] [FOO]\n"
+  printf "  foo -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  FOO\n"
+  printf "    Test foo positional argument\n"
+  printf "    [@default bar]\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}

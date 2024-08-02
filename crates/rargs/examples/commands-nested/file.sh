@@ -6,12 +6,11 @@
 # @cmd Show file contents
 # @arg path! Path to file
 show() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Edit the file
 # @arg path! Path to file
 remove() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
-

@@ -1,0 +1,31 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with multiple commands and a default value
+expression: output
+---
+rargs_run() {
+  declare -A deps=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  # Call the right command action
+  case "$action" in
+    "bar")
+      bar "${rargs_input[@]}"
+      exit
+      ;;
+    "baz")
+      baz "${rargs_input[@]}"
+      exit
+      ;;
+    "foo")
+      foo "${rargs_input[@]}"
+      exit
+      ;;
+    "")
+      foo
+      exit
+      ;;
+    
+  esac
+}

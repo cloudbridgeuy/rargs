@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use clap_stdin::FileOrStdin;
 
 pub mod commands;
 
@@ -27,9 +28,13 @@ pub struct BuildOptions {
 
 #[derive(Debug, Parser)]
 #[clap(trailing_var_arg = true)]
+#[clap(disable_help_flag = true)]
 pub struct RunOptions {
-    /// The path to the script
-    pub script_root: String,
+    #[clap(long, action = clap::ArgAction::HelpLong)]
+    help: Option<bool>,
+    /// Path to the script or read from stdin.
+    #[clap(default_value = "-")]
+    pub script: FileOrStdin,
     /// An optional list of arguments to pass to the command
     #[arg(allow_hyphen_values = true)]
     pub arguments: Vec<String>,
@@ -39,7 +44,7 @@ pub struct RunOptions {
 pub struct NewOptions {
     /// The name of the script
     pub name: String,
-    /// An optional vesion number as a string
+    /// An optional version number as a string
     #[arg(short, long)]
     pub version: Option<String>,
     /// An optional description of the script
@@ -78,7 +83,10 @@ impl From<NewOptions> for commands::new::Options {
 impl From<RunOptions> for commands::run::Options {
     fn from(options: RunOptions) -> Self {
         Self {
-            script_root: options.script_root,
+            script: options
+                .script
+                .contents()
+                .expect("Unable to read script or stdin"),
             arguments: options.arguments,
         }
     }
@@ -87,7 +95,7 @@ impl From<RunOptions> for commands::run::Options {
 impl From<BuildOptions> for commands::build::Options {
     fn from(options: BuildOptions) -> Self {
         Self {
-            script_root: options.script_root,
+            script: options.script_root,
             destination: options.destination,
         }
     }

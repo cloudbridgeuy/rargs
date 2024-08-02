@@ -9,5 +9,5 @@
 # @example Download a file from the internet and force save it to ./output $ example.com ./output -f
 
 root() {
-	inspect_args
+	echo "${rargs_input[*]}"
 }

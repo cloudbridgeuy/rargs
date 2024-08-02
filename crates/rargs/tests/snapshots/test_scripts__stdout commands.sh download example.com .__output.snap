@@ -3,10 +3,4 @@ source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] commands.sh download example.com ./output"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-args:
-- rargs_input = ([0] = "example.com"
-- [1] = "./output")
-- rargs_source = example.com
-- rargs_target = ./output
-
+example.com ./output

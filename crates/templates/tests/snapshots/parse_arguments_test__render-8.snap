@@ -1,0 +1,36 @@
+---
+source: crates/templates/tests/parse_arguments_test.rs
+description: Parse command with positional arguments and no commands
+expression: output
+---
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+      -h|--help)
+        usage
+        exit
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -z "$rargs_foo" ]]; then
+          rargs_foo=$key
+          shift
+        else
+          printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+}

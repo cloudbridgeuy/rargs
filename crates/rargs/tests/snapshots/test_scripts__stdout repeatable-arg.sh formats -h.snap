@@ -12,12 +12,11 @@ Formats
 [4mArguments:[0m
   FORMATS
     One or more formats to process
-    [@required, @multiple, @default jpg, @choices jpg, png, gif]
+    [@required, @multiple, @default jpg, @choices jpg|png|gif]
 
 [4mOptions:[0m
   -a --action [<ACTION>]
     Action to perform
-    [@multiple, @choices upcase, downcase]
+    [@multiple, @choices upcase|downcase]
   -h --help
     Print help
-

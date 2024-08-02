@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# @name emtpy
-# @version 0.0.1
+# @name empty
+# @version X.X.X
 # @description Empty script
 # @author @cloudbridgeuy

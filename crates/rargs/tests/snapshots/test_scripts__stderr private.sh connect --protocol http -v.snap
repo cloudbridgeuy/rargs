@@ -21,9 +21,8 @@ Connect to the metaverse
 [4mOptions:[0m
   -p --protocol <PROTOCOL>
     Protocol to use for connection
-    [@choices ftp, ssh]
+    [@choices ftp|ssh]
   -v --verbose
     Verbose output
   -h --help
     Print help
-

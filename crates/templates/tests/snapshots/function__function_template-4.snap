@@ -1,0 +1,12 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with custom-usage rule
+expression: output
+---
+# Simple function
+foo() {
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  echo "No implementation body found for function foo"
+}

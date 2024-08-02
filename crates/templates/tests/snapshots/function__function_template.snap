@@ -1,0 +1,14 @@
+---
+source: crates/templates/tests/function.rs
+description: Normal function
+expression: output
+---
+# Simple function
+foo() {
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  foo
+  bar
+  baz
+}

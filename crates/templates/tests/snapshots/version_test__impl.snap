@@ -1,8 +1,0 @@
----
-source: crates/templates/tests/version_test.rs
-description: With version
-expression: output
----
-version() {
-  echo "0.0.1"
-}

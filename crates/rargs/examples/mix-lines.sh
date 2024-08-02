@@ -11,7 +11,7 @@
 set +x
 
 top() {
-  echo top
+	echo top
 }
 
 # @cmd Download a file
@@ -23,12 +23,12 @@ top() {
 # @example Download a file from the internet $ download example.com
 # @example Download a file from the internet and force save it to ./output $ download example.com ./output -f
 download() {
-  inspect_args
-  bottom
+	echo "${rargs_input[*]}"
+	bottom
 }
 
 middle() {
-  echo middle
+	echo middle
 }
 
 # @cmd Upload a file
@@ -37,16 +37,16 @@ middle() {
 # @option -u --user Username to use for logging in
 # @option -p --password Password to use for logging in
 upload() {
-  inspect_args
-  top
+	echo "${rargs_input[*]}"
+	top
 }
 
 bottom() {
-  echo bottom
+	echo bottom
 }
 
 root() {
-  top
-  middle
-  bottom
+	top
+	middle
+	bottom
 }

@@ -11,7 +11,7 @@
 ## This line comment will be added to the final script
 # This one will not make it.
 root() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 ## Comments that begin with a double hash will be added to the final script
@@ -29,8 +29,6 @@ root() {
 # @example Download a file from the internet and force save it to ./output $ download example.com ./output -f
 ## This comment will be placed on top of the function definition.
 download() {
-  inspect_args
-  bottom
+	echo "${rargs_input[*]}"
+	bottom
 }
-
-

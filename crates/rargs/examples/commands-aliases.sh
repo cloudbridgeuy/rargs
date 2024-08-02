@@ -16,7 +16,7 @@
 # @example Download a file from the internet $ download example.com
 # @example Download a file and use a different alias $ down example.com
 download() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Upload a file
@@ -28,5 +28,5 @@ download() {
 # @example Upload a file to the internet $ upload example.com
 # @example Upload a file and use a different alias $ push example.com
 upload() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }

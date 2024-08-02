@@ -1,0 +1,22 @@
+---
+source: crates/templates/tests/root.rs
+description: Function global environment variables
+expression: output
+---
+root() {
+  # Parse environment variables
+  
+  if [[ -z "${BAR:-}" ]]; then
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing required environment variable: " "BAR" >&2
+    usage >&2
+    exit 1
+  fi
+  if [[ -z "$rargs_baz" ]]; then
+    rargs_baz="${BAZ:-}"
+  fi
+
+  # Parse command arguments
+  parse_root "$@"
+
+  echo "No implementation body found for root function"
+}

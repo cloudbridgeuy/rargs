@@ -1,0 +1,11 @@
+---
+source: crates/templates/tests/root.rs
+description: Normal function
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "$@"
+
+  echo "No implementation body found for root function"
+}

@@ -1,0 +1,29 @@
+---
+source: crates/templates/tests/usage_test.rs
+description: Usage with option with all flags and value notations
+expression: output
+---
+usage() {
+  printf "Test simple usage\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "  usage -a|--all <ELSE> [OPTIONS] [COMMAND] [COMMAND_OPTIONS]\n"
+  printf "  usage -h|--help\n"
+  printf "\n\033[4m%s\033[0m\n" "Arguments:"
+  printf "  ELSE\n"
+  printf "    Test argument with all attributes\n"
+  printf "    [@required, @multiple, @default foo, @choices foo|bar|baz]\n"
+  printf "\n\033[4m%s\033[0m\n" "Commands:"
+  cat <<EOF
+  foo .... Test foo command
+EOF
+  printf "  [@default foo]\n"
+
+  printf "\n\033[4m%s\033[0m\n" "Options:"
+  printf "  -a --all <ELSE>\n"
+  printf "    Test option with all attributes\n"
+  printf "    [@multiple, @default foo, @choices foo|bar|baz]\n"
+  printf "  --verbose\n"
+  printf "    Test verbose flag\n"
+  printf "  -h --help\n"
+  printf "    Print help\n"
+}

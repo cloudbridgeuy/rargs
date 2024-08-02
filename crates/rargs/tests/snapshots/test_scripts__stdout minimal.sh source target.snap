@@ -3,10 +3,4 @@ source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] minimal.sh source target"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-args:
-- rargs_input = ([0] = "source"
-- [1] = "target")
-- rargs_source = source
-- rargs_target = target
-
+source target

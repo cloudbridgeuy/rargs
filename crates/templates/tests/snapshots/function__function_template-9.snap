@@ -1,0 +1,19 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with global default option
+expression: output
+---
+# Function with global default option
+foo() {
+  local rargs_default
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  
+    
+  if [[ -z "$rargs_default" ]]; then
+    rargs_default="foo"
+  fi
+    
+  echo "No implementation body found for function foo"
+}

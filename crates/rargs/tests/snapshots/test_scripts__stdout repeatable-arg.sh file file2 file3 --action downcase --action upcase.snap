@@ -3,7 +3,6 @@ source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] repeatable-arg.sh file file2 file3 --action downcase --action upcase"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
 files:
   path: file
     downcase file
@@ -15,18 +14,4 @@ files:
     downcase file3
     upcase FILE3
 
-
-args:
-- rargs_action = ([0] = "downcase"
-- [1] = "upcase")
-- rargs_files = ([0] = "file"
-- [1] = "file2"
-- [2] = "file3")
-- rargs_input = ([0] = "file"
-- [1] = "file2"
-- [2] = "file3"
-- [3] = "--action"
-- [4] = "downcase"
-- [5] = "--action"
-- [6] = "upcase")
-
+file file2 file3 --action downcase --action upcase

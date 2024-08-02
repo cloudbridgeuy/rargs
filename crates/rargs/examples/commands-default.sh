@@ -15,15 +15,12 @@
 # @flag -f --force Force upload
 # @arg source! URL to download from
 upload() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Download a file
 # @alias d
 # @arg source! URL to download from
 download() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
-
-
-

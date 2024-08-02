@@ -105,7 +105,7 @@ fn parse_shebang(input: &str) -> nom::IResult<&str, Option<Data>> {
 }
 
 /// Parses an input as if it was a comment line.
-fn parse_comment(intput: &str) -> nom::IResult<&str, Option<Data>> {
+fn parse_comment(input: &str) -> nom::IResult<&str, Option<Data>> {
     nom::combinator::map(
         nom::sequence::preceded(
             nom::sequence::tuple((
@@ -116,7 +116,7 @@ fn parse_comment(intput: &str) -> nom::IResult<&str, Option<Data>> {
             parse_tail,
         ),
         |text| Some(Data::Comment(format!("# {}", text))),
-    )(intput)
+    )(input)
 }
 
 /// Parse an input as if it was an any definition.
@@ -552,7 +552,20 @@ fn parse_value_notation(input: &str) -> nom::IResult<&str, Option<&str>> {
         nom::character::complete::space0,
         nom::sequence::delimited(
             nom::character::complete::char('<'),
-            nom::bytes::complete::take_while1(|c: char| c.is_ascii_uppercase() || c == '_'),
+            nom::bytes::complete::take_while1(|c: char| {
+                c.is_ascii_uppercase()
+                    || c == '_'
+                    || c == '0'
+                    || c == '1'
+                    || c == '2'
+                    || c == '3'
+                    || c == '4'
+                    || c == '5'
+                    || c == '6'
+                    || c == '7'
+                    || c == '8'
+                    || c == '9'
+            }),
             nom::character::complete::char('>'),
         ),
     ))(input)
@@ -889,7 +902,7 @@ fn parse_param_name(input: &str) -> nom::IResult<&str, param::Data> {
     nom::combinator::map(parse_name, param::Data::new)(input)
 }
 
-/// Parses the input as if it was an envirionment variable name like `ENV_VAR`.
+/// Parses the input as if it was an environment variable name like `ENV_VAR`.
 fn parse_env_name(input: &str) -> nom::IResult<&str, param::Env> {
     nom::combinator::map(
         nom::bytes::complete::take_while1(is_env_char),
@@ -1532,5 +1545,36 @@ mod tests {
                 ..Default::default()
             })
         );
+
+        assert_token!(
+            "# @option --bucket<AWS_S3_BUCKET> AWS S3 Bucket.",
+            Data::Option(param::Option {
+                name: "bucket".to_string(),
+                required: false,
+                value_notation: Some("AWS_S3_BUCKET".to_string()),
+                description: "AWS S3 Bucket.".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @option --bucket <AWS_S3_BUCKET> AWS S3 Bucket.",
+            Data::Option(param::Option {
+                name: "bucket".to_string(),
+                required: false,
+                value_notation: Some("AWS_S3_BUCKET".to_string()),
+                description: "AWS S3 Bucket.".to_string(),
+                ..Default::default()
+            })
+        );
+        assert_token!(
+            "# @arg bucket <AWS_S3_BUCKET> AWS S3 Bucket.",
+            Data::PositionalArgument(param::PositionalArgument {
+                name: "bucket".to_string(),
+                required: false,
+                value_notation: Some("AWS_S3_BUCKET".to_string()),
+                description: "AWS S3 Bucket.".to_string(),
+                ..Default::default()
+            })
+        )
     }
 }

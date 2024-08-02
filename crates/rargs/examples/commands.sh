@@ -16,7 +16,7 @@
 # @example Download a file from the internet $ download example.com
 # @example Download a file from the internet and force save it to ./output $ download example.com ./output -f
 download() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Upload a file
@@ -25,6 +25,5 @@ download() {
 # @option -u --user Username to use for logging in
 # @option -p --password Password to use for logging in
 upload() {
-  inspect_args
+	echo "${rargs_input[*]}"
 }
-

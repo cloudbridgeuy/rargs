@@ -1,0 +1,12 @@
+---
+source: crates/templates/tests/run_test.rs
+description: Run function with a root command
+expression: output
+---
+rargs_run() {
+  declare -A deps=()
+  declare -a rargs_input=()
+  normalize_rargs_input "$@"
+  parse_arguments "${rargs_input[@]}"
+  root "${rargs_input[@]}"
+}

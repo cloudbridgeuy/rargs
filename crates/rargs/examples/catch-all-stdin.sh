@@ -10,7 +10,7 @@
 # @example Read a file from stdin $ -f csv < file1
 # @example Read a file from stdin using - $ -f csv - < file1
 root() {
-	inspect_args
+	echo "${rargs_input[*]}"
 
 	# If rargs_other_args[0] is "-" or empty, read from stdin
 	if [[ "${rargs_other_args[0]}" == "-" || -z "${rargs_other_args[0]}" ]]; then

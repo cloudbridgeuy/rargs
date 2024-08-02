@@ -13,20 +13,19 @@ Sample showing the use of arg and option whitelist (allowed values)
 [4mArguments:[0m
   REGION
     Region to connect to
-    [@required, @choices eu, us]
+    [@required, @choices eu|us]
   ENVIRONMENT
     Environment to connect to
-    [@default development, @choices development, staging, production]
+    [@default development, @choices development|staging|production]
 
 [4mOptions:[0m
   -p --protocol [<PROTOCOL>]
     Protocol to connect with
-    [@default ssh, @choices ssh, ftp, http]
+    [@default ssh, @choices ssh|ftp|http]
   -u --user <USER>
     User name
-    [@choices user, admin]
+    [@choices user|admin]
   -h --help
     Print help
   -v --version
     Print version
-

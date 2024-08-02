@@ -3,22 +3,4 @@ source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] catch-all-global.sh multiple something with --additional args and --debug"
 expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
-
-args:
-- rargs_debug = 1
-- rargs_input = ([0] = "something"
-- [1] = "with"
-- [2] = "--additional"
-- [3] = "args"
-- [4] = "and"
-- [5] = "--debug")
-- rargs_message = ([0] = "something"
-- [1] = "with"
-- [2] = "args"
-- [3] = "and")
-- rargs_other_args = ([0] = "--additional")
-
-rargs_other_args:
-- ${rargs_other_args[*]} = --additional
-- ${rargs_other_args[0]} = --additional
-
+something with --additional args and --debug

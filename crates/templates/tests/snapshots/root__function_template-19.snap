@@ -1,0 +1,11 @@
+---
+source: crates/templates/tests/root.rs
+description: Function that is configured to use a subcommand
+expression: output
+---
+root() {
+  # Parse command arguments
+  parse_root "$@"
+
+  echo "No implementation body found for root function"
+}

@@ -63,23 +63,23 @@ root() {
     usage >&2
     exit 1
   fi
-  echo
-  echo "files:"
-  for file in "${rargs_files[@]}"; do
-    echo "  path: $file"
-    for action in "${rargs_action[@]}"; do
-      case "$action" in
-        upcase)
-          echo "    upcase ${file^^}"
-          ;;
-        downcase)
-          echo "    downcase ${file,,}"
-          ;;
-      esac
-    done
-  done
-  echo
-  inspect_args
+	echo
+	echo "files:"
+	for file in "${rargs_files[@]}"; do
+		echo "  path: $file"
+		for action in "${rargs_action[@]}"; do
+			case "$action" in
+			upcase)
+				echo "    upcase ${file^^}"
+				;;
+			downcase)
+				echo "    downcase ${file,,}"
+				;;
+			esac
+		done
+	done
+	echo
+	echo "${rargs_input[*]}"
 }
 
 
@@ -107,36 +107,8 @@ normalize_rargs_input() {
   done
 }
 
-inspect_args() {
-  prefix="rargs_"
-  args="$(set | grep ^$prefix | grep -v rargs_run || true)"
-  if [[ -n "$args" ]]; then
-    echo
-    echo args:
-    for var in $args; do
-      echo "- $var" | sed 's/=/ = /g'
-    done
-  fi
-
-  if ((${#deps[@]})); then
-    readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
-    echo
-    echo deps:
-    for k in "${sorted_keys[@]}"; do echo "- \${deps[$k]} = ${deps[$k]}"; done
-  fi
-
-  if ((${#rargs_other_args[@]})); then
-    echo
-    echo rargs_other_args:
-    echo "- \${rargs_other_args[*]} = ${rargs_other_args[*]}"
-    for i in "${!rargs_other_args[@]}"; do
-      echo "- \${rargs_other_args[$i]} = ${rargs_other_args[$i]}"
-    done
-  fi
-}
-
 version() {
-  echo "0.0.1"
+  echo -n "0.0.1"
 }
 usage() {
   printf "Sample application to demonstrate the use of repeatable arguments\n"
@@ -161,7 +133,7 @@ EOF
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -a --action [<ACTION>]\n"
   printf "    Action to perform\n"
-  printf "    [@multiple, @choices upcase, downcase]\n"
+  printf "    [@multiple, @choices upcase|downcase]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
   printf "  -v --version\n"
@@ -212,12 +184,12 @@ formats_usage() {
   printf "\n\033[4m%s\033[0m\n" "Arguments:"
   printf "  FORMATS\n"
   printf "    One or more formats to process\n"
-  printf "    [@required, @multiple, @default jpg, @choices jpg, png, gif]\n"
+  printf "    [@required, @multiple, @default jpg, @choices jpg|png|gif]\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  -a --action [<ACTION>]\n"
   printf "    Action to perform\n"
-  printf "    [@multiple, @choices upcase, downcase]\n"
+  printf "    [@multiple, @choices upcase|downcase]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
 }
@@ -295,19 +267,19 @@ formats() {
     formats_usage >&2
     exit 1
   fi
-  for format in "${rargs_formats[@]}"; do
-    echo "format: $format"
-    for action in "${rargs_action[@]}"; do
-      case "$action" in
-        upcase)
-          echo "  upcase ${format^^}"
-          ;;
-        downcase)
-          echo "  downcase ${format,,}"
-          ;;
-      esac
-    done
-  done
+	for format in "${rargs_formats[@]}"; do
+		echo "format: $format"
+		for action in "${rargs_action[@]}"; do
+			case "$action" in
+			upcase)
+				echo "  upcase ${format^^}"
+				;;
+			downcase)
+				echo "  downcase ${format,,}"
+				;;
+			esac
+		done
+	done
 }
 
 rargs_run() {
@@ -333,4 +305,3 @@ rargs_run() {
 }
 
 rargs_run "$@"
-

@@ -102,7 +102,7 @@
         {%- if arg["required"] or arg["multiple"] -%}, {% endif -%}@default {{ arg["default"] }}
       {%- endif -%}
       {%- if arg["choices"] -%}
-        {%- if arg["required"] or arg["multiple"] or arg["default"] -%}, {% endif -%}@choices {{ arg["choices"] | join(sep=", ") }}
+        {%- if arg["required"] or arg["multiple"] or arg["default"] -%}, {% endif -%}@choices {{ arg["choices"] | join(sep="|") }}
       {%- endif -%}]\n"
     {%- endif -%}
   {%- endfor -%}
@@ -129,7 +129,7 @@
         {%- if option["multiple"] -%}, {% endif -%}@default {{ option["default"] }}
       {%- endif -%}
       {%- if option["choices"] -%}
-        {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep=", ") }}
+        {%- if option["multiple"] or option["default"] -%}, {% endif -%}@choices {{ option["choices"] | join(sep="|") }}
       {%- endif -%}]\n"
     {%- endif -%}
   {%- endfor -%}

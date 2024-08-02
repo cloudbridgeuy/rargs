@@ -8,5 +8,5 @@
 # @arg region![eu|us] <REGION> Region to connect to
 # @arg environment[=development|staging|production] <ENVIRONMENT> Environment to connect to
 root() {
-	inspect_args
+	echo "${rargs_input[*]}"
 }

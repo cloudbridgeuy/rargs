@@ -86,6 +86,77 @@ You can provide values with spaces by enclosing the text in quotes.
 # @arg title="Rargs Example"
 ```
 
+### Pre-defined Values
+
+If your arguments should only accept a sub-set or options you can use the `[]` operator with a list of values separated by the pipe operator (`|`).
+
+```bash
+# @arg categories[foo|bar|"foo bar"]
+```
+
+> As the example shows, you can use quotes (`"`) to define strings that include white space.
+
+If one of those values should be used as default, set it as the first element of the list with the `=` operator in front.
+
+```bash
+# @arg categories[=foo|bar|"foo bar"]
+```
+
+### Multiple Values
+
+Rargs supports defining zero-or-more or one-or-more values for your arguments when using the `*` or `+` operator respectively.
+
+```bash
+# @arg zero-or-more*
+# @arg one-or-more+
+```
+
+Default an predefined values can be used with the `*` and `+` operator.
+
+```bash
+# @arg zero-or-more*[foo|bar|baz]
+# @arg one-or-more+[=foo|bar|baz]
+```
+
+### Value Notation
+
+Rargs will do its best to create an easy to read usage output for your scripts, indicating the requirements of the arguments through different presentation of the value notation. The value notation is the keyword used to describe the value of an argument, accompanied by additional operators like `<>`, `[]`, and `...` to indicate if the argument is `required`, `optional`, or `multiple`.
+
+The value notation will be represented by default as the name of the argument in uppercase, but you can force **Rargs** to use a custom value using the `<(...)>` operator with the name that should be used.
+
+```bash
+# @arg bucket <AWS_S3_BUCKET>
+```
+
+The output of this argument will look something like this:
+
+```bash
+cat <<-EOF | rargs run - -h
+#!/usr/bin/env bash
+# @name value-notation
+# @arg bucket <AWS_S3_BUCKET> AWS S3 Bucket.
+# @arg region[=us-east-1|us-west-2] <AWS_REGION> AWS Region.
+EOF
+```
+
+```txt
+Usage:
+  value-notation [OPTIONS] AWS_S3_BUCKET [AWS_REGION]
+  value-notation -h|--help
+
+Arguments:
+  AWS_S3_BUCKET
+    AWS S3 Bucket.
+    [@required]
+  AWS_REGION
+    AWS Region.
+    [@default us-east-1, @choices us-east-1|us-west-2]
+
+Options:
+  -h --help
+    Print help
+```
+
 ## Configuration
 
 | Tag                                     | Description                                                                                                           |

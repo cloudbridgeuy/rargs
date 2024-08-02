@@ -27,9 +27,8 @@ Sample application to demonstrate the use of repeatable arguments
 [4mOptions:[0m
   -a --action [<ACTION>]
     Action to perform
-    [@multiple, @choices upcase, downcase]
+    [@multiple, @choices upcase|downcase]
   -h --help
     Print help
   -v --version
     Print version
-

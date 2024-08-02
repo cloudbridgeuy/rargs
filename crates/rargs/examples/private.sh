@@ -10,11 +10,11 @@
 # @flag -v --verbose Verbose output
 # @arg host! Hostname to connect to
 connect() {
-  if [[ "$rargs_protocol" == "ftp" ]]; then
-    connect-ftp --username ftp_user "$rargs_host"
-  else
-    connect-ssh --username ssh_ser "$rargs_host"
-  fi
+	if [[ "$rargs_protocol" == "ftp" ]]; then
+		connect-ftp --username ftp_user "$rargs_host"
+	else
+		connect-ssh --username ssh_ser "$rargs_host"
+	fi
 }
 
 # @cmd Connect using FTP
@@ -22,8 +22,8 @@ connect() {
 # @option --username Username
 # @arg host! Hostname to connect to
 connect-ftp() {
-  echo "FTP!!!"
-  inspect_args
+	echo "FTP!!!"
+	echo "${rargs_input[*]}"
 }
 
 # @cmd Connect using SSH
@@ -31,7 +31,6 @@ connect-ftp() {
 # @option --username Username
 # @arg host! Hostname to connect to
 connect-ssh() {
-  echo "SSH!!!"
-  inspect_args
+	echo "SSH!!!"
+	echo "${rargs_input[*]}"
 }
-
