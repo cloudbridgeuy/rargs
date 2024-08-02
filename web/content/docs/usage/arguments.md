@@ -17,7 +17,7 @@ Arguments are the simplest way to pass information to your script. They are posi
 
 ## Basic Usage
 
-To define arguments, use the `@arg` tag. Here's an example:
+To define arguments, use the `@arg` tag.
 
 ```bash
 #!/usr/bin/env bash
@@ -25,7 +25,7 @@ To define arguments, use the `@arg` tag. Here's an example:
 # @description Sample application with arguments
 
 # @cmd Greeting function
-# @arg name The name of the person to greet
+# @arg name
 greet() {
   echo "Hello, $rargs_name!"
 }
@@ -42,17 +42,49 @@ $ ./arguments greet "John Doe"
 "Hello, John Doe!"
 ```
 
-By default, arguments are optional. To mark an argument as _required_, append a `!` to its name. Here's an example:
+You can also provide an argument description to indicate to the user what the argument represents.
 
 ```bash
 # @cmd Greeting function
-# @arg name! The name of the person to greet
+# @arg name Name of the person to greet.
+greet() {
+  echo "Hello, $rargs_name!"
+}
+```
+
+> The _description_ is optional but highly encouraged. It makes you script easier to work with, and improved the output of the `usage`.
+
+### Required Arguments
+
+By default, arguments are _optional_. To mark an argument as _required_, append a `!` to its name.
+
+```bash
+# @cmd Greeting function
+# @arg name!
 greet() {
   echo "Hello, $rargs_name!"
 }
 ```
 
 If you don't provide a required argument when calling the script, **Rargs** will throw an error.
+
+### Default Values
+
+Use the `=` operator to define a default value for your argument.
+
+```bash
+# @cmd Greeting function
+# @arg name=World
+greet() {
+  echo "Hello, $rargs_name!"
+}
+```
+
+You can provide values with spaces by enclosing the text in quotes.
+
+```bash
+# @arg title="Rargs Example"
+```
 
 ## Configuration
 
@@ -104,7 +136,7 @@ Some important notes:
 ###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options
 ###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default
 arguments() {
-  inspect_args
+  echo "Hello world"
 }
 ```
 
@@ -112,4 +144,4 @@ arguments() {
 
 Next, we'll learn how to define `options` in your **Rargs** scripts.
 
-[Show me how options work →](../../usage/options)
+[Show me how `options` work →](../../usage/options)
