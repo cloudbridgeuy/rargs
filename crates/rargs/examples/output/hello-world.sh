@@ -34,6 +34,7 @@ parse_root() {
 }
 
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

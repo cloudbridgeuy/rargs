@@ -1,0 +1,23 @@
+---
+source: crates/templates/tests/parse_arguments_while.rs
+description: Parse commands with one multiple positional arguments
+expression: output
+---
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -?*)
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -z "$rargs_foo" ]]; then
+          rargs_foo+=("$key")
+          shift
+        else
+          rargs_foo+=("$key")
+          shift
+        fi
+        ;;
+    esac
+  done

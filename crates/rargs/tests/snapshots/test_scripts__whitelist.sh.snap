@@ -55,10 +55,10 @@ root() {
   local rargs_user
   local rargs_region
   local rargs_environment
+
   # Parse command arguments
   parse_root "$@"
 
-  
   if [[ -z "$rargs_protocol" ]]; then
     rargs_protocol="ssh"
   fi

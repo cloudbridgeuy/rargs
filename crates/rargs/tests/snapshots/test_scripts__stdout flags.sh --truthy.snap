@@ -5,4 +5,4 @@ expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => out
 ---
 falsy == false
 truthy == 1
-shorty == false
+shorty == 1

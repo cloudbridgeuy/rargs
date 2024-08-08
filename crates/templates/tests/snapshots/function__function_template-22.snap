@@ -16,6 +16,7 @@ foo() {
     rargs_baz="${BAZ:-}"
   fi
 
+
   # Parse command arguments
   parse_foo_arguments "$@"
 

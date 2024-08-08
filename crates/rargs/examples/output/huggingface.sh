@@ -182,6 +182,7 @@ fill-mask() {
     exit 1
   fi
 
+
   # Parse command arguments
   parse_fill-mask_arguments "$@"
 

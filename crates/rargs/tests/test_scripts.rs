@@ -758,15 +758,23 @@ fn test_flags() {
         stdout: vec![
             "--falsy",
             "--no-truthy",
-            "-h",
-            "--help",
             "--truthy",
             "--shorty",
             "--no-shorty",
-            "--no-s",
+            "-no-s",
+            "-h",
+            "--help",
             "",
         ],
-        stderr: vec![],
+        stderr: vec![
+            "--falsy",
+            "--no-truthy",
+            "--truthy",
+            "--shorty",
+            "--no-shorty",
+            "-no-s",
+            "",
+        ],
     };
 
     build_script!(script);

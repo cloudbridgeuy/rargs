@@ -14,3 +14,30 @@ fn test_function_template() {
         })
     );
 }
+
+#[test]
+fn test_function_flags() {
+    test_template!(
+        "minimal.tera",
+        "Minimal rargs template",
+        serde_json::json!({
+            "name": "foo",
+            "flags": {
+                "verbose": {
+                    "description": "Enable verbose mode",
+                    "short": "v"
+                },
+            },
+            "options": {
+                "require": {
+                    "name": "require",
+                    "required": true
+                }
+            },
+            "lines": [
+                "echo \"Hello, world!\"",
+                "$sub $@"
+            ]
+        })
+    );
+}

@@ -4,6 +4,7 @@ description: Function with dependencies
 expression: output
 ---
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

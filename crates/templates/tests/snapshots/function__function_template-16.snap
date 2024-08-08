@@ -6,6 +6,7 @@ expression: output
 # Function with a local positional argument with choices
 foo() {
   local rargs_choices
+
   # Parse command arguments
   parse_foo_arguments "$@"
 

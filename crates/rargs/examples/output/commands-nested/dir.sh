@@ -148,6 +148,7 @@ parse_list_arguments() {
 # Show files in the directory
 list() {
   local rargs_path
+
   # Parse command arguments
   parse_list_arguments "$@"
 
@@ -216,6 +217,7 @@ parse_remove_arguments() {
 remove() {
   local rargs_force
   local rargs_path
+
   # Parse command arguments
   parse_remove_arguments "$@"
 

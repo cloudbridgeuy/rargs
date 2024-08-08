@@ -1,9 +1,22 @@
+{#-----------------------------------------------------------------------------------------------#}
+{#- TEMPLATE GLOBALS ----------------------------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- set_global required = [] -%}
 {%- set_global defaults = [] -%}
+{%- set_global default_flags = [] -%}
 {%- set_global choices = [] -%}
 {%- set_global _any = false %}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Handle Options ------------------------------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
+{#- We need to check if there are `global` options we should handle along any command options.  -#}
+{#- If we find global options, we check if we also have `command` options and we merge them to  -#}
+{#- handle them together. If there are no `command` options then we only handle the `global`    -#}
+{#- ones. If there are no `global` options, and there are `command` options we handle them.     -#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- if options -%}
   {%- if command["options"] %}
+    {#- Handle `global` and `command` options -#}
     {%- for key, option in options | merge(with=command["options"]) -%}
       {%- if option["required"] -%}
         {%- set_global required = required | concat(with=option) -%}
@@ -16,6 +29,7 @@
       {%- endif -%}
     {%- endfor -%}
   {%- else %}
+    {#- Handle only `global` options -#}
     {%- for key, option in options -%}
       {%- if option["required"] -%}
         {%- set_global required = required | concat(with=option) -%}
@@ -29,6 +43,7 @@
     {%- endfor -%}
   {%- endif %}
 {%- else -%}
+  {#- Handle only `command` options -#}
   {%- if command["options"] -%}
     {%- for key, option in command["options"] -%}
       {%- if option["required"] -%}
@@ -43,6 +58,11 @@
     {%- endfor -%}
   {%- endif -%}
 {%- endif -%}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Handle Arguments ----------------------------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
+{#- We only handle command arguments. There's no concept of a global argument.                  -#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- if command["positional_arguments"] -%}
   {%- for arg in command["positional_arguments"] -%}
     {%- if arg["required"] -%}
@@ -56,6 +76,40 @@
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Handle Flags --------------------------------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Flags are handle similar to options. We need to change their behavior depending on how they -#}
+{#- are configured.                                                                             -#}
+{#-----------------------------------------------------------------------------------------------#}
+{%- if flags -%}
+  {%- if command["flags"] %}
+    {#- Handle `global` and `command` flags -#}
+    {%- for key, flag in flags | merge(with=command["flags"]) -%}
+      {%- if flag["default"] -%}
+        {%- set_global default_flags = default_flags | concat(with=flag) -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else %}
+    {#- Handle `global` flags -#}
+    {%- for key, flag in flags -%}
+      {%- if flag["default"] -%}
+        {%- set_global default_flags = default_flags | concat(with=flag) -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif %}
+{%- else -%}
+  {%- if command["flags"] -%}
+    {%- for key, flag in command["flags"] -%}
+      {%- if flag["default"] -%}
+        {%- set_global default_flags = default_flags | concat(with=flag) -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif %}
+{%- endif -%}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Handle Environment Variables ----------------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- set _envs = false %}
 {%- if command["envs"] %}
   {%- if envs %}
@@ -66,6 +120,9 @@
 {%- elif envs %}
   {%- set _envs = envs %}
 {%- endif %}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Handle Additional Arguments (ANY) -----------------------------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- if any %}
   {%- if command["any"] %}
     {%- set _any = command["any"] %}
@@ -75,6 +132,9 @@
 {%- elif command["any"] %}
   {%- set _any = command["any"] %}
 {%- endif %}
+{#-----------------------------------------------------------------------------------------------#}
+{#- Merge global and command arguments, options, and flags --------------------------------------#}
+{#-----------------------------------------------------------------------------------------------#}
 {%- set opts = false %}
 {%- set fls = false %}
 {%- set args = false %}
@@ -111,7 +171,9 @@
     {%- set args = command["positional_arguments"] %}
   {%- endif %}
 {%- endif %}
-
+{#-----------------------------------------------------------------------------------------------#}
+{#- Command -------------------------------------------------------------------------------------#}
+{#---------------------------------------------------------------------------------------------- #}
 {%- if command["description"] -%}
 # {{ command["description"] }}
 {% endif -%}
@@ -152,6 +214,19 @@
   # Parse environment variables
   {% include "check_environment_variables.tera" %}
 {%- endif %}
+{% if default_flags | length > 0 %}
+  {% for def in default_flags %}
+    {% if def["multiple"] %}
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ def["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}=({{ def["default"] }})
+  fi
+    {% else %}
+  if [[ -z "$rargs_{{ def["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}="{{ def["default"] }}"
+  fi
+    {% endif %}
+  {%- endfor %}
+{%- endif %}
   # Parse command arguments
   parse_{{ command["name"] }}_arguments "$@"
 {% if rules -%}
@@ -171,14 +246,14 @@
   {%- include "check_dependencies.tera" %}
 {%- endif %}
 {%- if defaults | length > 0 %}
-  {% for option in defaults %}
-    {% if option["multiple"] %}
-  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ option["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
-    rargs_{{ option["name"] | replace(from="-", to="_") }}=({{ option["default"] }})
+  {% for def in defaults %}
+    {% if def["multiple"] %}
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ def["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}=({{ def["default"] }})
   fi
     {% else %}
-  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
-    rargs_{{ option["name"] | replace(from="-", to="_") }}="{{ option["default"] }}"
+  if [[ -z "$rargs_{{ def["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}="{{ def["default"] }}"
   fi
     {% endif %}
   {%- endfor %}

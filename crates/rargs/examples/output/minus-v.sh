@@ -42,7 +42,9 @@ parse_root() {
 }
 
 root() {
+  local rargs_verbose
   local rargs_host
+
   # Parse command arguments
   parse_root "$@"
 

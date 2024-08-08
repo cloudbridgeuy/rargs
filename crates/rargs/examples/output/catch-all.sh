@@ -172,6 +172,7 @@ parse_multiple_arguments() {
 multiple() {
   local rargs_debug
   declare -a rargs_message
+
   # Parse command arguments
   parse_multiple_arguments "$@"
 
@@ -247,6 +248,7 @@ parse_no-multiple_arguments() {
 no-multiple() {
   local rargs_debug
   local rargs_message
+
   # Parse command arguments
   parse_no-multiple_arguments "$@"
 
@@ -312,6 +314,7 @@ parse_other_arguments() {
 # Any arguments without description
 other() {
   local rargs_debug
+
   # Parse command arguments
   parse_other_arguments "$@"
 
@@ -381,6 +384,7 @@ parse_required_arguments() {
 required() {
   local rargs_debug
   local rargs_message
+
   # Parse command arguments
   parse_required_arguments "$@"
 

@@ -1,5 +1,6 @@
 {%- set_global required = [] -%}
 {%- set_global defaults = [] -%}
+{%- set_global default_flags = [] -%}
 {%- set_global choices = [] -%}
 {%- if options -%}
   {%- for key, option in options -%}
@@ -27,10 +28,17 @@
     {%- endif -%}
   {%- endfor -%}
 {%- endif -%}
+{%- if flags -%}
+  {%- for key, flag in flags -%}
+    {%- if flag["default"] -%}
+      {%- set_global default_flags = default_flags | concat(with=flag) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 
 root() {
-{%- if fls %}
-  {%- for name, option in fls %}
+{%- if flags %}
+  {%- for name, option in flags %}
   local rargs_{{ name | replace(from="-", to="_") }}
   {%- endfor %}
 {%- endif %}
@@ -58,6 +66,19 @@ root() {
   # Parse environment variables
   {% include "check_environment_variables.tera" %}
 {%- endif %}
+{% if default_flags | length > 0 -%}
+  {%- for def in default_flags -%}
+    {%- if def["multiple"] %}
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ def["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}=({{ def["default"] }})
+  fi
+    {%- else %}
+  if [[ -z "$rargs_{{ def["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}="{{ def["default"] }}"
+  fi
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
   # Parse command arguments
   parse_root "$@"
 {% if rules -%}
@@ -75,11 +96,17 @@ root() {
   # Check dependencies
   {%- include "check_dependencies.tera" %}
 {%- endif %}
-{%- if defaults | length > 0 %}
-  {% for option in defaults %}
-  if [[ -z "$rargs_{{ option["name"] | replace(from="-", to="_") }}" ]]; then
-    rargs_{{ option["name"] | replace(from="-", to="_") }}="{{ option["default"] }}"
+{%- if defaults | length > 0 -%}
+  {%- for def in defaults -%}
+    {%- if def["multiple"] %}
+  if [[ "${% raw %}{{% endraw %}{% raw %}#{% endraw %}rargs_{{ def["name"] | replace(from="-", to="_") }}[@]}" -eq 0 ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}=({{ def["default"] }})
   fi
+    {%- else %}
+  if [[ -z "$rargs_{{ def["name"] | replace(from="-", to="_") }}" ]]; then
+    rargs_{{ def["name"] | replace(from="-", to="_") }}="{{ def["default"] }}"
+  fi
+    {%- endif %}
   {%- endfor %}
 {%- endif %}
 {%- if choices | length > 0 %}

@@ -136,7 +136,7 @@
 {%- endif %}
 {%- if fls %}
   {%- for key, flag in fls %}
-    {%- if flag["truthy"] %}
+    {%- if flag["default"] %}
   printf "  {% if flag["short"] -%}-no-{{ flag["short"] }} {% endif -%}--no-{{ key }}\n"
     {%- else %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"

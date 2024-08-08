@@ -15,6 +15,7 @@ root() {
     rargs_baz="${BAZ:-}"
   fi
 
+
   # Parse command arguments
   parse_root "$@"
 

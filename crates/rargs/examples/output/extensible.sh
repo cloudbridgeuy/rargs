@@ -36,6 +36,7 @@ parse_root() {
 }
 
 root() {
+
   # Parse command arguments
   parse_root "$@"
 
@@ -193,6 +194,7 @@ parse_download_arguments() {
 # Download a file
 download() {
   local rargs_source
+
   # Parse command arguments
   parse_download_arguments "$@"
 
@@ -263,6 +265,7 @@ parse_upload_arguments() {
 # Upload a file
 upload() {
   local rargs_source
+
   # Parse command arguments
   parse_upload_arguments "$@"
 

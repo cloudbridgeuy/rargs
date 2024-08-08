@@ -43,8 +43,10 @@ parse_root() {
 }
 
 root() {
+  local rargs_force
   local rargs_source
   local rargs_target
+
   # Parse command arguments
   parse_root "$@"
 
@@ -226,6 +228,7 @@ download() {
   local rargs_force
   local rargs_source
   local rargs_target
+
   # Parse command arguments
   parse_download_arguments "$@"
 

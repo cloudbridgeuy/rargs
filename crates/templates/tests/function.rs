@@ -353,4 +353,109 @@ fn test_function_template() {
             }
         })
     );
+
+    test_template!(
+        "function.tera",
+        "Function with global and command flags",
+        serde_json::json!({
+                "flags": {
+                    "global-falsy": {
+                        "name": "global-falsy",
+                        "description": "Enable verbose mode",
+                        "short": "v"
+                    },
+                    "global-truthy": {
+                        "name": "global-truthy",
+                        "description": "Truthy flag",
+                        "default": 1
+                    },
+                    "global-shorty": {
+                        "name": "global-shorty",
+                        "description": "Truthy flag",
+                        "short": "s",
+                        "default": 1
+                    },
+                },
+            "command": {
+                "name": "foo",
+                "description": "Function with a local option with choices",
+                "flags": {
+                    "falsy": {
+                        "name": "falsy",
+                        "description": "Enable verbose mode",
+                        "short": "v"
+                    },
+                    "truthy": {
+                        "name": "truthy",
+                        "description": "Truthy flag",
+                        "default": 1
+                    },
+                    "shorty": {
+                        "name": "shorty",
+                        "description": "Truthy flag",
+                        "short": "s",
+                        "default": 1
+                    },
+                },
+            },
+        })
+    );
+
+    test_template!(
+        "function.tera",
+        "Function with command flags",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Function with a local option with choices",
+                "flags": {
+                    "falsy": {
+                        "name": "falsy",
+                        "description": "Enable verbose mode",
+                        "short": "v"
+                    },
+                    "truthy": {
+                        "name": "truthy",
+                        "description": "Truthy flag",
+                        "default": 1
+                    },
+                    "shorty": {
+                        "name": "shorty",
+                        "description": "Truthy flag",
+                        "short": "s",
+                        "default": 1
+                    },
+                },
+            },
+        })
+    );
+
+    test_template!(
+        "function.tera",
+        "Function with global flags",
+        serde_json::json!({
+            "command": {
+                "name": "foo",
+                "description": "Function with a local option with choices",
+            },
+            "flags": {
+                "falsy": {
+                    "name": "falsy",
+                    "description": "Enable verbose mode",
+                    "short": "v"
+                },
+                "truthy": {
+                    "name": "truthy",
+                    "description": "Truthy flag",
+                    "default": 1
+                },
+                "shorty": {
+                    "name": "shorty",
+                    "description": "Truthy flag",
+                    "short": "s",
+                    "default": 1
+                },
+            },
+        })
+    );
 }

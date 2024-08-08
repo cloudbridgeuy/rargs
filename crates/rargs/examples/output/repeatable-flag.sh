@@ -46,7 +46,9 @@ parse_root() {
 }
 
 root() {
+  local rargs_verbose
   declare -a rargs_data
+
   # Parse command arguments
   parse_root "$@"
 

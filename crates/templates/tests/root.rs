@@ -298,7 +298,7 @@ fn test_function_template() {
     );
     test_template!(
         "root.tera",
-        "Function with mulitple dependencies and a message",
+        "Function with multiple dependencies and a message",
         serde_json::json!({
             "name": "foo",
             "description": "Function with a local option with choices",
@@ -327,6 +327,33 @@ fn test_function_template() {
                     "option": "baz"
                 }
             }
+        })
+    );
+
+    test_template!(
+        "root.tera",
+        "Function with flags",
+        serde_json::json!({
+            "name": "foo",
+            "description": "Function with a local option with choices",
+            "flags": {
+                "falsy": {
+                    "name": "falsy",
+                    "description": "Enable verbose mode",
+                    "short": "v"
+                },
+                "truthy": {
+                    "name": "truthy",
+                    "description": "Truthy flag",
+                    "default": 1
+                },
+                "shorty": {
+                    "name": "shorty",
+                    "description": "Truthy flag",
+                    "short": "s",
+                    "default": 1
+                },
+            },
         })
     );
 }

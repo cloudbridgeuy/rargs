@@ -1,0 +1,25 @@
+---
+source: crates/templates/tests/parse_arguments_while.rs
+description: Parse commands with one flag that uses -h as short
+expression: output
+---
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      -h | --host)
+        rargs_host=1
+        shift
+        ;;
+      -?*)
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
+        exit 1
+        ;;
+      *)
+        if [[ "$key" == "" ]]; then
+          break
+        fi
+        printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid argument: " "$key" >&2
+        exit 1
+        ;;
+    esac
+  done

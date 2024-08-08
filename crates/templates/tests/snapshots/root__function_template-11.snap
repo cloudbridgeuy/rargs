@@ -5,10 +5,10 @@ expression: output
 ---
 root() {
   local rargs_default
+
   # Parse command arguments
   parse_root "$@"
 
-  
   if [[ -z "$rargs_default" ]]; then
     rargs_default="foo"
   fi

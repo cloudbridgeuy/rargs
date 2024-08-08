@@ -148,6 +148,7 @@ parse_remove_arguments() {
 # Edit the file
 remove() {
   local rargs_path
+
   # Parse command arguments
   parse_remove_arguments "$@"
 
@@ -209,6 +210,7 @@ parse_show_arguments() {
 # Show file contents
 show() {
   local rargs_path
+
   # Parse command arguments
   parse_show_arguments "$@"
 

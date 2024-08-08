@@ -176,6 +176,7 @@ download() {
   local rargs_force
   local rargs_source
   local rargs_target
+
   # Parse command arguments
   parse_download_arguments "$@"
 
@@ -257,6 +258,7 @@ upload() {
   local rargs_password
   local rargs_user
   local rargs_source
+
   # Parse command arguments
   parse_upload_arguments "$@"
 

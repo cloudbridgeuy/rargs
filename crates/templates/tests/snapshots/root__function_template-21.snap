@@ -1,9 +1,10 @@
 ---
 source: crates/templates/tests/root.rs
-description: Function with mulitple dependencies and a message
+description: Function with multiple dependencies and a message
 expression: output
 ---
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

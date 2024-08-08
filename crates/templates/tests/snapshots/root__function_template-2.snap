@@ -4,6 +4,7 @@ description: Function with no lines
 expression: output
 ---
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

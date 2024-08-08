@@ -26,8 +26,16 @@ parse_root() {
         rargs_shorty=1
         shift
         ;;
+      -no-s | --no-shorty)
+        rargs_shorty=""
+        shift
+        ;;
       --truthy)
         rargs_truthy=1
+        shift
+        ;;
+      --no-truthy)
+        rargs_truthy=""
         shift
         ;;
       -?*)
@@ -46,6 +54,16 @@ parse_root() {
 }
 
 root() {
+  local rargs_falsy
+  local rargs_shorty
+  local rargs_truthy
+
+  if [[ -z "$rargs_shorty" ]]; then
+    rargs_shorty="1"
+  fi
+  if [[ -z "$rargs_truthy" ]]; then
+    rargs_truthy="1"
+  fi
   # Parse command arguments
   parse_root "$@"
 

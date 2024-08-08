@@ -41,10 +41,10 @@ parse_root() {
 
 root() {
   local rargs_format
+
   # Parse command arguments
   parse_root "$@"
 
-  
   if [[ -z "$rargs_format" ]]; then
     rargs_format="json"
   fi

@@ -42,6 +42,7 @@ parse_root() {
 root() {
   declare -a rargs_action
   declare -a rargs_repeatable_arg
+
   # Parse command arguments
   parse_root "$@"
 
@@ -229,6 +230,7 @@ parse_formats_arguments() {
 formats() {
   declare -a rargs_action
   declare -a rargs_formats
+
   # Parse command arguments
   parse_formats_arguments "$@"
 

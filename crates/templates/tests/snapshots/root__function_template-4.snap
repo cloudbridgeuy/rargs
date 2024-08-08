@@ -4,6 +4,7 @@ description: Function with custom-usage rule
 expression: output
 ---
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

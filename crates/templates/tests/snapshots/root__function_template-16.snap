@@ -5,6 +5,7 @@ expression: output
 ---
 root() {
   local rargs_choices
+
   # Parse command arguments
   parse_root "$@"
 

@@ -79,7 +79,8 @@ pub fn object_value_to_dot_columns(
         ))
     })? as usize;
     // Convert the value to an object then iterate over the keys and map its values to a
-    // Vec<( &str,&str )> wher the first value is the first key and the second value is the second key.
+    // `Vec<( &str,&str )>` where the first value is the first key and the second value is
+    // the second key.
     let pairs: Vec<(&str, &str)> = value
         .as_object()
         .unwrap()

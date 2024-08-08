@@ -1583,7 +1583,7 @@ mod tests {
             Data::Flag(param::Flag {
                 name: "flag".to_string(),
                 description: "A truthy flag".to_string(),
-                truthy: Some("1".to_string()),
+                default: Some("1".to_string()),
                 ..Default::default()
             })
         );

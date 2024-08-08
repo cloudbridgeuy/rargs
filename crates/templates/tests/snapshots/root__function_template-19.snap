@@ -4,6 +4,7 @@ description: Function that is configured to use a subcommand
 expression: output
 ---
 root() {
+
   # Parse command arguments
   parse_root "$@"
 

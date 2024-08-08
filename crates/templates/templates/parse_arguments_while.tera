@@ -83,6 +83,12 @@
         {% endif -%}
         shift
         ;;
+      {%- if flag["default"] %}
+      {% if flag["short"] -%}-no-{{ flag["short"] }} | {% endif -%}--no-{{ key }})
+        rargs_{{ key | replace(from="-", to="_") }}=""
+        shift
+        ;;
+      {%- endif %}
     {%- endfor -%}{% endif %}
     {%- if opts -%}{%- for key, option in opts %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})

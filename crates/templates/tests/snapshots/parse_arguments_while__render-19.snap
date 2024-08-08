@@ -1,0 +1,13 @@
+---
+source: crates/templates/tests/parse_arguments_while.rs
+description: Parse commands defined as a sub-command
+expression: output
+---
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      *)
+        break
+        ;;
+    esac
+  done

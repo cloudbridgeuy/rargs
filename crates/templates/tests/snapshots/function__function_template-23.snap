@@ -1,0 +1,40 @@
+---
+source: crates/templates/tests/function.rs
+description: Function with global and command flags
+expression: output
+---
+# Function with a local option with choices
+foo() {
+  local rargs_falsy
+  local rargs_global_falsy
+  local rargs_global_shorty
+  local rargs_global_truthy
+  local rargs_shorty
+  local rargs_truthy
+
+  
+    
+  if [[ -z "$rargs_global_shorty" ]]; then
+    rargs_global_shorty="1"
+  fi
+    
+    
+  if [[ -z "$rargs_global_truthy" ]]; then
+    rargs_global_truthy="1"
+  fi
+    
+    
+  if [[ -z "$rargs_shorty" ]]; then
+    rargs_shorty="1"
+  fi
+    
+    
+  if [[ -z "$rargs_truthy" ]]; then
+    rargs_truthy="1"
+  fi
+    
+  # Parse command arguments
+  parse_foo_arguments "$@"
+
+  echo "No implementation body found for function foo"
+}

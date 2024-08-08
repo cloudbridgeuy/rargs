@@ -1,5 +1,5 @@
 {%- set rules = rules | default(value=[]) -%}
-{{ shebang }}
+{{ shebang | default(value="/bin/bash")}}
 {% include "intro.tera" %}
 if [[ -n "${DEBUG:-}" ]]; then
   set -x

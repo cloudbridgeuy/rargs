@@ -167,6 +167,7 @@ connect() {
   local rargs_verbose
   local rargs_protocol
   local rargs_host
+
   # Parse command arguments
   parse_connect_arguments "$@"
 
@@ -252,6 +253,7 @@ parse_connect-ftp_arguments() {
 connect-ftp() {
   local rargs_username
   local rargs_host
+
   # Parse command arguments
   parse_connect-ftp_arguments "$@"
 
@@ -321,6 +323,7 @@ parse_connect-ssh_arguments() {
 connect-ssh() {
   local rargs_username
   local rargs_host
+
   # Parse command arguments
   parse_connect-ssh_arguments "$@"
 

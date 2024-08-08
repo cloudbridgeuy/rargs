@@ -1,0 +1,21 @@
+---
+source: crates/templates/tests/root.rs
+description: Function with flags
+expression: output
+---
+root() {
+  local rargs_falsy
+  local rargs_shorty
+  local rargs_truthy
+
+  if [[ -z "$rargs_shorty" ]]; then
+    rargs_shorty="1"
+  fi
+  if [[ -z "$rargs_truthy" ]]; then
+    rargs_truthy="1"
+  fi
+  # Parse command arguments
+  parse_root "$@"
+
+  echo "No implementation body found for root function"
+}

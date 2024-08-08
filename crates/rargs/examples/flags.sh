@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # @name minimal
 # @version 0.0.1
 # @description Flags examples

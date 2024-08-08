@@ -5,6 +5,7 @@ expression: output
 ---
 # Simple function
 foo() {
+
   # Parse command arguments
   parse_foo_arguments "$@"
 
