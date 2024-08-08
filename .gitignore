@@ -13,3 +13,4 @@ Cargo.lock
 /archive/
 
 .DS_Store
+web/public
