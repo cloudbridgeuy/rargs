@@ -1,10 +1,10 @@
 +++
-title = "Options"
-description = "Learn how to use options in your Rargs scripts."
-date = 2023-09-27T08:20:00+00:00
-updated = 2023-09-27T08:20:00+00:00
+title = "Flags"
+description = "Learn how to use flags in your Rargs scripts."
+date = 2024-08-07T08:20:00+00:00
+updated = 2024-08-07T08:20:00+00:00
 draft = false
-weight = 20
+weight = 30
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -13,56 +13,56 @@ toc = true
 top = false
 +++
 
-Options provide a more advanced method to pass information to your script. They are not positional, meaning that their order does not matter, but they must be prefixed with their respective names. With **Rargs**, you can streamline the process of parsing these options and define _required_, _multiple_, _pre-defined_ values, or a combination of all for your options.
+Flags are simple version of options that don't take values, but can be called multiple times in order to change the emphasis of the flag.
 
 ## Basic Usage
 
-To define options, use the `@option` tag. Here's an example:
+To define a flag, use the `@flag` tag. Here's an example:
 
 ```bash
 #!/usr/bin/env bash
-# @name options
-# @description Sample application with options
+# @name flags
+# @description Sample application with flags
 
 # @cmd Greeting function
-# @option --name The name of the person to greet
+# @flag --verbose Verbosity level
 greet() {
-  echo "Hello, $rargs_name!"
+  if [[ -n "$rargs_verbose" ]]; then
+    echo "Hello, World!"
+  fi
 }
 ```
 
-This script defines a single option called `name`. You can access the value of this option with the `$rargs_name` variable.
+This script defines a single flag called `verbose` that controls the behavior of the script.
 
 > All `arguments`, `options`, `flags`, and other **Rargs** related runtime resources are prefixed with `rargs_` to prevent collisions with your script.
 
-After building this script, you should be able to call the `greet` command like this:
+After building this script, calling the `greet` command like with the `--verbose` flag, you will see `Hello, World!` printed to `stdout`.
 
 ```bash
-$ ./options greet --name "John Doe"
+$ ./flags greet --verbose
 Hello, John Doe!
 ```
 
-By default, options are optional. To mark an option as _required_, append a `!` to its name. Here's an example:
+By default, flags are `falsy` and are set to `true` when defined. If you want the opposite behavior you can give the flag a default `truthy` value. Then, you would disable this value by running the `flag` with a `no` prefix in front of the flag name.
 
 ```bash
 # @cmd Greeting function
-# @option --name!
+# @verbose --verbose=true
 greet() {
-  echo "Hello, $rargs_name!"
+  if [[ -z "$rargs_verbose" ]]; then
+    echo "Hello, World!"
+  fi
 }
 ```
 
-You can also provide an argument description to indicate to the user what the argument represents.
+With this version of the script, you would need to provide the `--no-verbose` option in order to print something to `stdout`.
 
 ```bash
-# @cmd Greeting function
-# @option --name! Name of the person to greet.
-greet() {
-  echo "Hello, $rargs_name!"
-}
+$ ./flags greet --no-verbose
 ```
 
-> The _description_ is optional but highly encouraged. It makes your script easier to work with and improves the output of the `usage`.
+> The `truthy` value can be anything but `false` is always an empty variable.
 
 ### Required Options
 

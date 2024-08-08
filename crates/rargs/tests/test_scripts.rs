@@ -750,3 +750,32 @@ fn test_json() {
         test_script!(script, "stdout", options);
     }
 }
+
+#[test]
+fn test_flags() {
+    let script = "flags.sh";
+    let commands = Commands {
+        stdout: vec![
+            "--falsy",
+            "--no-truthy",
+            "-h",
+            "--help",
+            "--truthy",
+            "--shorty",
+            "--no-shorty",
+            "--no-s",
+            "",
+        ],
+        stderr: vec![],
+    };
+
+    build_script!(script);
+
+    for options in commands.stderr {
+        test_script!(script, "stderr", options);
+    }
+
+    for options in commands.stdout {
+        test_script!(script, "stdout", options);
+    }
+}

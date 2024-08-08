@@ -1,0 +1,23 @@
+---
+source: crates/rargs/tests/test_scripts.rs
+description: "[stdout] flags.sh -h"
+expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+---
+Flags examples
+
+[4mUsage:[0m
+  minimal [OPTIONS]
+  minimal -h|--help
+  minimal -v|--version
+
+[4mOptions:[0m
+  --falsy
+    Falsy flag
+  -no-s --no-shorty
+    Shorty flag
+  --no-truthy
+    Truthy flag
+  -h --help
+    Print help
+  -v --version
+    Print version

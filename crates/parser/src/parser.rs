@@ -469,7 +469,7 @@ fn parse_flag_param(input: &str) -> nom::IResult<&str, param::Flag> {
                     nom::character::complete::space0,
                     nom::bytes::complete::tag("--"),
                 ),
-                nom::branch::alt((parse_param_mark, parse_param_name)),
+                nom::branch::alt((parse_param_assign, parse_param_mark, parse_param_name)),
             ),
             parse_tail,
         )),
@@ -1008,6 +1008,7 @@ mod tests {
                 short: Some('f'),
                 multiple: true,
                 description: "A flag with a short and long name that can be provided multiple times".to_string(),
+                ..Default::default()
             })
         );
         assert_token!(
@@ -1017,6 +1018,7 @@ mod tests {
                 short: Some('f'),
                 multiple: true,
                 description: "A flag with a short and long name that can be provided multiple times".to_string(),
+                ..Default::default()
             })
         );
         assert_token!(
@@ -1575,6 +1577,15 @@ mod tests {
                 description: "AWS S3 Bucket.".to_string(),
                 ..Default::default()
             })
-        )
+        );
+        assert_token!(
+            "# @flag --flag=1 A truthy flag",
+            Data::Flag(param::Flag {
+                name: "flag".to_string(),
+                description: "A truthy flag".to_string(),
+                truthy: Some("1".to_string()),
+                ..Default::default()
+            })
+        );
     }
 }

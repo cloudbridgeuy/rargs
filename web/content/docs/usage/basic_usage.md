@@ -94,6 +94,7 @@ Every **Rargs** script must have at least one command. If commands don't fit you
 | `@dep`     | Define a dependency for the command.            |
 | `@private` | Set the command as private.                     |
 | `@example` | Add an example of how to use this command.      |
+| `@any`     | Support for any additional parameters.          |
 
 After the `@cmd` tag and any additional configuration, add the Bash function that executes when the command is called. The command's scope ends when **Rargs** detects the end of the function declaration.
 

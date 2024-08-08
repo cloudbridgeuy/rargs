@@ -35,7 +35,7 @@ This script defines a single argument called `name`. Access the value of this ar
 
 > All `arguments`, `options`, `flags`, and other **Rargs** related runtime resources are prefixed with `rargs_` to prevent collisions with your script.
 
-After building this script you should be able to call the `greet` command like this:
+After building this script, you should be able to call the `greet` command like this:
 
 ```bash
 $ ./arguments greet "John Doe"
@@ -52,7 +52,7 @@ greet() {
 }
 ```
 
-> The _description_ is optional but highly encouraged. It makes you script easier to work with, and improved the output of the `usage`.
+> The _description_ is optional but highly encouraged. It makes your script easier to work with and improves the output of the `usage`.
 
 ### Required Arguments
 
@@ -88,13 +88,13 @@ You can provide values with spaces by enclosing the text in quotes.
 
 ### Pre-defined Values
 
-If your arguments should only accept a sub-set or options you can use the `[]` operator with a list of values separated by the pipe operator (`|`).
+If your arguments should only accept a known list of values, you can use the `[]` operator with a list of values separated by the pipe operator (`|`).
 
 ```bash
 # @arg categories[foo|bar|"foo bar"]
 ```
 
-> As the example shows, you can use quotes (`"`) to define strings that include white space.
+> As the example shows, you can use quotes (`"`) to define strings that include whitespace.
 
 If one of those values should be used as default, set it as the first element of the list with the `=` operator in front.
 
@@ -102,27 +102,11 @@ If one of those values should be used as default, set it as the first element of
 # @arg categories[=foo|bar|"foo bar"]
 ```
 
-### Multiple Values
-
-Rargs supports defining zero-or-more or one-or-more values for your arguments when using the `*` or `+` operator respectively.
-
-```bash
-# @arg zero-or-more*
-# @arg one-or-more+
-```
-
-Default an predefined values can be used with the `*` and `+` operator.
-
-```bash
-# @arg zero-or-more*[foo|bar|baz]
-# @arg one-or-more+[=foo|bar|baz]
-```
-
 ### Value Notation
 
-Rargs will do its best to create an easy to read usage output for your scripts, indicating the requirements of the arguments through different presentation of the value notation. The value notation is the keyword used to describe the value of an argument, accompanied by additional operators like `<>`, `[]`, and `...` to indicate if the argument is `required`, `optional`, or `multiple`.
+**Rargs** will do its best to create an easy-to-read usage output for your scripts, indicating the requirements of the arguments through different presentations of a value notation. A value notation is a keyword used to describe the value of an argument, accompanied by additional operators like `<>`, `[]`, and `...` to indicate if the argument is `required`, `optional`, or `multiple`.
 
-The value notation will be represented by default as the name of the argument in uppercase, but you can force **Rargs** to use a custom value using the `<(...)>` operator with the name that should be used.
+The value notation will be represented by default as the name of the argument in uppercase, but you can force **Rargs** to use a custom value using the `<>` operator with the name that should be used.
 
 ```bash
 # @arg bucket <AWS_S3_BUCKET>
@@ -130,16 +114,14 @@ The value notation will be represented by default as the name of the argument in
 
 The output of this argument will look something like this:
 
-```bash
+```txt
 cat <<-EOF | rargs run - -h
 #!/usr/bin/env bash
 # @name value-notation
 # @arg bucket <AWS_S3_BUCKET> AWS S3 Bucket.
 # @arg region[=us-east-1|us-west-2] <AWS_REGION> AWS Region.
 EOF
-```
 
-```txt
 Usage:
   value-notation [OPTIONS] AWS_S3_BUCKET [AWS_REGION]
   value-notation -h|--help
@@ -157,59 +139,87 @@ Options:
     Print help
 ```
 
-## Configuration
+### Multiple Values
 
-| Tag                                     | Description                                                                                                           |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `<name> <description>`                  | Defines an optional argument.                                                                                         |
-| `<name>! <description>`                 | Defines a required argument.                                                                                          |
-| `<name>=foo <description>`              | Defines an argument with a default value.                                                                             |
-| `<name>="foo bar" <description>`        | Defines an argument with a default value that includes spaces.                                                        |
-| `<name>[foo\|bar\|baz] <description>`   | Defines an argument that accepts only a list of pre-defined values.                                                   |
-| `<name>[=foo\|bar\|baz] <description>`  | Defines an argument that accepts a list of pre-defined values with a default value.                                   |
-| `<name>* <description>`                 | Defines an optional multiple argument.                                                                                |
-| `<name>+ <description>`                 | Defines a required multiple argument.                                                                                 |
-| `<name>*[=a\|b\|c] <description>`       | Defines an optional argument that supports predefined values, allows multiple values, has a default, and is optional. |
-| `<name>*[=a\|b\|c] <description>`       | Defines a required argument that supports predefined values, allows multiple values, has a default, and is optional.  |
-| `<name> <VALUE_NOTATION> <description>` | Defines an argument with a custom value notation.                                                                     |
-
-Some important notes:
-
-- Argument descriptions can include spaces and ANSI escape sequences.
-- Use double quotes to set default values that contain spaces.
-- The default value for an argument that only supports a list of pre-defined values should be the first value in the list.
-- The values for _multiple_ arguments are stored inside a bash array.
-
-> The current implementation of `multiple` arguments requires all positional arguments to be _required_. This is a known issue that will be addressed in future versions.
-
-## Example
+**Rargs** supports defining zero-or-more or one-or-more values for your arguments when using the `*` or `+` operator respectively.
 
 ```bash
-#!/usr/bin/env bash
-# shellcheck disable=SC2154
-# @name example
-# @version 0.1.0
-# @description A rargs script template
-
-# @cmd A command with all the valid argument configurations.
-# @arg optional-argument Optional argument
-# @arg required-argument! Required argument
-# @arg default-argument=foo Default argument
-# @arg default-argument-with-spaces="foo bar" Default argument with spaces
-# @arg with-options[foo|bar|baz] Argument with options
-# @arg with-options-and-default[=foo|bar|baz] Argument with options and default
-# @arg with-different-value-notation <VALUE_NOTATION> Argument with a different value notation
-# @arg with-multiple-optional* Multiple optional argument
-## The next lines are commented out because `rargs` does not support handling more than one multiple argument.
-###arg with-multiple-required+ Multiple required argument
-###arg with-multiple-optional-and-options*[foo|bar|baz] Multiple optional argument with options
-###arg with-multiple-optional-options-and-default*[=foo|bar|baz] Multiple optional argument with options and default
-###arg with-multiple-required-and-options+[foo|bar|baz] Required multiple argument with options
-###arg with-multiple-required-options-and-default+[=foo|bar|baz] Required multiple argument with options and default
-arguments() {
-  echo "Hello world"
-}
+# @arg zero-or-more*
+# @arg one-or-more+
 ```
+
+Default and predefined values can be used with the `*` and `+` operators.
+
+```bash
+# @arg zero-or-more*[foo|bar|baz]
+# @arg one-or-more+[=foo|bar|baz]
+```
+
+The difference between the two operators is that the `+` operator requires at least one value to be present when invoking the command.
+
+**Zero or more values**:
+
+```txt
+cat <<-EOF | rargs run - -h
+#!/usr/bin/env bash
+# @name multiple
+# @arg zero-or-more* Zero or more arguments.
+EOF
+
+Usage:
+  multiple [OPTIONS] [ZERO-OR-MORE...]
+  multiple -h|--help
+
+Arguments:
+  ZERO-OR-MORE
+    Zero or more arguments.
+    [@multiple]
+
+Options:
+  -h --help
+    Print help
+```
+
+**One or more values**:
+
+```txt
+cat <<-EOF | rargs run - -h
+#!/usr/bin/env bash
+# @name multiple
+# @arg one-or-more+ One or more arguments.
+EOF
+
+Usage:
+  multiple [OPTIONS] ONE-OR-MORE...
+  multiple -h|--help
+
+Arguments:
+  ONE-OR-MORE
+    One or more arguments.
+    [@required, @multiple]
+
+Options:
+  -h --help
+    Print help
+```
+
+## Configuration
+
+Every operator, except the `*` and `+`, can be combined together.
+
+| Operator                           | Description                      |
+| ---------------------------------- | -------------------------------- |
+| `# @arg name`                      | Optional.                        |
+| `# @arg name!`                     | Required.                        |
+| `# @arg name*`                     | Zero or more.                    |
+| `# @arg name+`                     | One or more.                     |
+| `# @arg name Argument description` | With description.                |
+| `# @arg name=foo`                  | With default.                    |
+| `# @arg name[foo\|bar\|baz]`       | Pre-defined values.              |
+| `# @arg name[=foo\|bar\|baz]`      | Pre-defined values with default. |
+| `# @arg name <VALUE_NOTATION>`     | Custom value notation.           |
+
+Check the examples directory to look for ways to combine these operators.
 
 ---
 

@@ -6,8 +6,8 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.1.8", features = ["derive"] } # A simple to use, efficient, and full-featured Command Line Argument Parser
-duct = "0.13.6"                                     # A library for running child processes
-chrono = "0.4.24"                                   # Date and time library for Rust
+clap = { version = "4.5.13", features = ["derive", "env"] }
+duct = "0.13.7"
+chrono = "0.4.38"
 bunt = "0.2.8"
-color-eyre = "0.6.2"
+color-eyre = "0.6.3"

@@ -44,6 +44,7 @@ pub struct Flag {
     pub name: String,
     pub description: String,
     pub short: std::option::Option<char>,
+    pub truthy: std::option::Option<String>,
     pub multiple: bool,
 }
 
@@ -53,6 +54,7 @@ impl Flag {
             name: data.name,
             description: description.to_string(),
             short,
+            truthy: data.default,
             multiple: data.multiple,
         }
     }

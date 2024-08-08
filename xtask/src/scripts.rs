@@ -119,21 +119,23 @@ pub fn deploy_docs(args: &cli::DeployDocsArgs) -> Result<()> {
     if !args.no_login {
         println!("Authenticating with gcloud");
         cmd!(
-            "gcloud",
-            "config",
-            "configurations",
-            "activate",
-            &args.gcp_config
+            "aws",
+            "--profile",
+            &args.aws_profile,
+            "--region",
+            &args.aws_region,
+            "sso",
+            "login"
         )
         .run()?;
-        cmd!("gcloud", "auth", "login").run()?;
-        cmd!("gcloud", "auth", "application-default", "login").run()?;
         cmd!(
-            "gcloud",
-            "config",
-            "configurations",
-            "describe",
-            &args.gcp_config
+            "aws",
+            "--profile",
+            &args.aws_profile,
+            "--region",
+            &args.aws_region,
+            "sts",
+            "get-caller-identity"
         )
         .run()?;
     }
@@ -144,37 +146,16 @@ pub fn deploy_docs(args: &cli::DeployDocsArgs) -> Result<()> {
     );
     println!("{}", cmd!("pwd").read()?);
     cmd!(
-        "gcloud",
-        "storage",
-        "rsync",
+        "aws",
+        "--profile",
+        &args.aws_profile,
+        "--region",
+        &args.aws_region,
+        "s3",
+        "sync",
         &format!("{}/{}", &args.path, &args.output_dir),
-        &format!("gs://{}", &args.url),
-        "--recursive",
-        "--delete-unmatched-destination-objects"
-    )
-    .run()?;
-
-    println!("Setting the default ACL for the bucket");
-    cmd!(
-        "gcloud",
-        "storage",
-        "buckets",
-        "add-iam-policy-binding",
-        &format!("gs://{}", &args.url),
-        "--member=allUsers",
-        "--role=roles/storage.objectViewer"
-    )
-    .run()?;
-
-    println!("Assigning specialty pages");
-    cmd!(
-        "gcloud",
-        "storage",
-        "buckets",
-        "update",
-        &format!("gs://{}", &args.url),
-        "--web-main-page-suffix=index.html",
-        "--web-error-page=404.html",
+        &args.aws_bucket,
+        "--delete",
     )
     .run()?;
 

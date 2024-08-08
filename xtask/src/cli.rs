@@ -67,9 +67,15 @@ pub struct DeployDocsArgs {
     /// URL where the documentation site will be published
     #[arg(short, long, default_value = "rargs.cloudbridge.uy")]
     pub url: String,
-    /// Name of the gcloud configuration to use
-    #[arg(short, long, default_value = "cloudbridgeuy")]
-    pub gcp_config: String,
+    /// AWS Bucket to use.
+    #[arg(long, default_value = "s3://uy.cloudbridge.rargs", env = "AWS_BUCKET")]
+    pub aws_bucket: String,
+    /// AWS Profile to use.
+    #[arg(long, default_value = "admin", env = "AWS_PROFILE")]
+    pub aws_profile: String,
+    /// AWS Region to use.
+    #[arg(long, default_value = "us-east-2", env = "AWS_REGION")]
+    pub aws_region: String,
     /// Path to the directory where the documentation site will be built
     #[arg(short, long, default_value = "web")]
     pub path: String,

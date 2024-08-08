@@ -124,7 +124,11 @@ EOF
   {%- endif %}
   {%- if flags %}
   {%- for key, flag in flags %}
+    {%- if flag["truthy"] %}
+  printf "  {% if flag["short"] -%}-no-{{ flag["short"] }} {% endif -%}--no-{{ key }}\n"
+    {%- else %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
+    {%- endif %}
   printf "    {{ flag["description"] }}\n"
   {%- if flag["multiple"] -%}
   printf "    [@multiple]"
