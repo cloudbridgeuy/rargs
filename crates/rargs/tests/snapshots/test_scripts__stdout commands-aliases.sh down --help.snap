@@ -5,6 +5,16 @@ expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => out
 ---
 Download a file
 
+Every '@cmd' tag before a function defines an individual command
+that can be called independently from the terminal.
+Some times the name of this command is too long, or there other
+ways to describe the same command. When that happens, you can
+use the '@alias' tag and provide a different way of calling
+this command.
+
+Another good use-case of the  tag is for deprecating
+commands.
+
 [4mAlias:[0m d, down
 
 [4mUsage:[0m
@@ -29,4 +39,3 @@ Download a file
     Overwrite existing files
   -h --help
     Print help
-
