@@ -59,6 +59,12 @@
 {%- if command["description"] %}
   printf "{{ command["description"] }}\n"
 {%- endif %}
+{%- if command["long_description"] | default(value=[]) | length > 0 %}
+  printf "\n"
+  {%- for line in command["long_description"] %}
+  printf "{{ line }}\n"
+  {%- endfor %}
+{%- endif -%}
 
 {%- if command["help"] %}
   printf "{{ command["help"] }}\n"

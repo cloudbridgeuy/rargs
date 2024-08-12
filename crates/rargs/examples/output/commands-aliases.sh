@@ -109,6 +109,16 @@ parse_arguments() {
 }
 download_usage() {
   printf "Download a file\n"
+  printf "\n"
+  printf "Every '@cmd' tag before a function defines an individual command\n"
+  printf "that can be called independently from the terminal.\n"
+  printf "Some times the name of this command is too long, or there other\n"
+  printf "ways to describe the same command. When that happens, you can\n"
+  printf "use the '@alias' tag and provide a different way of calling\n"
+  printf "this command.\n"
+  printf "\n"
+  printf "Another good use-case of the `@alias` tag is for deprecating\n"
+  printf "commands.\n"
   printf "\n\033[4m%s\033[0m %s\n" "Alias:" "d, down"
 
   printf "\n\033[4m%s\033[0m\n" "Usage:"

@@ -11,6 +11,7 @@ use crate::parser;
 pub struct Command {
     pub aliases: Option<Vec<String>>,
     pub description: Option<String>,
+    pub long_description: Option<Vec<String>>,
     pub examples: Option<Vec<param::Example>>,
     pub flags: HashMap<String, param::Flag>,
     pub help: Option<String>,
@@ -42,6 +43,7 @@ pub struct Script {
     pub commands: HashMap<String, Command>,
     pub default: Option<String>,
     pub description: Option<String>,
+    pub long_description: Option<Vec<String>>,
     pub examples: Option<Vec<param::Example>>,
     pub flags: HashMap<String, param::Flag>,
     pub help: Option<String>,
@@ -115,6 +117,29 @@ impl Script {
                     } else {
                         err = Some(ScriptError::NoCommandInScope(format!(
                             "No command in scope when parsing a @description param in line {}. Did you forget the @cmd directive?",
+                            event.position
+                        )));
+                        break;
+                    }
+                }
+                parser::Data::LongDescription(value) => {
+                    if is_root_scope {
+                        script.long_description = match script.long_description {
+                            Some(mut long_description) => {
+                                long_description.push(value);
+                                Some(long_description)
+                            }
+                            None => Some(vec![value]),
+                        }
+                    } else if let Some(command) = maybe_command.as_mut() {
+                        if command.long_description.is_none() {
+                            command.long_description = Some(vec![value]);
+                        } else {
+                            command.long_description.as_mut().unwrap().push(value);
+                        }
+                    } else {
+                        err = Some(ScriptError::NoCommandInScope(format!(
+                            "No command in scope when parsing a @describe or @@ param in line {}. Did you forget the @cmd directive?",
                             event.position
                         )));
                         break;

@@ -21,6 +21,7 @@ pub enum Data {
     Default(String),
     Dep(param::Dep),
     Description(String),
+    LongDescription(String),
     Env(param::Env),
     Example(param::Example),
     Flag(param::Flag),
@@ -302,6 +303,8 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
             nom::branch::alt((
                 nom::bytes::complete::tag("author"),
                 nom::bytes::complete::tag("cmd"),
+                nom::bytes::complete::tag("describe"),
+                nom::bytes::complete::tag("@"),
                 nom::bytes::complete::tag("alias"),
                 nom::bytes::complete::tag("description"),
                 nom::bytes::complete::tag("default"),
@@ -323,6 +326,8 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
                 "alias" => Data::Alias(text),
                 "description" => Data::Description(text),
                 "default" => Data::Default(text),
+                "describe" => Data::LongDescription(text),
+                "@" => Data::LongDescription(text),
                 "help" => Data::Help(text),
                 "name" => Data::Name(text),
                 "version" => Data::Version(text),
@@ -340,13 +345,17 @@ fn parse_tag_text(input: &str) -> nom::IResult<&str, Option<Data>> {
 fn parse_tail(input: &str) -> nom::IResult<&str, &str> {
     nom::branch::alt((
         nom::combinator::eof,
-        nom::sequence::preceded(
-            nom::character::complete::space0,
-            nom::branch::alt((
-                nom::combinator::eof,
-                nom::combinator::map(nom::combinator::rest, |v: &str| v.trim()),
-            )),
-        ),
+        nom::branch::alt((
+            nom::combinator::eof,
+            nom::combinator::map(nom::combinator::rest, |v: &str| {
+                let rest = v.trim_end();
+                if let Some(trim_rest) = rest.strip_prefix(' ') {
+                    trim_rest
+                } else {
+                    rest
+                }
+            }),
+        )),
     ))(input)
 }
 
@@ -1586,6 +1595,14 @@ mod tests {
                 default: Some("1".to_string()),
                 ..Default::default()
             })
+        );
+        assert_token!(
+            "# @describe Some long description",
+            Data::LongDescription("Some long description".to_string())
+        );
+        assert_token!(
+            "# @@ Some long description but using @",
+            Data::LongDescription("Some long description but using @".to_string())
         );
     }
 }

@@ -9,7 +9,7 @@ macro_rules! test_template {
             match TEMPLATES.render($template, &object.expect("Can't create JSON object")) {
                 Ok(o) => o,
                 Err(e) => {
-                    log::error!("Parsing error(s): {}", e);
+                    log::error!("Parsing error(s): {:#?}", e);
                     ::std::process::exit(1);
                 }
             };

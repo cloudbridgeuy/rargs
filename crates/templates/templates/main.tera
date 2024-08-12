@@ -28,7 +28,7 @@ parse_root() {
 {% include "usage.tera" %}
 {% include "parse_arguments.tera" %}
 {%- for key, command in commands -%}
-  {%- set rules = rules | concat(with=command["rules"]) -%}
+  {%- set rules = rules | concat(with=( command["rules"] | default(value=[]) )) -%}
   {%- include "command_usage.tera" %}
   {%- include "parse_command_arguments.tera" %}
   {%- include "function.tera" %}
