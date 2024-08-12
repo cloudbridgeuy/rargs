@@ -8,8 +8,6 @@
     printf "{{ d["message"] }}\n" >&2
       {%- endif %}
     exit 1
-  else
-    deps["{{ d["alias"] }}"]="$(command -v {{ d["list"] | join(sep=" ") }} | head -n1)"
   fi
     {%- else %}
       {%- if d["list"] | length == 1 %}
@@ -20,8 +18,6 @@
     printf "{{ d["message"] }}\n" >&2
     {%- endif %}
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
       {%- else %}
   for dependency in {{ d["list"] | join(sep=" ")  }}; do
@@ -31,8 +27,6 @@
       printf "{{ d["message"] }}\n" >&2
       {%- endif %}
       exit 1
-    else
-      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
       {%- endif %}

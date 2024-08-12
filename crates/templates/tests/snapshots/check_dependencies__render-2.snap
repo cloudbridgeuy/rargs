@@ -8,6 +8,4 @@ expression: output
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "Install with: \e[32mgem install $dependency\e[0m\n\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi

@@ -14,8 +14,6 @@ rargs_run() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "Please install git, curl and wget\n" >&2
       exit 1
-    else
-      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
 

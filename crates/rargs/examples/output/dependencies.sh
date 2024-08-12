@@ -44,16 +44,12 @@ root() {
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "This is meant to fail\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
   dependency="again"
   if ! command -v $dependency >/dev/null 2>&1; then
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "Also this\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
 
 	echo "Fallback to root command"
@@ -219,8 +215,6 @@ download() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "install with \e[32mgem install foo bar baz\e[0m\n" >&2
       exit 1
-    else
-      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
   dependency="git"
@@ -228,8 +222,6 @@ download() {
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "You can install git with \e[32mapt install git\e[0m\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
 
   
@@ -315,23 +307,17 @@ upload() {
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "visit https://docker.com for more information\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
   dependency="foo"
   if ! command -v $dependency >/dev/null 2>&1; then
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
   dependency="git"
   if ! command -v $dependency >/dev/null 2>&1; then
     printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
     printf "You don't have git?\n" >&2
     exit 1
-  else
-    deps["$dependency"]="$(command -v $dependency | head -n1)"
   fi
 
   

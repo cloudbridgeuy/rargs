@@ -241,8 +241,6 @@ rargs_run() {
       printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: " "$dependency" >&2
       printf "Please install \e[32mcurl\e[0m with \e[32mbrew\e[0m or \e[32maapt-get\e[0m\n" >&2
       exit 1
-    else
-      deps["$dependency"]="$(command -v $dependency | head -n1)"
     fi
   done
 
