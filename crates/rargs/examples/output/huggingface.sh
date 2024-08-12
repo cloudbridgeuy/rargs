@@ -224,7 +224,6 @@ fill-mask() {
 }
 
 rargs_run() {
-  declare -A deps=()
   declare -a rargs_input=()
   normalize_rargs_input "$@"
   parse_arguments "${rargs_input[@]}"

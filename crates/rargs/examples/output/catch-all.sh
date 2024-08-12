@@ -400,7 +400,6 @@ required() {
 }
 
 rargs_run() {
-  declare -A deps=()
   declare -a rargs_other_args=()
   declare -a rargs_input=()
   normalize_rargs_input "$@"
