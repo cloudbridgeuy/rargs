@@ -1,7 +1,7 @@
 ---
 source: crates/rargs/tests/test_scripts.rs
 description: "[stdout] flags.sh -h"
-expression: "String::from_utf8(match \"stdout\" {\n            \"stdout\" => output.stdout,\n            \"stderr\" => output.stderr,\n            _ => panic!(\"invalid stream\"),\n        }).unwrap_or_else(|e|\n        panic!(\"failed to execute the '{dst}' script with error: {e}\"))"
+expression: "String ::\nfrom_utf8(match \"stdout\"\n{\n    \"stdout\" => output.stdout, \"stderr\" => output.stderr, _ => panic!\n    (\"invalid stream\"),\n}).unwrap_or_else(| e | panic!\n(\"failed to execute the '{dst}' script with error: {e}\"))"
 ---
 Flags examples
 
@@ -19,9 +19,15 @@ This script exposes three flags that showcase this behavior.
                by default.
   3. `shorty`: Same as the `truthy` flag but configured to also use
                a short version of the flag.
-printf  minimal [OPTIONS]
+
+You can also define flags to be multiple, in which case the value of
+calling the flag multiple time will be an integer with the total count
+flags provided to the command.
+
+[4mUsage:[0m
+  minimal [OPTIONS]
   minimal -h|--help
-  minimal -v|--version
+  minimal --version
 
 [4mExamples:[0m
   minimal --falsy
@@ -32,6 +38,10 @@ printf  minimal [OPTIONS]
     Set the `shorty` flag to `false`
   minimal -n-s
     Set the `shorty` flag to `false` using the short name
+  minimal -vvv
+    Return the total count of the multiple flag
+  minimal --verbose --verbose --verbose
+    Same example as before but with the full value
 
 [4mOptions:[0m
   --falsy
@@ -40,7 +50,10 @@ printf  minimal [OPTIONS]
     Shorty flag
   --no-truthy
     Truthy flag
+  -v --verbose
+    Support multiple verbose flags
+    [@multiple]
   -h --help
     Print help
-  -v --version
+  --version
     Print version

@@ -48,7 +48,7 @@ By default, flags are `falsy` and are set to `true` when defined. If you want th
 
 ```bash
 # @cmd Greeting function
-# @verbose --verbose=true
+# @flag --verbose=true
 greet() {
   if [[ -z "$rargs_verbose" ]]; then
     echo "Hello, World!"
@@ -62,189 +62,63 @@ With this version of the script, you would need to provide the `--no-verbose` op
 $ ./flags greet --no-verbose
 ```
 
-> The `truthy` value can be anything but `false` is always an empty variable.
-
-### Required Options
-
-By default, `options` are _optional_. To mark an `option` as _required_, append a `!` to its name.
-
-```bash
-# @cmd Greeting function
-# @option --name!
-greet() {
-  echo "Hello, $rargs_name!"
-}
-```
-
-If you don't provide a required argument when calling the script, **Rargs** will throw an error.
+> The `truthy` value can be anything but the string: `false`.
 
 ### Short names
 
-When defining your options you can also provide a short name to reference the option.
+When defining your flags you can also provide a short name for it.
 
 ```bash
 # @cmd Greeting function
-# @option -n --name!
+# @flag -v --verbose
 greet() {
   echo "Hello, $rargs_name!"
 }
 ```
 
-You can then reference the `name` option using its long and short form (`--name` or `-n`).
+You can then reference the `verbose` flag when calling your script using its long and short form (`--verbose` or `-v`).
 
-### Default Values
+### Multiple Flags
 
-Use the `=` operator to define a default value for your option.
+**Rargs** also support multiple values on flags, though they work differently than `options`. Flags
+don't take in values, yet you may want to use them to express different levels of a variable
+by calling it more than once. A common pattern is to define a `--verbose` flag that also
+supports a short option: `-v`. You can then repeat the `--verbose` or `-v` flag multiple
+times to increase the verbosity level of your command.
 
-```bash
-# @cmd Greeting function
-# @option --name=World
-```
+> Remember you can also concatenate multiple short variables like this `-vvv`.
 
-You can provide values with spaces by enclosing the text in quotes.
-
-```bash
-# @option --title="Rargs Example"
-```
-
-### Pre-defined Values
-
-If your options should accept only a predefined list of values, you can use the `[]` operator with a list of values separated by a pipe operator (`|`).
+To mark a `flag` as multiple add the `*` operator to the end of the long definition. Now,
+the value of that flag will be an integer value with the count of times the flag
+was passed to the command. For example, `-vvv` will set the `rargs_verbose` variable
+inside the script to `3`.
 
 ```bash
-# @option --categories[foo|bar|"foo bar"]
-```
-
-> As the example shows, you can use quotes (`"`) to define strings that include white space.
-
-If one of those values should be used as default, set it as the first element of the list with the `=` operator in front.
-
-```bash
-# @option --categories[=foo|bar|"foo bar"]
-```
-
-### Value Notation
-
-**Rargs** will do its best to create an easy-to-read usage output for your scripts, indicating the requirements of the options through different presentations of a value notation. A value notation is a keyword used to describe the value of an option, accompanied by additional operators like `<>`, `[]`, and `...` to indicate if the argument is `required`, `optional`, or `multiple`.
-
-The value notation will be represented by default as the name of the argument in uppercase, but you can force **Rargs** to use a custom value using the `<>` operator with the name that should be used.
-
-```bash
-# @option --bucket <AWS_S3_BUCKET>
-```
-
-The output of this argument will look something like this:
-
-```txt
-cat <<-EOF | rargs run - -h
-#!/usr/bin/env bash
-# @name value-notation
-# @option --bucket <AWS_S3_BUCKET> AWS S3 Bucket.
-# @option --region[=us-east-1|us-west-2] <AWS_REGION> AWS Region.
+cat <<-'EOF' | rargs run - -vvv
+# @flag -v --verbose* Verbosity level
 root() {
-  # pass
+  for ((i = 1; i <= rargs_verbose; i++)); do
+    echo "Verbose #$i"
+  done
 }
 EOF
-
-Usage:
-  value-notation [OPTIONS]
-  value-notation -h|--help
-
-Options:
-  --bucket [<AWS_S3_BUCKET>]
-    AWS S3 Bucket.
-  --region [<AWS_REGION>]
-    AWS Region.
-    [@default us-east-1, @choices us-east-1|us-west-2]
-  -h --help
-    Print help
-```
-
-### Multiple Values
-
-**Rargs** supports defining zero-or-more or one-or-more values for your options when using the `*` or `+` operator respectively.
-
-```bash
-# @option --zero-or-more*
-# @option --one-or-more+
-```
-
-Default and predefined values can be used with the `*` and `+` operators.
-
-```bash
-# @option --zero-or-more*[foo|bar|baz]
-# @option --one-or-more+[=foo|bar|baz]
-```
-
-The difference between the two operators is that the `+` operator requires at least one value to be present when invoking the command.
-
-```txt
-cat <<-EOF | rargs run - -h
-#!/usr/bin/env bash
-# @name multiple
-# @option --zero-or-more* Zero or more arguments.
-root() {
-  # pass
-}
-EOF
-
-Usage:
-  multiple [OPTIONS]
-  multiple -h|--help
-
-Options:
-  --zero-or-more [<ZERO-OR-MORE>]
-    Zero or more arguments.
-    [@multiple]
-  -h --help
-    Print help
-```
-
-**One or more values**:
-
-```txt
-cat <<-EOF | rargs run - -h
-#!/usr/bin/env bash
-# @name multiple
-# @option --one-or-more+ One or more arguments.
-root() {
-  # pass
-}
-EOF
-
-Usage:
-  multiple --one-or-more <ONE-OR-MORE> [OPTIONS]
-  multiple -h|--help
-
-Options:
-  --one-or-more <ONE-OR-MORE>
-    One or more arguments.
-    [@multiple]
-  -h --help
-    Print help
 ```
 
 ## Configuration
 
-Every operator, except the `*` and `+`, can be combined together.
-
-| Operator                              | Description                      |
-| ------------------------------------- | -------------------------------- |
-| `# @option --name`                    | Optional.                        |
-| `# @option -n --name`                 | Short and Long form.             |
-| `# @option --name!`                   | Required.                        |
-| `# @option --name*`                   | Zero or more.                    |
-| `# @option --name+`                   | One or more.                     |
-| `# @option --name Option description` | With description.                |
-| `# @option --name=foo`                | With default.                    |
-| `# @option --name[foo\|bar\|baz]`     | Pre-defined values.              |
-| `# @option --name[=foo\|bar\|baz]`    | Pre-defined values with default. |
-| `# @option --name <VALUE_NOTATION>`   | Custom value notation.           |
+| Operator                            | Description                                        |
+| ----------------------------------- | -------------------------------------------------- |
+| `# @flag --name`                    | Falsy flag.                                        |
+| `# @flag -n --name`                 | Falsy flag with short form.                        |
+| `# @flag --name=1`                  | Truthy flag (use it with `--no-` or `-n-` prefix.) |
+| `# @flag --name*`                   | Multiple value flag.                               |
+| `# @flag --name+`                   | One or more.                                       |
+| `# @flag --name Option description` | With description.                                  |
 
 Check the examples directory to look for ways to combine these operators.
 
 ---
 
-Next, we'll learn how to define `flags` in your **Rargs** scripts.
+Next, we'll learn how to use additional features of the framework in your **Rargs** scripts.
 
-[Show me how options work →](../../usage/options)
+[Tell me more →](../../usage/other)

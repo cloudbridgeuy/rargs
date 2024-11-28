@@ -36,9 +36,9 @@ usage() {
   {%- for line in long_description %}
   printf "{{ line }}\n"
   {%- endfor %}
-  {%- endif -%}
+  {% endif -%}
 
-  {% if help -%}
+  {%- if help -%}
   printf "{{ help }}\n"
   {% endif -%}
 
@@ -136,8 +136,8 @@ EOF
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
     {%- endif %}
   printf "    {{ flag["description"] }}\n"
-  {%- if flag["multiple"] -%}
-  printf "    [@multiple]"
+  {%- if flag["multiple"] %}
+  printf "    [@multiple]\n"
   {%- endif -%}
   {%- endfor %}
   {%- endif %}

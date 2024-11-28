@@ -42,6 +42,14 @@ parse_root() {
         rargs_truthy=""
         shift
         ;;
+      -v | --verbose)
+        if [[ -z "$rargs_verbose" ]]; then
+          rargs_verbose=1
+        else
+          rargs_verbose=$(("$rargs_verbose" + 1))
+        fi
+        shift
+        ;;
       -?*)
         printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Invalid option: " "$key" >&2
         exit 1
@@ -61,6 +69,7 @@ root() {
   local rargs_falsy
   local rargs_shorty
   local rargs_truthy
+  local rargs_verbose
 
   if [[ -z "$rargs_shorty" ]]; then
     rargs_shorty="1"
@@ -71,20 +80,24 @@ root() {
   # Parse command arguments
   parse_root "$@"
 
-	if [[ -n "$rargs_falsy" ]]; then
-		echo "falsy == $rargs_falsy"
+	if [[ -z "$rargs_verbose" ]]; then
+		if [[ -n "$rargs_falsy" ]]; then
+			echo "falsy == $rargs_falsy"
+		else
+			echo "falsy == false"
+		fi
+		if [[ -n "$rargs_truthy" ]]; then
+			echo "truthy == $rargs_truthy"
+		else
+			echo "truthy == false"
+		fi
+		if [[ -n "$rargs_shorty" ]]; then
+			echo "shorty == $rargs_shorty"
+		else
+			echo "shorty == false"
+		fi
 	else
-		echo "falsy == false"
-	fi
-	if [[ -n "$rargs_truthy" ]]; then
-		echo "truthy == $rargs_truthy"
-	else
-		echo "truthy == false"
-	fi
-	if [[ -n "$rargs_shorty" ]]; then
-		echo "shorty == $rargs_shorty"
-	else
-		echo "shorty == false"
+		echo "verbose == $rargs_verbose"
 	fi
 }
 
@@ -133,10 +146,15 @@ usage() {
   printf "  2. \`truthy\`: Flag with a default value that is considered \`truthy\`\n"
   printf "               by default.\n"
   printf "  3. \`shorty\`: Same as the \`truthy\` flag but configured to also use\n"
-  printf "               a short version of the flag.\n"printf "\n\033[4m%s\033[0m\n" "Usage:"
+  printf "               a short version of the flag.\n"
+  printf "\n"
+  printf "You can also define flags to be multiple, in which case the value of\n"
+  printf "calling the flag multiple time will be an integer with the total count\n"
+  printf "flags provided to the command.\n"
+  printf "\n\033[4m%s\033[0m\n" "Usage:"
   printf "  minimal [OPTIONS]\n"
   printf "  minimal -h|--help\n"
-  printf "  minimal -v|--version\n"
+  printf "  minimal --version\n"
   printf "\n\033[4m%s\033[0m\n" "Examples:"
   printf "  minimal --falsy\n"
   printf "    Set the \`falsy\` flag to \`true\`\n"
@@ -146,6 +164,10 @@ usage() {
   printf "    Set the \`shorty\` flag to \`false\`\n"
   printf "  minimal -n-s\n"
   printf "    Set the \`shorty\` flag to \`false\` using the short name\n"
+  printf "  minimal -vvv\n"
+  printf "    Return the total count of the multiple flag\n"
+  printf "  minimal --verbose --verbose --verbose\n"
+  printf "    Same example as before but with the full value\n"
 
   printf "\n\033[4m%s\033[0m\n" "Options:"
   printf "  --falsy\n"
@@ -154,16 +176,19 @@ usage() {
   printf "    Shorty flag\n"
   printf "  --no-truthy\n"
   printf "    Truthy flag\n"
+  printf "  -v --verbose\n"
+  printf "    Support multiple verbose flags\n"
+  printf "    [@multiple]\n"
   printf "  -h --help\n"
   printf "    Print help\n"
-  printf "  -v --version\n"
+  printf "  --version\n"
   printf "    Print version\n"
 }
 
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case "${1:-}" in
-      -v|--version)
+      --version)
         version
         exit
         ;;

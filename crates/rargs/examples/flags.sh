@@ -18,7 +18,7 @@
 # @@                by default.
 # @@   3. \`shorty\`: Same as the \`truthy\` flag but configured to also use
 # @@                a short version of the flag.
-
+#
 # @flag --falsy Falsy flag
 # @flag --truthy=1 Truthy flag
 # @flag -s --shorty=1 Shorty flag
@@ -27,20 +27,35 @@
 # @example Set the \`truthy\` flag to \`false\` $ --no-truthy
 # @example Set the \`shorty\` flag to \`false\` $ --no-shorty
 # @example Set the \`shorty\` flag to \`false\` using the short name $ -n-s
+#
+# @@
+# @@ You can also define flags to be multiple, in which case the value of
+# @@ calling the flag multiple time will be an integer with the total count
+# @@ flags provided to the command.
+#
+# @flag -v --verbose* Support multiple verbose flags
+#
+# @example Return the total count of the multiple flag $ -vvv
+# @example Same example as before but with the full value $ --verbose --verbose --verbose
+#
 root() {
-	if [[ -n "$rargs_falsy" ]]; then
-		echo "falsy == $rargs_falsy"
+	if [[ -z "$rargs_verbose" ]]; then
+		if [[ -n "$rargs_falsy" ]]; then
+			echo "falsy == $rargs_falsy"
+		else
+			echo "falsy == false"
+		fi
+		if [[ -n "$rargs_truthy" ]]; then
+			echo "truthy == $rargs_truthy"
+		else
+			echo "truthy == false"
+		fi
+		if [[ -n "$rargs_shorty" ]]; then
+			echo "shorty == $rargs_shorty"
+		else
+			echo "shorty == false"
+		fi
 	else
-		echo "falsy == false"
-	fi
-	if [[ -n "$rargs_truthy" ]]; then
-		echo "truthy == $rargs_truthy"
-	else
-		echo "truthy == false"
-	fi
-	if [[ -n "$rargs_shorty" ]]; then
-		echo "shorty == $rargs_shorty"
-	else
-		echo "shorty == false"
+		echo "verbose == $rargs_verbose"
 	fi
 }
