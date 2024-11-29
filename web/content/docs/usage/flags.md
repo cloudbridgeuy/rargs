@@ -121,4 +121,4 @@ Check the examples directory to look for ways to combine these operators.
 
 Next, we'll learn how to use additional features of the framework in your **Rargs** scripts.
 
-[Tell me more →](../../usage/other)
+[Tell me more →](../../usage/extra)
