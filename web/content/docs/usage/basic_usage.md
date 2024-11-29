@@ -84,17 +84,18 @@ Every **Rargs** script must have at least one command. If commands don't fit you
 
 ### Available Decorators
 
-| Tag        | Description                                     |
-| ---------- | ----------------------------------------------- |
-| `@option`  | Define an option for the command.               |
-| `@flag`    | Define a flag for the command.                  |
-| `@arg`     | Define an argument for the command.             |
-| `@env`     | Define an environment variable for the command. |
-| `@rule`    | Define a rule for the command.                  |
-| `@dep`     | Define a dependency for the command.            |
-| `@private` | Set the command as private.                     |
-| `@example` | Add an example of how to use this command.      |
-| `@any`     | Support for any additional parameters.          |
+| Tag        | Description                                                        |
+| ---------- | ------------------------------------------------------------------ |
+| `@option`  | Define an option for the command.                                  |
+| `@flag`    | Define a flag for the command.                                     |
+| `@arg`     | Define an argument for the command.                                |
+| `@env`     | Define an environment variable for the command.                    |
+| `@rule`    | Define a rule for the command.                                     |
+| `@dep`     | Define a dependency for the command.                               |
+| `@private` | Set the command as private.                                        |
+| `@example` | Add an example of how to use this command.                         |
+| `@alias`   | Define an alias name for the function. Can be used multiple times. |
+| `@any`     | Support for any additional parameters.                             |
 
 After the `@cmd` tag and any additional configuration, add the Bash function that executes when the command is called. The command's scope ends when **Rargs** detects the end of the function declaration.
 
@@ -104,6 +105,7 @@ All `command decorator` tags at the `root` scope are declared regardless of the 
 
 ```bash
 # @cmd A command with all the possible tags.
+# @alias c
 # @option -s --long Optional short and long option.
 # @flag --flag Flag option.
 # @arg optional-argument Optional argument
