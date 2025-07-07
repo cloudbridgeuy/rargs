@@ -2,7 +2,7 @@
   {%- for d in dep %}
     {%- if d["alias"] %}
   if ! command -v {{ d["list"] | join(sep=" ") }} >/dev/null 2>&1; then
-    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: {{ d["alias"] }}" "({{ d["list"] | join(dep=" ") }})" >&2
+    printf "\e[31m%s\e[33m%s\e[31m\e[0m\n\n" "Missing dependency: {{ d["alias"] }}" "({{ d["list"] | join(sep=" ") }})" >&2
     {%- if d["message"] %}
     dependencies="{{ d["list"] | join(sep="|") }}"
     printf "{{ d["message"] }}\n" >&2
