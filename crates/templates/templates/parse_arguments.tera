@@ -97,7 +97,7 @@ parse_arguments() {
         if [[ -z "$rargs_{{ key | replace(from="-", to="_") }}" ]]; then
           rargs_{{ key | replace(from="-", to="_") }}=1
         else
-          rargs_{{ key | replace(from="-", to="_") }}=$(("$rargs_{{ key }}" + 1))
+          rargs_{{ key | replace(from="-", to="_") }}=$(("$rargs_{{ key | replace(from="-", to="_") }}" + 1))
         fi
         {% else -%}
         rargs_{{ key | replace(from="-", to="_") }}=1
