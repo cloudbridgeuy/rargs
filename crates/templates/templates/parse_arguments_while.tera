@@ -89,10 +89,8 @@
         shift
         ;;
       {%- endif %}
-    {%- endfor -%}
-{%- endif %}
-    {%- if opts -%}
-{%- for key, option in opts %}
+    {%- endfor -%}{%- endif %}
+    {%- if opts -%}{%- for key, option in opts %}
       {% if option["short"] -%}-{{ option["short"] }} | {% endif -%}--{{ key }})
         {% if option["multiple"] -%}
         rargs_{{ key | replace(from="-", to="_") }}+=("$2")
@@ -101,8 +99,7 @@
         {% endif -%}
         shift 2
         ;;
-    {%- endfor -%}
-{%- endif %}
+    {%- endfor -%}{%- endif %}
     {%- if rules and rules is containing("no-first-option-help") %}
       {% if not uses_h %}-h|{% endif %}--help)
         rargs_help=1
