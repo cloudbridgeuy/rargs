@@ -203,7 +203,7 @@
 {%- if args %}
   {%- for arg in args %}
     {%- if arg["multiple"] %}
-  declare -a rargs_{{ arg.name | replace(from="-", to="_") }}
+  declare -a rargs_{{ arg["name"] | replace(from="-", to="_") }}
     {%- else %}
   local rargs_{{ arg["name"] | replace(from="-", to="_") }}
     {%- endif %}
@@ -227,6 +227,7 @@
     {% endif %}
   {%- endfor %}
 {%- endif %}
+
   # Parse command arguments
   parse_{{ command["name"] }}_arguments "$@"
 {% if rules -%}
@@ -307,7 +308,7 @@
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}
     {%- for line in command["lines"] %}
-{{ line }}
+  {{ line | replace(from="	", to="  ") }}
     {%- endfor %}
   {%- endif %}
 {%- else %}

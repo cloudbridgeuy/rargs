@@ -6,6 +6,7 @@ if [[ -n "${DEBUG:-}" ]]; then
 fi
 set -e
 
+
 {% if root and root | length > 0 %}
 parse_root() {
 {% include "parse_arguments_while.tera" -%}
@@ -25,7 +26,9 @@ parse_root() {
   {%- endfor %}
 {% endif %}
 {% include "version.tera" %}
+
 {% include "usage.tera" %}
+
 {% include "parse_arguments.tera" %}
 {%- for key, command in commands -%}
   {%- set rules = rules | concat(with=( command["rules"] | default(value=[]) )) -%}
@@ -34,4 +37,5 @@ parse_root() {
   {%- include "function.tera" %}
 {%- endfor -%}
 {%- include "run.tera" %}
+
 rargs_run "$@"

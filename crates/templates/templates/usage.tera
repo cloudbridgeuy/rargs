@@ -72,7 +72,9 @@ usage() {
     {%- if positional_arguments %}
   {%- for arg in positional_arguments %}
   printf "  {% if arg["value_notation"] %}{{ arg["value_notation"] }}{% else %}{{ arg["name"] | upper }}{% endif %}\n"
+  {%- if arg["description"] %}
   printf "    {{ arg["description"] }}\n"
+  {%- endif %}
   {%- if arg["required"] or arg["multiple"] or arg["default"] or arg["choices"] %}
   printf "    [
     {%- if arg["required"] -%}
@@ -113,7 +115,9 @@ EOF
   {%- if options %}
   {%- for key, option in options %}
   printf "  {% if option["short"] -%}-{{ option["short"] }} {% endif -%}--{{ key }} {% if option["required"] %}<{% if option["value_notation"] %}{{ option["value_notation"] }}{% else %}{{ key | upper }}{% endif %}>{% else %}[<{% if option["value_notation"] %}{{ option["value_notation"] }}{% else %}{{ key | upper }}{% endif %}>]{% endif %}\n"
+  {%- if option["description"] %}
   printf "    {{ option["description"] }}\n"
+  {%- endif %}
   {%- if option["multiple"] or option["default"] or option["choices"] %}
   printf "    [
     {%- if option["multiple"] -%}
@@ -135,7 +139,9 @@ EOF
     {%- else %}
   printf "  {% if flag["short"] -%}-{{ flag["short"] }} {% endif -%}--{{ key }}\n"
     {%- endif %}
+  {%- if flag["description"] %}
   printf "    {{ flag["description"] }}\n"
+  {%- endif %}
   {%- if flag["multiple"] %}
   printf "    [@multiple]\n"
   {%- endif -%}
