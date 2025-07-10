@@ -227,7 +227,6 @@
     {% endif %}
   {%- endfor %}
 {%- endif %}
-
   # Parse command arguments
   parse_{{ command["name"] }}_arguments "$@"
 {% if rules -%}
