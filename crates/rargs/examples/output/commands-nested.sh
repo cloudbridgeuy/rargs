@@ -140,11 +140,6 @@ parse_dir_arguments() {
 }
 # Directory commands
 dir() {
-  local rargs_verbose
-
-  # Parse command arguments
-  parse_dir_arguments "$@"
-
   local sub="/Users/guzmanmonne/Projects/Rust/rargs/crates/rargs/examples/output/commands-nested/dir.sh"
 	# shellcheck disable=SC2068
 	# shellcheck disable=SC2154
@@ -175,10 +170,6 @@ parse_file_arguments() {
 }
 # File commands
 file() {
-
-  # Parse command arguments
-  parse_file_arguments "$@"
-
   local sub="/Users/guzmanmonne/Projects/Rust/rargs/crates/rargs/examples/output/commands-nested/file.sh"
 	# shellcheck disable=SC2068
 	# shellcheck disable=SC2154

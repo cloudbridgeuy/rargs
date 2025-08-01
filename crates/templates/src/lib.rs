@@ -15,7 +15,7 @@ pub fn pairs_to_dot_columns(pairs: Vec<(&str, &str)>, indent: usize) -> String {
         .iter()
         .map(|(first, _)| first.len() + indent + 1)
         .max()
-        .unwrap();
+        .unwrap_or_default();
 
     // Create a string builder to store the output.
     let mut output = String::new();
@@ -26,7 +26,7 @@ pub fn pairs_to_dot_columns(pairs: Vec<(&str, &str)>, indent: usize) -> String {
         let padded_first = format!("{:.<width$}", "  ".to_string() + first + " ", width = max);
 
         // Add the name and description to the string builder, separated by dots.
-        output.push_str(&format!("{}.... {}\n", padded_first, second));
+        output.push_str(&format!("{padded_first}.... {second}\n"));
     }
 
     // Return the string builder as a string.

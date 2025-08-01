@@ -186,6 +186,9 @@
 {% endfor -%}
 {% endif -%}
 {{ command["name"] }}() {
+{%- if command["subcommand"] %}
+  local sub="{{ command["subcommand"] }}"
+{%- else %}
 {%- if fls %}
   {%- for name, option in fls %}
   local rargs_{{ name | replace(from="-", to="_") }}
@@ -301,8 +304,6 @@
   fi
   {%- endfor %}
 {%- endif %}
-{%- if command["subcommand"] %}
-  local sub="{{ command["subcommand"] }}"
 {%- endif %}
 {%- if command["lines"] %}
   {%- if command["lines"] | length > 0 %}
